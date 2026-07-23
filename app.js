@@ -41,7 +41,12 @@ function isEditable(){ return !!state.user && state.mode === "cloud"; }
 
 async function init(){
   bindStaticEvents();
-  const { data: { session } } = await supabase.auth.getSession();
+  let { data: { session } } = await supabase.auth.getSession();
+  if(!session){
+    const {data,error}=await supabase.auth.signInAnonymously();
+    if(error) console.warn("Anonymous collaboration is not enabled:",error.message);
+    session=data?.session||null;
+  }
   state.user = session?.user ?? null;
   supabase.auth.onAuthStateChange((_event, session2) => {
     state.user = session2?.user ?? null;
@@ -113,15 +118,14 @@ function renderStats(){
 }
 
 function renderHeaderState(){
-  const banner=$("#status-banner"), auth=$("#auth-btn"), sync=$("#cloud-sync-btn");
+  const banner=$("#status-banner"), sync=$("#cloud-sync-btn");
   if(state.mode==="cloud"){
     banner.className="status-banner cloud";
-    banner.innerHTML=`클라우드 공동편집 모드 · ${esc(state.user?.email || "읽기 전용")} · 변경사항 실시간 반영`;
+    banner.innerHTML=`공개 공동편집 모드 · 로그인 불필요 · 변경사항 실시간 반영 · 개인정보·담당자 연락처 입력 금지`;
   }else{
     banner.className="status-banner";
-    banner.innerHTML=`검수된 GitHub 기준안을 표시 중입니다. 로그인 후 <b>기준안 안전 적용</b>을 누르면 기존 데이터를 JSON으로 백업하고 팀 메모를 보존한 채 공동편집판을 갱신합니다.`;
+    banner.innerHTML=`검수된 GitHub 기준안을 표시 중입니다. 익명 공동편집 연결이 아직 허용되지 않아 현재는 읽기 전용입니다.`;
   }
-  auth.textContent=state.user?"로그아웃":"팀 로그인";
   sync.hidden=!state.user || state.mode==="cloud";
 }
 
@@ -147,14 +151,14 @@ function renderTimeline(){
   const d=state.data.days.find(x=>x.id===state.activeDay) || state.data.days[0];
   const evs=state.data.events.filter(x=>Number(x.day_id)===Number(d.id)).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
   return `${renderDayTabs()}
-    <div class="day-summary"><h2>Day ${d.id} · ${esc(d.date)} ${esc(d.weekday)}</h2><p>${esc(d.cities)} · 숙박: ${esc(d.lodging)}</p><p>${esc(d.summary)}</p></div>
+    <div class="day-summary"><div class="day-summary-title"><h2>Day ${d.id} · ${esc(d.date)} ${esc(d.weekday)}</h2>${isEditable()?`<label class="date-shifter">날짜 변경 <input type="date" id="active-day-date" value="${esc(d.date)}"><button class="btn small" id="shift-day-date">이 날짜부터 연쇄 이동</button></label>`:""}</div><p>${esc(d.cities)} · 숙박: ${esc(d.lodging)}</p><p>${esc(d.summary)}</p><p class="drag-hint">일정 카드를 위아래로 끌어 순서를 바꿀 수 있습니다. 변경된 Day를 선택하면 지도도 즉시 따라갑니다.</p></div>
     <div class="section-head"><h2>상세 일정</h2>${isEditable()?`<button class="btn small primary" data-add="events">+ 일정 추가</button>`:""}</div>
     <div class="cards">${evs.length?evs.map(renderEventCard).join(""):`<div class="empty">일정이 없습니다.</div>`}</div>`;
 }
 
 function renderEventCard(e){
   const links=[e.booking_url&&["예약",e.booking_url],e.official_url&&["공식",e.official_url],e.map_url&&["지도",e.map_url]].filter(Boolean);
-  return `<article class="event-card">
+  return `<article class="event-card" draggable="${isEditable()}" data-event-id="${esc(e.id)}">
     <div class="event-time">${esc(e.time_start||"")}${e.time_end?`\n~ ${esc(e.time_end)}`:""}</div>
     <div><div class="event-title">${e.category?`<span class="chip">${esc(e.category)}</span>`:""}<span>${esc(e.title)}</span></div>
       <div class="meta">${e.location?`<span>📍 ${esc(e.location)}</span>`:""}${e.transport?`<span>🚗 ${esc(e.transport)}</span>`:""}${e.duration?`<span>⏱ ${esc(e.duration)}</span>`:""}</div>
@@ -172,7 +176,7 @@ function renderMapTab(){
     <div class="legend"><span>━ 자동차</span><span>┄ 항공</span><span class="warning">━ ━ THSR</span><span>·· 지하철·Airport Express</span></div>`;
 }
 
-function drawMap(){
+async function drawMap(){
   const all=!state.activeDay;
   const pts=(all?state.data.map_points:state.data.map_points.filter(p=>Number(p.day_id)===Number(state.activeDay)))
     .slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||Number(a.sort_order)-Number(b.sort_order));
@@ -188,6 +192,15 @@ function drawMap(){
   });
   state.map.fitBounds(bounds,{padding:[28,28]});
   $("#route-list").innerHTML=pts.map((p,i)=>`<div class="route-stop"><div class="route-num">${i+1}</div><div><b>Day ${p.day_id} · ${esc(p.name)}</b><small>${esc(p.popup||"")} · ${esc(p.segment_type||"car")}</small></div></div>`).join("");
+  for(let i=1;i<pts.length;i++){
+    if((pts[i].segment_type||"car")!=="car")continue;
+    try{
+      const a=pts[i-1],b=pts[i];
+      const url=`https://router.project-osrm.org/route/v1/driving/${a.lng},${a.lat};${b.lng},${b.lat}?overview=full&geometries=geojson`;
+      const res=await fetch(url),json=await res.json(),route=json.routes?.[0];
+      if(route)L.geoJSON(route.geometry,{style:{color:"#087a72",weight:5,opacity:.82}}).bindTooltip(`${Math.round(route.distance/1000)}km · 약 ${Math.round(route.duration/60)}분`).addTo(state.map);
+    }catch(err){console.warn("도로 상세경로 조회 실패",err);}
+  }
 }
 
 const tableDefs={
@@ -199,7 +212,18 @@ const tableDefs={
   budget_items:{title:"예산 상세",fields:["category","label","min_krw","max_krw","notes"],labels:{category:"구분",label:"항목",min_krw:"최소(4인)",max_krw:"최대(4인)",notes:"메모"}},
 };
 
-function renderAirHotel(){return `${renderDataSection("flights")}<div style="height:22px"></div>${renderDataSection("hotels")}`;}
+function flightSearchUrl(r){
+  const date=String(r.date||"").replaceAll("-","").slice(2);
+  const from=encodeURIComponent((r.origin||"").match(/[A-Z]{3}/)?.[0]?.toLowerCase()||"");
+  const to=encodeURIComponent((r.destination||"").match(/[A-Z]{3}/)?.[0]?.toLowerCase()||"");
+  return `https://www.skyscanner.co.kr/transport/flights/${from}/${to}/${date}/?adultsv2=4&cabinclass=economy&rtn=0`;
+}
+function hotelSearchUrl(r){
+  return `https://www.booking.com/searchresults.ko.html?ss=${encodeURIComponent(`${r.name} ${r.city}`)}&checkin=${r.check_in}&checkout=${r.check_out}&group_adults=4&no_rooms=${r.rooms||2}&group_children=0`;
+}
+function renderAirHotel(){
+  return `<div class="status-banner cloud price-banner"><b>실시간 최저가 연결</b> · 표시 금액은 마지막 확인값입니다. ‘날짜 적용 최저가 검색’을 누르면 4인·해당 날짜 조건의 최신 예약 결과가 열립니다. 재고가 계속 변하므로 열린 발권 화면을 최종 기준으로 사용하십시오.</div>${renderDataSection("flights")}<div style="height:22px"></div>${renderDataSection("hotels")}`;
+}
 function renderMeetings(){return renderDataSection("meetings");}
 function renderTransport(){return `<div class="security-note" style="margin-bottom:12px">비용·시간 차이가 크지 않은 구간은 자동차를 우선했습니다. 국경간 편도반납 수수료가 과도하면 별도 렌트 또는 기사차량과 재비교하십시오.</div>${renderDataSection("transport_options")}`;}
 function renderRestaurants(){return renderDataSection("restaurants");}
@@ -207,8 +231,8 @@ function renderRestaurants(){return renderDataSection("restaurants");}
 function renderDataSection(table){
   const def=tableDefs[table], rows=state.data[table]||[];
   return `<div class="section-head"><h2>${def.title}</h2>${isEditable()?`<button class="btn small primary" data-add="${table}">+ 추가</button>`:""}</div>
-  <div class="table-wrap"><table class="data-table"><thead><tr>${def.fields.map(f=>`<th>${def.labels[f]||f}</th>`).join("")}${isEditable()?"<th></th>":""}</tr></thead><tbody>
-    ${rows.map(r=>`<tr>${def.fields.map(f=>`<td>${cellValue(r,f)}</td>`).join("")}${isEditable()?`<td><button class="btn small" data-edit-table="${table}" data-id="${esc(r.id)}">편집</button></td>`:""}</tr>`).join("")}
+  <div class="table-wrap"><table class="data-table"><thead><tr>${def.fields.map(f=>`<th>${def.labels[f]||f}</th>`).join("")}<th>실시간·편집</th></tr></thead><tbody>
+    ${rows.map(r=>`<tr>${def.fields.map(f=>`<td>${cellValue(r,f)}</td>`).join("")}<td>${table==="flights"?`<a class="btn small primary" href="${flightSearchUrl(r)}" target="_blank" rel="noreferrer">날짜 적용 최저가 검색 ↗</a>`:table==="hotels"?`<a class="btn small primary" href="${hotelSearchUrl(r)}" target="_blank" rel="noreferrer">2실 실시간 검색 ↗</a>`:""}${isEditable()?` <button class="btn small" data-edit-table="${table}" data-id="${esc(r.id)}">편집</button>`:""}</td></tr>`).join("")}
   </tbody></table></div>`;
 }
 
@@ -266,8 +290,6 @@ function renderVerify(){
 }
 
 function bindStaticEvents(){
-  $("#auth-btn").onclick=async()=>{if(state.user){await supabase.auth.signOut();toast("로그아웃했습니다.");}else openModal("auth-modal");};
-  $("#login-btn").onclick=login; $("#signup-btn").onclick=signup;
   $("#cloud-sync-btn").onclick=syncOfficialSeed;
   $("#print-btn").onclick=()=>window.print();
   $$('[data-close-modal]').forEach(b=>b.onclick=()=>closeModal(b.dataset.closeModal));
@@ -282,15 +304,35 @@ function bindDynamicEvents(){
   $$('[data-add]').forEach(b=>b.onclick=()=>openEditor(b.dataset.add,null,true));
   const addNote=$("#add-note");if(addNote)addNote.onclick=addNoteHandler;
   $$('[data-delete-note]').forEach(b=>b.onclick=()=>deleteNote(b.dataset.deleteNote));
+  const shift=$("#shift-day-date");if(shift)shift.onclick=shiftDates;
+  let dragged=null;
+  $$(".event-card[draggable='true']").forEach(card=>{
+    card.ondragstart=()=>{dragged=card.dataset.eventId;card.classList.add("dragging");};
+    card.ondragend=()=>card.classList.remove("dragging");
+    card.ondragover=e=>e.preventDefault();
+    card.ondrop=async e=>{e.preventDefault();const target=card.dataset.eventId;if(dragged&&target&&dragged!==target)await reorderEvents(dragged,target);};
+  });
 }
 
-async function login(){
-  const email=$("#auth-email").value.trim(),password=$("#auth-password").value;if(!email||!password)return toast("이메일과 비밀번호를 입력하십시오.");
-  showLoader(true);const {error}=await supabase.auth.signInWithPassword({email,password});showLoader(false);if(error)return toast(error.message);closeModal("auth-modal");toast("로그인했습니다.");render();
+async function reorderEvents(sourceId,targetId){
+  const rows=state.data.events.filter(x=>Number(x.day_id)===Number(state.activeDay)).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
+  const from=rows.findIndex(x=>String(x.id)===String(sourceId)),to=rows.findIndex(x=>String(x.id)===String(targetId));if(from<0||to<0)return;
+  const [moved]=rows.splice(from,1);rows.splice(to,0,moved);showLoader(true);
+  try{for(let i=0;i<rows.length;i++){const{error}=await supabase.from("events").update({sort_order:(i+1)*10}).eq("id",rows[i].id);if(error)throw error;}await loadCloud();render();toast("일정 순서와 지도를 갱신했습니다.");}catch(err){toast(`순서 변경 실패: ${err.message}`);}finally{showLoader(false);}
 }
-async function signup(){
-  const email=$("#auth-email").value.trim(),password=$("#auth-password").value;if(!email||password.length<6)return toast("이메일과 6자 이상 비밀번호를 입력하십시오.");
-  showLoader(true);const {error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:location.href}});showLoader(false);if(error)return toast(error.message);toast("가입 요청을 보냈습니다. 이메일 인증 설정에 따라 확인 메일을 점검하십시오.");
+async function shiftDates(){
+  const current=state.data.days.find(d=>Number(d.id)===Number(state.activeDay)),value=$("#active-day-date").value;if(!current||!value)return;
+  const delta=Math.round((new Date(value+"T00:00:00Z")-new Date(current.date+"T00:00:00Z"))/86400000);if(!delta)return toast("같은 날짜입니다.");
+  if(!confirm(`Day ${current.id}부터 이후 일정을 ${delta>0?"+":""}${delta}일 이동하고 항공·숙박 검색 날짜도 함께 바꿀까요?`))return;
+  const add=(s,n)=>{const d=new Date(s+"T00:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);};showLoader(true);
+  try{
+    for(const d of state.data.days.filter(x=>Number(x.id)>=Number(current.id))){
+      const old=d.date,next=add(old,delta);let q=await supabase.from("days").update({date:next}).eq("id",d.id);if(q.error)throw q.error;
+      for(const f of state.data.flights.filter(x=>x.date===old)){q=await supabase.from("flights").update({date:next,status:"가격 재확인"}).eq("id",f.id);if(q.error)throw q.error;}
+      for(const h of state.data.hotels.filter(x=>x.check_in===old||x.check_out===old)){q=await supabase.from("hotels").update({check_in:add(h.check_in,delta),check_out:add(h.check_out,delta),status:"가격 재확인"}).eq("id",h.id);if(q.error)throw q.error;}
+    }
+    await loadCloud();render();toast("일정·항공·숙박 날짜를 연쇄 변경했습니다.");
+  }catch(err){toast(`날짜 변경 실패: ${err.message}`);}finally{showLoader(false);}
 }
 
 function cleanRows(table,rows){
@@ -308,7 +350,7 @@ function cleanRows(table,rows){
 }
 
 async function syncOfficialSeed(){
-  if(!state.user)return openModal("auth-modal");
+  if(!state.user)return toast("Supabase 익명 공동편집을 먼저 활성화해야 합니다.");
   if(!confirm("현재 클라우드 데이터를 JSON으로 자동 백업한 뒤 새 기준안으로 교체합니다. 팀 메모는 삭제하지 않습니다. 계속할까요?"))return;
   showLoader(true);
   try{
@@ -369,7 +411,7 @@ async function saveEdit(){
   showLoader(true);try{let q;if(ed.isNew)q=supabase.from(ed.table).insert(patch);else q=supabase.from(ed.table).update(patch).eq("id",ed.row.id);const{error}=await q;if(error)throw error;closeModal("edit-modal");await loadCloud();render();toast("저장했습니다.");}catch(err){toast(err.message);}finally{showLoader(false);}
 }
 async function deleteEdit(){const ed=state.editing;if(!ed||!confirm("이 항목을 삭제할까요?"))return;showLoader(true);const{error}=await supabase.from(ed.table).delete().eq("id",ed.row.id);showLoader(false);if(error)return toast(error.message);closeModal("edit-modal");await loadCloud();render();toast("삭제했습니다.");}
-async function addNoteHandler(){const content=$("#note-content").value.trim();if(!content)return;const day=$("#note-day").value;const{error}=await supabase.from("team_notes").insert({content,day_id:day?Number(day):null,author_name:state.user.email});if(error)return toast(error.message);await loadCloud();render();toast("메모를 등록했습니다.");}
+async function addNoteHandler(){const content=$("#note-content").value.trim();if(!content)return;const day=$("#note-day").value;const{error}=await supabase.from("team_notes").insert({content,day_id:day?Number(day):null,author_name:"익명 팀원"});if(error)return toast(error.message);await loadCloud();render();toast("메모를 등록했습니다.");}
 async function deleteNote(id){if(!confirm("메모를 삭제할까요?"))return;const{error}=await supabase.from("team_notes").delete().eq("id",id);if(error)return toast(error.message);await loadCloud();render();}
 
 function exportData(type){
