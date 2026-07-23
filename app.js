@@ -1,6 +1,6 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import {
-  APP_VERSION, tripMeta, officialSeed, days as localDays,
+  APP_VERSION, tripMeta, officialSeed,
 } from "./itinerary-data.js";
 
 const SUPABASE_URL = "https://wrozrvsplryfjgckmxvl.supabase.co";
@@ -24,7 +24,8 @@ const state = {
 
 const tabs = [
   ["timeline","전체 일정"],["map","지도"],["airhotel","항공·숙박"],["budget","예산"],
-  ["meetings","회의·방문기관"],["transport","교통·렌터카"],["restaurants","맛집"],["notes","팀 메모"],
+  ["meetings","회의·방문기관"],["transport","교통·렌터카"],["restaurants","맛집"],
+  ["verify","확정·검증"],["notes","팀 메모"],
 ];
 
 const $ = (s) => document.querySelector(s);
@@ -118,7 +119,7 @@ function renderHeaderState(){
     banner.innerHTML=`클라우드 공동편집 모드 · ${esc(state.user?.email || "읽기 전용")} · 변경사항 실시간 반영`;
   }else{
     banner.className="status-banner";
-    banner.innerHTML=`새 공식 일정 로컬 원본을 표시 중입니다. 팀 공동편집을 시작하려면 로그인 후 <b>새 공식안 동기화</b>를 한 번 실행하십시오. 기존 Lovable 데이터는 자동으로 사용하지 않습니다.`;
+    banner.innerHTML=`검수된 GitHub 기준안을 표시 중입니다. 로그인 후 <b>기준안 안전 적용</b>을 누르면 기존 데이터를 JSON으로 백업하고 팀 메모를 보존한 채 공동편집판을 갱신합니다.`;
   }
   auth.textContent=state.user?"로그아웃":"팀 로그인";
   sync.hidden=!state.user || state.mode==="cloud";
@@ -132,7 +133,7 @@ function renderTabs(){
 function renderContent(){
   const main=$("#main-content");
   if(state.tab!=="map" && state.map){state.map.remove();state.map=null;}
-  const handlers={timeline:renderTimeline,map:renderMapTab,airhotel:renderAirHotel,budget:renderBudget,meetings:renderMeetings,transport:renderTransport,restaurants:renderRestaurants,notes:renderNotes};
+  const handlers={timeline:renderTimeline,map:renderMapTab,airhotel:renderAirHotel,budget:renderBudget,meetings:renderMeetings,transport:renderTransport,restaurants:renderRestaurants,verify:renderVerify,notes:renderNotes};
   main.innerHTML=handlers[state.tab]();
   bindDynamicEvents();
   if(state.tab==="map") setTimeout(drawMap,0);
@@ -232,6 +233,38 @@ function renderNotes(){
     <div class="cards" style="margin-top:12px">${notes.length?notes.map(n=>`<div class="event-card"><div class="event-time">${n.day_id?`Day ${n.day_id}`:"전체"}</div><div><div class="event-title">${esc(n.author_name||"팀원")}</div><div class="notes">${esc(n.content)}</div><div class="meta">${esc(new Date(n.created_at).toLocaleString("ko-KR"))}</div></div>${isEditable()?`<div><button class="btn small danger" data-delete-note="${n.id}">삭제</button></div>`:""}</div>`).join(""):`<div class="empty">등록된 메모가 없습니다.</div>`}</div>`;
 }
 
+function renderVerify(){
+  const flights=state.data.flights||[], meetings=state.data.meetings||[];
+  const flightPending=flights.filter(f=>!/확정|발권완료/.test(f.status||""));
+  const meetingPending=meetings.filter(m=>m.status!=="확정");
+  const checks=[
+    ["일정 기준","유럽 선행 → AWTEC 후반·Technical Tour → 홍콩 당일 경유","GitHub판 채택"],
+    ["대만 체류","9/8 오후–9/12 아침, 약 3.5일","기존 Lovable판보다 단축"],
+    ["항공",`${flights.length}개 구간 중 ${flightPending.length}개 발권·운항 재확인 필요`,flightPending.length?"확정 필요":"완료"],
+    ["기관 회의",`${meetings.length}개 중 ${meetingPending.length}개 미확정`,meetingPending.length?"회신 필요":"완료"],
+    ["데이터 보호","기준안 적용 전 JSON 자동 백업 · 팀 메모 보존","개선 완료"],
+    ["최종 검증일",tripMeta.lastVerified||"미기록","운임·운항시간은 발권 화면 우선"],
+  ];
+  const sourceLinks=[
+    ["AWTEC 2026","https://www.awtec2026.com/"],
+    ["SAS","https://www.flysas.com/"],
+    ["KLM","https://www.klm.com/"],
+    ["Port of Rotterdam","https://www.portofrotterdam.com/en"],
+    ["Port Esbjerg","https://portesbjerg.dk/en/"],
+    ["Taiwan HSR","https://en.thsrc.com.tw/"],
+  ];
+  return `<div class="section-head"><h2>기준안 비교·확정 현황</h2><span class="version-chip">${esc(APP_VERSION)}</span></div>
+    <div class="compare-grid">
+      <section class="compare-card muted-card"><h3>Lovable 교정본</h3><p>카드형 UI·실시간 편집은 우수하지만 대만 선행·도쿄 경유의 이전 일정이며, 복원 함수가 상세 데이터와 메모를 삭제할 수 있어 기준본에서 제외했습니다.</p></section>
+      <section class="compare-card selected-card"><h3>GitHub 무료판 · 기준본</h3><p>유럽 선행·대만 3.5일·홍콩 당일 경유를 반영했습니다. 무료 호스팅을 유지하면서 백업·메모 보존·검증 현황을 추가했습니다.</p></section>
+    </div>
+    <div class="table-wrap"><table class="data-table verify-table"><thead><tr><th>검증항목</th><th>현재 상태</th><th>판정</th></tr></thead><tbody>
+      ${checks.map(([a,b,c])=>`<tr><td><b>${esc(a)}</b></td><td>${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")}
+    </tbody></table></div>
+    <div class="day-summary source-panel"><h2>주요 공식 링크</h2><div class="link-row">${sourceLinks.map(([label,url])=>`<a href="${url}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`).join("")}</div>
+      <p>‘직항 확인’은 계획 수립 시점의 운항 패턴을 뜻하며 발권 완료가 아닙니다. 편명·시간·가격은 실제 발권 화면에서 최종 확정하십시오.</p></div>`;
+}
+
 function bindStaticEvents(){
   $("#auth-btn").onclick=async()=>{if(state.user){await supabase.auth.signOut();toast("로그아웃했습니다.");}else openModal("auth-modal");};
   $("#login-btn").onclick=login; $("#signup-btn").onclick=signup;
@@ -276,25 +309,42 @@ function cleanRows(table,rows){
 
 async function syncOfficialSeed(){
   if(!state.user)return openModal("auth-modal");
-  if(!confirm("기존 클라우드 일정과 팀 메모를 모두 지우고 새 유럽 선행·AWTEC·홍콩 공식안으로 교체합니다. 계속할까요?"))return;
+  if(!confirm("현재 클라우드 데이터를 JSON으로 자동 백업한 뒤 새 기준안으로 교체합니다. 팀 메모는 삭제하지 않습니다. 계속할까요?"))return;
   showLoader(true);
   try{
-    const uuidTables=["team_notes","events","flights","hotels","meetings","transport_options","restaurants","map_points","budget_items"];
-    for(const table of uuidTables){const {error}=await supabase.from(table).delete().neq("id","00000000-0000-0000-0000-000000000000");if(error)throw error;}
+    const results=await Promise.all(TABLES.map(async table=>{
+      const {data,error}=await supabase.from(table).select("*");
+      if(error)throw error;
+      return [table,data||[]];
+    }));
+    const snapshot=Object.fromEntries(results);
+    const stamp=new Date().toISOString().slice(0,19).replaceAll(":","-");
+    download(`offshore-wind-trip-backup-${stamp}.json`,JSON.stringify({version:`pre-${APP_VERSION}`,created_at:new Date().toISOString(),...snapshot},null,2),"application/json");
+
+    const replaceTables=["events","flights","hotels","meetings","transport_options","restaurants","map_points","budget_items"];
+    for(const table of replaceTables){const {error}=await supabase.from(table).delete().neq("id","00000000-0000-0000-0000-000000000000");if(error)throw error;}
     {const {error}=await supabase.from("days").delete().gte("id",1);if(error)throw error;}
     {const {error}=await supabase.from("days").insert(officialSeed.days.map(({id,date,weekday,cities,lodging,summary})=>({id,date,weekday,cities,lodging,summary})));if(error)throw error;}
-    for(const table of ["events","flights","hotels","meetings","transport_options","restaurants","map_points","budget_items"]){
+    for(const table of replaceTables){
       const rows=cleanRows(table,officialSeed[table]);const {error}=await supabase.from(table).insert(rows);if(error)throw error;
     }
+    for(const note of snapshot.team_notes.filter(n=>n.author_name!=="SYSTEM"&&n.day_id!=null)){
+      const {error}=await supabase.from("team_notes").update({day_id:note.day_id}).eq("id",note.id);
+      if(error)throw error;
+    }
+    {const {error}=await supabase.from("team_notes").delete().eq("author_name","SYSTEM").like("content","__EU_FIRST_%");if(error)throw error;}
     {const {error}=await supabase.from("team_notes").insert({content:MARKER,author_name:"SYSTEM"});if(error)throw error;}
-    await loadCloud();toast("새 공식안을 클라우드에 동기화했습니다.");render();
-  }catch(err){console.error(err);toast(`동기화 실패: ${err.message||err}`);}finally{showLoader(false);}
+    await loadCloud();toast("기준안을 안전 적용했습니다. 기존 팀 메모는 보존됐습니다.");render();
+  }catch(err){
+    console.error(err);
+    toast(`적용 중단: ${err.message||err}. 내려받은 백업 파일을 보관하십시오.`);
+  }finally{showLoader(false);}
 }
 
 const fieldTypes={day_id:"number",min_krw:"number",max_krw:"number",original_min:"number",original_max:"number",nights:"number",rooms:"number",photo_allowed:"checkbox",ppe_required:"checkbox",interpreter_needed:"checkbox",notes:"textarea",agenda:"textarea",reason:"textarea"};
 const eventFields=["day_id","time_start","time_end","title","category","location","transport","duration","original_currency","original_min","original_max","min_cost_krw","max_cost_krw","cost_basis","booking_url","notes","sort_order"];
 function openEditor(table,id,isNew){
-  if(!isEditable()){toast(state.user?"먼저 새 공식안을 클라우드에 동기화하십시오.":"로그인이 필요합니다.");return;}
+  if(!isEditable()){toast(state.user?"먼저 기준안을 클라우드에 안전 적용하십시오.":"로그인이 필요합니다.");return;}
   const rows=state.data[table]||[];const def=table==="events"?{title:"일정",fields:eventFields,labels:{}}:tableDefs[table];
   const row=isNew?defaultRow(table):rows.find(r=>String(r.id)===String(id));if(!row)return;
   state.editing={table,row:{...row},isNew};$("#edit-title").textContent=`${def.title} ${isNew?"추가":"편집"}`;
