@@ -1,0 +1,8 @@
+.day-summary-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.date-shifter{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+.date-shifter input{border:1px solid var(--line);border-radius:7px;padding:5px}
+.drag-hint{font-size:11px!important;color:var(--brand)!important}
+.event-card[draggable=true]{cursor:grab}
+.event-card.dragging{opacity:.4;border:2px dashed var(--brand)}
+.price-banner{margin:0 0 16px}
+.data-table td:last-child{white-space:nowrap}
