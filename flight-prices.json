@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "source": "Google Flights",
+  "source_library": "fast-flights 3.0.1",
+  "currency": "KRW",
+  "passengers": 4,
+  "cabin": "economy",
+  "generated_at": "2026-07-23T15:21:32Z",
+  "fresh_until": "2026-07-23T17:21:32Z",
+  "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
+  "fares": {
+    "f1": {
+      "label": "인천 → 코펜하겐",
+      "date": "2026-09-01",
+      "origin": "ICN",
+      "destination": "CPH",
+      "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDEoAGoFEgNJQ05yBRIDQ1BIQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
+      "lowest": {
+        "total_krw": 14488699,
+        "per_person_krw": 3622175,
+        "airlines": [
+          "SAS항공"
+        ],
+        "carrier_code": "SK",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "ICN",
+            "destination": "CPH",
+            "departure_date": "2026-09-01",
+            "departure_time": "23:35",
+            "arrival_date": "2026-09-02",
+            "arrival_time": "06:00",
+            "duration_minutes": 805,
+            "aircraft": "Airbus A350"
+          }
+        ]
+      },
+      "selected": {
+        "total_krw": 14488699,
+        "per_person_krw": 3622175,
+        "airlines": [
+          "SAS항공"
+        ],
+        "carrier_code": "SK",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "ICN",
+            "destination": "CPH",
+            "departure_date": "2026-09-01",
+            "departure_time": "23:35",
+            "arrival_date": "2026-09-02",
+            "arrival_time": "06:00",
+            "duration_minutes": 805,
+            "aircraft": "Airbus A350"
+          }
+        ]
+      },
+      "selected_reason": "출국 직항",
+      "selected_fallback": false,
+      "status": "ok"
+    },
+    "f2": {
+      "label": "암스테르담 → 오슬로",
+      "date": "2026-09-05",
+      "origin": "AMS",
+      "destination": "OSL",
+      "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDUoAGoFEgNBTVNyBRIDT1NMQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
+      "lowest": {
+        "total_krw": 1220261,
+        "per_person_krw": 305065,
+        "airlines": [
+          "KLM"
+        ],
+        "carrier_code": "KL",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "AMS",
+            "destination": "OSL",
+            "departure_date": "2026-09-05",
+            "departure_time": "14:35",
+            "arrival_date": "2026-09-05",
+            "arrival_time": "16:20",
+            "duration_minutes": 105,
+            "aircraft": "Boeing 737"
+          }
+        ]
+      },
+      "selected": {
+        "total_krw": 1233671,
+        "per_person_krw": 308418,
+        "airlines": [
+          "KLM"
+        ],
+        "carrier_code": "KL",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "AMS",
+            "destination": "OSL",
+            "departure_date": "2026-09-05",
+            "departure_time": "09:20",
+            "arrival_date": "2026-09-05",
+            "arrival_time": "11:05",
+            "duration_minutes": 105,
+            "aircraft": "Boeing 737"
+          }
+        ]
+      },
+      "selected_reason": "오슬로 관광시간 확보",
+      "selected_fallback": false,
+      "status": "ok"
+    },
+    "f3": {
+      "label": "오슬로 → 타이베이",
+      "date": "2026-09-07",
+      "origin": "OSL",
+      "destination": "TPE",
+      "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAWoFEgNPU0xyBRIDVFBFQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
+      "lowest": {
+        "total_krw": 5704980,
+        "per_person_krw": 1426245,
+        "airlines": [
+          "루프트한자",
+          "중화항공"
+        ],
+        "carrier_code": "multi",
+        "stops": 1,
+        "legs": [
+          {
+            "origin": "OSL",
+            "destination": "FRA",
+            "departure_date": "2026-09-07",
+            "departure_time": "06:45",
+            "arrival_date": "2026-09-07",
+            "arrival_time": "08:55",
+            "duration_minutes": 130,
+            "aircraft": "Airbus A320neo"
+          },
+          {
+            "origin": "FRA",
+            "destination": "TPE",
+            "departure_date": "2026-09-07",
+            "departure_time": "11:15",
+            "arrival_date": "2026-09-08",
+            "arrival_time": "06:15",
+            "duration_minutes": 780,
+            "aircraft": "Boeing 777"
+          }
+        ]
+      },
+      "selected": {
+        "total_krw": 5704980,
+        "per_person_krw": 1426245,
+        "airlines": [
+          "루프트한자",
+          "중화항공"
+        ],
+        "carrier_code": "multi",
+        "stops": 1,
+        "legs": [
+          {
+            "origin": "OSL",
+            "destination": "FRA",
+            "departure_date": "2026-09-07",
+            "departure_time": "06:45",
+            "arrival_date": "2026-09-07",
+            "arrival_time": "08:55",
+            "duration_minutes": 130,
+            "aircraft": "Airbus A320neo"
+          },
+          {
+            "origin": "FRA",
+            "destination": "TPE",
+            "departure_date": "2026-09-07",
+            "departure_time": "11:15",
+            "arrival_date": "2026-09-08",
+            "arrival_time": "06:15",
+            "duration_minutes": 780,
+            "aircraft": "Boeing 777"
+          }
+        ]
+      },
+      "selected_reason": "1회 환승·9월 8일 06:15 도착",
+      "selected_fallback": false,
+      "status": "ok"
+    },
+    "f4": {
+      "label": "타이중 → 홍콩",
+      "date": "2026-09-11",
+      "origin": "RMQ",
+      "destination": "HKG",
+      "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNSTVFyBRIDSEtHQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
+      "lowest": {
+        "total_krw": 395375,
+        "per_person_krw": 98844,
+        "airlines": [
+          "홍콩 익스프레스항공"
+        ],
+        "carrier_code": "UO",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "RMQ",
+            "destination": "HKG",
+            "departure_date": "2026-09-11",
+            "departure_time": "13:35",
+            "arrival_date": "2026-09-11",
+            "arrival_time": "15:20",
+            "duration_minutes": 105,
+            "aircraft": "Airbus A321"
+          }
+        ]
+      },
+      "selected": {
+        "total_krw": 448213,
+        "per_person_krw": 112053,
+        "airlines": [
+          "홍콩 익스프레스항공"
+        ],
+        "carrier_code": "UO",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "RMQ",
+            "destination": "HKG",
+            "departure_date": "2026-09-11",
+            "departure_time": "10:25",
+            "arrival_date": "2026-09-11",
+            "arrival_time": "12:10",
+            "duration_minutes": 105,
+            "aircraft": "Airbus A321neo"
+          }
+        ]
+      },
+      "selected_reason": "홍콩 당일관광 시간 확보",
+      "selected_fallback": false,
+      "status": "ok"
+    },
+    "f5": {
+      "label": "홍콩 → 인천",
+      "date": "2026-09-11",
+      "origin": "HKG",
+      "destination": "ICN",
+      "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNIS0dyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
+      "lowest": {
+        "total_krw": 621065,
+        "per_person_krw": 155266,
+        "airlines": [
+          "홍콩 익스프레스항공"
+        ],
+        "carrier_code": "UO",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "HKG",
+            "destination": "ICN",
+            "departure_date": "2026-09-11",
+            "departure_time": "16:55",
+            "arrival_date": "2026-09-11",
+            "arrival_time": "21:35",
+            "duration_minutes": 220,
+            "aircraft": "Airbus A321neo"
+          }
+        ]
+      },
+      "selected": {
+        "total_krw": 688736,
+        "per_person_krw": 172184,
+        "airlines": [
+          "홍콩 익스프레스항공"
+        ],
+        "carrier_code": "UO",
+        "stops": 0,
+        "legs": [
+          {
+            "origin": "HKG",
+            "destination": "ICN",
+            "departure_date": "2026-09-11",
+            "departure_time": "21:00",
+            "arrival_date": "2026-09-12",
+            "arrival_time": "01:40",
+            "duration_minutes": 220,
+            "aircraft": "Airbus A321neo"
+          }
+        ]
+      },
+      "selected_reason": "홍콩 체류시간을 늘리는 야간편",
+      "selected_fallback": false,
+      "status": "ok"
+    }
+  },
+  "errors": []
+}
