@@ -6,3 +6,25 @@
 .event-card.dragging{opacity:.4;border:2px dashed var(--brand)}
 .price-banner{margin:0 0 16px}
 .data-table td:last-child{white-space:nowrap}
+.live-fare{min-width:320px;max-width:390px;white-space:normal;border:1px solid #b7dfda;background:#f1fbf9;border-radius:10px;padding:10px}
+.live-fare.stale{border-color:#e7c47d;background:#fff9eb}
+.live-fare.error{border-color:#e7aaa4;background:#fff4f2}
+.live-fare>small{display:block;margin-top:4px;color:var(--muted)}
+.fare-title,.fare-picked{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fare-title span,.fare-picked span{font-size:11px;color:var(--muted)}
+.fare-title strong,.fare-picked strong{font-size:16px;color:var(--brand)}
+.fare-sub{font-size:11px;line-height:1.55;color:var(--muted);margin:3px 0 8px}
+.fare-picked{display:grid;grid-template-columns:1fr auto;border-top:1px solid rgba(0,0,0,.09);padding-top:8px}
+.fare-picked small{grid-column:1/-1;line-height:1.55;color:var(--muted)}
+.fare-picked.same{display:block;border-radius:6px;background:#dff4ef;color:#086f66;font-weight:700;padding:6px 8px}
+.fare-updated{font-size:10px;color:var(--muted);margin-top:8px}
+.fare-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.price-banner .btn{margin-left:8px}
+.event-live-fare{margin:8px 0 2px;padding:8px 10px;border-left:3px solid var(--brand);background:#edf9f6;border-radius:0 7px 7px 0;font-size:12px;color:#155c55}
+.event-live-fare.stale{border-color:#c68a1b;background:#fff7e4;color:#835a0f}
+.event-live-fare a{font-weight:700;color:inherit}
+.event-live-fare small{display:block;margin-top:3px;color:var(--muted)}
+@media(max-width:760px){
+  .live-fare{min-width:270px}
+  .price-banner .btn{display:block;margin:8px 0 0}
+}
