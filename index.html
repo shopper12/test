@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./compare.css" />
+  <link rel="stylesheet" href="./interactive.css" />
 </head>
 <body>
   <header class="topbar">
@@ -24,7 +25,6 @@
         <button class="btn small" data-export="json">JSON</button>
         <button class="btn small" id="print-btn">인쇄</button>
         <button class="btn small primary" id="cloud-sync-btn" hidden>기준안 안전 적용</button>
-        <button class="btn small" id="auth-btn">팀 로그인</button>
       </div>
     </div>
   </header>
@@ -42,23 +42,6 @@
     GitHub Pages 무료 호스팅 · Supabase 로그인/공동편집 · Leaflet/OpenStreetMap 지도<br>
     공개 저장소 기반이므로 여권번호, 연락처, 계약자료 등 비공개 정보는 입력하지 마십시오.
   </footer>
-
-  <div class="modal" id="auth-modal" aria-hidden="true">
-    <div class="modal-card">
-      <h2>팀원 로그인</h2>
-      <p class="auth-note">기존 Lovable 대시보드와 같은 Supabase 계정을 사용합니다. 계정이 없으면 가입 후 이메일 인증이 필요할 수 있습니다.</p>
-      <div class="form-grid">
-        <div class="field full"><label>이메일</label><input id="auth-email" type="email" autocomplete="email"></div>
-        <div class="field full"><label>비밀번호</label><input id="auth-password" type="password" autocomplete="current-password"></div>
-      </div>
-      <p class="security-note">현재 백엔드의 일부 일정 테이블은 익명 읽기가 허용되어 있습니다. 공개 가능한 출장정보만 입력하십시오.</p>
-      <div class="modal-actions">
-        <button class="btn" data-close-modal="auth-modal">취소</button>
-        <button class="btn" id="signup-btn">가입</button>
-        <button class="btn primary" id="login-btn">로그인</button>
-      </div>
-    </div>
-  </div>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
     <div class="modal-card">
