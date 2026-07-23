@@ -4,13 +4,21 @@
 
 - 일정: 2026-09-02 ~ 2026-09-12 (9월 1일 23:45 출국편 포함)
 - 공식 경로: 인천 → 코펜하겐 → 오슬로/포르네부 → 코펜하겐/에스비에르 → 함부르크 → 로테르담/델프트 → 타이베이/가오슝/타이중 → 홍콩 → 인천
+- 대만 체류: 9월 8일 오후부터 9월 12일 아침까지 약 3.5일
 - 호스팅: GitHub Pages
 - 로그인·공동편집: Supabase Free
 - 지도: Leaflet + OpenStreetMap
 
+## 대시보드
+
+- 배포 주소: https://shopper12.github.io/test/
+- 저장소: https://github.com/shopper12/test
+
+일정은 새 공식안을 로컬 원본으로 먼저 표시합니다. 팀 공동편집은 로그인 후 화면 상단의 **새 공식안 동기화**를 한 번 실행하면 시작됩니다.
+
 ## 배포
 
-GitHub Actions의 `Deploy GitHub Pages` 워크플로로 배포합니다. 최초 한 번 저장소 **Settings → Pages → Source → GitHub Actions**를 선택해야 할 수 있습니다.
+GitHub Actions의 `Deploy GitHub Pages` 워크플로로 자동 배포합니다. 배포 주소가 404이면 저장소 **Settings → Pages → Source → GitHub Actions**를 최초 한 번 선택하십시오.
 
 ## 보안
 
