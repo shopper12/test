@@ -1,4 +1,4 @@
-export const APP_VERSION = "EU_FIRST_AWTEC_HKG_V4";
+export const APP_VERSION = "EU_FIRST_AWTEC_HKG_V5";
 
 export const tripMeta = {
   title: "해상풍력 벤치마킹 출장 2026",
@@ -12,6 +12,7 @@ export const tripMeta = {
   budgetMin: 32000000,
   budgetMax: 49000000,
   budgetNote: "4인 기준, AWTEC late/on-site 등록(USD 950×4)과 10% 예비비 포함 계획 범위",
+  lastVerified: "2026-07-23",
 };
 
 // AWTEC 2026 공식 일정 (확인): 9/6(일) Welcome Reception, 9/7(월) Plenary+Sessions,
@@ -86,7 +87,7 @@ export const events = [
   // ── Day 7 (9/8 화) AWTEC Day3 ─────────────────────────────────────
   e("d7-01",7,"14:55","16:15","TPE 입국·수하물","입국","Taoyuan Airport","도보","80분",{notes:"AWTEC은 이미 9/6 개막. 9/8은 Day3. 정시 도착 시 당일 저녁 Banquet 참석 가능."}),
   e("d7-02",7,"16:20","19:00","TPE → 가오슝","교통","TPE → Taoyuan HSR → Zuoying","Airport MRT+THSR+택시","약 2시간 40분",{original_currency:"TWD",original_min:1500,original_max:1900,min_cost_krw:68000,max_cost_krw:87000,cost_basis:"1인",booking_url:"https://en.thsrc.com.tw/"}),
-  e("d7-03",7,"19:30","21:30","AWTEC Day3 Conference Banquet·Award","컨퍼런스","Kaohsiung Exhibition Center","택시","항공 정시 도착 시",{booking_url:"https://www.awtec2026.com/",notes:"AWTEC 공식 일정: Day3(9/8)에 Conference Banquet and Award. 항공 지연 시 ���참 가능성 있음. 핵심 세션은 9/9."}),
+  e("d7-03",7,"19:30","21:30","AWTEC Day3 Conference Banquet·Award","컨퍼런스","Kaohsiung Exhibition Center","택시","항공 정시 도착 시",{booking_url:"https://www.awtec2026.com/",notes:"AWTEC 공식 일정: Day3(9/8)에 Conference Banquet and Award. 항공 지연 시 지각·불참 가능성 있음. 핵심 세션은 9/9."}),
 
   // ── Day 8 (9/9 수) AWTEC Day4 Closing ─────────────────────────────
   e("d8-01",8,"08:30","09:30","AWTEC Day4 Plenary Speech","컨퍼런스","Kaohsiung Exhibition Center","도보/택시","1시간",{booking_url:"https://www.awtec2026.com/",notes:"AWTEC 공식 일정: Day4(9/9) Plenary Speech."}),
@@ -95,7 +96,7 @@ export const events = [
   e("d8-04",8,"13:30","17:00","정책·환경·표준화 세션·Closing Event","컨퍼런스","AWTEC","도보","3시간 30분",{booking_url:"https://www.awtec2026.com/",notes:"AWTEC Day4(9/9) Closing Event."}),
 
   // ── Day 9 (9/10 목) AWTEC Technical Tour → 타이중 ─────────────────
-  e("d9-01",9,"08:30","17:00","AWTEC Day5 Technical Tour","기술견학","Kaohsiung/Taiwan 해상풍력 시설","행사버스","종일",{original_currency:"USD",original_min:950,original_max:950,min_cost_krw:1400000,max_cost_krw:1400000,cost_basis:"1인 late/on-site 등록비 환산(4인 총 약 560만원)",booking_url:"https://www.awtec2026.com/",notes:"AWTEC 공식 일정: Day5(9/10) Technical Tour. 가오슝·대만 해상풍력 실��시설 버스 견학."}),
+  e("d9-01",9,"08:30","17:00","AWTEC Day5 Technical Tour","기술견학","Kaohsiung/Taiwan 해상풍력 시설","행사버스","종일",{original_currency:"USD",original_min:950,original_max:950,min_cost_krw:1400000,max_cost_krw:1400000,cost_basis:"1인 late/on-site 등록비 환산(4인 총 약 560만원)",booking_url:"https://www.awtec2026.com/",notes:"AWTEC 공식 일정: Day5(9/10) Technical Tour. 가오슝·대만 해상풍력 시설 버스 견학."}),
   e("d9-02",9,"18:30","20:30","가오슝 → 타이중항 호텔","교통","Zuoying → Taichung HSR → Wuqi","택시+THSR+택시","약 2시간",{original_currency:"TWD",original_min:1600,original_max:2200,min_cost_krw:73000,max_cost_krw:101000,cost_basis:"1인",booking_url:"https://en.thsrc.com.tw/"}),
 
   // ── Day 10 (9/11 금) 타이중항 클러스터 ─────────────────────────────
