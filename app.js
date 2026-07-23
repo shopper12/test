@@ -20,6 +20,8 @@ const state = {
   map: null,
   subscriptions: [],
   editing: null,
+  livePrices: null,
+  livePriceError: null,
 };
 
 const tabs = [
@@ -32,7 +34,12 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const esc = (v) => String(v ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
 const fmt = (n) => new Intl.NumberFormat("ko-KR").format(Math.round(Number(n) || 0));
-const money = (min,max) => min == null && max == null ? "" : `₩${fmt(min)}~${fmt(max)}`;
+const money = (min,max) => {
+  if(min == null && max == null)return "";
+  if(min == null)return `₩${fmt(max)}`;
+  if(max == null || Number(min)===Number(max))return `₩${fmt(min)}`;
+  return `₩${fmt(min)}~${fmt(max)}`;
+};
 const showLoader = (v) => $("#loader").classList.toggle("open", v);
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),3200); }
 function openModal(id){ const el=document.getElementById(id); el.classList.add("open"); el.setAttribute("aria-hidden","false"); }
@@ -41,6 +48,7 @@ function isEditable(){ return !!state.user && state.mode === "cloud"; }
 
 async function init(){
   bindStaticEvents();
+  const pricePromise=loadLivePrices();
   let { data: { session } } = await supabase.auth.getSession();
   if(!session){
     const {data,error}=await supabase.auth.signInAnonymously();
@@ -53,7 +61,84 @@ async function init(){
     render();
   });
   await detectCloudVersion();
+  await pricePromise;
   render();
+  window.setInterval(async()=>{
+    const changed=await loadLivePrices();
+    if(changed){
+      renderStats();
+      if(["timeline","airhotel","budget","verify"].includes(state.tab))renderContent();
+    }
+  },300000);
+}
+
+async function loadLivePrices(){
+  try{
+    const res=await fetch(`./flight-prices.json?ts=${Date.now()}`,{cache:"no-store"});
+    if(!res.ok)throw new Error(`HTTP ${res.status}`);
+    const payload=await res.json();
+    if(!payload?.fares || Number(payload.passengers)!==4)throw new Error("운임 파일 형식 오류");
+    state.livePrices=payload;
+    state.livePriceError=null;
+    return true;
+  }catch(err){
+    state.livePriceError=err.message||String(err);
+    console.warn("항공 운임 스냅샷을 불러오지 못했습니다.",err);
+    return false;
+  }
+}
+
+function koreaStamp(value){
+  if(!value)return "미확인";
+  return new Intl.DateTimeFormat("ko-KR",{
+    timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit",
+    hour:"2-digit",minute:"2-digit",hour12:false,
+  }).format(new Date(value));
+}
+
+function flightFareId(row){
+  const origin=String(row?.origin||"").match(/[A-Z]{3}/)?.[0]||"";
+  const destination=String(row?.destination||"").match(/[A-Z]{3}/)?.[0]||"";
+  return ({
+    "ICN-CPH":"f1",
+    "AMS-OSL":"f2",
+    "OSL-TPE":"f3",
+    "RMQ-HKG":"f4",
+    "HKG-ICN":"f5",
+  })[`${origin}-${destination}`]||null;
+}
+
+function selectedFlightTotal(){
+  const rows=state.data.flights||[], fares=state.livePrices?.fares||{};
+  if(!rows.length)return null;
+  let total=0;
+  for(const row of rows){
+    const fare=fares[flightFareId(row)];
+    if(!fare?.selected?.total_krw || fare.date!==row.date)return null;
+    total+=Number(fare.selected.total_krw);
+  }
+  return total;
+}
+
+function budgetRows(){
+  const rows=clone(state.data.budget_items||[]);
+  const flightTotal=selectedFlightTotal();
+  const air=rows.find(r=>r.id==="b1" || r.category==="항공");
+  if(air){
+    air.min_krw=flightTotal;
+    air.max_krw=flightTotal;
+    air.notes=flightTotal==null
+      ?"일정 날짜와 최신 운임 스냅샷이 일치하지 않아 자동 합계를 보류했습니다."
+      :`Google Flights 일정 채택편 5개 구간·성인 4명 합계 · ${koreaStamp(state.livePrices?.generated_at)} 조회`;
+  }
+  return rows;
+}
+
+function budgetSummary(){
+  const rows=budgetRows(), complete=rows.every(r=>r.min_krw!=null&&r.max_krw!=null);
+  const subMin=rows.reduce((s,r)=>s+Number(r.min_krw||0),0);
+  const subMax=rows.reduce((s,r)=>s+Number(r.max_krw||0),0);
+  return {rows,complete,subMin,subMax,totalMin:subMin*1.1,totalMax:subMax*1.1};
 }
 
 async function detectCloudVersion(){
@@ -107,12 +192,15 @@ function render(){
 }
 
 function renderStats(){
+  const budget=budgetSummary();
+  const totalMin=budget.complete?budget.totalMin:tripMeta.budgetMin;
+  const totalMax=budget.complete?budget.totalMax:tripMeta.budgetMax;
   const items=[
     ["기간",tripMeta.dates,"11일 · 9/1 야간 출국"],
-    ["숙박",`호텔 ${tripMeta.hotelNights}박 + 기내 ${tripMeta.flightNights}박`,"홍콩 무숙박 당일 경유"],
-    ["대만 체류","9/8 오후–9/12 아침","약 3.5일 · 기존안보다 단축"],
-    ["4인 총예산",`${fmt(tripMeta.budgetMin/10000)}만~${fmt(tripMeta.budgetMax/10000)}만원`,"AWTEC·10% 예비비 포함"],
-    ["1인 환산",`${fmt(tripMeta.budgetMin/4/10000)}만~${fmt(tripMeta.budgetMax/4/10000)}만원`,"계획범위"],
+    ["숙박",`호텔 ${tripMeta.hotelNights}박 + 기내 ${tripMeta.flightNights}박`,"홍콩 무숙박 당일관광"],
+    ["대만 체류","9/8 06:15–9/11 10:25","약 3일 4시간"],
+    ["4인 총예산",`${fmt(totalMin/10000)}만~${fmt(totalMax/10000)}만원`,"항공 최신 조회가·10% 예비비 포함"],
+    ["1인 환산",`${fmt(totalMin/4/10000)}만~${fmt(totalMax/4/10000)}만원`,"항공은 성인 4명 조회 합계 반영"],
   ];
   $("#stat-grid").innerHTML=items.map(([l,v,s])=>`<div class="stat"><span>${esc(l)}</span><strong>${esc(v)}</strong><span>${esc(s)}</span></div>`).join("");
 }
@@ -162,6 +250,7 @@ function renderEventCard(e){
     <div class="event-time">${esc(e.time_start||"")}${e.time_end?`\n~ ${esc(e.time_end)}`:""}</div>
     <div><div class="event-title">${e.category?`<span class="chip">${esc(e.category)}</span>`:""}<span>${esc(e.title)}</span></div>
       <div class="meta">${e.location?`<span>📍 ${esc(e.location)}</span>`:""}${e.transport?`<span>🚗 ${esc(e.transport)}</span>`:""}${e.duration?`<span>⏱ ${esc(e.duration)}</span>`:""}</div>
+      ${eventFareInline(e)}
       ${(e.original_min!=null||e.min_cost_krw!=null)?`<div class="cost">${e.original_currency?`${esc(e.original_currency)} ${fmt(e.original_min)}~${fmt(e.original_max)}`:""} ${e.min_cost_krw!=null?`<b>${money(e.min_cost_krw,e.max_cost_krw)}</b>`:""} ${e.cost_basis?`<span>(${esc(e.cost_basis)})</span>`:""}</div>`:""}
       ${e.notes?`<div class="notes">${esc(e.notes)}</div>`:""}
       ${links.length?`<div class="link-row">${links.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noreferrer">${l} ↗</a>`).join("")}</div>`:""}
@@ -188,12 +277,12 @@ async function drawMap(){
   pts.forEach((p,i)=>{
     const ll=[Number(p.lat),Number(p.lng)];bounds.push(ll);
     L.marker(ll).bindPopup(`<b>Day ${p.day_id} · ${esc(p.name)}</b><br>${esc(p.popup||"")}${p.url?`<br><a href="${esc(p.url)}" target="_blank">링크</a>`:""}`).addTo(state.map);
-    if(i){const type=p.segment_type||"car";const style=type==="flight"?{color:"#008fc5",weight:2,dashArray:"7 7"}:type==="hsr"?{color:"#c73434",weight:4,dashArray:"13 5"}:type==="subway"?{color:"#7346b8",weight:3,dashArray:"2 5"}:{color:"#087a72",weight:3};L.polyline([[Number(pts[i-1].lat),Number(pts[i-1].lng)],ll],style).addTo(state.map);}
+    if(i && Number(pts[i-1].day_id)===Number(p.day_id)){const type=p.segment_type||"car";const style=type==="flight"?{color:"#008fc5",weight:2,dashArray:"7 7"}:type==="hsr"?{color:"#c73434",weight:4,dashArray:"13 5"}:type==="subway"?{color:"#7346b8",weight:3,dashArray:"2 5"}:{color:"#087a72",weight:3};L.polyline([[Number(pts[i-1].lat),Number(pts[i-1].lng)],ll],style).addTo(state.map);}
   });
   state.map.fitBounds(bounds,{padding:[28,28]});
   $("#route-list").innerHTML=pts.map((p,i)=>`<div class="route-stop"><div class="route-num">${i+1}</div><div><b>Day ${p.day_id} · ${esc(p.name)}</b><small>${esc(p.popup||"")} · ${esc(p.segment_type||"car")}</small></div></div>`).join("");
   for(let i=1;i<pts.length;i++){
-    if((pts[i].segment_type||"car")!=="car")continue;
+    if(Number(pts[i-1].day_id)!==Number(pts[i].day_id) || (pts[i].segment_type||"car")!=="car")continue;
     try{
       const a=pts[i-1],b=pts[i];
       const url=`https://router.project-osrm.org/route/v1/driving/${a.lng},${a.lat};${b.lng},${b.lat}?overview=full&geometries=geojson`;
@@ -204,7 +293,7 @@ async function drawMap(){
 }
 
 const tableDefs={
-  flights:{title:"항공",fields:["date","flight_no","origin","destination","depart_time","arrive_time","min_krw","max_krw","status","alternative","url","notes"],labels:{date:"날짜",flight_no:"편명",origin:"출발",destination:"도착",depart_time:"출발",arrive_time:"도착",min_krw:"최소",max_krw:"최대",status:"상태",alternative:"대안",url:"링크",notes:"메모"}},
+  flights:{title:"항공",fields:["date","flight_no","origin","destination","depart_time","arrive_time","status","alternative","url","notes"],labels:{date:"날짜",flight_no:"편명",origin:"출발",destination:"도착",depart_time:"출발",arrive_time:"도착",status:"상태",alternative:"대안",url:"항공사",notes:"메모"}},
   hotels:{title:"숙박",fields:["name","city","check_in","check_out","nights","rooms","min_krw","max_krw","status","alternative","url","notes"],labels:{name:"호텔",city:"도시",check_in:"체크인",check_out:"체크아웃",nights:"박",rooms:"실",min_krw:"최소",max_krw:"최대",status:"상태",alternative:"대안",url:"링크",notes:"메모"}},
   meetings:{title:"회의·방문기관",fields:["day_id","organization","agenda","recommended_duration","status","photo_allowed","ppe_required","interpreter_needed","url","notes"],labels:{day_id:"Day",organization:"기관",agenda:"의제",recommended_duration:"권장시간",status:"상태",photo_allowed:"사진",ppe_required:"PPE",interpreter_needed:"통역",url:"링크",notes:"메모"}},
   transport_options:{title:"교통·렌터카",fields:["region","recommendation","reason","min_krw","max_krw","notes"],labels:{region:"지역",recommendation:"권고",reason:"사유",min_krw:"최소",max_krw:"최대",notes:"메모"}},
@@ -212,39 +301,92 @@ const tableDefs={
   budget_items:{title:"예산 상세",fields:["category","label","min_krw","max_krw","notes"],labels:{category:"구분",label:"항목",min_krw:"최소(4인)",max_krw:"최대(4인)",notes:"메모"}},
 };
 
-function airportCode(value){
-  return ((String(value||"").toUpperCase().match(/\\b[A-Z]{3}\\b/)||[])[0]||"").toLowerCase();
-}
 function flightSearchUrl(r){
   const date=String(r.date||"").replaceAll("-","").slice(2);
-  const from=encodeURIComponent(airportCode(r.origin));
-  const to=encodeURIComponent(airportCode(r.destination));
-  return `https://www.skyscanner.co.kr/transport/flights/${from}/${to}/${date}/?adultsv2=4&cabinclass=economy&currency=KRW&locale=ko-KR&market=KR&rtn=0`;
+  const from=encodeURIComponent((r.origin||"").match(/[A-Z]{3}/)?.[0]?.toLowerCase()||"");
+  const to=encodeURIComponent((r.destination||"").match(/[A-Z]{3}/)?.[0]?.toLowerCase()||"");
+  return `https://www.skyscanner.co.kr/transport/flights/${from}/${to}/${date}/?adultsv2=4&cabinclass=economy&rtn=0`;
 }
 function flightGoogleUrl(r){
-  const from=airportCode(r.origin).toUpperCase(),to=airportCode(r.destination).toUpperCase();
-  const q=`Flights from ${from} to ${to} on ${r.date} one way 4 adults economy`;
-  return `https://www.google.com/travel/flights?q=${encodeURIComponent(q)}&curr=KRW&hl=ko`;
+  const query=`Flights from ${r.origin} to ${r.destination} on ${r.date} one way economy 4 adults`;
+  return `https://www.google.com/travel/flights?q=${encodeURIComponent(query)}&curr=KRW&hl=ko`;
 }
 function hotelSearchUrl(r){
-  return `https://www.booking.com/searchresults.ko.html?ss=${encodeURIComponent(`${r.name} ${r.city}`)}&checkin=${r.check_in}&checkout=${r.check_out}&group_adults=4&no_rooms=${r.rooms||2}&group_children=0&selected_currency=KRW&order=price`;
+  return `https://www.booking.com/searchresults.ko.html?ss=${encodeURIComponent(`${r.name} ${r.city}`)}&checkin=${r.check_in}&checkout=${r.check_out}&group_adults=4&no_rooms=${r.rooms||2}&group_children=0`;
 }
-function priceCondition(r,table){
-  if(table==="flights")return `${esc(r.date)} · ${airportCode(r.origin).toUpperCase()}→${airportCode(r.destination).toUpperCase()} · 편도 · 성인 4명 · 일반석`;
-  return `${esc(r.check_in)}~${esc(r.check_out)} · 성인 4명 · ${Number(r.rooms)||2}실 · 낮은 가격순`;
+
+function offerSchedule(offer){
+  const legs=offer?.legs||[];
+  if(!legs.length)return "운항시각 미확인";
+  const first=legs[0],last=legs[legs.length-1];
+  const next=last.arrival_date!==first.departure_date?` (${last.arrival_date})`:"";
+  return `${first.departure_time} ${first.origin} → ${last.arrival_time}${next} ${last.destination} · ${offer.stops}회 경유`;
 }
+
+function offerAirlines(offer){
+  return (offer?.airlines||[]).filter(Boolean).join(" + ") || offer?.carrier_code || "항공사 미확인";
+}
+
+function flightFareCard(row){
+  const fare=state.livePrices?.fares?.[flightFareId(row)];
+  if(!fare){
+    return `<div class="live-fare error"><b>자동 운임 없음</b><small>${esc(state.livePriceError||"스냅샷을 불러오는 중입니다.")}</small>
+      <div class="fare-actions"><a class="btn small primary" href="${esc(flightGoogleUrl(row))}" target="_blank" rel="noreferrer">Google Flights 현재가 ↗</a></div></div>`;
+  }
+  if(fare.date!==row.date){
+    return `<div class="live-fare stale"><b>날짜 변경됨 · 자동가격 재조회 필요</b><small>스냅샷 ${esc(fare.date)} / 현재 일정 ${esc(row.date)}</small>
+      <div class="fare-actions"><a class="btn small primary" href="${esc(flightGoogleUrl(row))}" target="_blank" rel="noreferrer">변경 날짜 현재가 ↗</a><a class="btn small" href="${esc(flightSearchUrl(row))}" target="_blank" rel="noreferrer">Skyscanner 비교 ↗</a></div></div>`;
+  }
+  if(!fare.lowest?.total_krw || !fare.selected?.total_krw){
+    return `<div class="live-fare error"><b>가격 조회 실패</b><small>${esc(fare.error||"직전 성공값이 없습니다.")}</small>
+      <div class="fare-actions"><a class="btn small primary" href="${esc(flightGoogleUrl(row))}" target="_blank" rel="noreferrer">Google Flights 직접 조회 ↗</a></div></div>`;
+  }
+  const lowest=fare.lowest, selected=fare.selected;
+  const same=Number(lowest.total_krw)===Number(selected.total_krw)
+    && offerSchedule(lowest)===offerSchedule(selected);
+  const fresh=Date.now()<=Date.parse(state.livePrices?.fresh_until||0) && fare.status==="ok";
+  const exactUrl=fare.query_url||flightGoogleUrl(row);
+  return `<div class="live-fare ${fresh?"":"stale"}">
+    <div class="fare-title"><span>노선 절대최저가 · 4인</span><strong>₩${fmt(lowest.total_krw)}</strong></div>
+    <div class="fare-sub">1인 ₩${fmt(lowest.per_person_krw)} · ${esc(offerAirlines(lowest))}<br>${esc(offerSchedule(lowest))}</div>
+    ${same?`<div class="fare-picked same">현재 최저가 = 일정 채택편</div>`:`<div class="fare-picked"><span>일정 채택가 · 4인</span><strong>₩${fmt(selected.total_krw)}</strong><small>1인 ₩${fmt(selected.per_person_krw)} · ${esc(fare.selected_reason||"시간표 기준")}<br>${esc(offerAirlines(selected))} · ${esc(offerSchedule(selected))}${fare.selected_fallback?" · 조건편 미발견으로 최저가 임시사용":""}</small></div>`}
+    <div class="fare-updated">${fresh?"최신":"지연 가능"} · ${esc(koreaStamp(state.livePrices?.generated_at))} 조회 · 수하물·좌석료 별도 가능</div>
+    <div class="fare-actions"><a class="btn small primary" href="${esc(exactUrl)}" target="_blank" rel="noreferrer">Google Flights 실제 결과 ↗</a><a class="btn small" href="${esc(flightSearchUrl(row))}" target="_blank" rel="noreferrer">Skyscanner 교차비교 ↗</a></div>
+  </div>`;
+}
+
+function eventFareInline(event){
+  const title=String(event.title||"");
+  const fareId=title.includes("SK988")?"f1"
+    :title.includes("AMS → OSL")?"f2"
+    :title.includes("OSL → FRA")?"f3"
+    :title.includes("RMQ → HKG")?"f4"
+    :title.includes("HKG → ICN")?"f5":null;
+  if(!fareId)return "";
+  const row=(state.data.flights||[]).find(f=>flightFareId(f)===fareId);
+  const fare=state.livePrices?.fares?.[fareId];
+  if(!row || !fare?.selected?.total_krw || fare.date!==row.date){
+    return `<div class="event-live-fare stale">자동 운임 재조회 필요${row?` · <a href="${esc(flightGoogleUrl(row))}" target="_blank" rel="noreferrer">현재가 열기 ↗</a>`:""}</div>`;
+  }
+  const lowest=fare.lowest,selected=fare.selected;
+  const differs=Number(lowest?.total_krw)!==Number(selected.total_krw);
+  return `<div class="event-live-fare"><b>${differs?"일정 채택가":"현재 최저가"} 4인 ₩${fmt(selected.total_krw)}</b> · 1인 ₩${fmt(selected.per_person_krw)}${differs?` · 노선 최저 4인 ₩${fmt(lowest.total_krw)}`:""} · <a href="${esc(fare.query_url||flightGoogleUrl(row))}" target="_blank" rel="noreferrer">실제 결과 ↗</a><small>${esc(koreaStamp(state.livePrices?.generated_at))} 조회 · 수하물·좌석료 별도 가능</small></div>`;
+}
+
 function renderAirHotel(){
-  return `<div class="status-banner cloud price-banner"><b>예약 버튼을 누르면 지금 예약 가능한 최저가 결과가 바로 열립니다.</b> 각 링크에는 날짜·구간·성인 4명·객실 수가 자동 입력되어 있으며, 결과 화면의 금액이 최종 가격입니다. 일정 날짜를 바꾸면 예약 링크의 날짜도 함께 바뀝니다.</div>${renderDataSection("flights")}<div style="height:22px"></div>${renderDataSection("hotels")}`;
+  const p=state.livePrices;
+  const fresh=p && Date.now()<=Date.parse(p.fresh_until||0);
+  return `<div class="status-banner ${fresh?"cloud":"warning"} price-banner"><b>항공 최저가 자동조회</b> · Google Flights · 성인 4명·일반석·편도 · ${esc(koreaStamp(p?.generated_at))} 조회 · GitHub가 매시간 갱신합니다. ${state.livePriceError?`불러오기 오류: ${esc(state.livePriceError)}`:"예약 직전 실제 결과와 최종 결제액을 확인하십시오."} <button class="btn small" id="refresh-fares">최신 스냅샷 다시 읽기</button></div>${renderDataSection("flights")}<div style="height:22px"></div>${renderDataSection("hotels")}`;
 }
 function renderMeetings(){return renderDataSection("meetings");}
 function renderTransport(){return `<div class="security-note" style="margin-bottom:12px">비용·시간 차이가 크지 않은 구간은 자동차를 우선했습니다. 국경간 편도반납 수수료가 과도하면 별도 렌트 또는 기사차량과 재비교하십시오.</div>${renderDataSection("transport_options")}`;}
 function renderRestaurants(){return renderDataSection("restaurants");}
 
 function renderDataSection(table){
-  const def=tableDefs[table], rows=state.data[table]||[];
+  const def=tableDefs[table], rows=table==="budget_items"?budgetRows():(state.data[table]||[]);
   return `<div class="section-head"><h2>${def.title}</h2>${isEditable()?`<button class="btn small primary" data-add="${table}">+ 추가</button>`:""}</div>
-  <div class="table-wrap"><table class="data-table"><thead><tr>${def.fields.map(f=>`<th>${def.labels[f]||f}</th>`).join("")}<th>실시간·편집</th></tr></thead><tbody>
-    ${rows.map(r=>`<tr>${def.fields.map(f=>`<td>${cellValue(r,f)}</td>`).join("")}<td>${table==="flights"?`<div class="booking-actions"><small>${priceCondition(r,table)}</small><a class="btn small primary" href="${flightSearchUrl(r)}" target="_blank" rel="noreferrer">Skyscanner 최저가 바로 보기 ↗</a><a class="btn small" href="${flightGoogleUrl(r)}" target="_blank" rel="noreferrer">Google Flights 비교 ↗</a></div>`:table==="hotels"?`<div class="booking-actions"><small>${priceCondition(r,table)}</small><a class="btn small primary" href="${hotelSearchUrl(r)}" target="_blank" rel="noreferrer">Booking 최저가 바로 보기 ↗</a></div>`:""}${isEditable()?` <button class="btn small" data-edit-table="${table}" data-id="${esc(r.id)}">편집</button>`:""}</td></tr>`).join("")}
+  <div class="table-wrap"><table class="data-table"><thead><tr>${def.fields.map(f=>`<th>${def.labels[f]||f}</th>`).join("")}<th>가격·작업</th></tr></thead><tbody>
+    ${rows.map(r=>`<tr>${def.fields.map(f=>`<td>${cellValue(r,f)}</td>`).join("")}<td>${table==="flights"?flightFareCard(r):table==="hotels"?`<a class="btn small primary" href="${hotelSearchUrl(r)}" target="_blank" rel="noreferrer">날짜·4인·2실 최저가 ↗</a>`:""}${isEditable()?` <button class="btn small" data-edit-table="${table}" data-id="${esc(r.id)}">편집</button>`:""}</td></tr>`).join("")}
   </tbody></table></div>`;
 }
 
@@ -257,15 +399,16 @@ function cellValue(r,f){
 }
 
 function renderBudget(){
-  const rows=state.data.budget_items||[];const subMin=rows.reduce((s,r)=>s+Number(r.min_krw||0),0),subMax=rows.reduce((s,r)=>s+Number(r.max_krw||0),0);const max=Math.max(...rows.map(r=>Number(r.max_krw)||0),1);
-  return `<div class="budget-total"><div class="stat"><span>4인 소계</span><strong>${money(subMin,subMax)}</strong></div><div class="stat"><span>10% 예비비 포함</span><strong>${money(subMin*1.1,subMax*1.1)}</strong></div><div class="stat"><span>1인 환산</span><strong>${money(subMin*1.1/4,subMax*1.1/4)}</strong></div><div class="stat"><span>대만 체류</span><strong>약 3.5일</strong></div></div>
+  const summary=budgetSummary(),{rows,subMin,subMax}=summary;const max=Math.max(...rows.map(r=>Number(r.max_krw)||0),1);
+  return `<div class="status-banner cloud price-banner"><b>항공비 자동 반영</b> · 5개 항공 구간 일정 채택가 ₩${fmt(selectedFlightTotal())} · ${esc(koreaStamp(state.livePrices?.generated_at))} 조회. 숙박·교통·식비·행사비는 계획범위입니다.</div>
+    <div class="budget-total"><div class="stat"><span>4인 소계</span><strong>${money(subMin,subMax)}</strong></div><div class="stat"><span>10% 예비비 포함</span><strong>${money(subMin*1.1,subMax*1.1)}</strong></div><div class="stat"><span>1인 환산</span><strong>${money(subMin*1.1/4,subMax*1.1/4)}</strong></div><div class="stat"><span>대만 체류</span><strong>약 3일 4시간</strong></div></div>
     <div class="budget-bars">${rows.map(r=>`<div class="budget-row"><div class="top"><b>${esc(r.category)} · ${esc(r.label)}</b><span>${money(r.min_krw,r.max_krw)}</span></div><div class="bar"><span style="width:${Math.max(3,Number(r.max_krw)/max*100)}%"></span></div><div class="notes">${esc(r.notes||"")}</div></div>`).join("")}</div><div style="height:20px"></div>${renderDataSection("budget_items")}`;
 }
 
 function renderNotes(){
   const notes=(state.data.team_notes||[]).slice().reverse();
   return `<div class="security-note">이 메모 테이블은 현재 기존 Supabase 정책상 익명 읽기가 허용될 수 있습니다. 개인정보·계약내용·기관 담당자 연락처 등 비공개 정보는 입력하지 마십시오.</div>
-    ${isEditable()?`<div class="day-summary" style="margin-top:12px"><div class="form-grid"><div class="field"><label>연결 Day</label><select id="note-day"><option value="">전체</option>${state.data.days.map(d=>`<option value="${d.id}">Day ${d.id}</option>`).join("")}</select></div><div class="field full"><label>팀 메모</label><textarea id="note-content" rows="3"></textarea></div></div><button class="btn primary" id="add-note" style="margin-top:10px">메모 등록</button></div>`:"<div class='status-banner'>메모 작성은 로그인·클라우드 동기화 후 가능합니다.</div>"}
+    ${isEditable()?`<div class="day-summary" style="margin-top:12px"><div class="form-grid"><div class="field"><label>연결 Day</label><select id="note-day"><option value="">전체</option>${state.data.days.map(d=>`<option value="${d.id}">Day ${d.id}</option>`).join("")}</select></div><div class="field full"><label>팀 메모</label><textarea id="note-content" rows="3"></textarea></div></div><button class="btn primary" id="add-note" style="margin-top:10px">메모 등록</button></div>`:"<div class='status-banner'>Supabase 익명 쓰기 권한이 연결되면 로그인 없이 메모를 작성할 수 있습니다.</div>"}
     <div class="cards" style="margin-top:12px">${notes.length?notes.map(n=>`<div class="event-card"><div class="event-time">${n.day_id?`Day ${n.day_id}`:"전체"}</div><div><div class="event-title">${esc(n.author_name||"팀원")}</div><div class="notes">${esc(n.content)}</div><div class="meta">${esc(new Date(n.created_at).toLocaleString("ko-KR"))}</div></div>${isEditable()?`<div><button class="btn small danger" data-delete-note="${n.id}">삭제</button></div>`:""}</div>`).join(""):`<div class="empty">등록된 메모가 없습니다.</div>`}</div>`;
 }
 
@@ -273,32 +416,35 @@ function renderVerify(){
   const flights=state.data.flights||[], meetings=state.data.meetings||[];
   const flightPending=flights.filter(f=>!/확정|발권완료/.test(f.status||""));
   const meetingPending=meetings.filter(m=>m.status!=="확정");
+  const mapMeetings=meetings.filter(m=>!String(m.organization||"").includes("AWTEC"));
   const checks=[
-    ["일정 기준","유럽 선행 → AWTEC 후반·Technical Tour → 홍콩 당일 경유","GitHub판 채택"],
-    ["대만 체류","9/8 오후–9/12 아침, 약 3.5일","기존 Lovable판보다 단축"],
-    ["항공",`${flights.length}개 구간 중 ${flightPending.length}개 발권·운항 재확인 필요`,flightPending.length?"확정 필요":"완료"],
-    ["기관 회의",`${meetings.length}개 중 ${meetingPending.length}개 미확정`,meetingPending.length?"회신 필요":"완료"],
+    ["업무장소 원칙",`공유 Google Maps 업무장소 ${mapMeetings.length}곳 + AWTEC만 유지`,"적용 완료"],
+    ["삭제한 업무장소","Equinor Fornebu·Norwegian Offshore Wind·Ørsted Gentofte·Port Esbjerg·Port of Taichung","삭제 완료"],
+    ["대만 체류","9/8 06:15–9/11 10:25, 약 3일 4시간","요청 반영"],
+    ["항공",`${flights.length}개 구간 · 성인 4명 최저가 매시간 자동조회 · ${flightPending.length}개 발권 전`,flightPending.length?"발권 필요":"완료"],
+    ["기관·행사",`${meetings.length}개 일정 중 ${meetingPending.length}개 미확정`,meetingPending.length?"회신·등록 필요":"완료"],
     ["데이터 보호","기준안 적용 전 JSON 자동 백업 · 팀 메모 보존","개선 완료"],
-    ["최종 검증일",tripMeta.lastVerified||"미기록","운임·운항시간은 발권 화면 우선"],
+    ["최종 운임조회",koreaStamp(state.livePrices?.generated_at),Date.now()<=Date.parse(state.livePrices?.fresh_until||0)?"최신":"지연 가능"],
   ];
   const sourceLinks=[
+    ["사용자 Google Maps 목록",tripMeta.sourceMap],
     ["AWTEC 2026","https://www.awtec2026.com/"],
-    ["SAS","https://www.flysas.com/"],
-    ["KLM","https://www.klm.com/"],
+    ["Google Flights","https://www.google.com/travel/flights"],
+    ["SAS ICN–CPH","https://www.flysas.com/en/flight-routes/copenhagen/seoul"],
+    ["HK Express RMQ–HKG","https://www.hkexpress.com/en-tw/flights-from-taichung-to-hong-kong"],
     ["Port of Rotterdam","https://www.portofrotterdam.com/en"],
-    ["Port Esbjerg","https://portesbjerg.dk/en/"],
     ["Taiwan HSR","https://en.thsrc.com.tw/"],
   ];
-  return `<div class="section-head"><h2>기준안 비교·확정 현황</h2><span class="version-chip">${esc(APP_VERSION)}</span></div>
+  return `<div class="section-head"><h2>업무장소·가격 검증 현황</h2><span class="version-chip">${esc(APP_VERSION)}</span></div>
     <div class="compare-grid">
-      <section class="compare-card muted-card"><h3>Lovable 교정본</h3><p>카드형 UI·실시간 편집은 우수하지만 대만 선행·도쿄 경유의 이전 일정이며, 복원 함수가 상세 데이터와 메모를 삭제할 수 있어 기준본에서 제외했습니다.</p></section>
-      <section class="compare-card selected-card"><h3>GitHub 무료판 · 기준본</h3><p>유럽 선행·대만 3.5일·홍콩 당일 경유를 반영했습니다. 무료 호스팅을 유지하면서 백업·메모 보존·검증 현황을 추가했습니다.</p></section>
+      <section class="compare-card muted-card"><h3>제외된 업무일정</h3><p>공유 지도에 없는 노르웨이·덴마크 업무기관과 별도 항만회의는 모두 제거했습니다. 해당 지역은 관광·음식점 일정만 남겼습니다.</p></section>
+      <section class="compare-card selected-card"><h3>현재 GitHub 기준본</h3><p>지도에 저장된 풍력 업무장소와 Kaohsiung Exhibition Center의 AWTEC만 유지했습니다. 대만은 약 3일, 나머지 빈 시간은 관광과 식사로 재구성했습니다.</p></section>
     </div>
     <div class="table-wrap"><table class="data-table verify-table"><thead><tr><th>검증항목</th><th>현재 상태</th><th>판정</th></tr></thead><tbody>
       ${checks.map(([a,b,c])=>`<tr><td><b>${esc(a)}</b></td><td>${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")}
     </tbody></table></div>
     <div class="day-summary source-panel"><h2>주요 공식 링크</h2><div class="link-row">${sourceLinks.map(([label,url])=>`<a href="${url}" target="_blank" rel="noreferrer">${esc(label)} ↗</a>`).join("")}</div>
-      <p>‘직항 확인’은 계획 수립 시점의 운항 패턴을 뜻하며 발권 완료가 아닙니다. 편명·시간·가격은 실제 발권 화면에서 최종 확정하십시오.</p></div>`;
+      <p>자동 금액은 Google Flights가 표시한 성인 4명 일반석 총액 스냅샷입니다. 위탁수하물·좌석·결제수수료와 재고 변동은 링크를 연 뒤 최종 결제 화면에서 확인하십시오.</p></div>`;
 }
 
 function bindStaticEvents(){
@@ -317,6 +463,13 @@ function bindDynamicEvents(){
   const addNote=$("#add-note");if(addNote)addNote.onclick=addNoteHandler;
   $$('[data-delete-note]').forEach(b=>b.onclick=()=>deleteNote(b.dataset.deleteNote));
   const shift=$("#shift-day-date");if(shift)shift.onclick=shiftDates;
+  const refresh=$("#refresh-fares");if(refresh)refresh.onclick=async()=>{
+    showLoader(true);
+    const ok=await loadLivePrices();
+    showLoader(false);
+    renderStats();renderContent();
+    toast(ok?"최신 운임 스냅샷을 다시 읽었습니다.":"운임 파일을 불러오지 못했습니다.");
+  };
   let dragged=null;
   $$(".event-card[draggable='true']").forEach(card=>{
     card.ondragstart=()=>{dragged=card.dataset.eventId;card.classList.add("dragging");};
@@ -349,13 +502,14 @@ async function shiftDates(){
 
 function cleanRows(table,rows){
   return rows.map((r,idx)=>{
-    const x={...r};delete x.id;delete x.updated_at;delete x.updated_by;delete x.created_at;
+    const x={...r},sourceId=x.id;delete x.id;delete x.updated_at;delete x.updated_by;delete x.created_at;
     if(table==="events"){
       x.booking_url=x.booking_url||x.official_url||x.map_url||null;
       const extra=[x.official_url&&`공식: ${x.official_url}`,x.map_url&&`지도: ${x.map_url}`].filter(Boolean).join(" | ");
       if(extra)x.notes=[x.notes,extra].filter(Boolean).join("\n");
       delete x.official_url;delete x.map_url;
     }
+    if(table==="map_points")x.code=x.code||String(sourceId||`P${idx+1}`).toUpperCase();
     if(x.sort_order==null)x.sort_order=(idx+1)*10;
     return x;
   });
@@ -398,7 +552,7 @@ async function syncOfficialSeed(){
 const fieldTypes={day_id:"number",min_krw:"number",max_krw:"number",original_min:"number",original_max:"number",nights:"number",rooms:"number",photo_allowed:"checkbox",ppe_required:"checkbox",interpreter_needed:"checkbox",notes:"textarea",agenda:"textarea",reason:"textarea"};
 const eventFields=["day_id","time_start","time_end","title","category","location","transport","duration","original_currency","original_min","original_max","min_cost_krw","max_cost_krw","cost_basis","booking_url","notes","sort_order"];
 function openEditor(table,id,isNew){
-  if(!isEditable()){toast(state.user?"먼저 기준안을 클라우드에 안전 적용하십시오.":"로그인이 필요합니다.");return;}
+  if(!isEditable()){toast(state.user?"먼저 기준안을 클라우드에 안전 적용하십시오.":"익명 공동편집 연결이 필요합니다.");return;}
   const rows=state.data[table]||[];const def=table==="events"?{title:"일정",fields:eventFields,labels:{}}:tableDefs[table];
   const row=isNew?defaultRow(table):rows.find(r=>String(r.id)===String(id));if(!row)return;
   state.editing={table,row:{...row},isNew};$("#edit-title").textContent=`${def.title} ${isNew?"추가":"편집"}`;
