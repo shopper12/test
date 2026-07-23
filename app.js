@@ -212,17 +212,29 @@ const tableDefs={
   budget_items:{title:"예산 상세",fields:["category","label","min_krw","max_krw","notes"],labels:{category:"구분",label:"항목",min_krw:"최소(4인)",max_krw:"최대(4인)",notes:"메모"}},
 };
 
+function airportCode(value){
+  return ((String(value||"").toUpperCase().match(/\\b[A-Z]{3}\\b/)||[])[0]||"").toLowerCase();
+}
 function flightSearchUrl(r){
   const date=String(r.date||"").replaceAll("-","").slice(2);
-  const from=encodeURIComponent((r.origin||"").match(/[A-Z]{3}/)?.[0]?.toLowerCase()||"");
-  const to=encodeURIComponent((r.destination||"").match(/[A-Z]{3}/)?.[0]?.toLowerCase()||"");
-  return `https://www.skyscanner.co.kr/transport/flights/${from}/${to}/${date}/?adultsv2=4&cabinclass=economy&rtn=0`;
+  const from=encodeURIComponent(airportCode(r.origin));
+  const to=encodeURIComponent(airportCode(r.destination));
+  return `https://www.skyscanner.co.kr/transport/flights/${from}/${to}/${date}/?adultsv2=4&cabinclass=economy&currency=KRW&locale=ko-KR&market=KR&rtn=0`;
+}
+function flightGoogleUrl(r){
+  const from=airportCode(r.origin).toUpperCase(),to=airportCode(r.destination).toUpperCase();
+  const q=`Flights from ${from} to ${to} on ${r.date} one way 4 adults economy`;
+  return `https://www.google.com/travel/flights?q=${encodeURIComponent(q)}&curr=KRW&hl=ko`;
 }
 function hotelSearchUrl(r){
-  return `https://www.booking.com/searchresults.ko.html?ss=${encodeURIComponent(`${r.name} ${r.city}`)}&checkin=${r.check_in}&checkout=${r.check_out}&group_adults=4&no_rooms=${r.rooms||2}&group_children=0`;
+  return `https://www.booking.com/searchresults.ko.html?ss=${encodeURIComponent(`${r.name} ${r.city}`)}&checkin=${r.check_in}&checkout=${r.check_out}&group_adults=4&no_rooms=${r.rooms||2}&group_children=0&selected_currency=KRW&order=price`;
+}
+function priceCondition(r,table){
+  if(table==="flights")return `${esc(r.date)} · ${airportCode(r.origin).toUpperCase()}→${airportCode(r.destination).toUpperCase()} · 편도 · 성인 4명 · 일반석`;
+  return `${esc(r.check_in)}~${esc(r.check_out)} · 성인 4명 · ${Number(r.rooms)||2}실 · 낮은 가격순`;
 }
 function renderAirHotel(){
-  return `<div class="status-banner cloud price-banner"><b>실시간 최저가 연결</b> · 표시 금액은 마지막 확인값입니다. ‘날짜 적용 최저가 검색’을 누르면 4인·해당 날짜 조건의 최신 예약 결과가 열립니다. 재고가 계속 변하므로 열린 발권 화면을 최종 기준으로 사용하십시오.</div>${renderDataSection("flights")}<div style="height:22px"></div>${renderDataSection("hotels")}`;
+  return `<div class="status-banner cloud price-banner"><b>예약 버튼을 누르면 지금 예약 가능한 최저가 결과가 바로 열립니다.</b> 각 링크에는 날짜·구간·성인 4명·객실 수가 자동 입력되어 있으며, 결과 화면의 금액이 최종 가격입니다. 일정 날짜를 바꾸면 예약 링크의 날짜도 함께 바뀝니다.</div>${renderDataSection("flights")}<div style="height:22px"></div>${renderDataSection("hotels")}`;
 }
 function renderMeetings(){return renderDataSection("meetings");}
 function renderTransport(){return `<div class="security-note" style="margin-bottom:12px">비용·시간 차이가 크지 않은 구간은 자동차를 우선했습니다. 국경간 편도반납 수수료가 과도하면 별도 렌트 또는 기사차량과 재비교하십시오.</div>${renderDataSection("transport_options")}`;}
@@ -232,7 +244,7 @@ function renderDataSection(table){
   const def=tableDefs[table], rows=state.data[table]||[];
   return `<div class="section-head"><h2>${def.title}</h2>${isEditable()?`<button class="btn small primary" data-add="${table}">+ 추가</button>`:""}</div>
   <div class="table-wrap"><table class="data-table"><thead><tr>${def.fields.map(f=>`<th>${def.labels[f]||f}</th>`).join("")}<th>실시간·편집</th></tr></thead><tbody>
-    ${rows.map(r=>`<tr>${def.fields.map(f=>`<td>${cellValue(r,f)}</td>`).join("")}<td>${table==="flights"?`<a class="btn small primary" href="${flightSearchUrl(r)}" target="_blank" rel="noreferrer">날짜 적용 최저가 검색 ↗</a>`:table==="hotels"?`<a class="btn small primary" href="${hotelSearchUrl(r)}" target="_blank" rel="noreferrer">2실 실시간 검색 ↗</a>`:""}${isEditable()?` <button class="btn small" data-edit-table="${table}" data-id="${esc(r.id)}">편집</button>`:""}</td></tr>`).join("")}
+    ${rows.map(r=>`<tr>${def.fields.map(f=>`<td>${cellValue(r,f)}</td>`).join("")}<td>${table==="flights"?`<div class="booking-actions"><small>${priceCondition(r,table)}</small><a class="btn small primary" href="${flightSearchUrl(r)}" target="_blank" rel="noreferrer">Skyscanner 최저가 바로 보기 ↗</a><a class="btn small" href="${flightGoogleUrl(r)}" target="_blank" rel="noreferrer">Google Flights 비교 ↗</a></div>`:table==="hotels"?`<div class="booking-actions"><small>${priceCondition(r,table)}</small><a class="btn small primary" href="${hotelSearchUrl(r)}" target="_blank" rel="noreferrer">Booking 최저가 바로 보기 ↗</a></div>`:""}${isEditable()?` <button class="btn small" data-edit-table="${table}" data-id="${esc(r.id)}">편집</button>`:""}</td></tr>`).join("")}
   </tbody></table></div>`;
 }
 
