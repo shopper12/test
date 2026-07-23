@@ -166,7 +166,7 @@ function renderEventCard(e){
 }
 
 function renderMapTab(){
-  return `${renderDayTabs()}<div class="section-head"><h2>${state.activeDay?`Day ${state.activeDay} 경로":"전체 경로"}</h2><button class="btn small" id="show-all-route">전체 경로</button></div>
+  return `${renderDayTabs()}<div class="section-head"><h2>${state.activeDay ? `Day ${state.activeDay} 경로` : "전체 경로"}</h2><button class="btn small" id="show-all-route">전체 경로</button></div>
     <div class="map-layout"><div class="map-box" id="map"></div><div class="route-list" id="route-list"></div></div>
     <div class="legend"><span>━ 자동차</span><span>┄ 항공</span><span class="warning">━ ━ THSR</span><span>·· 지하철·Airport Express</span></div>`;
 }
