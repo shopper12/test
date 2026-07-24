@@ -41,7 +41,7 @@ jobs:
       - name: Validate snapshot
         run: |
           python -m json.tool flight-prices.json >/dev/null
-          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "5"
+          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "12"
 
       - name: Commit refreshed snapshot
         run: |

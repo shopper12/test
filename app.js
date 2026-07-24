@@ -1,18 +1,22 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import {
-  APP_VERSION, tripMeta, officialSeed,
-} from "./itinerary-data.js?v=SEP2_MOBILE_V7";
+  APP_VERSION, DEFAULT_ITINERARY, ITINERARIES,
+} from "./itinerary-data.js?v=TWO_PLAN_DIRECT_RETURN_V1";
 
 const SUPABASE_URL = "https://wrozrvsplryfjgckmxvl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_g1uvMhgnSTskTzGCKglOag_cIVpzZ2a";
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-const MARKER = `__${APP_VERSION}__`;
-const LOCAL_ORDER_KEY = `offshore-trip-event-order-${APP_VERSION}`;
+let activeItinerary = ITINERARIES[DEFAULT_ITINERARY];
+let tripMeta = activeItinerary.meta;
+let officialSeed = activeItinerary.officialSeed;
+let MARKER = `__OFFSHORE_PLAN_${APP_VERSION}_${DEFAULT_ITINERARY}__`;
+let LOCAL_ORDER_KEY = `offshore-trip-event-order-${APP_VERSION}-${DEFAULT_ITINERARY}`;
 
 const TABLES = ["days","events","flights","hotels","meetings","transport_options","restaurants","map_points","budget_items","team_notes"];
 const clone = (x) => JSON.parse(JSON.stringify(x));
 
 const state = {
+  itineraryKey: DEFAULT_ITINERARY,
   tab: "timeline",
   activeDay: 1,
   user: null,
@@ -121,13 +125,22 @@ function koreaStamp(value){
 function flightFareId(row){
   const origin=String(row?.origin||"").match(/[A-Z]{3}/)?.[0]||"";
   const destination=String(row?.destination||"").match(/[A-Z]{3}/)?.[0]||"";
-  return ({
-    "ICN-CPH":"f1",
-    "AMS-OSL":"f2",
-    "OSL-TPE":"f3",
-    "RMQ-HKG":"f4",
-    "HKG-ICN":"f5",
-  })[`${origin}-${destination}`]||null;
+  const maps={
+    europe_first:{
+      "ICN-CPH":"eu_f1",
+      "AMS-OSL":"eu_f2",
+      "OSL-TPE":"eu_f3",
+      "RMQ-ICN":"eu_f4",
+    },
+    taiwan_first:{
+      "ICN-TPE":"tw_f1",
+      "TPE-HAM":"tw_f2",
+      "BLL-OSL":"tw_f3",
+      "OSL-AMS":"tw_f4",
+      "AMS-ICN":"tw_f5",
+    },
+  };
+  return maps[state.itineraryKey]?.[`${origin}-${destination}`]||null;
 }
 
 function selectedFlightTotal(){
@@ -151,7 +164,7 @@ function budgetRows(){
     air.max_krw=flightTotal;
     air.notes=flightTotal==null
       ?"일정 날짜와 최신 운임 스냅샷이 일치하지 않아 자동 합계를 보류했습니다."
-      :`Google Flights 일정 채택편 5개 구간·성인 4명 합계 · ${koreaStamp(state.livePrices?.generated_at)} 조회`;
+      :`Google Flights 일정 채택편 ${state.data.flights.length}개 구간·성인 4명 합계 · ${koreaStamp(state.livePrices?.generated_at)} 조회`;
   }
   return rows;
 }
@@ -163,14 +176,52 @@ function budgetSummary(){
   return {rows,complete,subMin,subMax,totalMin:subMin*1.1,totalMax:subMax*1.1};
 }
 
+function clearSubscriptions(){
+  state.subscriptions.forEach(ch=>supabase.removeChannel(ch));
+  state.subscriptions=[];
+}
+
+function setActiveDefinition(key){
+  const next=ITINERARIES[key];
+  if(!next)return false;
+  state.itineraryKey=key;
+  activeItinerary=next;
+  tripMeta=next.meta;
+  officialSeed=next.officialSeed;
+  MARKER=`__OFFSHORE_PLAN_${APP_VERSION}_${key}__`;
+  LOCAL_ORDER_KEY=`offshore-trip-event-order-${APP_VERSION}-${key}`;
+  state.activeDay=officialSeed.days[0]?.id||1;
+  return true;
+}
+
+async function activateItinerary(key){
+  if(key===state.itineraryKey)return;
+  showLoader(true);
+  try{
+    clearSubscriptions();
+    setActiveDefinition(key);
+    await detectCloudVersion();
+    render();
+    toast(`${tripMeta.tabLabel} 일정으로 전환했습니다.`);
+  }finally{
+    showLoader(false);
+  }
+}
+
 async function detectCloudVersion(){
   try{
     const { data, error } = await supabase.from("team_notes").select("id,content").eq("content", MARKER).limit(1);
     if(error) throw error;
     if(data?.length){ await loadCloud(); }
-    else { state.mode="local"; state.data={...clone(officialSeed),team_notes:[]}; restoreLocalEventOrder(); }
+    else {
+      clearSubscriptions();
+      state.mode="local";
+      state.data={...clone(officialSeed),team_notes:[]};
+      restoreLocalEventOrder();
+    }
   }catch(err){
     console.warn(err);
+    clearSubscriptions();
     state.mode="local";
     state.data={...clone(officialSeed),team_notes:[]};
     restoreLocalEventOrder();
@@ -189,7 +240,7 @@ async function loadCloud(){
     const {data,error}=await q; if(error) throw error; return [table,data||[]];
   }));
   state.data=Object.fromEntries(results);
-  state.data.team_notes=state.data.team_notes.filter(n=>n.content!==MARKER);
+  state.data.team_notes=state.data.team_notes.filter(n=>!(n.author_name==="SYSTEM"&&String(n.content||"").startsWith("__")));
   state.mode="cloud";
   subscribeRealtime();
 }
@@ -211,7 +262,19 @@ function render(){
   $("#app-title").textContent=tripMeta.title;
   $("#app-route").textContent=tripMeta.route;
   $("#subtitle").textContent=tripMeta.subtitle;
-  renderStats(); renderHeaderState(); renderTabs(); renderContent();
+  renderItineraryTabs(); renderStats(); renderHeaderState(); renderTabs(); renderContent();
+}
+
+function renderItineraryTabs(){
+  const host=$("#itinerary-tabs");
+  host.innerHTML=Object.entries(ITINERARIES).map(([key,plan])=>`
+    <button class="itinerary-tab ${state.itineraryKey===key?"active":""}" data-itinerary="${key}">
+      <b>${esc(plan.meta.tabLabel)}</b>
+      <span>${esc(plan.meta.tabNote)}</span>
+    </button>`).join("");
+  $$("[data-itinerary]").forEach(button=>{
+    button.onclick=()=>activateItinerary(button.dataset.itinerary);
+  });
 }
 
 function renderStats(){
@@ -219,9 +282,9 @@ function renderStats(){
   const totalMin=budget.complete?budget.totalMin:tripMeta.budgetMin;
   const totalMax=budget.complete?budget.totalMax:tripMeta.budgetMax;
   const items=[
-    ["기간",tripMeta.dates,"11일 · 9/2 저녁 출국"],
-    ["숙박",`호텔 ${tripMeta.hotelNights}박 + 기내 ${tripMeta.flightNights}박`,"홍콩 무숙박 당일관광"],
-    ["대만 체류","9/8 06:15–9/11 10:25","약 3일 4시간"],
+    ["기간",tripMeta.dates,tripMeta.durationText],
+    ["숙박",`호텔 ${tripMeta.hotelNights}박 + 기내 ${tripMeta.flightNights}박`,tripMeta.lodgingNote],
+    ["대만 체류",tripMeta.taiwanWindow,tripMeta.taiwanDuration],
     ["4인 총예산",`${fmt(totalMin/10000)}만~${fmt(totalMax/10000)}만원`,"항공 최신 조회가·10% 예비비 포함"],
     ["1인 환산",`${fmt(totalMin/4/10000)}만~${fmt(totalMax/4/10000)}만원`,"항공은 성인 4명 조회 합계 반영"],
   ];
@@ -232,10 +295,10 @@ function renderHeaderState(){
   const banner=$("#status-banner"), sync=$("#cloud-sync-btn");
   if(state.mode==="cloud"){
     banner.className="status-banner cloud";
-    banner.innerHTML=`공개 공동편집 모드 · 로그인 불필요 · 변경사항 실시간 반영 · 개인정보·담당자 연락처 입력 금지`;
+    banner.innerHTML=`${esc(tripMeta.tabLabel)} 공개 공동편집 모드 · 로그인 불필요 · 변경사항 실시간 반영 · 개인정보·담당자 연락처 입력 금지`;
   }else{
     banner.className="status-banner";
-    banner.innerHTML=`검수된 GitHub 기준안을 표시 중입니다. 일정 카드 순서 이동은 로그인 없이 이 기기에 저장됩니다. 기준안 안전 적용 후에는 팀 공동 데이터로 반영됩니다.`;
+    banner.innerHTML=`${esc(tripMeta.tabLabel)} 검수 기준안을 표시 중입니다. 일정 카드 순서 이동은 이 기기에 저장됩니다. 이 안을 ‘기준안 안전 적용’하면 팀 공동 데이터가 선택한 안으로 전환됩니다.`;
   }
   sync.hidden=!state.user || state.mode==="cloud";
 }
@@ -258,10 +321,53 @@ function renderDayTabs(){
   return `<div class="day-tabs no-print">${state.data.days.map(d=>`<button class="day-tab ${state.activeDay===d.id?"active":""}" data-day="${d.id}"><b>Day ${d.id}</b><span>${esc(d.date)} ${esc(d.weekday)}</span><small>${esc(d.cities)}</small></button>`).join("")}</div>`;
 }
 
+function fareTotal(id){
+  const fare=state.livePrices?.fares?.[id];
+  return fare?.status==="ok"&&fare?.selected?.total_krw ? Number(fare.selected.total_krw) : null;
+}
+
+function fareText(value){
+  return value==null ? "자동 운임 재조회 중" : `4인 ₩${fmt(value)} · 1인 ₩${fmt(value/4)}`;
+}
+
+function renderPlanDecision(){
+  const stamp=koreaStamp(state.livePrices?.generated_at);
+  if(state.itineraryKey==="europe_first"){
+    const connection=fareTotal("eu_f1");
+    const direct=fareTotal("eu_out_direct");
+    const directReturn=fareTotal("eu_f4");
+    const viaHongKong=(fareTotal("eu_hk_1")!=null&&fareTotal("eu_hk_2")!=null)
+      ?fareTotal("eu_hk_1")+fareTotal("eu_hk_2"):null;
+    const outboundSaving=connection!=null&&direct!=null?direct-connection:null;
+    const returnSaving=directReturn!=null&&viaHongKong!=null?viaHongKong-directReturn:null;
+    return `<section class="decision-panel">
+      <div class="section-head"><h2>항공 선택 결론</h2><span>${esc(stamp)} 조회</span></div>
+      <div class="compare-grid">
+        <article class="compare-card selected-card"><h3>출국 · 두바이 1회 환승 채택</h3><p><b>${esc(fareText(connection))}</b></p><p>9/2 22:45 출발 → 9/3 13:15 도착 · 직항보다 7시간 15분 더 걸리지만 ${outboundSaving==null?"현재 차액 재조회 중":`4인 ₩${fmt(outboundSaving)} 절감`}.</p></article>
+        <article class="compare-card muted-card"><h3>출국 대안 · 코펜하겐 직항</h3><p><b>${esc(fareText(direct))}</b></p><p>9/2 23:35 출발 → 9/3 06:00 도착 · 오전 업무를 바로 시작해야 할 때만 비용 프리미엄을 감수할 대안.</p></article>
+        <article class="compare-card selected-card"><h3>귀국 · 타이중→인천 직항 채택</h3><p><b>${esc(fareText(directReturn))}</b></p><p>9/11 17:00 출발 → 20:45 도착 · 홍콩 경유보다 약 11시간 30분 짧고 ${returnSaving==null?"현재 차액 재조회 중":`4인 ₩${fmt(returnSaving)} 절감`}.</p></article>
+        <article class="compare-card muted-card"><h3>삭제 · 홍콩 당일 경유</h3><p><b>${esc(fareText(viaHongKong))}</b></p><p>10:25 타이중 출발 → 다음 날 01:40 인천 도착. 항공 2회·수하물 재수속·태풍 변수를 감수할 이점이 없음.</p></article>
+      </div>
+    </section>`;
+  }
+  const outbound=fareTotal("tw_f1");
+  const europeMove=fareTotal("tw_f2");
+  const home=fareTotal("tw_f5");
+  return `<section class="decision-panel">
+    <div class="section-head"><h2>대만 선행안 핵심</h2><span>${esc(stamp)} 조회</span></div>
+    <div class="compare-grid">
+      <article class="compare-card selected-card"><h3>한국 출발 · 타이베이 직항</h3><p><b>${esc(fareText(outbound))}</b></p><p>9/2 20:05 출발 → 21:50 도착. 짧은 구간이라 환승으로 절약할 시간·비용상 이점이 없음.</p></article>
+      <article class="compare-card selected-card"><h3>대만 3일 뒤 유럽 이동</h3><p><b>${esc(fareText(europeMove))}</b></p><p>9/5 23:50 TPE → DXB → 9/6 13:35 HAM. 유럽 업무를 월요일부터 동쪽→서쪽으로 연결.</p></article>
+      <article class="compare-card selected-card"><h3>유럽 종료 · 암스테르담 직항 귀국</h3><p><b>${esc(fareText(home))}</b></p><p>9/11 21:35 출발 → 9/12 16:25 도착. 마지막 날 암스테르담 관광시간을 보존.</p></article>
+      <article class="compare-card muted-card"><h3>AWTEC 제외</h3><p><b>등록비 계획액 ₩5,600,000 제외</b></p><p>가오슝 행사 2일 대신 타이베이·타이중 업무와 관광, 유럽 평일 기관방문에 시간을 배분.</p></article>
+    </div>
+  </section>`;
+}
+
 function renderTimeline(){
   const d=state.data.days.find(x=>x.id===state.activeDay) || state.data.days[0];
   const evs=state.data.events.filter(x=>Number(x.day_id)===Number(d.id)).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
-  return `${renderDayTabs()}
+  return `${renderPlanDecision()}${renderDayTabs()}
     <div class="day-summary"><div class="day-summary-title"><h2>Day ${d.id} · ${esc(d.date)} ${esc(d.weekday)}</h2>${isEditable()?`<label class="date-shifter">날짜 변경 <input type="date" id="active-day-date" value="${esc(d.date)}"><button class="btn small" id="shift-day-date">이 날짜부터 연쇄 이동</button></label>`:""}</div><p>${esc(d.cities)} · 숙박: ${esc(d.lodging)}</p><p>${esc(d.summary)}</p><p class="drag-hint">모바일은 ↕ 끌기 손잡이를 누른 채 이동하거나 ↑·↓ 버튼을 사용하세요. PC에서는 카드 자체를 끌 수 있습니다. ${isEditable()?"변경 순서는 공동 데이터에 즉시 반영됩니다.":"현재 순서는 이 기기에 저장되며, 기준안 안전 적용 후에는 팀에 공동 반영됩니다."}</p></div>
     <div class="section-head"><h2>상세 일정</h2>${isEditable()?`<button class="btn small primary" data-add="events">+ 일정 추가</button>`:""}</div>
     <div class="cards">${evs.length?evs.map(renderEventCard).join(""):`<div class="empty">일정이 없습니다.</div>`}</div>`;
@@ -384,13 +490,13 @@ function flightFareCard(row){
 
 function eventFareInline(event){
   const title=String(event.title||"");
-  const fareId=title.includes("SK988")?"f1"
-    :title.includes("AMS → OSL")?"f2"
-    :title.includes("OSL → FRA")?"f3"
-    :title.includes("RMQ → HKG")?"f4"
-    :title.includes("HKG → ICN")?"f5":null;
-  if(!fareId)return "";
-  const row=(state.data.flights||[]).find(f=>flightFareId(f)===fareId);
+  const row=(state.data.flights||[]).find(f=>{
+    const origin=String(f.origin||"").match(/[A-Z]{3}/)?.[0];
+    const destination=String(f.destination||"").match(/[A-Z]{3}/)?.[0];
+    return origin&&destination&&title.includes(origin)&&title.includes(destination);
+  });
+  const fareId=flightFareId(row);
+  if(!fareId || !row)return "";
   const fare=state.livePrices?.fares?.[fareId];
   if(!row || fare?.status!=="ok" || !fare?.selected?.total_krw || fare.date!==row.date){
     return `<div class="event-live-fare stale">자동 운임 재조회 필요${row?` · <a href="${esc(flightGoogleUrl(row))}" target="_blank" rel="noreferrer">현재가 열기 ↗</a>`:""}</div>`;
@@ -428,8 +534,8 @@ function cellValue(r,f){
 function renderBudget(){
   const summary=budgetSummary(),{rows,subMin,subMax}=summary;const max=Math.max(...rows.map(r=>Number(r.max_krw)||0),1);
   const flightTotal=selectedFlightTotal();
-  return `<div class="status-banner ${flightTotal==null?"warning":"cloud"} price-banner"><b>항공비 자동 반영</b> · ${flightTotal==null?"변경된 날짜 운임 재조회 중":`5개 항공 구간 일정 채택가 ₩${fmt(flightTotal)}`} · ${esc(koreaStamp(state.livePrices?.generated_at))} 조회. 숙박·교통·식비·행사비는 계획범위입니다.</div>
-    <div class="budget-total"><div class="stat"><span>4인 소계</span><strong>${money(subMin,subMax)}</strong></div><div class="stat"><span>10% 예비비 포함</span><strong>${money(subMin*1.1,subMax*1.1)}</strong></div><div class="stat"><span>1인 환산</span><strong>${money(subMin*1.1/4,subMax*1.1/4)}</strong></div><div class="stat"><span>대만 체류</span><strong>약 3일 4시간</strong></div></div>
+  return `<div class="status-banner ${flightTotal==null?"warning":"cloud"} price-banner"><b>항공비 자동 반영</b> · ${flightTotal==null?"변경된 날짜 운임 재조회 중":`${state.data.flights.length}개 항공 구간 일정 채택가 ₩${fmt(flightTotal)}`} · ${esc(koreaStamp(state.livePrices?.generated_at))} 조회. 숙박·교통·식비·행사비는 계획범위입니다.</div>
+    <div class="budget-total"><div class="stat"><span>4인 소계</span><strong>${money(subMin,subMax)}</strong></div><div class="stat"><span>10% 예비비 포함</span><strong>${money(subMin*1.1,subMax*1.1)}</strong></div><div class="stat"><span>1인 환산</span><strong>${money(subMin*1.1/4,subMax*1.1/4)}</strong></div><div class="stat"><span>대만 체류</span><strong>${esc(tripMeta.taiwanDuration)}</strong></div></div>
     <div class="budget-bars">${rows.map(r=>`<div class="budget-row"><div class="top"><b>${esc(r.category)} · ${esc(r.label)}</b><span>${money(r.min_krw,r.max_krw)}</span></div><div class="bar"><span style="width:${Math.max(3,Number(r.max_krw)/max*100)}%"></span></div><div class="notes">${esc(r.notes||"")}</div></div>`).join("")}</div><div style="height:20px"></div>${renderDataSection("budget_items")}`;
 }
 
@@ -445,10 +551,14 @@ function renderVerify(){
   const flightPending=flights.filter(f=>!/확정|발권완료/.test(f.status||""));
   const meetingPending=meetings.filter(m=>m.status!=="확정");
   const mapMeetings=meetings.filter(m=>!String(m.organization||"").includes("AWTEC"));
+  const eventRule=tripMeta.includesAwtec
+    ?`공유 Google Maps 업무장소 ${mapMeetings.length}곳 + AWTEC만 유지`
+    :`공유 Google Maps 업무장소 ${mapMeetings.length}곳만 유지 · AWTEC 제외`;
   const checks=[
-    ["업무장소 원칙",`공유 Google Maps 업무장소 ${mapMeetings.length}곳 + AWTEC만 유지`,"적용 완료"],
+    ["선택 일정",`${tripMeta.tabLabel} · ${tripMeta.recommendation}`,"적용 완료"],
+    ["업무장소 원칙",eventRule,"적용 완료"],
     ["삭제한 업무장소","Equinor Fornebu·Norwegian Offshore Wind·Ørsted Gentofte·Port Esbjerg·Port of Taichung","삭제 완료"],
-    ["대만 체류","9/8 06:15–9/11 10:25, 약 3일 4시간","요청 반영"],
+    ["대만 체류",`${tripMeta.taiwanWindow}, ${tripMeta.taiwanDuration}`,"요청 반영"],
     ["항공",`${flights.length}개 구간 · 성인 4명 최저가 매시간 자동조회 · ${flightPending.length}개 발권 전`,flightPending.length?"발권 필요":"완료"],
     ["기관·행사",`${meetings.length}개 일정 중 ${meetingPending.length}개 미확정`,meetingPending.length?"회신·등록 필요":"완료"],
     ["데이터 보호","기준안 적용 전 JSON 자동 백업 · 팀 메모 보존","개선 완료"],
@@ -456,17 +566,16 @@ function renderVerify(){
   ];
   const sourceLinks=[
     ["사용자 Google Maps 목록",tripMeta.sourceMap],
-    ["AWTEC 2026","https://www.awtec2026.com/"],
+    ...(tripMeta.includesAwtec?[["AWTEC 2026","https://www.awtec2026.com/"]]:[]),
     ["Google Flights","https://www.google.com/travel/flights"],
     ["SAS ICN–CPH","https://www.flysas.com/en/flight-routes/copenhagen/seoul"],
-    ["HK Express RMQ–HKG","https://www.hkexpress.com/en-tw/flights-from-taichung-to-hong-kong"],
     ["Port of Rotterdam","https://www.portofrotterdam.com/en"],
     ["Taiwan HSR","https://en.thsrc.com.tw/"],
   ];
   return `<div class="section-head"><h2>업무장소·가격 검증 현황</h2><span class="version-chip">${esc(APP_VERSION)}</span></div>
     <div class="compare-grid">
       <section class="compare-card muted-card"><h3>제외된 업무일정</h3><p>공유 지도에 없는 노르웨이·덴마크 업무기관과 별도 항만회의는 모두 제거했습니다. 해당 지역은 관광·음식점 일정만 남겼습니다.</p></section>
-      <section class="compare-card selected-card"><h3>현재 GitHub 기준본</h3><p>지도에 저장된 풍력 업무장소와 Kaohsiung Exhibition Center의 AWTEC만 유지했습니다. 대만은 약 3일, 나머지 빈 시간은 관광과 식사로 재구성했습니다.</p></section>
+      <section class="compare-card selected-card"><h3>${esc(tripMeta.tabLabel)} 기준본</h3><p>${tripMeta.includesAwtec?"지도에 저장된 풍력 업무장소와 AWTEC만 유지했습니다.":"지도에 저장된 풍력 업무장소만 유지하고 AWTEC는 완전히 제외했습니다."} ${esc(tripMeta.recommendation)}.</p></section>
     </div>
     <div class="table-wrap"><table class="data-table verify-table"><thead><tr><th>검증항목</th><th>현재 상태</th><th>판정</th></tr></thead><tbody>
       ${checks.map(([a,b,c])=>`<tr><td><b>${esc(a)}</b></td><td>${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")}
@@ -613,7 +722,7 @@ function cleanRows(table,rows){
 
 async function syncOfficialSeed(){
   if(!state.user)return toast("Supabase 익명 공동편집을 먼저 활성화해야 합니다.");
-  if(!confirm("현재 클라우드 데이터를 JSON으로 자동 백업한 뒤 새 기준안으로 교체합니다. 팀 메모는 삭제하지 않습니다. 계속할까요?"))return;
+  if(!confirm(`현재 클라우드 데이터를 JSON으로 자동 백업한 뒤 ${tripMeta.tabLabel} 기준안으로 교체합니다. 팀 메모는 삭제하지 않습니다. 계속할까요?`))return;
   showLoader(true);
   try{
     const results=await Promise.all(TABLES.map(async table=>{
@@ -636,10 +745,10 @@ async function syncOfficialSeed(){
       const {error}=await supabase.from("team_notes").update({day_id:note.day_id}).eq("id",note.id);
       if(error)throw error;
     }
-    {const {error}=await supabase.from("team_notes").delete().eq("author_name","SYSTEM").like("content","__EU_FIRST_%");if(error)throw error;}
+    {const {error}=await supabase.from("team_notes").delete().eq("author_name","SYSTEM").like("content","__OFFSHORE_PLAN_%");if(error)throw error;}
     {const {error}=await supabase.from("team_notes").insert({content:MARKER,author_name:"SYSTEM"});if(error)throw error;}
     localStorage.removeItem(LOCAL_ORDER_KEY);
-    await loadCloud();toast("기준안을 안전 적용했습니다. 기존 팀 메모는 보존됐습니다.");render();
+    await loadCloud();toast(`${tripMeta.tabLabel} 기준안을 안전 적용했습니다. 기존 팀 메모는 보존됐습니다.`);render();
   }catch(err){
     console.error(err);
     toast(`적용 중단: ${err.message||err}. 내려받은 백업 파일을 보관하십시오.`);
@@ -678,8 +787,8 @@ async function addNoteHandler(){const content=$("#note-content").value.trim();if
 async function deleteNote(id){if(!confirm("메모를 삭제할까요?"))return;const{error}=await supabase.from("team_notes").delete().eq("id",id);if(error)return toast(error.message);await loadCloud();render();}
 
 function exportData(type){
-  const data={version:APP_VERSION,meta:tripMeta,...state.data};
-  if(type==="json")return download(`offshore-wind-trip-${APP_VERSION}.json`,JSON.stringify(data,null,2),"application/json");
+  const data={version:APP_VERSION,itinerary:state.itineraryKey,meta:tripMeta,...state.data};
+  if(type==="json")return download(`offshore-wind-trip-${state.itineraryKey}-${APP_VERSION}.json`,JSON.stringify(data,null,2),"application/json");
   const rows=[];Object.entries(state.data).forEach(([table,items])=>(items||[]).forEach(item=>rows.push({table,...item})));
   const keys=[...new Set(rows.flatMap(Object.keys))];const csv=[keys.join(","),...rows.map(r=>keys.map(k=>`"${String(r[k]??"").replaceAll('"','""')}"`).join(","))].join("\n");download("offshore-wind-trip-all.csv","\ufeff"+csv,"text/csv;charset=utf-8");
 }

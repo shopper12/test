@@ -1,5 +1,5 @@
 try {
-  await import("./app.js?v=SEP2_MOBILE_V7");
+  await import("./app.js?v=TWO_PLAN_DIRECT_RETURN_V1");
 } catch (error) {
   console.error(error);
   const main = document.querySelector("#main-content");

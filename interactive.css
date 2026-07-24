@@ -1,3 +1,12 @@
+.itinerary-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}
+.itinerary-tab{display:flex;flex-direction:column;align-items:flex-start;gap:4px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px 16px;color:var(--ink);cursor:pointer;text-align:left;box-shadow:var(--shadow)}
+.itinerary-tab b{font-size:15px}
+.itinerary-tab span{font-size:11px;color:var(--muted)}
+.itinerary-tab.active{border:2px solid var(--brand);background:linear-gradient(135deg,#edf9fb,#fff);color:var(--brand)}
+.itinerary-tab.active span{color:#276f7c}
+.decision-panel{margin-bottom:18px}
+.decision-panel>.section-head span{font-size:11px;color:var(--muted)}
+.decision-panel .compare-card p+p{margin-top:7px}
 .day-summary-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .date-shifter{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
 .date-shifter input{border:1px solid var(--line);border-radius:7px;padding:5px}
@@ -30,6 +39,8 @@
 .event-live-fare a{font-weight:700;color:inherit}
 .event-live-fare small{display:block;margin-top:3px;color:var(--muted)}
 @media(max-width:760px){
+  .itinerary-tabs{grid-template-columns:1fr;gap:8px}
+  .itinerary-tab{min-height:64px;padding:11px 13px}
   .live-fare{min-width:270px}
   .price-banner .btn{display:block;margin:8px 0 0}
   .event-card>.event-actions{grid-column:1/-1;justify-content:flex-end;border-top:1px solid var(--line);padding-top:9px}
