@@ -1,5 +1,5 @@
 try {
-  await import("./app.js");
+  await import("./app.js?v=SEP2_MOBILE_V7");
 } catch (error) {
   console.error(error);
   const main = document.querySelector("#main-content");
