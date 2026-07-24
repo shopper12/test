@@ -26,7 +26,7 @@ ROUTES = [
         "origin": "ICN",
         "destination": "CPH",
         "max_stops": 0,
-        "preferred_departure": "23:45",
+        "preferred_departures": ["23:35", "23:45"],
         "reason": "사용자 지정 9월 2일 저녁 출국 직항",
     },
     {
@@ -110,14 +110,16 @@ def serialize_offer(offer: Any) -> dict[str, Any]:
 
 
 def preferred_offer(offers: list[Any], route: dict[str, Any]) -> Any | None:
-    wanted_time = route.get("preferred_departure")
+    wanted_times = route.get("preferred_departures")
+    if not wanted_times and route.get("preferred_departure"):
+        wanted_times = [route["preferred_departure"]]
     wanted_via = route.get("via", [])
     for offer in offers:
         if not offer.flights:
             continue
         first_time = time_text(offer.flights[0].departure.time)
         via = [leg.to_airport.code for leg in offer.flights[:-1]]
-        if wanted_time and first_time != wanted_time:
+        if wanted_times and first_time not in wanted_times:
             continue
         if wanted_via and via != wanted_via:
             continue
