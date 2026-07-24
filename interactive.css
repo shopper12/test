@@ -3,7 +3,12 @@
 .date-shifter input{border:1px solid var(--line);border-radius:7px;padding:5px}
 .drag-hint{font-size:11px!important;color:var(--brand)!important}
 .event-card[draggable=true]{cursor:grab}
-.event-card.dragging{opacity:.4;border:2px dashed var(--brand)}
+.event-card.dragging{opacity:.48;border:2px dashed var(--brand);box-shadow:0 14px 34px rgba(0,107,143,.2)}
+.event-card.drop-target{border-color:var(--brand2);box-shadow:0 0 0 3px rgba(0,152,167,.15);transform:translateY(2px)}
+.event-actions{display:flex;align-items:center;justify-content:flex-end;gap:5px;flex-wrap:wrap}
+.drag-handle{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:70px;min-height:38px;border:1px solid #9fcbd3;border-radius:8px;background:#edf8fa;color:var(--brand);font-weight:700;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.drag-handle:active{cursor:grabbing;background:#d8f0f3}
+.move-btn{min-width:38px;min-height:38px;font-size:16px!important}
 .price-banner{margin:0 0 16px}
 .data-table td:last-child{white-space:nowrap}
 .live-fare{min-width:320px;max-width:390px;white-space:normal;border:1px solid #b7dfda;background:#f1fbf9;border-radius:10px;padding:10px}
@@ -27,4 +32,7 @@
 @media(max-width:760px){
   .live-fare{min-width:270px}
   .price-banner .btn{display:block;margin:8px 0 0}
+  .event-card>.event-actions{grid-column:1/-1;justify-content:flex-end;border-top:1px solid var(--line);padding-top:9px}
+  .drag-handle{min-width:92px;min-height:44px}
+  .move-btn{min-width:44px;min-height:44px}
 }
