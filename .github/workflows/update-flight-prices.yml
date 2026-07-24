@@ -3,6 +3,11 @@ name: Update live flight prices
 on:
   schedule:
     - cron: "17 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/update_flight_prices.py"
+      - ".github/workflows/update-flight-prices.yml"
   workflow_dispatch:
 
 permissions:
