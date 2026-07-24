@@ -1,7 +1,7 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import {
   APP_VERSION, tripMeta, officialSeed,
-} from "./itinerary-data.js";
+} from "./itinerary-data.js?v=SEP2_MOBILE_V7";
 
 const SUPABASE_URL = "https://wrozrvsplryfjgckmxvl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_g1uvMhgnSTskTzGCKglOag_cIVpzZ2a";
