@@ -17,8 +17,8 @@ export const tripMeta = {
 };
 
 export const days = [
-  { id:1, date:"2026-09-02", weekday:"수요일", cities:"인천 → 코펜하겐", lodging:"기내박", summary:"23:45 SK988 인천 출발 · 사용자가 지정한 9월 2일 저녁 직항 출국" },
-  { id:2, date:"2026-09-03", weekday:"목요일", cities:"코펜하겐 → 빌룬 → 에스비에르", lodging:"Boutique Hotel Britannia", summary:"06:05 코펜하겐 도착 · 지도 저장장소 Blue Water Shipping 방문 · LEGO House와 북해 해변 관광" },
+  { id:1, date:"2026-09-02", weekday:"수요일", cities:"인천 → 코펜하겐", lodging:"기내박", summary:"23:35 SK988 인천 출발 · 사용자가 지정한 9월 2일 저녁 직항 출국" },
+  { id:2, date:"2026-09-03", weekday:"목요일", cities:"코펜하겐 → 빌룬 → 에스비에르", lodging:"Boutique Hotel Britannia", summary:"06:00 코펜하겐 도착 · 지도 저장장소 Blue Water Shipping 방문 · LEGO House와 북해 해변 관광" },
   { id:3, date:"2026-09-04", weekday:"금요일", cities:"에스비에르 → 함부르크 → 로테르담", lodging:"Hotel New York Rotterdam", summary:"지도 저장장소 Skyborn Renewables 방문 · 함부르크 관광·Restaurant Leuchtturm 점심 · 렌터카로 로테르담 이동" },
   { id:4, date:"2026-09-05", weekday:"토요일", cities:"헤이그 → 델프트 → 로테르담", lodging:"Hotel New York Rotterdam", summary:"지도 저장장소 TNO·Stieltjesweg·로테르담항 방문 · 미술관·구시가지·건축 관광" },
   { id:5, date:"2026-09-06", weekday:"일요일", cities:"로테르담 → 암스테르담 → 오슬로", lodging:"Clarion Hotel The Hub", summary:"KLM 직항으로 오슬로 이동 · 오페라하우스·MUNCH·Sørenga 관광 · 노르웨이 업무일정 없음" },
@@ -39,8 +39,8 @@ const e = (id, day_id, time_start, time_end, title, category, location, transpor
 });
 
 export const events = [
-  e("d1-01",1,"23:45","9/3 06:05","SK988 인천(ICN) → 코펜하겐(CPH) 직항","항공","ICN → CPH","SAS","13시간 20분",{booking_url:"https://www.google.com/travel/flights",notes:"9월 2일 수요일 저녁 출발. 실시간 총액과 실제 출발시각은 항공·숙박 탭에서 자동 갱신."}),
-  e("d1-02",2,"06:05","06:50","입국·수하물·7인승 렌터카 인수","입국·교통","Copenhagen Airport","도보+렌터카","45분",{notes:"4인+수하물. 덴마크→독일→네덜란드 편도반납·국경통과·완전자차를 반드시 포함."}),
+  e("d1-01",1,"23:35","9/3 06:00","SK988 인천(ICN) → 코펜하겐(CPH) 직항","항공","ICN → CPH","SAS","13시간 25분",{booking_url:"https://www.google.com/travel/flights",notes:"9월 2일 수요일 저녁 출발. 실시간 총액과 실제 출발시각은 항공·숙박 탭에서 자동 갱신."}),
+  e("d1-02",2,"06:00","06:50","입국·수하물·7인승 렌터카 인수","입국·교통","Copenhagen Airport","도보+렌터카","50분",{notes:"4인+수하물. 덴마크→독일→네덜란드 편도반납·국경통과·완전자차를 반드시 포함."}),
   e("d1-03",2,"06:50","09:35","코펜하겐공항 → Blue Water Shipping","교통","CPH → Billund","렌터카","약 2시간 45분"),
   e("d1-04",2,"10:00","11:30","Blue Water Shipping 방문","업무","지도 저장 좌표 55.7358995, 9.1513797","렌터카","90분",{official_url:"https://www.bws.net/",map_url:"https://www.google.com/maps/search/?api=1&query=55.7358995,9.1513797",notes:"공유 Google Maps에 있는 지점. 풍력부품 운송·보관·통관·설치지연 대응만 질의."}),
   e("d1-05",2,"11:40","14:20","LEGO House 관람·Mini Chef 점심","관광·식사","Billund","렌터카+도보","2시간 40분",{booking_url:"https://legohouse.com/en-gb/"}),
@@ -108,7 +108,7 @@ export const events = [
 ];
 
 export const flights = [
-  { id:"f1",day_id:1,date:"2026-09-02",flight_no:"SK988",origin:"ICN",destination:"CPH",depart_time:"23:45",arrive_time:"06:05+1",min_krw:null,max_krw:null,status:"9/2 저녁 직항·자동가격",alternative:"없음",url:"https://www.flysas.com/",notes:"4인 일반석·직항 최저가 자동조회. 실제 시각은 최신 운임 카드 우선.",sort_order:10 },
+  { id:"f1",day_id:1,date:"2026-09-02",flight_no:"SK988",origin:"ICN",destination:"CPH",depart_time:"23:35",arrive_time:"06:00+1",min_krw:null,max_krw:null,status:"9/2 저녁 직항·자동가격",alternative:"없음",url:"https://www.flysas.com/",notes:"4인 일반석·직항 최저가 자동조회. 실제 시각은 최신 운임 카드 우선.",sort_order:10 },
   { id:"f2",day_id:5,date:"2026-09-06",flight_no:"KLM 직항",origin:"AMS",destination:"OSL",depart_time:"09:20 권고",arrive_time:"11:05",min_krw:null,max_krw:null,status:"오전편 권고",alternative:"노선 최저가는 오후편 가능",url:"https://www.klm.com/",notes:"최저가와 일정 채택가를 분리 표시",sort_order:20 },
   { id:"f3",day_id:6,date:"2026-09-07",flight_no:"LH + CI",origin:"OSL",destination:"TPE",depart_time:"06:45",arrive_time:"06:15+1",min_krw:null,max_krw:null,status:"FRA 1회 환승",alternative:"AMS 1회 환승은 늦은 도착",url:"https://www.google.com/travel/flights",notes:"1회 이하 환승 최저가 자동조회",sort_order:30 },
   { id:"f4",day_id:10,date:"2026-09-11",flight_no:"HK Express 직항",origin:"RMQ",destination:"HKG",depart_time:"10:25 권고",arrive_time:"12:10",min_krw:null,max_krw:null,status:"오전편 권고",alternative:"노선 최저가는 오후편 가능",url:"https://www.hkexpress.com/en-tw/flights-from-taichung-to-hong-kong",notes:"홍콩 관광시간 확보",sort_order:40 },
@@ -159,10 +159,10 @@ export const restaurants = [
 ];
 
 export const mapPoints = [
-  {id:"p01",day_id:1,name:"인천공항",lat:37.458666,lng:126.4419679,sort_order:1,segment_type:"flight",popup:"9/2 23:45 SK988 출발",url:""},
-  {id:"p02",day_id:1,name:"코펜하겐공항",lat:55.6181,lng:12.6560,sort_order:2,segment_type:"flight",popup:"9/3 06:05 도착",url:""},
+  {id:"p01",day_id:1,name:"인천공항",lat:37.458666,lng:126.4419679,sort_order:1,segment_type:"flight",popup:"9/2 23:35 SK988 출발",url:""},
+  {id:"p02",day_id:1,name:"코펜하겐공항",lat:55.6181,lng:12.6560,sort_order:2,segment_type:"flight",popup:"9/3 06:00 도착",url:""},
 
-  {id:"p02b",day_id:2,name:"코펜하겐공항",lat:55.6181,lng:12.6560,sort_order:1,segment_type:"car",popup:"06:05 도착·렌터카 인수",url:""},
+  {id:"p02b",day_id:2,name:"코펜하겐공항",lat:55.6181,lng:12.6560,sort_order:1,segment_type:"car",popup:"06:00 도착·렌터카 인수",url:""},
   {id:"p03",day_id:2,name:"Blue Water Shipping",lat:55.7358995,lng:9.1513797,sort_order:2,segment_type:"car",popup:"지도 허용 업무장소",url:"https://www.bws.net/"},
   {id:"p04",day_id:2,name:"LEGO House",lat:55.7308,lng:9.1153,sort_order:3,segment_type:"car",popup:"관광·점심",url:"https://legohouse.com/"},
   {id:"p05",day_id:2,name:"Men at Sea",lat:55.4894,lng:8.4123,sort_order:4,segment_type:"car",popup:"관광",url:""},
