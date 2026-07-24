@@ -31,7 +31,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install pinned fare reader
-        run: python -m pip install "fast-flights==3.0.1"
+        run: python -m pip install "fast-flights==3.0.1" "typing-extensions>=4.12,<5"
 
       - name: Query Google Flights
         id: prices
