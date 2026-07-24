@@ -7,6 +7,7 @@ const SUPABASE_URL = "https://wrozrvsplryfjgckmxvl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_g1uvMhgnSTskTzGCKglOag_cIVpzZ2a";
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const MARKER = `__${APP_VERSION}__`;
+const LOCAL_ORDER_KEY = `offshore-trip-event-order-${APP_VERSION}`;
 
 const TABLES = ["days","events","flights","hotels","meetings","transport_options","restaurants","map_points","budget_items","team_notes"];
 const clone = (x) => JSON.parse(JSON.stringify(x));
@@ -45,6 +46,27 @@ function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("sh
 function openModal(id){ const el=document.getElementById(id); el.classList.add("open"); el.setAttribute("aria-hidden","false"); }
 function closeModal(id){ const el=document.getElementById(id); el.classList.remove("open"); el.setAttribute("aria-hidden","true"); }
 function isEditable(){ return !!state.user && state.mode === "cloud"; }
+function isReorderable(){ return isEditable() || state.mode === "local"; }
+
+function restoreLocalEventOrder(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(LOCAL_ORDER_KEY)||"{}");
+    for(const [dayId,ids] of Object.entries(saved)){
+      const rank=new Map((ids||[]).map((id,index)=>[String(id),(index+1)*10]));
+      state.data.events.filter(e=>String(e.day_id)===String(dayId)).forEach(e=>{
+        if(rank.has(String(e.id)))e.sort_order=rank.get(String(e.id));
+      });
+    }
+  }catch(err){console.warn("로컬 일정 순서를 복원하지 못했습니다.",err);}
+}
+
+function saveLocalEventOrder(rows){
+  try{
+    const saved=JSON.parse(localStorage.getItem(LOCAL_ORDER_KEY)||"{}");
+    saved[String(state.activeDay)]=rows.map(row=>String(row.id));
+    localStorage.setItem(LOCAL_ORDER_KEY,JSON.stringify(saved));
+  }catch(err){console.warn("로컬 일정 순서를 저장하지 못했습니다.",err);}
+}
 
 async function init(){
   bindStaticEvents();
@@ -114,7 +136,7 @@ function selectedFlightTotal(){
   let total=0;
   for(const row of rows){
     const fare=fares[flightFareId(row)];
-    if(!fare?.selected?.total_krw || fare.date!==row.date)return null;
+    if(fare?.status!=="ok" || !fare?.selected?.total_krw || fare.date!==row.date)return null;
     total+=Number(fare.selected.total_krw);
   }
   return total;
@@ -146,11 +168,12 @@ async function detectCloudVersion(){
     const { data, error } = await supabase.from("team_notes").select("id,content").eq("content", MARKER).limit(1);
     if(error) throw error;
     if(data?.length){ await loadCloud(); }
-    else { state.mode="local"; state.data={...clone(officialSeed),team_notes:[]}; }
+    else { state.mode="local"; state.data={...clone(officialSeed),team_notes:[]}; restoreLocalEventOrder(); }
   }catch(err){
     console.warn(err);
     state.mode="local";
     state.data={...clone(officialSeed),team_notes:[]};
+    restoreLocalEventOrder();
   }
 }
 
@@ -196,7 +219,7 @@ function renderStats(){
   const totalMin=budget.complete?budget.totalMin:tripMeta.budgetMin;
   const totalMax=budget.complete?budget.totalMax:tripMeta.budgetMax;
   const items=[
-    ["기간",tripMeta.dates,"11일 · 9/1 야간 출국"],
+    ["기간",tripMeta.dates,"11일 · 9/2 저녁 출국"],
     ["숙박",`호텔 ${tripMeta.hotelNights}박 + 기내 ${tripMeta.flightNights}박`,"홍콩 무숙박 당일관광"],
     ["대만 체류","9/8 06:15–9/11 10:25","약 3일 4시간"],
     ["4인 총예산",`${fmt(totalMin/10000)}만~${fmt(totalMax/10000)}만원`,"항공 최신 조회가·10% 예비비 포함"],
@@ -212,7 +235,7 @@ function renderHeaderState(){
     banner.innerHTML=`공개 공동편집 모드 · 로그인 불필요 · 변경사항 실시간 반영 · 개인정보·담당자 연락처 입력 금지`;
   }else{
     banner.className="status-banner";
-    banner.innerHTML=`검수된 GitHub 기준안을 표시 중입니다. 익명 공동편집 연결이 아직 허용되지 않아 현재는 읽기 전용입니다.`;
+    banner.innerHTML=`검수된 GitHub 기준안을 표시 중입니다. 일정 카드 순서 이동은 로그인 없이 이 기기에 저장됩니다. 기준안 안전 적용 후에는 팀 공동 데이터로 반영됩니다.`;
   }
   sync.hidden=!state.user || state.mode==="cloud";
 }
@@ -239,14 +262,14 @@ function renderTimeline(){
   const d=state.data.days.find(x=>x.id===state.activeDay) || state.data.days[0];
   const evs=state.data.events.filter(x=>Number(x.day_id)===Number(d.id)).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
   return `${renderDayTabs()}
-    <div class="day-summary"><div class="day-summary-title"><h2>Day ${d.id} · ${esc(d.date)} ${esc(d.weekday)}</h2>${isEditable()?`<label class="date-shifter">날짜 변경 <input type="date" id="active-day-date" value="${esc(d.date)}"><button class="btn small" id="shift-day-date">이 날짜부터 연쇄 이동</button></label>`:""}</div><p>${esc(d.cities)} · 숙박: ${esc(d.lodging)}</p><p>${esc(d.summary)}</p><p class="drag-hint">일정 카드를 위아래로 끌어 순서를 바꿀 수 있습니다. 변경된 Day를 선택하면 지도도 즉시 따라갑니다.</p></div>
+    <div class="day-summary"><div class="day-summary-title"><h2>Day ${d.id} · ${esc(d.date)} ${esc(d.weekday)}</h2>${isEditable()?`<label class="date-shifter">날짜 변경 <input type="date" id="active-day-date" value="${esc(d.date)}"><button class="btn small" id="shift-day-date">이 날짜부터 연쇄 이동</button></label>`:""}</div><p>${esc(d.cities)} · 숙박: ${esc(d.lodging)}</p><p>${esc(d.summary)}</p><p class="drag-hint">모바일은 ↕ 끌기 손잡이를 누른 채 이동하거나 ↑·↓ 버튼을 사용하세요. PC에서는 카드 자체를 끌 수 있습니다. ${isEditable()?"변경 순서는 공동 데이터에 즉시 반영됩니다.":"현재 순서는 이 기기에 저장되며, 기준안 안전 적용 후에는 팀에 공동 반영됩니다."}</p></div>
     <div class="section-head"><h2>상세 일정</h2>${isEditable()?`<button class="btn small primary" data-add="events">+ 일정 추가</button>`:""}</div>
     <div class="cards">${evs.length?evs.map(renderEventCard).join(""):`<div class="empty">일정이 없습니다.</div>`}</div>`;
 }
 
 function renderEventCard(e){
   const links=[e.booking_url&&["예약",e.booking_url],e.official_url&&["공식",e.official_url],e.map_url&&["지도",e.map_url]].filter(Boolean);
-  return `<article class="event-card" draggable="${isEditable()}" data-event-id="${esc(e.id)}">
+  return `<article class="event-card" draggable="${isReorderable()}" data-event-id="${esc(e.id)}">
     <div class="event-time">${esc(e.time_start||"")}${e.time_end?`\n~ ${esc(e.time_end)}`:""}</div>
     <div><div class="event-title">${e.category?`<span class="chip">${esc(e.category)}</span>`:""}<span>${esc(e.title)}</span></div>
       <div class="meta">${e.location?`<span>📍 ${esc(e.location)}</span>`:""}${e.transport?`<span>🚗 ${esc(e.transport)}</span>`:""}${e.duration?`<span>⏱ ${esc(e.duration)}</span>`:""}</div>
@@ -255,7 +278,11 @@ function renderEventCard(e){
       ${e.notes?`<div class="notes">${esc(e.notes)}</div>`:""}
       ${links.length?`<div class="link-row">${links.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noreferrer">${l} ↗</a>`).join("")}</div>`:""}
     </div>
-    <div class="event-actions">${isEditable()?`<button class="btn small" data-edit-table="events" data-id="${esc(e.id)}">편집</button>`:""}</div>
+    <div class="event-actions">${isReorderable()?`
+      <button class="drag-handle" type="button" data-drag-handle="${esc(e.id)}" aria-label="${esc(e.title)} 일정 끌어서 이동">↕ <span>끌기</span></button>
+      <button class="btn small move-btn" type="button" data-move-event="${esc(e.id)}" data-direction="-1" aria-label="${esc(e.title)} 위로 이동">↑</button>
+      <button class="btn small move-btn" type="button" data-move-event="${esc(e.id)}" data-direction="1" aria-label="${esc(e.title)} 아래로 이동">↓</button>
+      ${isEditable()?`<button class="btn small" data-edit-table="events" data-id="${esc(e.id)}">편집</button>`:""}`:""}</div>
   </article>`;
 }
 
@@ -365,7 +392,7 @@ function eventFareInline(event){
   if(!fareId)return "";
   const row=(state.data.flights||[]).find(f=>flightFareId(f)===fareId);
   const fare=state.livePrices?.fares?.[fareId];
-  if(!row || !fare?.selected?.total_krw || fare.date!==row.date){
+  if(!row || fare?.status!=="ok" || !fare?.selected?.total_krw || fare.date!==row.date){
     return `<div class="event-live-fare stale">자동 운임 재조회 필요${row?` · <a href="${esc(flightGoogleUrl(row))}" target="_blank" rel="noreferrer">현재가 열기 ↗</a>`:""}</div>`;
   }
   const lowest=fare.lowest,selected=fare.selected;
@@ -400,7 +427,8 @@ function cellValue(r,f){
 
 function renderBudget(){
   const summary=budgetSummary(),{rows,subMin,subMax}=summary;const max=Math.max(...rows.map(r=>Number(r.max_krw)||0),1);
-  return `<div class="status-banner cloud price-banner"><b>항공비 자동 반영</b> · 5개 항공 구간 일정 채택가 ₩${fmt(selectedFlightTotal())} · ${esc(koreaStamp(state.livePrices?.generated_at))} 조회. 숙박·교통·식비·행사비는 계획범위입니다.</div>
+  const flightTotal=selectedFlightTotal();
+  return `<div class="status-banner ${flightTotal==null?"warning":"cloud"} price-banner"><b>항공비 자동 반영</b> · ${flightTotal==null?"변경된 날짜 운임 재조회 중":`5개 항공 구간 일정 채택가 ₩${fmt(flightTotal)}`} · ${esc(koreaStamp(state.livePrices?.generated_at))} 조회. 숙박·교통·식비·행사비는 계획범위입니다.</div>
     <div class="budget-total"><div class="stat"><span>4인 소계</span><strong>${money(subMin,subMax)}</strong></div><div class="stat"><span>10% 예비비 포함</span><strong>${money(subMin*1.1,subMax*1.1)}</strong></div><div class="stat"><span>1인 환산</span><strong>${money(subMin*1.1/4,subMax*1.1/4)}</strong></div><div class="stat"><span>대만 체류</span><strong>약 3일 4시간</strong></div></div>
     <div class="budget-bars">${rows.map(r=>`<div class="budget-row"><div class="top"><b>${esc(r.category)} · ${esc(r.label)}</b><span>${money(r.min_krw,r.max_krw)}</span></div><div class="bar"><span style="width:${Math.max(3,Number(r.max_krw)/max*100)}%"></span></div><div class="notes">${esc(r.notes||"")}</div></div>`).join("")}</div><div style="height:20px"></div>${renderDataSection("budget_items")}`;
 }
@@ -471,18 +499,86 @@ function bindDynamicEvents(){
     toast(ok?"최신 운임 스냅샷을 다시 읽었습니다.":"운임 파일을 불러오지 못했습니다.");
   };
   let dragged=null;
+  const clearDragState=()=>{
+    $$(".event-card.dragging,.event-card.drop-target").forEach(card=>card.classList.remove("dragging","drop-target"));
+    dragged=null;
+  };
   $$(".event-card[draggable='true']").forEach(card=>{
     card.ondragstart=()=>{dragged=card.dataset.eventId;card.classList.add("dragging");};
-    card.ondragend=()=>card.classList.remove("dragging");
+    card.ondragend=clearDragState;
     card.ondragover=e=>e.preventDefault();
-    card.ondrop=async e=>{e.preventDefault();const target=card.dataset.eventId;if(dragged&&target&&dragged!==target)await reorderEvents(dragged,target);};
+    card.ondragenter=()=>{if(dragged&&dragged!==card.dataset.eventId)card.classList.add("drop-target");};
+    card.ondragleave=()=>card.classList.remove("drop-target");
+    card.ondrop=async e=>{
+      e.preventDefault();
+      const source=dragged,target=card.dataset.eventId;
+      clearDragState();
+      if(source&&target&&source!==target)await reorderEvents(source,target);
+    };
   });
+  $$("[data-move-event]").forEach(button=>{
+    button.onclick=()=>moveEventBy(button.dataset.moveEvent,Number(button.dataset.direction));
+  });
+
+  let touchDrag=null;
+  $$("[data-drag-handle]").forEach(handle=>{
+    handle.onpointerdown=e=>{
+      if(e.pointerType==="mouse" || e.button!==0)return;
+      const card=handle.closest(".event-card");
+      if(!card)return;
+      e.preventDefault();
+      touchDrag={pointerId:e.pointerId,sourceId:card.dataset.eventId,targetId:card.dataset.eventId};
+      card.classList.add("dragging");
+      try{handle.setPointerCapture(e.pointerId);}catch(_err){}
+    };
+    handle.onpointermove=e=>{
+      if(!touchDrag || touchDrag.pointerId!==e.pointerId)return;
+      e.preventDefault();
+      const target=document.elementFromPoint(e.clientX,e.clientY)?.closest(".event-card");
+      $$(".event-card.drop-target").forEach(card=>card.classList.remove("drop-target"));
+      if(target && target.dataset.eventId!==touchDrag.sourceId){
+        target.classList.add("drop-target");
+        touchDrag.targetId=target.dataset.eventId;
+      }
+      const edge=72;
+      if(e.clientY<edge)window.scrollBy({top:-14,behavior:"auto"});
+      else if(e.clientY>window.innerHeight-edge)window.scrollBy({top:14,behavior:"auto"});
+    };
+    handle.onpointerup=async e=>{
+      if(!touchDrag || touchDrag.pointerId!==e.pointerId)return;
+      const {sourceId,targetId}=touchDrag;
+      touchDrag=null;
+      try{handle.releasePointerCapture(e.pointerId);}catch(_err){}
+      clearDragState();
+      if(sourceId&&targetId&&sourceId!==targetId)await reorderEvents(sourceId,targetId);
+    };
+    handle.onpointercancel=e=>{
+      if(touchDrag?.pointerId!==e.pointerId)return;
+      touchDrag=null;
+      clearDragState();
+    };
+  });
+}
+
+async function moveEventBy(eventId,direction){
+  const rows=state.data.events.filter(x=>Number(x.day_id)===Number(state.activeDay)).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
+  const index=rows.findIndex(x=>String(x.id)===String(eventId));
+  const target=rows[index+direction];
+  if(index<0 || !target)return toast(direction<0?"이미 첫 일정입니다.":"이미 마지막 일정입니다.");
+  await reorderEvents(eventId,target.id);
 }
 
 async function reorderEvents(sourceId,targetId){
   const rows=state.data.events.filter(x=>Number(x.day_id)===Number(state.activeDay)).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
   const from=rows.findIndex(x=>String(x.id)===String(sourceId)),to=rows.findIndex(x=>String(x.id)===String(targetId));if(from<0||to<0)return;
-  const [moved]=rows.splice(from,1);rows.splice(to,0,moved);showLoader(true);
+  const [moved]=rows.splice(from,1);rows.splice(to,0,moved);
+  rows.forEach((row,index)=>{row.sort_order=(index+1)*10;});
+  if(state.mode!=="cloud"){
+    saveLocalEventOrder(rows);
+    renderContent();
+    return toast("일정 순서를 이 기기에 저장했습니다. 지도에서 같은 Day를 열면 갱신된 일정과 함께 확인할 수 있습니다.");
+  }
+  showLoader(true);
   try{for(let i=0;i<rows.length;i++){const{error}=await supabase.from("events").update({sort_order:(i+1)*10}).eq("id",rows[i].id);if(error)throw error;}await loadCloud();render();toast("일정 순서와 지도를 갱신했습니다.");}catch(err){toast(`순서 변경 실패: ${err.message}`);}finally{showLoader(false);}
 }
 async function shiftDates(){
@@ -542,6 +638,7 @@ async function syncOfficialSeed(){
     }
     {const {error}=await supabase.from("team_notes").delete().eq("author_name","SYSTEM").like("content","__EU_FIRST_%");if(error)throw error;}
     {const {error}=await supabase.from("team_notes").insert({content:MARKER,author_name:"SYSTEM"});if(error)throw error;}
+    localStorage.removeItem(LOCAL_ORDER_KEY);
     await loadCloud();toast("기준안을 안전 적용했습니다. 기존 팀 메모는 보존됐습니다.");render();
   }catch(err){
     console.error(err);
