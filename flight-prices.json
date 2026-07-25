@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-25T18:09:39Z",
-  "fresh_until": "2026-07-25T20:09:39Z",
+  "generated_at": "2026-07-25T19:34:28Z",
+  "fresh_until": "2026-07-25T21:34:28Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -131,8 +131,7 @@
       },
       "selected_reason": "출국 직항 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 235 (char 234)"
+      "status": "ok"
     },
     "eu_f2": {
       "label": "유럽 선행 · 암스테르담 → 오슬로",
@@ -184,8 +183,7 @@
       },
       "selected_reason": "로테르담 출발시간과 오슬로 관광시간 균형",
       "selected_fallback": true,
-      "status": "stale",
-      "error": "Extra data: line 1 column 235 (char 234)"
+      "status": "ok"
     },
     "eu_f3": {
       "label": "유럽 선행 · 오슬로 → 타이베이",
@@ -311,7 +309,8 @@
       },
       "selected_reason": "홍콩을 삭제한 최저가 직항 귀국",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "eu_hk_1": {
       "label": "비교 · 타이중 → 홍콩",
@@ -363,7 +362,8 @@
       },
       "selected_reason": "삭제한 홍콩 당일경유 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "eu_hk_2": {
       "label": "비교 · 홍콩 → 인천",
@@ -593,8 +593,7 @@
       },
       "selected_reason": "오슬로 관광시간 확보",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 235 (char 234)"
+      "status": "ok"
     },
     "tw_f4": {
       "label": "대만 선행 · 오슬로 → 암스테르담",
@@ -646,7 +645,8 @@
       },
       "selected_reason": "네덜란드 평일 업무시간 확보",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "error sending request for url (https://www.google.com/travel/flights?tfs=GhwSCjIwMjYtMDktMDkoAGoFEgNPU0xyBRIDQU1TQgQBAQEBSAGYAQI%3D&hl=ko&curr=KRW) > client error (Connect) > Connection reset by peer (os error 104)"
     },
     "tw_f5": {
       "label": "대만 선행 · 암스테르담 → 인천",
@@ -702,8 +702,8 @@
     }
   },
   "errors": [
-    "eu_out_direct: Extra data: line 1 column 235 (char 234)",
-    "eu_f2: Extra data: line 1 column 235 (char 234)",
-    "tw_f3: Extra data: line 1 column 235 (char 234)"
+    "eu_hk_1: Extra data: line 1 column 235 (char 234)",
+    "eu_f4: Extra data: line 1 column 235 (char 234)",
+    "tw_f4: error sending request for url (https://www.google.com/travel/flights?tfs=GhwSCjIwMjYtMDktMDkoAGoFEgNPU0xyBRIDQU1TQgQBAQEBSAGYAQI%3D&hl=ko&curr=KRW) > client error (Connect) > Connection reset by peer (os error 104)"
   ]
 }
