@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-25T19:34:28Z",
-  "fresh_until": "2026-07-25T21:34:28Z",
+  "generated_at": "2026-07-25T21:08:51Z",
+  "fresh_until": "2026-07-25T23:08:51Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -309,8 +309,7 @@
       },
       "selected_reason": "홍콩을 삭제한 최저가 직항 귀국",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 235 (char 234)"
+      "status": "ok"
     },
     "eu_hk_1": {
       "label": "비교 · 타이중 → 홍콩",
@@ -362,8 +361,7 @@
       },
       "selected_reason": "삭제한 홍콩 당일경유 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 235 (char 234)"
+      "status": "ok"
     },
     "eu_hk_2": {
       "label": "비교 · 홍콩 → 인천",
@@ -372,8 +370,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNIS0dyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 681911,
-        "per_person_krw": 170478,
+        "total_krw": 667022,
+        "per_person_krw": 166756,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -384,17 +382,17 @@
             "origin": "HKG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "16:55",
+            "departure_time": "00:50",
             "arrival_date": "2026-09-11",
-            "arrival_time": "21:35",
+            "arrival_time": "05:30",
             "duration_minutes": 220,
             "aircraft": "Airbus A321neo"
           }
         ]
       },
       "selected": {
-        "total_krw": 681911,
-        "per_person_krw": 170478,
+        "total_krw": 667022,
+        "per_person_krw": 166756,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -405,16 +403,16 @@
             "origin": "HKG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "21:00",
-            "arrival_date": "2026-09-12",
-            "arrival_time": "01:40",
+            "departure_time": "00:50",
+            "arrival_date": "2026-09-11",
+            "arrival_time": "05:30",
             "duration_minutes": 220,
             "aircraft": "Airbus A321neo"
           }
         ]
       },
       "selected_reason": "삭제한 홍콩 당일경유 비교",
-      "selected_fallback": false,
+      "selected_fallback": true,
       "status": "ok"
     },
     "tw_f1": {
@@ -645,8 +643,7 @@
       },
       "selected_reason": "네덜란드 평일 업무시간 확보",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "error sending request for url (https://www.google.com/travel/flights?tfs=GhwSCjIwMjYtMDktMDkoAGoFEgNPU0xyBRIDQU1TQgQBAQEBSAGYAQI%3D&hl=ko&curr=KRW) > client error (Connect) > Connection reset by peer (os error 104)"
+      "status": "ok"
     },
     "tw_f5": {
       "label": "대만 선행 · 암스테르담 → 인천",
@@ -701,9 +698,5 @@
       "status": "ok"
     }
   },
-  "errors": [
-    "eu_hk_1: Extra data: line 1 column 235 (char 234)",
-    "eu_f4: Extra data: line 1 column 235 (char 234)",
-    "tw_f4: error sending request for url (https://www.google.com/travel/flights?tfs=GhwSCjIwMjYtMDktMDkoAGoFEgNPU0xyBRIDQU1TQgQBAQEBSAGYAQI%3D&hl=ko&curr=KRW) > client error (Connect) > Connection reset by peer (os error 104)"
-  ]
+  "errors": []
 }
