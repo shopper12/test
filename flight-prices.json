@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-24T23:16:20Z",
-  "fresh_until": "2026-07-25T01:16:20Z",
+  "generated_at": "2026-07-25T00:17:13Z",
+  "fresh_until": "2026-07-25T02:17:13Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -192,8 +192,8 @@
       "destination": "TPE",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAWoFEgNPU0xyBRIDVFBFQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5374141,
-        "per_person_krw": 1343535,
+        "total_krw": 5371093,
+        "per_person_krw": 1342773,
         "airlines": [
           "SAS항공",
           "중화항공"
@@ -224,8 +224,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5531415,
-        "per_person_krw": 1382854,
+        "total_krw": 5528367,
+        "per_person_krw": 1382092,
         "airlines": [
           "루프트한자",
           "중화항공"
@@ -266,8 +266,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNSTVFyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 920742,
-        "per_person_krw": 230186,
+        "total_krw": 920087,
+        "per_person_krw": 230022,
         "airlines": [
           "티웨이항공"
         ],
@@ -287,8 +287,8 @@
         ]
       },
       "selected": {
-        "total_krw": 920742,
-        "per_person_krw": 230186,
+        "total_krw": 920087,
+        "per_person_krw": 230022,
         "airlines": [
           "티웨이항공"
         ],
@@ -318,8 +318,8 @@
       "destination": "HKG",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNSTVFyBRIDSEtHQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 391767,
-        "per_person_krw": 97942,
+        "total_krw": 391488,
+        "per_person_krw": 97872,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -339,8 +339,8 @@
         ]
       },
       "selected": {
-        "total_krw": 444123,
-        "per_person_krw": 111031,
+        "total_krw": 443807,
+        "per_person_krw": 110952,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -474,8 +474,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDUoAWoFEgNUUEVyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 33461896,
-        "per_person_krw": 8365474,
+        "total_krw": 33438114,
+        "per_person_krw": 8359528,
         "airlines": [
           "중화항공",
           "오스트리아항공"
@@ -506,8 +506,8 @@
         ]
       },
       "selected": {
-        "total_krw": 33461896,
-        "per_person_krw": 8365474,
+        "total_krw": 33438114,
+        "per_person_krw": 8359528,
         "airlines": [
           "중화항공",
           "오스트리아항공"
