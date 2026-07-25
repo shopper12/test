@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-25T14:02:15Z",
-  "fresh_until": "2026-07-25T16:02:15Z",
+  "generated_at": "2026-07-25T15:19:34Z",
+  "fresh_until": "2026-07-25T17:19:34Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -16,64 +16,64 @@
       "destination": "CPH",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDIoAWoFEgNJQ05yBRIDQ1BIQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 3667200,
-        "per_person_krw": 916800,
+        "total_krw": 3441600,
+        "per_person_krw": 860400,
         "airlines": [
-          "터키항공"
+          "에티하드항공"
         ],
-        "carrier_code": "TK",
+        "carrier_code": "EY",
         "stops": 1,
         "legs": [
           {
             "origin": "ICN",
-            "destination": "IST",
+            "destination": "AUH",
             "departure_date": "2026-09-02",
-            "departure_time": "10:15",
+            "departure_time": "18:20",
             "arrival_date": "2026-09-02",
-            "arrival_time": "15:45",
-            "duration_minutes": 690,
-            "aircraft": "Boeing 777"
+            "arrival_time": "23:05",
+            "duration_minutes": 585,
+            "aircraft": "Airbus A350"
           },
           {
-            "origin": "IST",
+            "origin": "AUH",
             "destination": "CPH",
-            "departure_date": "2026-09-02",
-            "departure_time": "21:20",
-            "arrival_date": "2026-09-02",
-            "arrival_time": "23:35",
-            "duration_minutes": 195,
-            "aircraft": "Boeing 737"
+            "departure_date": "2026-09-04",
+            "departure_time": "02:25",
+            "arrival_date": "2026-09-04",
+            "arrival_time": "07:10",
+            "duration_minutes": 405,
+            "aircraft": "Boeing 787"
           }
         ]
       },
       "selected": {
-        "total_krw": 3667200,
-        "per_person_krw": 916800,
+        "total_krw": 3441600,
+        "per_person_krw": 860400,
         "airlines": [
-          "터키항공"
+          "에티하드항공"
         ],
-        "carrier_code": "TK",
+        "carrier_code": "EY",
         "stops": 1,
         "legs": [
           {
             "origin": "ICN",
-            "destination": "IST",
+            "destination": "AUH",
             "departure_date": "2026-09-02",
-            "departure_time": "10:15",
+            "departure_time": "18:20",
             "arrival_date": "2026-09-02",
-            "arrival_time": "15:45",
-            "duration_minutes": 690,
-            "aircraft": "Boeing 777"
+            "arrival_time": "23:05",
+            "duration_minutes": 585,
+            "aircraft": "Airbus A350"
           },
           {
-            "origin": "IST",
+            "origin": "AUH",
             "destination": "CPH",
-            "departure_date": "2026-09-02",
-            "departure_time": "21:20",
-            "arrival_date": "2026-09-02",
-            "arrival_time": "23:35",
-            "duration_minutes": 195,
-            "aircraft": "Boeing 737"
+            "departure_date": "2026-09-04",
+            "departure_time": "02:25",
+            "arrival_date": "2026-09-04",
+            "arrival_time": "07:10",
+            "duration_minutes": 405,
+            "aircraft": "Boeing 787"
           }
         ]
       },
@@ -539,7 +539,8 @@
       },
       "selected_reason": "일요일 오후 함부르크 관광시간 확보",
       "selected_fallback": true,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "tw_f3": {
       "label": "대만 선행 · 빌룬 → 오슬로",
@@ -591,7 +592,8 @@
       },
       "selected_reason": "오슬로 관광시간 확보",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "tw_f4": {
       "label": "대만 선행 · 오슬로 → 암스테르담",
@@ -698,5 +700,8 @@
       "status": "ok"
     }
   },
-  "errors": []
+  "errors": [
+    "tw_f2: Extra data: line 1 column 235 (char 234)",
+    "tw_f3: Extra data: line 1 column 235 (char 234)"
+  ]
 }
