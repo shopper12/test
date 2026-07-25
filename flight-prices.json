@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-25T04:28:16Z",
-  "fresh_until": "2026-07-25T06:28:16Z",
+  "generated_at": "2026-07-25T07:28:44Z",
+  "fresh_until": "2026-07-25T09:28:44Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -47,38 +47,38 @@
         ]
       },
       "selected": {
-        "total_krw": 3856800,
-        "per_person_krw": 964200,
+        "total_krw": 3667200,
+        "per_person_krw": 916800,
         "airlines": [
-          "에미레이트항공"
+          "터키항공"
         ],
-        "carrier_code": "EK",
+        "carrier_code": "TK",
         "stops": 1,
         "legs": [
           {
             "origin": "ICN",
-            "destination": "DXB",
+            "destination": "IST",
             "departure_date": "2026-09-02",
-            "departure_time": "22:45",
-            "arrival_date": "2026-09-03",
-            "arrival_time": "03:15",
-            "duration_minutes": 570,
+            "departure_time": "10:15",
+            "arrival_date": "2026-09-02",
+            "arrival_time": "15:45",
+            "duration_minutes": 690,
             "aircraft": "Boeing 777"
           },
           {
-            "origin": "DXB",
+            "origin": "IST",
             "destination": "CPH",
-            "departure_date": "2026-09-03",
-            "departure_time": "08:20",
-            "arrival_date": "2026-09-03",
-            "arrival_time": "13:15",
-            "duration_minutes": 415,
-            "aircraft": "Boeing 777"
+            "departure_date": "2026-09-02",
+            "departure_time": "21:20",
+            "arrival_date": "2026-09-02",
+            "arrival_time": "23:35",
+            "duration_minutes": 195,
+            "aircraft": "Boeing 737"
           }
         ]
       },
       "selected_reason": "직항 대비 대폭 절감하는 두바이 1회 환승",
-      "selected_fallback": false,
+      "selected_fallback": true,
       "status": "ok"
     },
     "eu_out_direct": {
