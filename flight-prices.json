@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-26T11:37:04Z",
-  "fresh_until": "2026-07-26T13:37:04Z",
+  "generated_at": "2026-07-26T13:56:12Z",
+  "fresh_until": "2026-07-26T15:56:12Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -361,7 +361,8 @@
       },
       "selected_reason": "삭제한 홍콩 당일경유 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 236 (char 235)"
     },
     "eu_hk_2": {
       "label": "비교 · 홍콩 → 인천",
@@ -413,7 +414,8 @@
       },
       "selected_reason": "삭제한 홍콩 당일경유 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 236 (char 235)"
     },
     "tw_f1": {
       "label": "대만 선행 · 인천 → 타이베이",
@@ -698,5 +700,8 @@
       "status": "ok"
     }
   },
-  "errors": []
+  "errors": [
+    "eu_hk_2: Extra data: line 1 column 236 (char 235)",
+    "eu_hk_1: Extra data: line 1 column 236 (char 235)"
+  ]
 }
