@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-26T00:13:22Z",
-  "fresh_until": "2026-07-26T02:13:22Z",
+  "generated_at": "2026-07-26T03:56:26Z",
+  "fresh_until": "2026-07-26T05:56:26Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -370,8 +370,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNIS0dyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 667022,
-        "per_person_krw": 166756,
+        "total_krw": 681911,
+        "per_person_krw": 170478,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -382,17 +382,17 @@
             "origin": "HKG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "00:50",
+            "departure_time": "07:15",
             "arrival_date": "2026-09-11",
-            "arrival_time": "05:30",
-            "duration_minutes": 220,
-            "aircraft": "Airbus A321neo"
+            "arrival_time": "11:50",
+            "duration_minutes": 215,
+            "aircraft": "Airbus A321"
           }
         ]
       },
       "selected": {
-        "total_krw": 667022,
-        "per_person_krw": 166756,
+        "total_krw": 681911,
+        "per_person_krw": 170478,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -403,11 +403,11 @@
             "origin": "HKG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "00:50",
+            "departure_time": "07:15",
             "arrival_date": "2026-09-11",
-            "arrival_time": "05:30",
-            "duration_minutes": 220,
-            "aircraft": "Airbus A321neo"
+            "arrival_time": "11:50",
+            "duration_minutes": 215,
+            "aircraft": "Airbus A321"
           }
         ]
       },
