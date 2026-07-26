@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-26T03:56:26Z",
-  "fresh_until": "2026-07-26T05:56:26Z",
+  "generated_at": "2026-07-26T06:48:38Z",
+  "fresh_until": "2026-07-26T08:48:38Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -16,64 +16,64 @@
       "destination": "CPH",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDIoAWoFEgNJQ05yBRIDQ1BIQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 3441600,
-        "per_person_krw": 860400,
+        "total_krw": 3667200,
+        "per_person_krw": 916800,
         "airlines": [
-          "에티하드항공"
+          "터키항공"
         ],
-        "carrier_code": "EY",
+        "carrier_code": "TK",
         "stops": 1,
         "legs": [
           {
             "origin": "ICN",
-            "destination": "AUH",
+            "destination": "IST",
             "departure_date": "2026-09-02",
-            "departure_time": "18:20",
+            "departure_time": "10:15",
             "arrival_date": "2026-09-02",
-            "arrival_time": "23:05",
-            "duration_minutes": 585,
-            "aircraft": "Airbus A350"
+            "arrival_time": "15:45",
+            "duration_minutes": 690,
+            "aircraft": "Boeing 777"
           },
           {
-            "origin": "AUH",
+            "origin": "IST",
             "destination": "CPH",
-            "departure_date": "2026-09-04",
-            "departure_time": "02:25",
-            "arrival_date": "2026-09-04",
-            "arrival_time": "07:10",
-            "duration_minutes": 405,
-            "aircraft": "Boeing 787"
+            "departure_date": "2026-09-02",
+            "departure_time": "21:20",
+            "arrival_date": "2026-09-02",
+            "arrival_time": "23:35",
+            "duration_minutes": 195,
+            "aircraft": "Boeing 737"
           }
         ]
       },
       "selected": {
-        "total_krw": 3441600,
-        "per_person_krw": 860400,
+        "total_krw": 3667200,
+        "per_person_krw": 916800,
         "airlines": [
-          "에티하드항공"
+          "터키항공"
         ],
-        "carrier_code": "EY",
+        "carrier_code": "TK",
         "stops": 1,
         "legs": [
           {
             "origin": "ICN",
-            "destination": "AUH",
+            "destination": "IST",
             "departure_date": "2026-09-02",
-            "departure_time": "18:20",
+            "departure_time": "10:15",
             "arrival_date": "2026-09-02",
-            "arrival_time": "23:05",
-            "duration_minutes": 585,
-            "aircraft": "Airbus A350"
+            "arrival_time": "15:45",
+            "duration_minutes": 690,
+            "aircraft": "Boeing 777"
           },
           {
-            "origin": "AUH",
+            "origin": "IST",
             "destination": "CPH",
-            "departure_date": "2026-09-04",
-            "departure_time": "02:25",
-            "arrival_date": "2026-09-04",
-            "arrival_time": "07:10",
-            "duration_minutes": 405,
-            "aircraft": "Boeing 787"
+            "departure_date": "2026-09-02",
+            "departure_time": "21:20",
+            "arrival_date": "2026-09-02",
+            "arrival_time": "23:35",
+            "duration_minutes": 195,
+            "aircraft": "Boeing 737"
           }
         ]
       },
@@ -192,10 +192,10 @@
       "destination": "TPE",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAWoFEgNPU0xyBRIDVFBFQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4729195,
-        "per_person_krw": 1182299,
+        "total_krw": 5371093,
+        "per_person_krw": 1342773,
         "airlines": [
-          "영국항공",
+          "SAS항공",
           "중화항공"
         ],
         "carrier_code": "multi",
@@ -205,11 +205,11 @@
             "origin": "OSL",
             "destination": "LHR",
             "departure_date": "2026-09-07",
-            "departure_time": "11:35",
+            "departure_time": "15:05",
             "arrival_date": "2026-09-07",
-            "arrival_time": "13:05",
-            "duration_minutes": 150,
-            "aircraft": "Airbus A320"
+            "arrival_time": "16:25",
+            "duration_minutes": 140,
+            "aircraft": "Airbus A320neo"
           },
           {
             "origin": "LHR",
