@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-28T03:35:13Z",
-  "fresh_until": "2026-07-28T05:35:13Z",
+  "generated_at": "2026-07-28T06:40:15Z",
+  "fresh_until": "2026-07-28T08:40:15Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "eu_f1": {
@@ -140,8 +140,8 @@
       "destination": "OSL",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDYoAGoFEgNBTVNyBRIDT1NMQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 1956188,
-        "per_person_krw": 489047,
+        "total_krw": 1951274,
+        "per_person_krw": 487818,
         "airlines": [
           "KLM"
         ],
@@ -161,8 +161,8 @@
         ]
       },
       "selected": {
-        "total_krw": 1982849,
-        "per_person_krw": 495712,
+        "total_krw": 1977869,
+        "per_person_krw": 494467,
         "airlines": [
           "KLM"
         ],
@@ -192,8 +192,8 @@
       "destination": "TPE",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAWoFEgNPU0xyBRIDVFBFQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5343969,
-        "per_person_krw": 1335992,
+        "total_krw": 5327070,
+        "per_person_krw": 1331768,
         "airlines": [
           "SAS항공",
           "중화항공"
@@ -224,8 +224,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5500448,
-        "per_person_krw": 1375112,
+        "total_krw": 5483055,
+        "per_person_krw": 1370764,
         "airlines": [
           "루프트한자",
           "중화항공"
@@ -257,8 +257,7 @@
       },
       "selected_reason": "1회 환승·9월 8일 오전 도착",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "status": "ok"
     },
     "eu_f4": {
       "label": "유럽 선행 · 타이중 → 인천 직항",
@@ -267,8 +266,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNSTVFyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 921540,
-        "per_person_krw": 230385,
+        "total_krw": 920586,
+        "per_person_krw": 230146,
         "airlines": [
           "티웨이항공"
         ],
@@ -288,8 +287,8 @@
         ]
       },
       "selected": {
-        "total_krw": 921540,
-        "per_person_krw": 230385,
+        "total_krw": 920586,
+        "per_person_krw": 230146,
         "airlines": [
           "티웨이항공"
         ],
@@ -319,8 +318,8 @@
       "destination": "HKG",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNSTVFyBRIDSEtHQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 392107,
-        "per_person_krw": 98027,
+        "total_krw": 391701,
+        "per_person_krw": 97925,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -340,8 +339,8 @@
         ]
       },
       "selected": {
-        "total_krw": 406562,
-        "per_person_krw": 101640,
+        "total_krw": 406141,
+        "per_person_krw": 101535,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -371,8 +370,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNIS0dyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 684430,
-        "per_person_krw": 171108,
+        "total_krw": 683231,
+        "per_person_krw": 170808,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -392,8 +391,8 @@
         ]
       },
       "selected": {
-        "total_krw": 684430,
-        "per_person_krw": 171108,
+        "total_krw": 683231,
+        "per_person_krw": 170808,
         "airlines": [
           "홍콩 익스프레스항공"
         ],
@@ -466,8 +465,7 @@
       },
       "selected_reason": "사용자 지정 저녁 출국 직항",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 235 (char 234)"
+      "status": "ok"
     },
     "tw_f2": {
       "label": "대만 선행 · 타이베이 → 함부르크",
@@ -476,8 +474,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDUoAWoFEgNUUEVyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 33491114,
-        "per_person_krw": 8372778,
+        "total_krw": 33456434,
+        "per_person_krw": 8364108,
         "airlines": [
           "중화항공",
           "오스트리아항공"
@@ -508,8 +506,8 @@
         ]
       },
       "selected": {
-        "total_krw": 33491114,
-        "per_person_krw": 8372778,
+        "total_krw": 33456434,
+        "per_person_krw": 8364108,
         "airlines": [
           "중화항공",
           "오스트리아항공"
@@ -550,8 +548,8 @@
       "destination": "OSL",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDgoAGoFEgNCTExyBRIDT1NMQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 560872,
-        "per_person_krw": 140218,
+        "total_krw": 559476,
+        "per_person_krw": 139869,
         "airlines": [
           "노르웨이항공"
         ],
@@ -571,8 +569,8 @@
         ]
       },
       "selected": {
-        "total_krw": 757044,
-        "per_person_krw": 189261,
+        "total_krw": 755159,
+        "per_person_krw": 188790,
         "airlines": [
           "SAS항공"
         ],
@@ -602,8 +600,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDkoAGoFEgNPU0xyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 614416,
-        "per_person_krw": 153604,
+        "total_krw": 613058,
+        "per_person_krw": 153264,
         "airlines": [
           "KLM"
         ],
@@ -623,8 +621,8 @@
         ]
       },
       "selected": {
-        "total_krw": 614416,
-        "per_person_krw": 153604,
+        "total_krw": 613058,
+        "per_person_krw": 153264,
         "airlines": [
           "KLM"
         ],
@@ -654,8 +652,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNBTVNyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 6933973,
-        "per_person_krw": 1733493,
+        "total_krw": 6916555,
+        "per_person_krw": 1729139,
         "airlines": [
           "KLM"
         ],
@@ -675,8 +673,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6933973,
-        "per_person_krw": 1733493,
+        "total_krw": 6916555,
+        "per_person_krw": 1729139,
         "airlines": [
           "KLM"
         ],
@@ -700,8 +698,5 @@
       "status": "ok"
     }
   },
-  "errors": [
-    "eu_f3: Extra data: line 1 column 234 (char 233)",
-    "tw_f1: Extra data: line 1 column 235 (char 234)"
-  ]
+  "errors": []
 }
