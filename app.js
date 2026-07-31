@@ -1,7 +1,7 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import {
   APP_VERSION, DEFAULT_ITINERARY, ITINERARIES,
-} from "./itinerary-data.js?v=PDF_ROUTE_COST_OPTIMIZED_V1";
+} from "./itinerary-data.js?v=PDF_ROUTE_COST_OPTIMIZED_V2";
 
 const SUPABASE_URL = "https://wrozrvsplryfjgckmxvl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_g1uvMhgnSTskTzGCKglOag_cIVpzZ2a";

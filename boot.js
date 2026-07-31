@@ -1,5 +1,5 @@
 try {
-  await import("./app.js?v=PDF_ROUTE_COST_OPTIMIZED_V1");
+  await import("./app.js?v=PDF_ROUTE_COST_OPTIMIZED_V2");
 } catch (error) {
   console.error(error);
   const main = document.querySelector("#main-content");

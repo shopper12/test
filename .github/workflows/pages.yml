@@ -31,7 +31,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           text = Path('app.js').read_text(encoding='utf-8')
-          text = text.replace('"./itinerary-data.js?v=PDF_ROUTE_COST_OPTIMIZED_V1"', '"./itinerary-data.mjs"')
+          text = text.replace('"./itinerary-data.js?v=PDF_ROUTE_COST_OPTIMIZED_V2"', '"./itinerary-data.mjs"')
           Path('/tmp/app.mjs').write_text(text, encoding='utf-8')
           PY
           node --check /tmp/itinerary-data.mjs

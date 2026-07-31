@@ -1,4 +1,4 @@
-export const APP_VERSION = "PDF_ROUTE_COST_OPTIMIZED_V1";
+export const APP_VERSION = "PDF_ROUTE_COST_OPTIMIZED_V2";
 export const DEFAULT_ITINERARY = "cost_optimized";
 
 const SOURCE_PLAN = "260729_공무 국외출장 계획서(초안)";
