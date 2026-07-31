@@ -818,12 +818,12 @@ function buildEvents(mode) {
       "d6-09",
       6,
       "18:00",
-      "23:45",
+      "9/8 00:05",
       "로테르담 → 함부르크",
       "교통",
       "Rotterdam Centraal → Hamburg Hbf",
       "NS/DB 국제열차",
-      "약 5시간 45분",
+      "약 6시간 5분",
       {
         booking_url:
           "https://www.nsinternational.com/en/germany/train-hamburg",
@@ -835,14 +835,14 @@ function buildEvents(mode) {
         max_cost_krw: 500_000,
         cost_basis: "4인·조기예약",
         notes:
-          "계획서의 AMS→HAM 항공을 대체. 공항 이동·보안검색을 빼면 문전시간 차이가 작고 현재 KLM 4인 운임보다 크게 저렴.",
+          "계획서의 AMS→HAM 항공을 대체. NS 표준 소요시간은 약 6시간 4분이며 실제 출발시각은 발권 시 확정. 공항 이동·보안검색을 빼면 문전시간 차이가 작고 현재 KLM 4인 운임보다 크게 저렴.",
       },
     ),
     e(
       "d6-10",
       6,
-      "23:45",
-      "00:10",
+      "00:05",
+      "00:30",
       "함부르크 중앙역 → 호텔",
       "교통·숙박",
       "Motel One Hamburg-Fleetinsel",
@@ -1493,7 +1493,7 @@ const transportOptions = [
     reason: "항공보다 4인 약 100만원 이상 절약 가능·도심 간 이동",
     min_krw: 210_000,
     max_krw: 500_000,
-    notes: "공식 조기운임 €33부터·약 5시간 15분~6시간",
+    notes: "네덜란드발 조기운임 €33부터·로테르담 기준 약 6시간 4분",
     sort_order: 30,
   },
   {
@@ -2034,7 +2034,7 @@ function buildMapPoints(mode) {
       lng: 10.0067,
       sort_order: 6,
       segment_type: "rail",
-      popup: "23:45 도착 예정",
+      popup: "약 00:05 도착",
       url: "",
     },
     {

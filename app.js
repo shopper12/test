@@ -347,7 +347,7 @@ function renderPlanDecision(){
       <div class="compare-grid">
         <article class="compare-card selected-card"><h3>추천안 항공 3구간</h3><p><b>${esc(fareText(selected))}</b></p><p>계획서 항공 표기 합계 4인 ₩${fmt(baseline)} 대비 ${selectedSaving==null?"차액 재조회 중":`약 ₩${fmt(selectedSaving)} 절감`}. 도시·업무장소 순서는 그대로 유지.</p></article>
         <article class="compare-card selected-card"><h3>TPE→CAN→AMS 채택</h3><p><b>${esc(fareText(savingMid))}</b></p><p>9/4 14:50 출발 → 9/5 06:35 도착. 중화항공 직항보다 ${directPremium==null?"차액 재조회 중":`4인 약 ₩${fmt(directPremium)} 절감`}하되 광저우에서 7시간 5분 환승.</p></article>
-        <article class="compare-card selected-card"><h3>로테르담→함부르크 철도</h3><p><b>4인 약 ₩210,000~₩500,000</b></p><p>NS/DB 조기운임 €33부터. 현재 조회 KLM 항공 ${oldHamburgFlight==null?"가격 재조회 중":`4인 ₩${fmt(oldHamburgFlight)}`}과 비교해 공항 이동·수속까지 줄임.</p></article>
+        <article class="compare-card selected-card"><h3>로테르담→함부르크 철도</h3><p><b>4인 약 ₩210,000~₩500,000</b></p><p>NS/DB 네덜란드발 조기운임 €33부터. 현재 조회 KLM 항공 ${oldHamburgFlight==null?"가격 재조회 중":`4인 ₩${fmt(oldHamburgFlight)}`}과 비교해 공항 이동·수속까지 줄임.</p></article>
         <article class="compare-card selected-card"><h3>에스비에르→CPH 육상 + IST 환승</h3><p><b>${esc(fareText(home))}</b></p><p>계획서 EBJ→ABZ→AMS→ICN 표기액보다 ${returnSaving==null?"차액 재조회 중":`4인 약 ₩${fmt(returnSaving)} 절감`}하고 9월 12일 08:35 도착.</p></article>
       </div>
     </section>`;
