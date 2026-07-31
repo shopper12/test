@@ -12,6 +12,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: live-flight-prices
@@ -54,3 +56,35 @@ jobs:
           git add flight-prices.json
           git commit -m "chore: refresh live flight prices"
           git push
+
+  deploy:
+    needs: refresh
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Validate refreshed snapshot
+        run: |
+          python -m json.tool flight-prices.json >/dev/null
+          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "8"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload refreshed dashboard
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Deploy refreshed dashboard
+        id: deployment
+        uses: actions/deploy-pages@v4
