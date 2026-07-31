@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-31T14:39:47Z",
-  "fresh_until": "2026-07-31T16:39:47Z",
+  "generated_at": "2026-07-31T16:57:08Z",
+  "fresh_until": "2026-07-31T18:57:08Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -16,8 +16,8 @@
       "destination": "RMQ",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDIoAGoFEgNJQ05yBRIDUk1RQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 550800,
-        "per_person_krw": 137700,
+        "total_krw": 490800,
+        "per_person_krw": 122700,
         "airlines": [
           "진에어"
         ],
@@ -37,8 +37,8 @@
         ]
       },
       "selected": {
-        "total_krw": 550800,
-        "per_person_krw": 137700,
+        "total_krw": 490800,
+        "per_person_krw": 122700,
         "airlines": [
           "진에어"
         ],
@@ -59,8 +59,7 @@
       },
       "selected_reason": "계획서 첫날 TIPC 회의에 맞춘 타이중 직항",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     },
     "route_f2_save": {
       "label": "비용 최적 · 타이베이 → 광저우 → 암스테르담",
@@ -69,64 +68,64 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 3482151,
-        "per_person_krw": 870538,
+        "total_krw": 3755092,
+        "per_person_krw": 938773,
         "airlines": [
-          "THAI"
+          "에티하드항공"
         ],
-        "carrier_code": "TG",
+        "carrier_code": "EY",
         "stops": 1,
         "legs": [
           {
             "origin": "TPE",
-            "destination": "BKK",
+            "destination": "AUH",
             "departure_date": "2026-09-04",
-            "departure_time": "18:50",
-            "arrival_date": "2026-09-04",
-            "arrival_time": "21:35",
-            "duration_minutes": 225,
-            "aircraft": "Airbus A350"
+            "departure_time": "19:40",
+            "arrival_date": "2026-09-05",
+            "arrival_time": "00:55",
+            "duration_minutes": 555,
+            "aircraft": "Boeing 787"
           },
           {
-            "origin": "BKK",
+            "origin": "AUH",
             "destination": "AMS",
             "departure_date": "2026-09-05",
-            "departure_time": "05:35",
+            "departure_time": "02:25",
             "arrival_date": "2026-09-05",
-            "arrival_time": "12:40",
-            "duration_minutes": 725,
-            "aircraft": "Airbus A350"
+            "arrival_time": "08:00",
+            "duration_minutes": 455,
+            "aircraft": "Airbus A321neo"
           }
         ]
       },
       "selected": {
-        "total_krw": 3482151,
-        "per_person_krw": 870538,
+        "total_krw": 3755092,
+        "per_person_krw": 938773,
         "airlines": [
-          "THAI"
+          "에티하드항공"
         ],
-        "carrier_code": "TG",
+        "carrier_code": "EY",
         "stops": 1,
         "legs": [
           {
             "origin": "TPE",
-            "destination": "BKK",
+            "destination": "AUH",
             "departure_date": "2026-09-04",
-            "departure_time": "18:50",
-            "arrival_date": "2026-09-04",
-            "arrival_time": "21:35",
-            "duration_minutes": 225,
-            "aircraft": "Airbus A350"
+            "departure_time": "19:40",
+            "arrival_date": "2026-09-05",
+            "arrival_time": "00:55",
+            "duration_minutes": 555,
+            "aircraft": "Boeing 787"
           },
           {
-            "origin": "BKK",
+            "origin": "AUH",
             "destination": "AMS",
             "departure_date": "2026-09-05",
-            "departure_time": "05:35",
+            "departure_time": "02:25",
             "arrival_date": "2026-09-05",
-            "arrival_time": "12:40",
-            "duration_minutes": 725,
-            "aircraft": "Airbus A350"
+            "arrival_time": "08:00",
+            "duration_minutes": 455,
+            "aircraft": "Airbus A321neo"
           }
         ]
       },
@@ -185,7 +184,7 @@
       "selected_reason": "광저우 환승을 없애는 중화항공 직항",
       "selected_fallback": false,
       "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "route_f3": {
       "label": "공통 · 코펜하겐 → 이스탄불 → 인천",
@@ -258,7 +257,7 @@
       "selected_reason": "계획서의 에스비에르 출국 대신 전날 코펜하겐 이동 후 1회 환승",
       "selected_fallback": false,
       "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "compare_rmq_ams": {
       "label": "비교 · 타이중 → 홍콩 → 암스테르담",
@@ -267,8 +266,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4670785,
-        "per_person_krw": 1167696,
+        "total_krw": 4658785,
+        "per_person_krw": 1164696,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -299,8 +298,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5608049,
-        "per_person_krw": 1402012,
+        "total_krw": 5593641,
+        "per_person_krw": 1398410,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -332,8 +331,7 @@
       },
       "selected_reason": "계획서의 홍콩 경유 선택지 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     },
     "compare_ams_ham": {
       "label": "비교 · 암스테르담 → 함부르크 직항",
@@ -386,7 +384,7 @@
       "selected_reason": "계획서 항공과 로테르담발 국제열차 비교",
       "selected_fallback": true,
       "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "compare_bll_icn": {
       "label": "비교 · 빌룬 → 인천",
@@ -395,8 +393,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNCTExyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 7574084,
-        "per_person_krw": 1893521,
+        "total_krw": 7571004,
+        "per_person_krw": 1892751,
         "airlines": [
           "영국항공",
           "아시아나항공"
@@ -427,8 +425,8 @@
         ]
       },
       "selected": {
-        "total_krw": 7574084,
-        "per_person_krw": 1893521,
+        "total_krw": 7571004,
+        "per_person_krw": 1892751,
         "airlines": [
           "영국항공",
           "아시아나항공"
@@ -460,8 +458,7 @@
       },
       "selected_reason": "에스비에르에서 빌룬공항으로 이동하는 대안 비교",
       "selected_fallback": true,
-      "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "status": "ok"
     },
     "compare_cph_direct": {
       "label": "비교 · 코펜하겐 → 인천 직항",
@@ -470,8 +467,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 18234202,
-        "per_person_krw": 4558550,
+        "total_krw": 18226786,
+        "per_person_krw": 4556696,
         "airlines": [
           "SAS항공"
         ],
@@ -491,8 +488,8 @@
         ]
       },
       "selected": {
-        "total_krw": 18234202,
-        "per_person_krw": 4558550,
+        "total_krw": 18226786,
+        "per_person_krw": 4556696,
         "airlines": [
           "SAS항공"
         ],
@@ -513,17 +510,12 @@
       },
       "selected_reason": "귀국 직항의 시간·가격 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     }
   },
   "errors": [
-    "route_f1: Extra data: line 1 column 236 (char 235)",
-    "route_f2_direct: Extra data: line 1 column 234 (char 233)",
-    "route_f3: Extra data: line 1 column 236 (char 235)",
-    "compare_rmq_ams: Extra data: line 1 column 236 (char 235)",
-    "compare_ams_ham: Extra data: line 1 column 234 (char 233)",
-    "compare_bll_icn: Extra data: line 1 column 234 (char 233)",
-    "compare_cph_direct: Extra data: line 1 column 236 (char 235)"
+    "route_f2_direct: Extra data: line 1 column 235 (char 234)",
+    "route_f3: Extra data: line 1 column 235 (char 234)",
+    "compare_ams_ham: Extra data: line 1 column 235 (char 234)"
   ]
 }
