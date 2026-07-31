@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-07-31T22:15:37Z",
-  "fresh_until": "2026-08-01T00:15:37Z",
+  "generated_at": "2026-07-31T23:17:21Z",
+  "fresh_until": "2026-08-01T01:17:21Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -338,8 +338,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 1475426,
-        "per_person_krw": 368856,
+        "total_krw": 1475298,
+        "per_person_krw": 368824,
         "airlines": [
           "KLM"
         ],
@@ -359,8 +359,8 @@
         ]
       },
       "selected": {
-        "total_krw": 1475426,
-        "per_person_krw": 368856,
+        "total_krw": 1475298,
+        "per_person_krw": 368824,
         "airlines": [
           "KLM"
         ],
