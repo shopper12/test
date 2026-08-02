@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-02T11:34:30Z",
-  "fresh_until": "2026-08-02T13:34:30Z",
+  "generated_at": "2026-08-02T13:54:06Z",
+  "fresh_until": "2026-08-02T15:54:06Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -16,8 +16,8 @@
       "destination": "RMQ",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDIoAGoFEgNJQ05yBRIDUk1RQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 490800,
-        "per_person_krw": 122700,
+        "total_krw": 610800,
+        "per_person_krw": 152700,
         "airlines": [
           "진에어"
         ],
@@ -37,8 +37,8 @@
         ]
       },
       "selected": {
-        "total_krw": 490800,
-        "per_person_krw": 122700,
+        "total_krw": 610800,
+        "per_person_krw": 152700,
         "airlines": [
           "진에어"
         ],
