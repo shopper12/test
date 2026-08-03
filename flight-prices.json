@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-03T07:46:14Z",
-  "fresh_until": "2026-08-03T09:46:14Z",
+  "generated_at": "2026-08-03T11:44:03Z",
+  "fresh_until": "2026-08-03T13:44:03Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -68,8 +68,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 3728907,
-        "per_person_krw": 932227,
+        "total_krw": 3708934,
+        "per_person_krw": 927234,
         "airlines": [
           "에티하드항공"
         ],
@@ -99,8 +99,8 @@
         ]
       },
       "selected": {
-        "total_krw": 3728907,
-        "per_person_krw": 932227,
+        "total_krw": 3708934,
+        "per_person_krw": 927234,
         "airlines": [
           "에티하드항공"
         ],
@@ -140,8 +140,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAGoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5193001,
-        "per_person_krw": 1298250,
+        "total_krw": 5165186,
+        "per_person_krw": 1291296,
         "airlines": [
           "중화항공"
         ],
@@ -161,8 +161,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5193001,
-        "per_person_krw": 1298250,
+        "total_krw": 5165186,
+        "per_person_krw": 1291296,
         "airlines": [
           "중화항공"
         ],
@@ -192,39 +192,39 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5062772,
-        "per_person_krw": 1265693,
+        "total_krw": 4489742,
+        "per_person_krw": 1122436,
         "airlines": [
-          "에어프랑스"
+          "핀란드항공"
         ],
-        "carrier_code": "AF",
+        "carrier_code": "AY",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
-            "destination": "CDG",
+            "destination": "HEL",
             "departure_date": "2026-09-11",
-            "departure_time": "06:05",
+            "departure_time": "19:25",
             "arrival_date": "2026-09-11",
-            "arrival_time": "08:15",
-            "duration_minutes": 130,
-            "aircraft": "Airbus A220-300 Passenger"
+            "arrival_time": "22:00",
+            "duration_minutes": 95,
+            "aircraft": "Boeing 737"
           },
           {
-            "origin": "CDG",
+            "origin": "HEL",
             "destination": "ICN",
-            "departure_date": "2026-09-11",
-            "departure_time": "14:40",
-            "arrival_date": "2026-09-12",
-            "arrival_time": "09:35",
-            "duration_minutes": 715,
+            "departure_date": "2026-09-12",
+            "departure_time": "17:30",
+            "arrival_date": "2026-09-13",
+            "arrival_time": "11:20",
+            "duration_minutes": 710,
             "aircraft": "Airbus A350"
           }
         ]
       },
       "selected": {
-        "total_krw": 5143021,
-        "per_person_krw": 1285755,
+        "total_krw": 5134152,
+        "per_person_krw": 1283538,
         "airlines": [
           "터키항공"
         ],
@@ -264,8 +264,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4778148,
-        "per_person_krw": 1194537,
+        "total_krw": 4752555,
+        "per_person_krw": 1188139,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -296,8 +296,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5706132,
-        "per_person_krw": 1426533,
+        "total_krw": 5675569,
+        "per_person_krw": 1418892,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -338,8 +338,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 1460378,
-        "per_person_krw": 365094,
+        "total_krw": 1457962,
+        "per_person_krw": 364490,
         "airlines": [
           "KLM"
         ],
@@ -359,8 +359,8 @@
         ]
       },
       "selected": {
-        "total_krw": 1460378,
-        "per_person_krw": 365094,
+        "total_krw": 1457962,
+        "per_person_krw": 364490,
         "airlines": [
           "KLM"
         ],
@@ -390,8 +390,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNCTExyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 10665243,
-        "per_person_krw": 2666311,
+        "total_krw": 10646850,
+        "per_person_krw": 2661712,
         "airlines": [
           "LOT 폴란드항공"
         ],
@@ -421,8 +421,8 @@
         ]
       },
       "selected": {
-        "total_krw": 10665243,
-        "per_person_krw": 2666311,
+        "total_krw": 10646850,
+        "per_person_krw": 2661712,
         "airlines": [
           "LOT 폴란드항공"
         ],
@@ -462,8 +462,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 18132852,
-        "per_person_krw": 4533213,
+        "total_krw": 18101582,
+        "per_person_krw": 4525396,
         "airlines": [
           "SAS항공"
         ],
@@ -483,8 +483,8 @@
         ]
       },
       "selected": {
-        "total_krw": 18132852,
-        "per_person_krw": 4533213,
+        "total_krw": 18101582,
+        "per_person_krw": 4525396,
         "airlines": [
           "SAS항공"
         ],
