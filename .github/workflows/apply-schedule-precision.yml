@@ -1,7 +1,6 @@
 name: Apply precise transport schedules
 
 on:
-  schedule: [] # no scheduled runs; temporary one-shot workflow
   push:
     branches: [main]
     paths:
