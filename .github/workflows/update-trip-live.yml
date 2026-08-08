@@ -8,8 +8,11 @@ on:
     paths:
       - "scripts/update_trip_live.py"
       - "scripts/refine_trip_photos.py"
+      - "scripts/update_official_web_content.py"
       - "travel-live.js"
       - "travel-live.css"
+      - "index.html"
+      - "boot.js"
       - ".github/workflows/update-trip-live.yml"
   workflow_dispatch:
 
@@ -42,13 +45,16 @@ jobs:
 
       - name: Syntax checks
         run: |
-          python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py
+          python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py scripts/update_official_web_content.py
           node --check travel-live.js
 
-      - name: Refresh weather, photos and return stopover
+      - name: Refresh fares, stopover and legacy snapshot
         run: |
           python scripts/update_trip_live.py
           python scripts/refine_trip_photos.py
+
+      - name: Replace weather and photos with official web sources
+        run: python scripts/update_official_web_content.py
 
       - name: Validate live snapshot
         run: |
@@ -58,9 +64,16 @@ jobs:
           p=json.load(open('trip-live.json',encoding='utf-8'))
           assert len(p['weather']) == 11
           assert 'return_stopover' in p
-          assert len(p['photos']) >= 20
-          assert p.get('schema_version', 0) >= 4
-          assert p['photos'].get('Men at Sea', {}).get('url')
+          assert p.get('schema_version', 0) >= 5
+          assert len(p.get('photos', {})) >= 25
+          assert all(photo.get('source') == 'official_website' for photo in p['photos'].values())
+          assert not any('wikimedia' in (photo.get('url','')+photo.get('page_url','')).lower() for photo in p['photos'].values())
+          allowed={'Central Weather Administration (CWA)','KNMI','Deutscher Wetterdienst (DWD)','Danish Meteorological Institute (DMI)','Korea Meteorological Administration (KMA)'}
+          for day in p['weather'].values():
+              assert day.get('kind') == 'official_weather_bundle'
+              for loc in day.get('locations',[]):
+                  assert loc.get('authority') in allowed
+                  assert loc.get('kind') in {'official_pending','official_hourly','official_unparsed','official_source_error'}
           PY
 
       - name: Commit refreshed snapshot safely
@@ -72,7 +85,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add trip-live.json
-          git commit -m "chore: refresh live trip intelligence"
+          git commit -m "chore: refresh official trip intelligence"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
