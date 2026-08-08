@@ -1,8 +1,8 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V14";
-import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V14";
-import { auditEventMappings, eventMapView, googleMapsEmbedUrl, googleMapsOpenUrl, mappingLabel } from "./map-routing.mjs?v=LIVE_TRAVEL_V14";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V15";
+import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V15";
+import { auditEventMappings, auditRouteContinuity, eventMapView, googleMapsEmbedUrl, googleMapsOpenUrl, mappingLabel } from "./map-routing.mjs?v=LIVE_TRAVEL_V15";
 
-const BUILD="LIVE_TRAVEL_V14";
+const BUILD="LIVE_TRAVEL_V15";
 const HOST_ID="stable-live-tools";
 const state={weather:null,loadedAt:0,selectedEvent:null};
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
@@ -21,17 +21,10 @@ function viewFor(event){const day=dayForEvent(event);return eventMapView(eventsF
 
 async function loadWeather(force=false){
   if(!force&&state.weather&&Date.now()-state.loadedAt<300000)return;
-  try{
-    const r=await fetch(`./trip-live.json?v=${Date.now()}`,{cache:"no-store"});
-    if(!r.ok)throw new Error(`HTTP ${r.status}`);
-    const p=await r.json();state.weather=p.weather||{};state.loadedAt=Date.now();
-  }catch(e){console.warn(`[${BUILD}] weather`,e);state.loadedAt=Date.now();}
+  try{const r=await fetch(`./trip-live.json?v=${Date.now()}`,{cache:"no-store"});if(!r.ok)throw new Error(`HTTP ${r.status}`);const p=await r.json();state.weather=p.weather||{};state.loadedAt=Date.now();}
+  catch(e){console.warn(`[${BUILD}] weather`,e);state.loadedAt=Date.now();}
 }
-
-function fallbackCard(text){
-  const f=longRangeWeather(text);if(!f)return"";
-  return `<article><b>${esc(f.label)} · 장기전망/평년</b><small>${esc(f.basis)}</small><p><strong>예상 기준 ${esc(f.highC)}℃ / ${esc(f.lowC)}℃</strong><br>정식 단기예보가 발표되면 자동으로 공식예보가 우선됩니다.</p><div class="stable-source-links"><a href="${esc(f.sourceUrl)}" target="_blank" rel="noopener noreferrer">월간 전망 원문 ↗</a>${f.officialUrl?`<a href="${esc(f.officialUrl)}" target="_blank" rel="noopener noreferrer">${esc(f.officialLabel)} ↗</a>`:""}</div></article>`;
-}
+function fallbackCard(text){const f=longRangeWeather(text);if(!f)return"";return `<article><b>${esc(f.label)} · 장기전망/평년</b><small>${esc(f.basis)}</small><p><strong>예상 기준 ${esc(f.highC)}℃ / ${esc(f.lowC)}℃</strong><br>정식 단기예보가 발표되면 자동으로 공식예보가 우선됩니다.</p><div class="stable-source-links"><a href="${esc(f.sourceUrl)}" target="_blank" rel="noopener noreferrer">월간 전망 원문 ↗</a>${f.officialUrl?`<a href="${esc(f.officialUrl)}" target="_blank" rel="noopener noreferrer">${esc(f.officialLabel)} ↗</a>`:""}</div></article>`;}
 function weatherHtml(day){
   const bundle=state.weather?.[day.date],rows=bundle?.locations||[];
   if(!rows.length){const fallback=fallbackCard(day.cities);return `<section class="stable-card stable-weather"><div class="stable-head"><div><h2>🌦 ${esc(day.date)} 날씨</h2><p>공식 단기예보 전에는 월간전망 또는 9월 평년값을 표시합니다.</p></div><button class="btn small" type="button" data-stable-weather-refresh>다시 읽기</button></div><div class="stable-weather-grid">${fallback||"<article><b>장기 날씨 기준 준비 중</b></article>"}</div></section>`;}
@@ -43,14 +36,12 @@ function mapSidebarItem(event){
   return `<button type="button" class="map-schedule-sidebar-item ${active?"active":""}" data-stable-map-event="${esc(event.id)}"><span class="map-sidebar-time">${esc(event.time_start||"")}${event.time_end?`<small>~ ${esc(event.time_end)}</small>`:""}</span><span class="map-sidebar-body"><b>${allDays?`Day ${esc(event.day_id)} · `:""}${esc(event.title||"")}</b><small>${event.location?`📍 ${esc(event.location)}`:""}${event.transport?` · ${esc(event.transport)}`:""}</small></span><span class="map-sidebar-kind ${view.kind}">${esc(label)}</span></button>`;
 }
 function mapSidebarHtml(){
-  const events=eventsForMap(),audit=auditEventMappings(events,activePlan().officialSeed.days),valid=audit.filter(r=>r.mapped&&!r.ambiguous).length,id=selectedDayId();
-  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 상세 일정":`Day ${id} 상세 일정`}</b><small>${events.length}개 일정 · 지도 매핑 ${valid}/${events.length}</small></div><span class="map-audit-ok">${valid===events.length?"전체 매핑 완료":"매핑 점검 필요"}</span></div><div class="map-schedule-sidebar-list">${events.map(mapSidebarItem).join("")}</div>`;
+  const events=eventsForMap(),days=activePlan().officialSeed.days,audit=auditEventMappings(events,days),valid=audit.filter(r=>r.mapped&&!r.ambiguous).length,joins=auditRouteContinuity(events,days),connected=joins.filter(r=>r.connected).length,id=selectedDayId();
+  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 상세 일정":`Day ${id} 상세 일정`}</b><small>${events.length}개 일정 · 지도 매핑 ${valid}/${events.length} · 구간 연결 ${connected}/${joins.length}</small></div><span class="map-audit-ok">${valid===events.length&&connected===joins.length?"전체 연결 완료":"경로 점검 필요"}</span></div><div class="map-schedule-sidebar-list">${events.map(mapSidebarItem).join("")}</div>`;
 }
 function renderMapSidebar(){
-  if(activeTab()!=="map")return false;
-  const list=document.getElementById("route-list");if(!list)return false;
-  const key=`${activePlanKey()}:${selectedDayId()??"all"}:${eventsForMap().length}`;
-  if(list.dataset.stableSidebarKey===key&&list.querySelector("[data-stable-map-event]"))return true;
+  if(activeTab()!=="map")return false;const list=document.getElementById("route-list");if(!list)return false;
+  const key=`${activePlanKey()}:${selectedDayId()??"all"}:${eventsForMap().length}`;if(list.dataset.stableSidebarKey===key&&list.querySelector("[data-stable-map-event]"))return true;
   list.dataset.stableSidebarKey=key;list.classList.add("map-schedule-sidebar");list.innerHTML=mapSidebarHtml();return true;
 }
 function scheduleMapSidebar(){[40,120,260,520,900].forEach(ms=>setTimeout(renderMapSidebar,ms));}
@@ -58,37 +49,22 @@ function scheduleMapSidebar(){[40,120,260,520,900].forEach(ms=>setTimeout(render
 function focusMap(eventId){
   const event=eventById(eventId),map=document.getElementById("map");if(!event||!map)return false;
   const view=viewFor(event),src=googleMapsEmbedUrl(view),openUrl=googleMapsOpenUrl(view);if(!src)return false;
-  state.selectedEvent=event.id;
-  let shell=map.querySelector(":scope > .event-map-shell");if(!shell){shell=document.createElement("div");shell.className="event-map-shell";map.append(shell);}
+  state.selectedEvent=event.id;let shell=map.querySelector(":scope > .event-map-shell");if(!shell){shell=document.createElement("div");shell.className="event-map-shell";map.append(shell);}
   const target=view.kind==="route"?`${view.origin} → ${view.destination}`:view.query;
-  shell.innerHTML=`<div class="event-map-bar"><div><b>${esc(event.title||target)}</b><small>${esc(target)} · ${esc(mappingLabel(view))}</small></div><div class="event-map-actions"><a href="${esc(openUrl)}" target="_blank" rel="noreferrer">Google Maps ↗</a><button type="button" data-event-map-close>기본 지도</button></div></div><iframe title="${esc(event.title||target)}" src="${esc(src)}" loading="eager" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  shell.innerHTML=`<div class="event-map-bar"><div><b>${esc(event.title||target)}</b><small>${esc(target)} · ${esc(mappingLabel(view))}${view.waypoints?` · 경유 ${esc(view.waypoints.replaceAll("|"," → "))}`:""}</small></div><div class="event-map-actions"><a href="${esc(openUrl)}" target="_blank" rel="noreferrer">Google Maps ↗</a><button type="button" data-event-map-close>기본 지도</button></div></div><iframe title="${esc(event.title||target)}" src="${esc(src)}" loading="eager" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
   document.querySelectorAll("#route-list [data-stable-map-event]").forEach(button=>button.classList.toggle("active",String(button.dataset.stableMapEvent)===String(event.id)));
-  shell.querySelector("[data-event-map-close]")?.addEventListener("click",()=>{shell.remove();state.selectedEvent=null;document.querySelectorAll("#route-list [data-stable-map-event]").forEach(button=>button.classList.remove("active"));});
-  return true;
+  shell.querySelector("[data-event-map-close]")?.addEventListener("click",()=>{shell.remove();state.selectedEvent=null;document.querySelectorAll("#route-list [data-stable-map-event]").forEach(button=>button.classList.remove("active"));});return true;
 }
 window.__tripMapFocus=focusMap;
 window.__tripMapAudit=()=>auditEventMappings(activePlan().officialSeed.events||[],activePlan().officialSeed.days||[]);
+window.__tripMapContinuityAudit=()=>auditRouteContinuity(activePlan().officialSeed.events||[],activePlan().officialSeed.days||[]);
 
-function render(){
-  const h=host();if(!h)return;
-  const tab=activeTab();
-  if(tab==="timeline"){h.hidden=false;h.innerHTML=weatherHtml(activeDay());return;}
-  if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}
-  h.hidden=true;h.innerHTML="";
-}
+function render(){const h=host();if(!h)return;const tab=activeTab();if(tab==="timeline"){h.hidden=false;h.innerHTML=weatherHtml(activeDay());return;}if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}h.hidden=true;h.innerHTML="";}
 async function sync(forceWeather=false){await loadWeather(forceWeather);render();}
-
 let activationLock="";
 function activateMapEvent(target,type){const button=target?.closest?.("#route-list [data-stable-map-event]");if(!button)return false;const token=`${type}:${button.dataset.stableMapEvent}`;if(token===activationLock)return true;activationLock=token;setTimeout(()=>{activationLock="";},250);return focusMap(button.dataset.stableMapEvent);}
 document.addEventListener("pointerup",e=>{if(activateMapEvent(e.target,"pointerup")){e.preventDefault();e.stopPropagation();}},true);
-document.addEventListener("click",e=>{
-  const refresh=e.target.closest("[data-stable-weather-refresh]");if(refresh){e.preventDefault();sync(true);return;}
-  if(activateMapEvent(e.target,"click")){e.preventDefault();e.stopPropagation();return;}
-  if(e.target.closest(".day-tab,.itinerary-tab,#tabs [data-tab],#show-all-route"))setTimeout(()=>{state.selectedEvent=null;render();},80);
-},true);
-
-const tabObserver=new MutationObserver(()=>{clearTimeout(tabObserver._t);tabObserver._t=setTimeout(render,50);});
-tabObserver.observe(document.getElementById("tabs")||document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
+document.addEventListener("click",e=>{const refresh=e.target.closest("[data-stable-weather-refresh]");if(refresh){e.preventDefault();sync(true);return;}if(activateMapEvent(e.target,"click")){e.preventDefault();e.stopPropagation();return;}if(e.target.closest(".day-tab,.itinerary-tab,#tabs [data-tab],#show-all-route"))setTimeout(()=>{state.selectedEvent=null;render();},80);},true);
+const tabObserver=new MutationObserver(()=>{clearTimeout(tabObserver._t);tabObserver._t=setTimeout(render,50);});tabObserver.observe(document.getElementById("tabs")||document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
 const main=document.getElementById("main-content");if(main){const mainObserver=new MutationObserver(()=>{clearTimeout(mainObserver._t);mainObserver._t=setTimeout(render,80);});mainObserver.observe(main,{childList:true,subtree:false});}
-window.addEventListener("load",()=>sync(false));
-sync(false);
+window.addEventListener("load",()=>sync(false));sync(false);
