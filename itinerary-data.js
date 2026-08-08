@@ -245,6 +245,11 @@ function buildEvents(mode) {
             min_cost_krw: 110_000,
             max_cost_krw: 180_000,
             cost_basis: "4인",
+            notes: "THSR는 9/4(금) 공식 게시 시간표 확정. Airport MRT는 공식 사이트가 현재 8/31까지만 게시하여 9/4 편은 3일 전 재확인.",
+            schedule_legs: [
+              { status: "confirmed", service: "THSR 0826", from: "THSR Taichung", depart: "13:36", to: "THSR Taoyuan", arrive: "14:20", source_label: "THSR 공식 2026 시간표", source_url: "https://en.thsrc.com.tw/" },
+              { status: "provisional", service: "Taoyuan Airport MRT", from: "A18 Taoyuan HSR", depart: "14:32 후보", to: "A12 Airport T1", arrive: "약 14:50", source_label: "Taoyuan Metro · 9/4 시간표 미공개", source_url: "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/timetable-A18" },
+            ],
           },
         ),
         e(
@@ -272,6 +277,9 @@ function buildEvents(mode) {
             booking_url: "https://www.google.com/travel/flights",
             notes:
               "비용 최적안보다 4인 약 190만원 높지만 환승과 약 8시간의 추가 이동을 제거.",
+            schedule_legs: [
+              { status: "confirmed", service: "China Airlines CI73", from: "TPE", depart: "23:10", to: "AMS", arrive: "9/5 07:40", source_label: "Google Flights 현재 판매편" },
+            ],
           },
         ),
       ];
@@ -301,6 +309,9 @@ function buildEvents(mode) {
       {
         booking_url: "https://www.google.com/travel/flights",
         notes: "계획서 원안과 동일. Google Flights 4인 최저가 자동조회.",
+        schedule_legs: [
+          { status: "confirmed", service: "Jin Air LJ737", from: "ICN", depart: "07:55", to: "RMQ", arrive: "09:40", source_label: "Google Flights 현재 판매편" },
+        ],
       },
     ),
     e(
@@ -495,7 +506,10 @@ function buildEvents(mode) {
       "약 2시간",
       {
         booking_url: "https://www.nsinternational.com/en",
-        notes: "열차 약 26분 간격. 공항 도착시간에 맞춰 현장 구매 가능.",
+        notes: "Schiphol→Rotterdam 직통은 약 26~27분. 항공 도착·입국심사 변동 때문에 특정 편을 선결제하지 않고 입국 후 첫 가능한 NS 직통편을 탑승.",
+        schedule_legs: [
+          { status: "flexible", service: "NS Intercity Direct", from: "Schiphol Airport", depart: "입국 후 첫 가능편", to: "Rotterdam Centraal", arrive: "출발 + 약 26~27분", source_label: "NS Journey Planner" },
+        ],
       },
     ),
     e(
@@ -580,15 +594,19 @@ function buildEvents(mode) {
       5,
       "12:20",
       "17:20",
-      "Waterbus·킨더다이크 풍차군",
+      "WaterShuttle·킨더다이크 풍차군",
       "관광",
-      "Rotterdam Erasmusbrug → Kinderdijk",
-      "Waterbus+도보",
+      "Rotterdam Erasmusbrug → Kinderdijk Molenkade",
+      "WaterShuttle+도보",
       "5시간",
       {
         booking_url: "https://www.waterbus.nl/en/",
         official_url: "https://kinderdijk.com/",
-        notes: "무료 외부 산책 기준. 박물관 풍차 입장은 선택.",
+        notes: "2026 여름 공식 시간표(3/23~10/5) 기준. 무료 외부 산책, 박물관 풍차 입장은 선택.",
+        schedule_legs: [
+          { status: "confirmed", service: "WaterShuttle", from: "Rotterdam Erasmusbrug", depart: "12:40", to: "Kinderdijk Molenkade", arrive: "13:10", source_label: "WaterShuttle 2026 summer timetable" },
+          { status: "confirmed", service: "WaterShuttle", from: "Kinderdijk Molenkade", depart: "16:45", to: "Rotterdam Erasmusbrug", arrive: "17:15", source_label: "WaterShuttle 2026 summer timetable" },
+        ],
       },
     ),
     e(
@@ -714,23 +732,23 @@ function buildEvents(mode) {
       "d6-08",
       6,
       "16:30",
-      "17:40",
+      "17:05",
       "TNO → 로테르담 중앙역·짐 회수",
       "교통",
       "Rijswijk → Rotterdam Centraal",
       "택시+도보",
-      "70분",
+      "35분",
     ),
     e(
       "d6-09",
       6,
-      "18:00",
-      "9/8 00:05",
+      "17:20",
+      "23:16",
       "로테르담 → 함부르크",
       "교통",
       "Rotterdam Centraal → Hamburg Hbf",
       "NS/DB 국제열차",
-      "약 6시간 5분",
+      "약 5시간 56분",
       {
         booking_url:
           "https://www.nsinternational.com/en/germany/train-hamburg",
@@ -742,7 +760,10 @@ function buildEvents(mode) {
         max_cost_krw: 500_000,
         cost_basis: "4인·조기예약",
         notes:
-          "계획서의 AMS→HAM 항공을 대체. NS 표준 소요시간은 약 6시간 4분이며 실제 출발시각은 발권 시 확정. 공항 이동·보안검색을 빼면 문전시간 차이가 작고 현재 KLM 4인 운임보다 크게 저렴.",
+          "2026 현행 DB/NS 시간표 패턴의 저녁 연결편. 9/7 공사·편성 변경 가능성이 있어 발권 화면에서 최종 재확인해야 하며, 확정 전까지는 '시간표 후보'로 표시.",
+        schedule_legs: [
+          { status: "provisional", service: "IC 2863 · IC 1765 · ICE 243 · ICE 104", from: "Rotterdam Centraal", depart: "17:20 후보", to: "Hamburg Hbf", arrive: "23:16 후보", source_label: "2026 DB/NS 현행 시간표 패턴 · 9/7 재확인" },
+        ],
       },
     ),
     e(
@@ -868,13 +889,13 @@ function buildEvents(mode) {
     e(
       "d8-02",
       8,
-      "09:53",
-      "14:20",
+      "10:53",
+      "14:54",
       "함부르크 → 에스비에르",
       "교통",
       "Hamburg Hbf → Kolding → Esbjerg",
       "DB/DSB 열차",
-      "약 4시간 30분",
+      "4시간 1분",
       {
         booking_url: "https://int.bahn.de/en",
         original_currency: "EUR",
@@ -884,14 +905,18 @@ function buildEvents(mode) {
         max_cost_krw: 450_000,
         cost_basis: "4인·조기예약",
         notes:
-          "계획서의 3시간 38분 Kolding 대기편 대신 빠른 연결편 우선. 실제 시각은 DB 예약화면에서 확정.",
+          "Rejseplanen/DSB가 2026년 9월 운행기간을 게시한 연결편 기준. Kolding 환승 22분.",
+        schedule_legs: [
+          { status: "confirmed", service: "ECE 396", from: "Hamburg Hbf", depart: "10:53", to: "Kolding St.", arrive: "13:44", source_label: "Rejseplanen/DSB 2026 게시 시간표" },
+          { status: "confirmed", service: "IC 2340", from: "Kolding St.", depart: "14:06", to: "Esbjerg St.", arrive: "14:54", source_label: "Rejseplanen/DSB 2026 게시 시간표" },
+        ],
       },
     ),
     e(
       "d8-03",
       8,
-      "14:20",
-      "15:10",
+      "14:54",
+      "15:30",
       "호텔 이동·체크인",
       "숙박",
       "CABINN Plus Esbjerg, Torvegade 27",
@@ -901,7 +926,7 @@ function buildEvents(mode) {
     e(
       "d8-04",
       8,
-      "15:30",
+      "15:45",
       "18:30",
       "Men at Sea·Fisheries and Maritime Museum 외부",
       "관광",
@@ -988,7 +1013,7 @@ function buildEvents(mode) {
       "d9-05",
       9,
       "13:00",
-      "15:30",
+      "15:10",
       "독일·덴마크 방문내용 정리",
       "업무정리",
       "CABINN Plus 라운지/도심 업무공간",
@@ -998,27 +1023,30 @@ function buildEvents(mode) {
     e(
       "d9-06",
       9,
-      "16:00",
-      "19:05",
+      "15:32",
+      "18:28",
       "에스비에르 → 코펜하겐",
       "교통",
       "Esbjerg St. → København H",
       "DSB InterCity",
-      "약 3시간",
+      "2시간 56분",
       {
         booking_url: "https://www.dsb.dk/en/",
         min_cost_krw: 320_000,
         max_cost_krw: 600_000,
         cost_basis: "4인·Orange/일반 운임",
         notes:
-          "다음 날 CPH 출국을 위해 전날 이동. EBJ→ABZ 항공·영국 환승을 제거.",
+          "Rejseplanen 게시 시간표상 IC 850 직통. Kolding 16:11 도착·16:13 출발 후 같은 열차로 København H까지 이동.",
+        schedule_legs: [
+          { status: "confirmed", service: "DSB IC 850", from: "Esbjerg St.", depart: "15:32", to: "København H", arrive: "18:28", source_label: "Rejseplanen/DSB · 17 Aug–21 Oct 2026 유효" },
+        ],
       },
     ),
     e(
       "d9-07",
       9,
-      "19:05",
-      "20:00",
+      "18:28",
+      "19:20",
       "코펜하겐 중앙역 → CABINN Metro",
       "교통·숙박",
       "Arne Jacobsens Allé 2, Copenhagen",
@@ -1031,8 +1059,8 @@ function buildEvents(mode) {
     e(
       "d9-08",
       9,
-      "20:00",
-      "21:00",
+      "19:30",
+      "20:45",
       "Field's Food Court 저녁",
       "식사",
       "Ørestad, Copenhagen",
@@ -1045,16 +1073,16 @@ function buildEvents(mode) {
     ...(saving
       ? [
           e("d10c-01",10,"06:45","08:00","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → CPH","기차","75분"),
-          e("d10c-02",10,"10:10","12:10","CPH → CDG","항공","Copenhagen → Paris CDG","Air France","2시간",{booking_url:"https://www.google.com/travel/flights",notes:"현재 4인 Google Flights 자동운임 기준 귀국 최저가 경로."}),
+          e("d10c-02",10,"10:10","12:10","CPH → CDG","항공","Copenhagen → Paris CDG","Air France","2시간",{booking_url:"https://www.google.com/travel/flights",notes:"현재 4인 Google Flights 자동운임 기준 귀국 최저가 경로.",schedule_legs:[{status:"confirmed",service:"Air France",from:"CPH",depart:"10:10",to:"CDG",arrive:"12:10",source_label:"Google Flights 현재 판매편"}]}),
           e("d10c-03",10,"12:10","14:40","파리 샤를드골 환승","환승","Paris Charles de Gaulle Airport","공항 내 이동","2시간 30분"),
-          e("d10c-04",10,"14:40","9/12 09:35","CDG → ICN","항공","Paris CDG → Incheon","Air France","11시간 55분",{booking_url:"https://www.google.com/travel/flights",notes:"CPH→CDG→ICN 연결발권. 4인 약 500만원으로 SAS 직항 약 1,790만원 대비 약 1,291만원 절감."}),
+          e("d10c-04",10,"14:40","9/12 09:35","CDG → ICN","항공","Paris CDG → Incheon","Air France","11시간 55분",{booking_url:"https://www.google.com/travel/flights",notes:"CPH→CDG→ICN 연결발권. 4인 약 500만원으로 SAS 직항 약 1,790만원 대비 약 1,291만원 절감.",schedule_legs:[{status:"confirmed",service:"Air France",from:"CDG",depart:"14:40",to:"ICN",arrive:"9/12 09:35",source_label:"Google Flights 현재 판매편"}]}),
           e("d11-01",11,"09:35","10:35","인천 도착·입국","귀국","Incheon International Airport","도보","60분"),
         ]
       : [
           e("d10-01",10,"06:45","08:00","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → CPH","기차","75분"),
-          e("d10-02",10,"10:25","14:45","CPH → IST","항공","Copenhagen → Istanbul","Turkish Airlines","3시간 20분",{booking_url:"https://www.google.com/travel/flights"}),
+          e("d10-02",10,"10:25","14:45","CPH → IST","항공","Copenhagen → Istanbul","Turkish Airlines","3시간 20분",{booking_url:"https://www.google.com/travel/flights",schedule_legs:[{status:"confirmed",service:"Turkish Airlines TK1784",from:"CPH",depart:"10:25",to:"IST",arrive:"14:45",source_label:"Google Flights 현재 판매편"}]}),
           e("d10-03",10,"14:45","17:00","이스탄불 환승","환승","Istanbul Airport","공항 내 이동","2시간 15분"),
-          e("d10-04",10,"17:00","9/12 08:35","IST → ICN","항공","Istanbul → Incheon","Turkish Airlines","9시간 35분",{booking_url:"https://www.google.com/travel/flights",notes:"비용안보다 약 102만원(4인) 비싸지만 인천 도착은 약 1시간 빠름."}),
+          e("d10-04",10,"17:00","9/12 08:35","IST → ICN","항공","Istanbul → Incheon","Turkish Airlines","9시간 35분",{booking_url:"https://www.google.com/travel/flights",notes:"비용안보다 약 102만원(4인) 비싸지만 인천 도착은 약 1시간 빠름.",schedule_legs:[{status:"confirmed",service:"Turkish Airlines TK90",from:"IST",depart:"17:00",to:"ICN",arrive:"9/12 08:35",source_label:"Google Flights 현재 판매편"}]}),
           e("d11-01",11,"08:35","09:35","인천 도착·입국","귀국","Incheon International Airport","도보","60분"),
         ]),
   ];
