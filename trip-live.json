@@ -1,470 +1,570 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-08T02:08:10Z",
-  "fresh_until": "2026-08-08T04:08:10Z",
+  "generated_at": "2026-08-08T02:38:19Z",
+  "fresh_until": "2026-08-08T04:38:19Z",
   "weather": {
     "2026-09-02": {
-      "temp_min_c": 24,
-      "temp_max_c": 31,
-      "precip_probability_pct": 55,
-      "wind_max_kmh": 24,
-      "summary": "덥고 습하며 소나기·태풍 영향 가능",
-      "clothing": "반팔+통풍 좋은 긴바지, 실내 냉방용 얇은 겉옷",
-      "umbrella": true,
-      "city": "Taichung",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-02",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Taichung",
+          "aliases": [
+            "Taichung",
+            "Wuqi",
+            "Port of Taichung"
+          ],
+          "country": "Taiwan",
+          "authority": "Central Weather Administration (CWA)",
+          "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
+          "forecast_horizon_hours": 72,
+          "checked_at": "2026-08-08T02:38:22Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
+          "kind": "official_pending",
+          "reason": "Central Weather Administration (CWA)의 시간대별 예보 발표 범위(72시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-03": {
-      "temp_min_c": 24,
-      "temp_max_c": 31,
-      "precip_probability_pct": 55,
-      "wind_max_kmh": 24,
-      "summary": "덥고 습하며 소나기·태풍 영향 가능",
-      "clothing": "반팔+통풍 좋은 긴바지, 실내 냉방용 얇은 겉옷",
-      "umbrella": true,
-      "city": "Taichung / Lukang",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-03",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Taichung / Lukang",
+          "aliases": [
+            "Taichung",
+            "Lukang",
+            "VESTAS"
+          ],
+          "country": "Taiwan",
+          "authority": "Central Weather Administration (CWA)",
+          "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
+          "forecast_horizon_hours": 72,
+          "checked_at": "2026-08-08T02:38:22Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
+          "kind": "official_pending",
+          "reason": "Central Weather Administration (CWA)의 시간대별 예보 발표 범위(72시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-04": {
-      "temp_min_c": 24,
-      "temp_max_c": 31,
-      "precip_probability_pct": 55,
-      "wind_max_kmh": 24,
-      "summary": "덥고 습하며 소나기·태풍 영향 가능",
-      "clothing": "반팔+통풍 좋은 긴바지, 실내 냉방용 얇은 겉옷",
-      "umbrella": true,
-      "city": "Taichung / Taoyuan",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-04",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Taichung / Taoyuan",
+          "aliases": [
+            "Taichung",
+            "Taoyuan",
+            "TPE"
+          ],
+          "country": "Taiwan",
+          "authority": "Central Weather Administration (CWA)",
+          "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=68",
+          "forecast_horizon_hours": 72,
+          "checked_at": "2026-08-08T02:38:22Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
+          "kind": "official_pending",
+          "reason": "Central Weather Administration (CWA)의 시간대별 예보 발표 범위(72시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-05": {
-      "temp_min_c": 12,
-      "temp_max_c": 20,
-      "precip_probability_pct": 40,
-      "wind_max_kmh": 28,
-      "summary": "선선하고 바람·간헐적 비 가능",
-      "clothing": "긴팔+경량 방풍재킷, 방수 신발 권장",
-      "umbrella": true,
-      "city": "Rotterdam",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-05",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Amsterdam / Rotterdam",
+          "aliases": [
+            "Amsterdam",
+            "Schiphol",
+            "Rotterdam"
+          ],
+          "country": "Netherlands",
+          "authority": "KNMI",
+          "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
+          "forecast_horizon_hours": 48,
+          "checked_at": "2026-08-08T02:38:22Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "KNMI - Weer - Verwachtingen",
+          "kind": "official_pending",
+          "reason": "KNMI의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-06": {
-      "temp_min_c": 12,
-      "temp_max_c": 20,
-      "precip_probability_pct": 40,
-      "wind_max_kmh": 28,
-      "summary": "선선하고 바람·간헐적 비 가능",
-      "clothing": "긴팔+경량 방풍재킷, 방수 신발 권장",
-      "umbrella": true,
-      "city": "Rotterdam / Kinderdijk",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-06",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Rotterdam / Kinderdijk",
+          "aliases": [
+            "Rotterdam",
+            "Kinderdijk"
+          ],
+          "country": "Netherlands",
+          "authority": "KNMI",
+          "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
+          "forecast_horizon_hours": 48,
+          "checked_at": "2026-08-08T02:38:22Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "KNMI - Weer - Verwachtingen",
+          "kind": "official_pending",
+          "reason": "KNMI의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-07": {
-      "temp_min_c": 12,
-      "temp_max_c": 20,
-      "precip_probability_pct": 40,
-      "wind_max_kmh": 28,
-      "summary": "선선하고 바람·간헐적 비 가능",
-      "clothing": "긴팔+경량 방풍재킷, 방수 신발 권장",
-      "umbrella": true,
-      "city": "Rotterdam / Rijswijk",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-07",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Rotterdam / Rijswijk",
+          "aliases": [
+            "Rotterdam",
+            "Rijswijk",
+            "TNO"
+          ],
+          "country": "Netherlands",
+          "authority": "KNMI",
+          "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
+          "forecast_horizon_hours": 48,
+          "checked_at": "2026-08-08T02:38:22Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "KNMI - Weer - Verwachtingen",
+          "kind": "official_pending",
+          "reason": "KNMI의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        },
+        {
+          "city": "Hamburg",
+          "aliases": [
+            "Hamburg"
+          ],
+          "country": "Germany",
+          "authority": "Deutscher Wetterdienst (DWD)",
+          "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
+          "forecast_horizon_hours": 72,
+          "checked_at": "2026-08-08T02:38:23Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
+          "kind": "official_pending",
+          "reason": "Deutscher Wetterdienst (DWD)의 시간대별 예보 발표 범위(72시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-08": {
-      "temp_min_c": 11,
-      "temp_max_c": 19,
-      "precip_probability_pct": 45,
-      "wind_max_kmh": 27,
-      "summary": "선선하고 흐림·비 변동성 큼",
-      "clothing": "긴팔+얇은 니트/재킷, 방수 겉옷",
-      "umbrella": true,
-      "city": "Hamburg",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-08",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Hamburg",
+          "aliases": [
+            "Hamburg",
+            "HafenCity",
+            "Skyborn"
+          ],
+          "country": "Germany",
+          "authority": "Deutscher Wetterdienst (DWD)",
+          "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
+          "forecast_horizon_hours": 72,
+          "checked_at": "2026-08-08T02:38:23Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
+          "kind": "official_pending",
+          "reason": "Deutscher Wetterdienst (DWD)의 시간대별 예보 발표 범위(72시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-09": {
-      "temp_min_c": 11,
-      "temp_max_c": 18,
-      "precip_probability_pct": 50,
-      "wind_max_kmh": 34,
-      "summary": "북해 바람이 강하고 체감온도 낮을 수 있음",
-      "clothing": "방풍·방수 재킷, 얇은 레이어드",
-      "umbrella": true,
-      "city": "Hamburg / Esbjerg",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-09",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Hamburg",
+          "aliases": [
+            "Hamburg"
+          ],
+          "country": "Germany",
+          "authority": "Deutscher Wetterdienst (DWD)",
+          "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
+          "forecast_horizon_hours": 72,
+          "checked_at": "2026-08-08T02:38:23Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
+          "kind": "official_pending",
+          "reason": "Deutscher Wetterdienst (DWD)의 시간대별 예보 발표 범위(72시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        },
+        {
+          "city": "Esbjerg",
+          "aliases": [
+            "Esbjerg",
+            "Men at Sea"
+          ],
+          "country": "Denmark",
+          "authority": "Danish Meteorological Institute (DMI)",
+          "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
+          "forecast_horizon_hours": 48,
+          "checked_at": "2026-08-08T02:38:23Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Lokation | DMI",
+          "kind": "official_pending",
+          "reason": "Danish Meteorological Institute (DMI)의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-10": {
-      "temp_min_c": 11,
-      "temp_max_c": 18,
-      "precip_probability_pct": 50,
-      "wind_max_kmh": 34,
-      "summary": "북해 바람이 강하고 체감온도 낮을 수 있음",
-      "clothing": "방풍·방수 재킷, 얇은 레이어드",
-      "umbrella": true,
-      "city": "Esbjerg / Copenhagen",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-10",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Esbjerg",
+          "aliases": [
+            "Esbjerg",
+            "Blue Water"
+          ],
+          "country": "Denmark",
+          "authority": "Danish Meteorological Institute (DMI)",
+          "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
+          "forecast_horizon_hours": 48,
+          "checked_at": "2026-08-08T02:38:23Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Lokation | DMI",
+          "kind": "official_pending",
+          "reason": "Danish Meteorological Institute (DMI)의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        },
+        {
+          "city": "Copenhagen",
+          "aliases": [
+            "Copenhagen",
+            "København",
+            "CABINN Metro"
+          ],
+          "country": "Denmark",
+          "authority": "Danish Meteorological Institute (DMI)",
+          "source_url": "https://www.dmi.dk/",
+          "forecast_horizon_hours": 48,
+          "checked_at": "2026-08-08T02:38:23Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Forside | DMI",
+          "kind": "official_pending",
+          "reason": "Danish Meteorological Institute (DMI)의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-11": {
-      "temp_min_c": 11,
-      "temp_max_c": 19,
-      "precip_probability_pct": 40,
-      "wind_max_kmh": 28,
-      "summary": "선선하고 바람·짧은 비 가능",
-      "clothing": "긴팔+경량 방풍재킷",
-      "umbrella": true,
-      "city": "Copenhagen",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-11",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Copenhagen",
+          "aliases": [
+            "Copenhagen",
+            "CPH"
+          ],
+          "country": "Denmark",
+          "authority": "Danish Meteorological Institute (DMI)",
+          "source_url": "https://www.dmi.dk/",
+          "forecast_horizon_hours": 48,
+          "checked_at": "2026-08-08T02:38:24Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Forside | DMI",
+          "kind": "official_pending",
+          "reason": "Danish Meteorological Institute (DMI)의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     },
     "2026-09-12": {
-      "temp_min_c": 19,
-      "temp_max_c": 27,
-      "precip_probability_pct": 35,
-      "wind_max_kmh": 20,
-      "summary": "초가을, 습도와 비 가능성 확인 필요",
-      "clothing": "반팔/긴팔 혼용+얇은 겉옷",
-      "umbrella": true,
-      "city": "Incheon",
-      "kind": "climate_baseline",
-      "source": "September seasonal baseline"
+      "date": "2026-09-12",
+      "kind": "official_weather_bundle",
+      "locations": [
+        {
+          "city": "Incheon",
+          "aliases": [
+            "Incheon",
+            "ICN"
+          ],
+          "country": "South Korea",
+          "authority": "Korea Meteorological Administration (KMA)",
+          "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
+          "forecast_horizon_hours": 120,
+          "checked_at": "2026-08-08T02:38:24Z",
+          "hourly": [],
+          "source_reachable": true,
+          "source_page_title": "Short-Range Forecasts - Korea Meteorological Administration",
+          "kind": "official_pending",
+          "reason": "Korea Meteorological Administration (KMA)의 시간대별 예보 발표 범위(120시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+        }
+      ]
     }
   },
   "photos": {
     "TIPC Port of Taichung": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/20230602_TRA_Taichung_Port_Station_01.jpg/960px-20230602_TRA_Taichung_Port_Station_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:20230602_TRA_Taichung_Port_Station_01.jpg",
-      "credit": "鐵路1",
-      "aliases": [
-        "Port of Taichung Taiwan",
-        "Taichung Port Taiwan"
-      ],
-      "query": "Port of Taichung Taiwan",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://www.twport.com.tw/images/fbimg.jpg",
+      "page_url": "https://tc.twport.com.tw/en",
+      "credit": "Port of Taichung, Taiwan International Ports Corporation, Ltd.",
+      "source": "official_website",
+      "official": true,
+      "name": "TIPC Port of Taichung"
     },
     "VESTAS O&M Base": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Blyth_Offshore_Wind_Turbines_-_geograph.org.uk_-_394707.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Blyth_Offshore_Wind_Turbines_-_geograph.org.uk_-_394707.jpg",
-      "credit": "Michael Batey",
-      "aliases": [
-        "Vestas offshore wind turbine",
-        "Vestas wind turbine Denmark"
-      ],
-      "query": "Vestas offshore wind turbine",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://vestas.scene7.com/is/image/vestas/V236-15.0 MW Product Shot 02",
+      "page_url": "https://www.vestas.com/en/energy-solutions/offshore-wind-turbines",
+      "credit": "Offshore Wind Turbines | Vestas",
+      "source": "official_website",
+      "official": true,
+      "name": "VESTAS O&M Base"
     },
     "Holiday Inn Express Taichung Park": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/20250208_143444_Taichung_Park_Doves.jpg/960px-20250208_143444_Taichung_Park_Doves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:20250208_143444_Taichung_Park_Doves.jpg",
-      "credit": "Saimmx",
-      "aliases": [
-        "Taichung Park Taiwan"
-      ],
-      "query": "Taichung Park Taiwan",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://digital.ihg.com/is/image/ihg/holiday-inn-express-taichung-6067100683-2x1",
+      "page_url": "https://www.ihg.com/holidayinnexpress/hotels/us/en/taichung/txgsr/hoteldetail",
+      "credit": "Holiday Inn Express Taichung Park is a modern hotel located near Taichung Station in Taiwan.",
+      "source": "official_website",
+      "official": true,
+      "name": "Holiday Inn Express Taichung Park"
     },
     "Wuqi Fishing Harbor": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/2022_Wuqi_Fishing_Port.jpg/960px-2022_Wuqi_Fishing_Port.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:2022_Wuqi_Fishing_Port.jpg",
-      "credit": "Taiwankengo",
-      "aliases": [
-        "Wuqi Fishing Port Taiwan"
-      ],
-      "query": "Wuqi Fishing Port Taiwan",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://travel.taichung.gov.tw/en",
+      "credit": "Taichung Tourism",
+      "source": "official_website",
+      "official": true,
+      "name": "Wuqi Fishing Harbor"
     },
     "Gaomei Wetlands": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Bolboschoenus_planiculmis_at_the_Gaomei_Wetlands_Wildlife_Refuge.jpg/960px-Bolboschoenus_planiculmis_at_the_Gaomei_Wetlands_Wildlife_Refuge.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Bolboschoenus_planiculmis_at_the_Gaomei_Wetlands_Wildlife_Refuge.jpg",
-      "credit": "臺中市政府",
-      "aliases": [
-        "Gaomei Wetlands Taichung"
-      ],
-      "query": "Gaomei Wetlands Taichung",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://travel.taichung.gov.tw/en",
+      "credit": "Taichung Tourism",
+      "source": "official_website",
+      "official": true,
+      "name": "Gaomei Wetlands"
     },
     "Lukang Old Street": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Geoffrey_2003_002_Lukang.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Geoffrey_2003_002_Lukang.jpg",
-      "credit": "Wikimedia Commons",
-      "aliases": [
-        "Lukang Old Street Taiwan"
-      ],
-      "query": "Lukang Old Street Taiwan",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://tourism.chcg.gov.tw/images/logo/fb_logo.png",
+      "page_url": "https://tourism.chcg.gov.tw/",
+      "credit": "彰化旅遊資訊網",
+      "source": "official_website",
+      "official": true,
+      "name": "Lukang Old Street"
     },
     "National Taichung Theater": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Illuminated_buildings_viewed_from_National_Taichung_Theater_20210914.jpg/960px-Illuminated_buildings_viewed_from_National_Taichung_Theater_20210914.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Illuminated_buildings_viewed_from_National_Taichung_Theater_20210914.jpg",
-      "credit": "Cheng-en Cheng",
-      "aliases": [
-        "National Taichung Theater Taiwan"
-      ],
-      "query": "National Taichung Theater Taiwan",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://www.npac-ntt.org/dispPageBox/qseries/images/ogimage.jpg",
+      "page_url": "https://www.npac-ntt.org/en",
+      "credit": "National Taichung Theater │ National Performing Arts Center National Taichung Theater",
+      "source": "official_website",
+      "official": true,
+      "name": "National Taichung Theater"
+    },
+    "Chun Shui Tang Siwei Original Store": {
+      "url": "https://www.chunshuitang.com.tw/upload/location_list_pic/enL_location_23L26_10YhKvJWb9.webp",
+      "page_url": "https://www.chunshuitang.com.tw/en/location-detail/original_store/",
+      "credit": "Original Store | Chun Shui Tang Humanistic Tea House",
+      "source": "official_website",
+      "official": true,
+      "name": "Chun Shui Tang Siwei Original Store"
     },
     "Schiphol Airport": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Amsterdam_Airport_Schiphol_PD_2011_15.JPG/960px-Amsterdam_Airport_Schiphol_PD_2011_15.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Amsterdam_Airport_Schiphol_PD_2011_15.JPG",
-      "credit": "Bin im Garten",
-      "aliases": [
-        "Amsterdam Airport Schiphol terminal"
-      ],
-      "query": "Amsterdam Airport Schiphol terminal",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://www.schiphol.nl/en/",
+      "credit": "official website",
+      "source": "official_website",
+      "official": true,
+      "name": "Schiphol Airport",
+      "error": "HTTP Error 403: Forbidden"
     },
     "Holiday Inn Express Rotterdam Central": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/20180225_004_Rotterdam_-_Centraal_Station.jpg/960px-20180225_004_Rotterdam_-_Centraal_Station.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:20180225_004_Rotterdam_-_Centraal_Station.jpg",
-      "credit": "Sjaak Kempe",
-      "aliases": [
-        "Rotterdam Centraal station Netherlands"
-      ],
-      "query": "Rotterdam Centraal station Netherlands",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://digital.ihg.com/is/image/ihg/holiday-inn-express-rotterdam-3829489517-2x1",
+      "page_url": "https://www.ihg.com/holidayinnexpress/hotels/us/en/rotterdam/rtmcs/hoteldetail",
+      "credit": "Holiday Inn Express Hotel Rotterdam - Central Station",
+      "source": "official_website",
+      "official": true,
+      "name": "Holiday Inn Express Rotterdam Central"
+    },
+    "Holiday Inn Express Rotterdam Central Station": {
+      "url": "https://digital.ihg.com/is/image/ihg/holiday-inn-express-rotterdam-3829489517-2x1",
+      "page_url": "https://www.ihg.com/holidayinnexpress/hotels/us/en/rotterdam/rtmcs/hoteldetail",
+      "credit": "Holiday Inn Express Hotel Rotterdam - Central Station",
+      "source": "official_website",
+      "official": true,
+      "name": "Holiday Inn Express Rotterdam Central Station"
     },
     "Markthal Rotterdam": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/B_Markthalle_-_Rotterdam.jpg/960px-B_Markthalle_-_Rotterdam.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:B_Markthalle_-_Rotterdam.jpg",
-      "credit": "W. Bulach",
-      "aliases": [
-        "Markthal Rotterdam interior"
-      ],
-      "query": "Markthal Rotterdam interior",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://markthal.nl/en/",
+      "credit": "Markthal",
+      "source": "official_website",
+      "official": true,
+      "name": "Markthal Rotterdam"
     },
     "Cube Houses": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/1503_Het_Potlood_en_kubuswoningen%2C_Rotterdam_009.jpg/960px-1503_Het_Potlood_en_kubuswoningen%2C_Rotterdam_009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:1503_Het_Potlood_en_kubuswoningen%2C_Rotterdam_009.jpg",
-      "credit": "Jan Geerling",
-      "aliases": [
-        "Cube Houses Rotterdam Kubuswoningen"
-      ],
-      "query": "Cube Houses Rotterdam Kubuswoningen",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://giustoragev2.blob.core.windows.net/shoppinger/rp/ogimage.jpg",
+      "page_url": "https://www.rotterdam.info/en/visit/guide",
+      "credit": "Things to Do in Rotterdam: Top Attractions & Insider Tips",
+      "source": "official_website",
+      "official": true,
+      "name": "Cube Houses"
     },
     "Historic Delfshaven": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Delfshaven_Rotterdam_%28the_Netherlands%29_13.JPG/960px-Delfshaven_Rotterdam_%28the_Netherlands%29_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Delfshaven_Rotterdam_(the_Netherlands)_13.JPG",
-      "credit": "Dickelbers",
-      "aliases": [
-        "Delfshaven Rotterdam Netherlands"
-      ],
-      "query": "Delfshaven Rotterdam Netherlands",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://giustoragev2.blob.core.windows.net/shoppinger/rp/ogimage.jpg",
+      "page_url": "https://www.rotterdam.info/en/visit/guide",
+      "credit": "Things to Do in Rotterdam: Top Attractions & Insider Tips",
+      "source": "official_website",
+      "official": true,
+      "name": "Historic Delfshaven"
     },
     "Restaurant Bazar": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/%27Fifteen_Minutes_of_Fame%27_-_Witte_de_Withstraat_Rotterdam_%2828164113224%29.jpg/960px-%27Fifteen_Minutes_of_Fame%27_-_Witte_de_Withstraat_Rotterdam_%2828164113224%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:%27Fifteen_Minutes_of_Fame%27_-_Witte_de_Withstraat_Rotterdam_(28164113224).jpg",
-      "credit": "FaceMePLS from The Hague, The Netherlands",
-      "aliases": [
-        "Witte de Withstraat Rotterdam Netherlands"
-      ],
-      "query": "Witte de Withstraat Rotterdam Netherlands",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://hotelbazar.nl/wp-content/uploads/2025/07/Restaurant-Bazar.jpg",
+      "page_url": "https://hotelbazar.nl/en/restaurant-bazar/",
+      "credit": "Bazar Rotterdam | Restaurant Bazar ☎ +31 10 206 5151",
+      "source": "official_website",
+      "official": true,
+      "name": "Restaurant Bazar"
     },
     "Kinderdijk": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Kinderdijk%2C_Nederwaard_molens_no_1tm5_RM30543tm7_IMG_9354_2021-06-13_11.04.jpg/960px-Kinderdijk%2C_Nederwaard_molens_no_1tm5_RM30543tm7_IMG_9354_2021-06-13_11.04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Kinderdijk%2C_Nederwaard_molens_no_1tm5_RM30543tm7_IMG_9354_2021-06-13_11.04.jpg",
-      "credit": "Michielverbeek",
-      "aliases": [
-        "Kinderdijk windmills Netherlands"
-      ],
-      "query": "Kinderdijk windmills Netherlands",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://kinderdijk.com/",
+      "credit": "Kinderdijk UNESCO World Heritage",
+      "source": "official_website",
+      "official": true,
+      "name": "Kinderdijk"
     },
     "Port of Rotterdam Authority": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/%27World_Port_Centre%27_Rotterdam_%286821045812%29.jpg/960px-%27World_Port_Centre%27_Rotterdam_%286821045812%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:%27World_Port_Centre%27_Rotterdam_(6821045812).jpg",
-      "credit": "FaceMePLS from The Hague, The Netherlands",
-      "aliases": [
-        "World Port Center Rotterdam Netherlands",
-        "Port of Rotterdam Netherlands"
-      ],
-      "query": "World Port Center Rotterdam Netherlands",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://www.portofrotterdam.com/en",
+      "credit": "Port of Rotterdam | Rotterdam Port Authority",
+      "source": "official_website",
+      "official": true,
+      "name": "Port of Rotterdam Authority"
     },
     "Rotterdam Offshore Group": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/OFFSHORE_WENDUINE_%2825098573134%29.jpg/960px-OFFSHORE_WENDUINE_%2825098573134%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:OFFSHORE_WENDUINE_(25098573134).jpg",
-      "credit": "kees torn",
-      "aliases": [
-        "Port of Rotterdam offshore Netherlands"
-      ],
-      "query": "Port of Rotterdam offshore Netherlands",
-      "context_image": true,
-      "query_version": 3
+      "url": "http://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
+      "page_url": "https://www.rotterdamoffshore.com/",
+      "credit": "ROG, your partner for dockside and on-site services",
+      "source": "official_website",
+      "official": true,
+      "name": "Rotterdam Offshore Group"
     },
     "TNO Kesslerpark": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Jaagpad_rijswijk_zh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Jaagpad_rijswijk_zh.jpg",
-      "credit": "Arvey",
-      "aliases": [
-        "Rijswijk Netherlands",
-        "TNO Rijswijk Netherlands"
-      ],
-      "query": "Rijswijk Netherlands",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://www.tno.nl/publish/pages/329/488.jpg",
+      "page_url": "https://www.tno.nl/en/about-tno/contact/locations/rijswijk-kesslerpark/",
+      "credit": "Rijswijk - Kesslerpark | TNO",
+      "source": "official_website",
+      "official": true,
+      "name": "TNO Kesslerpark"
     },
     "Motel One Hamburg-Fleetinsel": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Fleetinsel_%28Hamburg-Neustadt%29.Steigenberger.phb.ajb.jpg/960px-Fleetinsel_%28Hamburg-Neustadt%29.Steigenberger.phb.ajb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Fleetinsel_(Hamburg-Neustadt).Steigenberger.phb.ajb.jpg",
-      "credit": "Ajepbah",
-      "aliases": [
-        "Fleetinsel Hamburg",
-        "Hamburg Fleetinsel"
-      ],
-      "query": "Fleetinsel Hamburg",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://www-api.motel-one.com/_assets/5c2932c0cee77022c83eadff72076f3f/Seo/motel-one.jpg",
+      "page_url": "https://www.motel-one.com/en/hotels/hamburg/hotel-hamburg-fleetinsel/",
+      "credit": "Hotel Hamburg Fleetinsel Motel One Design Hotels at best price",
+      "source": "official_website",
+      "official": true,
+      "name": "Motel One Hamburg-Fleetinsel"
     },
     "Speicherstadt": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Hamburg%2C_Speicherstadt%2C_Block_P_--_2016_--_3330-6.jpg/960px-Hamburg%2C_Speicherstadt%2C_Block_P_--_2016_--_3330-6.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Hamburg%2C_Speicherstadt%2C_Block_P_--_2016_--_3330-6.jpg",
-      "credit": "Dietmar Rabich",
-      "aliases": [
-        "Speicherstadt Hamburg Germany"
-      ],
-      "query": "Speicherstadt Hamburg Germany",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://www.hamburg.com/visitors/sights/maritime/",
+      "credit": "Maritime Sights",
+      "source": "official_website",
+      "official": true,
+      "name": "Speicherstadt"
     },
     "Skyborn Renewables": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Ericush%C3%B6ft_%28Hamburg-HafenCity%29.08.12471.ajb.jpg/960px-Ericush%C3%B6ft_%28Hamburg-HafenCity%29.08.12471.ajb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Ericush%C3%B6ft_(Hamburg-HafenCity).08.12471.ajb.jpg",
-      "credit": "Ajepbah",
-      "aliases": [
-        "HafenCity Hamburg Germany",
-        "offshore wind Hamburg Germany"
-      ],
-      "query": "HafenCity Hamburg Germany",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://cdn.sanity.io/images/hj3rn54t/production/791eabb3a728f9f219c28e2e427459667190ffc0-400x400.png?w=1500&fit=max&auto=format",
+      "page_url": "https://www.skybornrenewables.com/",
+      "credit": "Skyborn Renewables",
+      "source": "official_website",
+      "official": true,
+      "name": "Skyborn Renewables"
     },
     "Elbphilharmonie": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Elbphilharmonie_Hamburg.jpg/960px-Elbphilharmonie_Hamburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Elbphilharmonie_Hamburg.jpg",
-      "credit": "Thomas Wolf, www.foto-tw.de",
-      "aliases": [
-        "Elbphilharmonie Hamburg Germany"
-      ],
-      "query": "Elbphilharmonie Hamburg Germany",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://www.elbphilharmonie.de/en/",
+      "credit": "Elbphilharmonie Laeiszhalle Hamburg - Elbphilharmonie",
+      "source": "official_website",
+      "official": true,
+      "name": "Elbphilharmonie"
     },
     "Oberhafen-Kantine": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/OberhafenKantineHamburg.jpg/960px-OberhafenKantineHamburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:OberhafenKantineHamburg.jpg",
-      "credit": "Notafly",
-      "aliases": [
-        "Oberhafen Kantine Hamburg"
-      ],
-      "query": "Oberhafen Kantine Hamburg",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://oberhafenkantine-hamburg.de/wp-content/uploads/2025/07/Haltung_Titelbild-242x300.jpg",
+      "page_url": "https://www.oberhafenkantine-hamburg.de/",
+      "credit": "Home - Oberhafen-Kantine",
+      "source": "official_website",
+      "official": true,
+      "name": "Oberhafen-Kantine"
     },
     "CABINN Plus Esbjerg": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Esbjerg_2015_harbour.jpg/960px-Esbjerg_2015_harbour.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Esbjerg_2015_harbour.jpg",
-      "credit": "Smiley.toerist",
-      "aliases": [
-        "Esbjerg Denmark harbour",
-        "Esbjerg Denmark"
-      ],
-      "query": "Esbjerg Denmark harbour",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://en.cabinn.com/hotel/cabinn-plus-esbjerg",
+      "credit": "official website",
+      "source": "official_website",
+      "official": true,
+      "name": "CABINN Plus Esbjerg",
+      "error": "<urlopen error timed out>"
     },
     "Men at Sea": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Man_by_the_Sea_%286767162535%29.jpg/960px-Man_by_the_Sea_%286767162535%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Man_by_the_Sea_(6767162535).jpg",
-      "credit": "Martin Nikolaj Christensen from Sorø, Denmark",
-      "aliases": [
-        "Mennesket ved Havet Esbjerg sculpture"
-      ],
-      "query": "Mennesket ved Havet Esbjerg sculpture",
-      "context_image": true,
-      "query_version": 3,
-      "refined": true
+      "url": "",
+      "page_url": "https://www.visitdenmark.com/denmark/plan-your-trip/men-sea-gdk610143",
+      "credit": "official website",
+      "source": "official_website",
+      "official": true,
+      "name": "Men at Sea",
+      "error": "HTTP Error 404: Not Found"
     },
     "Esbjerg Street Food": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Esbjerg_-_Marktplatz1.jpg/960px-Esbjerg_-_Marktplatz1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Esbjerg_-_Marktplatz1.jpg",
-      "credit": "Taxiarchos228",
-      "aliases": [
-        "Torvet Esbjerg Denmark",
-        "Esbjerg Denmark harbour"
-      ],
-      "query": "Torvet Esbjerg Denmark",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://esbjergstreetfood.com/wp-content/uploads/2024/10/Storsal-2.jpg",
+      "page_url": "https://esbjergstreetfood.dk/",
+      "credit": "Esbjerg Street Food - Spisested, bar, underholdning & take away",
+      "source": "official_website",
+      "official": true,
+      "name": "Esbjerg Street Food"
     },
     "Blue Water Shipping": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Udskibning_af_vindm%C3%B8ller_fra_Esbjergs_%C3%98sthavn.jpg/960px-Udskibning_af_vindm%C3%B8ller_fra_Esbjergs_%C3%98sthavn.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Udskibning_af_vindm%C3%B8ller_fra_Esbjergs_%C3%98sthavn.jpg",
-      "credit": "Thomas Dahlstrøm Nielsen",
-      "aliases": [
-        "Port of Esbjerg Denmark offshore wind"
-      ],
-      "query": "Port of Esbjerg Denmark offshore wind",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://www.bws.net/media/kugpf0xm/bwf-ownership-trailer-on-wall.jpg",
+      "page_url": "https://www.bws.net/contact/denmark/esbjerg",
+      "credit": "Contact your local Blue Water office in Esbjerg, Denmark",
+      "source": "official_website",
+      "official": true,
+      "name": "Blue Water Shipping"
     },
     "CABINN Metro": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Blue_Wall_%2816905090465%29.jpg/960px-Blue_Wall_%2816905090465%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Blue_Wall_(16905090465).jpg",
-      "credit": "Susanne Nilsson",
-      "aliases": [
-        "CABINN Metro Copenhagen Denmark",
-        "Orestad Copenhagen Denmark"
-      ],
-      "query": "CABINN Metro Copenhagen Denmark",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://en.cabinn.com/hotel/cabinn-metro",
+      "credit": "official website",
+      "source": "official_website",
+      "official": true,
+      "name": "CABINN Metro",
+      "error": "<urlopen error timed out>"
     },
     "Field's Food Court": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Amager_Vest%2C_Copenhagen%2C_Denmark_-_panoramio_%281%29.jpg/960px-Amager_Vest%2C_Copenhagen%2C_Denmark_-_panoramio_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Amager_Vest%2C_Copenhagen%2C_Denmark_-_panoramio_(1).jpg",
-      "credit": "Peter Surovcik",
-      "aliases": [
-        "Fields Copenhagen Orestad Denmark"
-      ],
-      "query": "Fields Copenhagen Orestad Denmark",
-      "context_image": true,
-      "query_version": 3
+      "url": "https://img.uniform.global/p/hwzO26lASzePZ9R51iN_MQ/mwGloGWhSTWwYjKlQqPvLg-field-s-886.png",
+      "page_url": "https://fields.steenstrom.dk/",
+      "credit": "Field's : Storcentrets officielle hjemmeside i København S",
+      "source": "official_website",
+      "official": true,
+      "name": "Field's Food Court"
     },
     "Copenhagen Airport": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Aerial_view_of_Copenhagen_Airport%28Kastrup%29_%28CPH_IATA%29%2C_Copenhagen%2C_Denmark_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg/960px-Aerial_view_of_Copenhagen_Airport%28Kastrup%29_%28CPH_IATA%29%2C_Copenhagen%2C_Denmark_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Copenhagen_Airport(Kastrup)_(CPH_IATA)%2C_Copenhagen%2C_Denmark_(Ank_Kumar%2C_Infosys_Limited)_01.jpg",
-      "credit": "Ank Kumar",
-      "aliases": [
-        "Copenhagen Airport Kastrup Denmark"
-      ],
-      "query": "Copenhagen Airport Kastrup Denmark",
-      "context_image": true,
-      "query_version": 3
+      "url": "",
+      "page_url": "https://www.cph.dk/en",
+      "credit": "Copenhagen Airport",
+      "source": "official_website",
+      "official": true,
+      "name": "Copenhagen Airport"
     }
   },
   "return_stopover": {
@@ -510,8 +610,9 @@
     ]
   },
   "sources": {
-    "weather": "Open-Meteo forecast (up to 16 days) + September seasonal baseline until forecast window",
-    "photos": "Wikimedia Commons API; exact venue or nearby-context imagery",
+    "weather": "National meteorological authorities only (CWA, KNMI, DWD, DMI, KMA); no historical/climatology fallback",
+    "photos": "First-party venue/company/hotel/official-tourism website metadata only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
-  }
+  },
+  "official_web_generated_at": "2026-08-08T02:38:20Z"
 }
