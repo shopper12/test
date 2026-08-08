@@ -30,7 +30,7 @@ const AMBIGUOUS = /호텔\s*(?:회의공간|공용공간)|라운지\/도심\s*�
 export function modeForEvent(event){
   const t=`${event?.category||""} ${event?.transport||""}`.toLowerCase();
   if(/항공|flight|airline/.test(t))return "driving";
-  if(/thsr|mrt|metro|subway|rail|train|기차|철도|열차|버스|bus|u-bahn|s-bahn|dsb|db\/|ns\//.test(t))return "transit";
+  if(/thsr|mrt|metro|subway|rail|train|기차|철도|열차|버스|bus|tram|waterbus|watershuttle|ferry|u-bahn|s-bahn|dsb|db\/|ns\//.test(t))return "transit";
   if(/도보|walk/.test(t))return "walking";
   return "driving";
 }
@@ -117,22 +117,22 @@ function continuityRoute(prevEnd,route,mode){
   return{...route,origin:prevEnd,waypoints:unique.join("|"),mode:route.mode||mode,source:`continuity_${route.source||"route"}`,continuityFixed:true};
 }
 
-export function eventMapView(dayEvents,event,day={}){
+export function eventMapView(dayEvents,event,day={},previousEndpoint=""){
   const events=(dayEvents||[]).slice().sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
   const idx=events.findIndex(x=>String(x.id)===String(event?.id));
-  const prevEnd=idx>0?endpointForEvent(events[idx-1],day):"";
+  const prevEnd=idx>0?endpointForEvent(events[idx-1],day):String(previousEndpoint||"").trim();
   const mode=modeForEvent(event);
   const explicit=parseMapUrl(event?.map_url,day,event);
   if(explicit?.kind==="route")return continuityRoute(prevEnd,{...explicit,mode:explicit.mode||mode},mode);
   if(explicit?.kind==="place"){
-    if(prevEnd&&!samePlace(prevEnd,explicit.query))return{kind:"route",origin:prevEnd,destination:explicit.query,waypoints:"",mode,source:"derived_from_map_place",derived:true};
-    return explicit;
+    if(prevEnd&&!samePlace(prevEnd,explicit.query))return{kind:"route",origin:prevEnd,destination:explicit.query,waypoints:"",mode,source:idx===0?"day_boundary_from_map_place":"derived_from_map_place",derived:true,dayBoundary:idx===0};
+    return{...explicit,source:prevEnd&&samePlace(prevEnd,explicit.query)?"same_place":explicit.source,dayBoundary:idx===0&&Boolean(prevEnd)};
   }
   const textRoute=routeFromText(event,day);
-  if(textRoute)return continuityRoute(prevEnd,textRoute,mode);
+  if(textRoute){const view=continuityRoute(prevEnd,textRoute,mode);return idx===0&&prevEnd?{...view,dayBoundary:true}:view;}
   const destination=placeForEvent(event,day);
-  if(idx>0&&destination&&prevEnd&&!samePlace(prevEnd,destination))return{kind:"route",origin:prevEnd,destination,waypoints:"",mode,source:"derived_route",derived:true};
-  return{kind:"place",query:destination,source:prevEnd&&samePlace(prevEnd,destination)?"same_place":"place"};
+  if(destination&&prevEnd&&!samePlace(prevEnd,destination))return{kind:"route",origin:prevEnd,destination,waypoints:"",mode,source:idx===0?"day_boundary_route":"derived_route",derived:true,dayBoundary:idx===0};
+  return{kind:"place",query:destination,source:prevEnd&&samePlace(prevEnd,destination)?"same_place":"place",dayBoundary:idx===0&&Boolean(prevEnd)};
 }
 
 export function googleMapsEmbedUrl(view){
@@ -153,6 +153,7 @@ export function googleMapsOpenUrl(view){
 }
 
 export function mappingLabel(view){
+  if(view?.dayBoundary&&view?.kind==="route")return "전날→첫 일정";
   if(view?.continuityFixed)return "연속경로";
   if(view?.kind==="route")return view.derived?"직전 일정→경로":"경로";
   return view?.source==="same_place"?"같은 장소":"위치";
@@ -182,8 +183,24 @@ export function auditRouteContinuity(events,days){
     for(let i=1;i<sorted.length;i++){
       const prev=sorted[i-1],event=sorted[i],prevEnd=endpointForEvent(prev,day),view=eventMapView(sorted,event,day);
       const start=view?.kind==="route"?view.origin:view?.query||"";
-      rows.push({day_id:dayId,from_id:prev.id,to_id:event.id,from:prevEnd,to:start,connected:Boolean(prevEnd&&start&&samePlace(prevEnd,start)),kind:view?.kind||"none",source:view?.source||"none"});
+      rows.push({day_id:dayId,from_id:prev.id,to_id:event.id,from:prevEnd,to:start,connected:Boolean(prevEnd&&start&&samePlace(prevEnd,start)),kind:view?.kind||"none",source:view?.source||"none",day_boundary:false});
     }
+  }
+  return rows;
+}
+
+export function auditFullRouteContinuity(events,days){
+  const dayMap=new Map((days||[]).map(d=>[Number(d.id),d]));
+  const grouped=new Map();for(const e of events||[]){const id=Number(e.day_id);if(!grouped.has(id))grouped.set(id,[]);grouped.get(id).push(e);}
+  for(const rows of grouped.values())rows.sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
+  const all=(events||[]).slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||(a.sort_order||0)-(b.sort_order||0));
+  const rows=[];
+  for(let i=1;i<all.length;i++){
+    const prev=all[i-1],event=all[i],prevDay=dayMap.get(Number(prev.day_id))||{},day=dayMap.get(Number(event.day_id))||{};
+    const prevEnd=endpointForEvent(prev,prevDay),dayEvents=grouped.get(Number(event.day_id))||[];
+    const boundary=Number(prev.day_id)!==Number(event.day_id),view=eventMapView(dayEvents,event,day,boundary?prevEnd:"");
+    const start=view?.kind==="route"?view.origin:view?.query||"";
+    rows.push({day_id:Number(event.day_id),from_day:Number(prev.day_id),from_id:prev.id,to_id:event.id,from:prevEnd,to:start,connected:Boolean(prevEnd&&start&&samePlace(prevEnd,start)),kind:view?.kind||"none",source:view?.source||"none",day_boundary:boundary});
   }
   return rows;
 }
