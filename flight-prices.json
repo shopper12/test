@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-07T23:48:17Z",
-  "fresh_until": "2026-08-08T01:48:17Z",
+  "generated_at": "2026-08-08T02:20:58Z",
+  "fresh_until": "2026-08-08T04:20:58Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -192,34 +192,33 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4854043,
-        "per_person_krw": 1213511,
+        "total_krw": 4995093,
+        "per_person_krw": 1248773,
         "airlines": [
-          "SAS항공",
-          "버진 애틀랜틱항공"
+          "에어프랑스"
         ],
-        "carrier_code": "multi",
+        "carrier_code": "AF",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
-            "destination": "LHR",
+            "destination": "CDG",
             "departure_date": "2026-09-11",
-            "departure_time": "20:40",
+            "departure_time": "06:05",
             "arrival_date": "2026-09-11",
-            "arrival_time": "21:40",
-            "duration_minutes": 120,
-            "aircraft": "Airbus A320neo"
+            "arrival_time": "08:15",
+            "duration_minutes": 130,
+            "aircraft": "Airbus A220-300 Passenger"
           },
           {
-            "origin": "LHR",
+            "origin": "CDG",
             "destination": "ICN",
-            "departure_date": "2026-09-12",
-            "departure_time": "13:25",
-            "arrival_date": "2026-09-13",
-            "arrival_time": "10:05",
-            "duration_minutes": 760,
-            "aircraft": "Boeing 787"
+            "departure_date": "2026-09-11",
+            "departure_time": "14:40",
+            "arrival_date": "2026-09-12",
+            "arrival_time": "09:35",
+            "duration_minutes": 715,
+            "aircraft": "Airbus A350"
           }
         ]
       },
