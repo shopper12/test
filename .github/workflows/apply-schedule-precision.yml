@@ -18,31 +18,32 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-      - name: Apply schedule precision patch
-        run: |
-          python scripts/repair_schedule_patch.py
-          python scripts/apply_schedule_precision.py
-      - name: Validate JavaScript and schedule data
+      - name: Apply final timing consistency fixes
+        run: python scripts/finalize_schedule_precision.py
+      - name: Validate exact transport schedules and maps
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node --check itinerary-data.js
           node --check stable-tools.js
           node --check timeline-runtime-v17.js
+          grep -q 'AF1751 + AF264' itinerary-data.js
+          grep -q 'Re 1116 후보' itinerary-data.js
+          grep -q 'Re 1026 후보' itinerary-data.js
+          grep -q '23:16' itinerary-data.js
           grep -q 'THSR 0826' itinerary-data.js
           grep -q 'WaterShuttle' itinerary-data.js
           grep -q 'ECE 396' itinerary-data.js
           grep -q 'DSB IC 850' itinerary-data.js
-          grep -q 'transport-schedule' stable-tools.js
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           node scripts/audit_map_continuity.mjs itinerary-data.js
-      - name: Commit precise schedule UI
+      - name: Commit final exact transport times
         run: |
-          if git diff --quiet -- itinerary-data.js stable-tools.js timeline-runtime-v17.js map-sidebar.css live-transit-links.css; then
+          if git diff --quiet -- itinerary-data.js; then
             echo 'No changes to commit'
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add itinerary-data.js stable-tools.js timeline-runtime-v17.js map-sidebar.css live-transit-links.css
-          git commit -m "feat: show precise flight ferry and rail schedules"
+          git add itinerary-data.js
+          git commit -m "fix: align transport times with published schedules"
           git push
