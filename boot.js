@@ -1,4 +1,4 @@
-const BUILD = "LIVE_TRAVEL_V11";
+const BUILD = "LIVE_TRAVEL_V12";
 document.documentElement.dataset.dashboardBuild = BUILD;
 window.__DASHBOARD_BUILD__ = BUILD;
 
