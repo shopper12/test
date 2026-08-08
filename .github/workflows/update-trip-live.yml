@@ -31,7 +31,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v8
+  group: live-trip-intelligence-v9
   cancel-in-progress: true
 
 jobs:
@@ -55,6 +55,7 @@ jobs:
       - name: Syntax checks
         run: |
           python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py scripts/fill_official_photo_images.py
+          node --check boot.js
           node --check travel-live.js
           node --check unified-nav.js
           node --check unified-experience.js
@@ -72,6 +73,8 @@ jobs:
           hotels=Path('hotel-booking-summary.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
+          assert 'LIVE_TRAVEL_V9' in boot and 'LIVE_TRAVEL_V9' in html
+          assert 'const failures = []' in boot
           assert 'maps/embed/v1/directions' in maps
           assert 'maps/embed/v1/place' in maps
           assert 'trip:map-event' in maps
@@ -161,7 +164,7 @@ jobs:
     needs: refresh
     runs-on: ubuntu-latest
     concurrency:
-      group: pages-v8
+      group: pages
       cancel-in-progress: true
     environment:
       name: github-pages
@@ -171,6 +174,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
+
+      - name: Verify deployed build
+        run: |
+          grep -q 'LIVE_TRAVEL_V9' index.html
+          grep -q 'LIVE_TRAVEL_V9' boot.js
+          grep -q 'hotel-booking-summary.js' boot.js
+          grep -q 'customView' google-maps-inline.js
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
