@@ -18,67 +18,38 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reassemble verified V17 bundle
+      - name: Apply return-flight comparison patch and verify maps
         shell: bash
         run: |
-          cat v17part_00_0 v17part_00_1 v17part_01 v17part_02 v17part_03 v17part_04 v17part_05 v17part_06_0 v17part_06_1_0 v17part_06_1_1 v17part_07 > /tmp/v17_bundle.b64
-          base64 -d /tmp/v17_bundle.b64 > /tmp/v17_bundle.tar.gz
-          gzip -t /tmp/v17_bundle.tar.gz
-          tar -tzf /tmp/v17_bundle.tar.gz >/dev/null
+          set -euo pipefail
+          git apply --check return-core.patch
+          git apply return-core.patch
+          rm -rf scripts/__pycache__
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node --check itinerary-data.js
+          node --check map-routing.mjs
+          node --check travel-live.js
+          python -m py_compile scripts/update_flight_prices.py
+          rm -rf scripts/__pycache__
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text='\n'.join(Path(x).read_text(encoding='utf-8') for x in ['itinerary-data.js','map-routing.mjs','travel-live.js','scripts/update_flight_prices.py'])
+          banned=[r'광저우',r'Guangzhou',r'중국남방',r'China Southern',r'\bCAN\b',r'CZ3098',r'CZ307',r'csair',r'route_f2_save']
+          assert not [(pat,re.search(pat,text,re.I)) for pat in banned if re.search(pat,text,re.I)]
+          assert 'CPH→CDG→ICN' in text
+          assert 'compare_cph_time' in text
+          assert 'Paris Charles de Gaulle Airport' in text
+          PY
 
-      - name: Apply verified source without workflow changes
+      - name: Commit verified return comparison
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          for attempt in 1 2 3 4; do
-            git fetch origin main
-            git reset --hard origin/main
-            git clean -fd -e 'v17part_*' -e 'v17_bundle.tar.gz'
-            tar -xzf /tmp/v17_bundle.tar.gz
-
-            # Workflow files are updated separately through the GitHub API.
-            git checkout origin/main -- .github/workflows
-            rm -f timeline-runtime-v16.js
-            rm -rf scripts/__pycache__
-
-            cp itinerary-data.js /tmp/itinerary-data.mjs
-            node --check app.js
-            node --check boot.js
-            node --check map-routing.mjs
-            node --check stable-tools.js
-            node --check timeline-runtime-v17.js
-            node --check unified-experience.js
-            node --check travel-live.js
-            node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
-            node scripts/audit_map_continuity.mjs itinerary-data.js
-            python -m py_compile scripts/update_flight_prices.py
-            rm -rf scripts/__pycache__
-            python -m json.tool flight-prices.json >/dev/null
-
-            python - <<'PY'
-          import json
-          from pathlib import Path
-          fares=json.load(open('flight-prices.json',encoding='utf-8'))
-          assert len(fares.get('fares',{})) == 7
-          assert 'route_f2_direct' in fares['fares']
-          assert 'route_f2_save' not in fares['fares']
-          boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V17' in boot
-          assert Path('timeline-runtime-v17.js').exists()
-          PY
-
-            git add -A -- . ':!.github/workflows' ':!v17part_*' ':!v17_bundle.tar.gz'
-            if git diff --cached --quiet; then
-              echo "V17 already applied"
-              exit 0
-            fi
-            git commit -m "feat: apply LIVE_TRAVEL_V17 direct itinerary and verified internal maps"
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-            sleep $((attempt * 2))
-          done
-          exit 1
+          git add itinerary-data.js map-routing.mjs travel-live.js scripts/update_flight_prices.py
+          git commit -m "feat: compare direct and one-stop return flights in itinerary"
+          git push origin HEAD:main
