@@ -1,6 +1,6 @@
 import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V15";
 import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V15";
-import { auditEventMappings, auditRouteContinuity, eventMapView, googleMapsEmbedUrl, googleMapsOpenUrl, mappingLabel } from "./map-routing.mjs?v=LIVE_TRAVEL_V15";
+import { auditEventMappings, auditFullRouteContinuity, endpointForEvent, eventMapView, googleMapsEmbedUrl, googleMapsOpenUrl, mappingLabel } from "./map-routing.mjs?v=LIVE_TRAVEL_V15";
 
 const BUILD="LIVE_TRAVEL_V15";
 const HOST_ID="stable-live-tools";
@@ -14,10 +14,16 @@ function activeTab(){return document.querySelector("#tabs [data-tab].active")?.d
 function selectedDayId(){const button=document.querySelector(".day-tab.active");return button?Number(button.dataset.day):null;}
 function activeDay(){const p=activePlan(),id=selectedDayId()??1;return p.officialSeed.days.find(d=>Number(d.id)===id)||p.officialSeed.days[0];}
 function dayForEvent(event){return activePlan().officialSeed.days.find(d=>Number(d.id)===Number(event?.day_id))||{};}
-function eventsForDay(dayId){return (activePlan().officialSeed.events||[]).filter(e=>Number(e.day_id)===Number(dayId)).slice().sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));}
-function eventsForMap(){const id=selectedDayId();const rows=activePlan().officialSeed.events||[];return (id==null?rows:rows.filter(e=>Number(e.day_id)===id)).slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||(a.sort_order||0)-(b.sort_order||0));}
+function allEventsSorted(){return (activePlan().officialSeed.events||[]).slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||(a.sort_order||0)-(b.sort_order||0));}
+function eventsForDay(dayId){return allEventsSorted().filter(e=>Number(e.day_id)===Number(dayId));}
+function eventsForMap(){const id=selectedDayId();return id==null?allEventsSorted():eventsForDay(id);}
 function eventById(id){return (activePlan().officialSeed.events||[]).find(e=>String(e.id)===String(id));}
-function viewFor(event){const day=dayForEvent(event);return eventMapView(eventsForDay(event.day_id),event,day);}
+function previousGlobalEvent(event){const rows=allEventsSorted(),idx=rows.findIndex(e=>String(e.id)===String(event?.id));return idx>0?rows[idx-1]:null;}
+function viewFor(event){
+  const day=dayForEvent(event),dayEvents=eventsForDay(event.day_id),first=dayEvents[0],prev=String(first?.id)===String(event?.id)?previousGlobalEvent(event):null;
+  const prevEnd=prev?endpointForEvent(prev,dayForEvent(prev)):"";
+  return eventMapView(dayEvents,event,day,prevEnd);
+}
 
 async function loadWeather(force=false){
   if(!force&&state.weather&&Date.now()-state.loadedAt<300000)return;
@@ -36,8 +42,10 @@ function mapSidebarItem(event){
   return `<button type="button" class="map-schedule-sidebar-item ${active?"active":""}" data-stable-map-event="${esc(event.id)}"><span class="map-sidebar-time">${esc(event.time_start||"")}${event.time_end?`<small>~ ${esc(event.time_end)}</small>`:""}</span><span class="map-sidebar-body"><b>${allDays?`Day ${esc(event.day_id)} · `:""}${esc(event.title||"")}</b><small>${event.location?`📍 ${esc(event.location)}`:""}${event.transport?` · ${esc(event.transport)}`:""}</small></span><span class="map-sidebar-kind ${view.kind}">${esc(label)}</span></button>`;
 }
 function mapSidebarHtml(){
-  const events=eventsForMap(),days=activePlan().officialSeed.days,audit=auditEventMappings(events,days),valid=audit.filter(r=>r.mapped&&!r.ambiguous).length,joins=auditRouteContinuity(events,days),connected=joins.filter(r=>r.connected).length,id=selectedDayId();
-  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 상세 일정":`Day ${id} 상세 일정`}</b><small>${events.length}개 일정 · 지도 매핑 ${valid}/${events.length} · 구간 연결 ${connected}/${joins.length}</small></div><span class="map-audit-ok">${valid===events.length&&connected===joins.length?"전체 연결 완료":"경로 점검 필요"}</span></div><div class="map-schedule-sidebar-list">${events.map(mapSidebarItem).join("")}</div>`;
+  const events=eventsForMap(),days=activePlan().officialSeed.days,all=allEventsSorted(),audit=auditEventMappings(events,days),valid=audit.filter(r=>r.mapped&&!r.ambiguous).length,id=selectedDayId();
+  const fullJoins=auditFullRouteContinuity(all,days),joins=id==null?fullJoins:fullJoins.filter(r=>Number(r.day_id)===id),connected=joins.filter(r=>r.connected).length,boundaries=joins.filter(r=>r.day_boundary).length;
+  const boundaryText=boundaries?` · 날짜경계 ${boundaries}`:"";
+  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 상세 일정":`Day ${id} 상세 일정`}</b><small>${events.length}개 일정 · 지도 매핑 ${valid}/${events.length} · 구간 연결 ${connected}/${joins.length}${boundaryText}</small></div><span class="map-audit-ok">${valid===events.length&&connected===joins.length?"전체 연결 완료":"경로 점검 필요"}</span></div><div class="map-schedule-sidebar-list">${events.map(mapSidebarItem).join("")}</div>`;
 }
 function renderMapSidebar(){
   if(activeTab()!=="map")return false;const list=document.getElementById("route-list");if(!list)return false;
@@ -57,7 +65,7 @@ function focusMap(eventId){
 }
 window.__tripMapFocus=focusMap;
 window.__tripMapAudit=()=>auditEventMappings(activePlan().officialSeed.events||[],activePlan().officialSeed.days||[]);
-window.__tripMapContinuityAudit=()=>auditRouteContinuity(activePlan().officialSeed.events||[],activePlan().officialSeed.days||[]);
+window.__tripMapContinuityAudit=()=>auditFullRouteContinuity(activePlan().officialSeed.events||[],activePlan().officialSeed.days||[]);
 
 function render(){const h=host();if(!h)return;const tab=activeTab();if(tab==="timeline"){h.hidden=false;h.innerHTML=weatherHtml(activeDay());return;}if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}h.hidden=true;h.innerHTML="";}
 async function sync(forceWeather=false){await loadWeather(forceWeather);render();}
