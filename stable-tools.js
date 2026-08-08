@@ -1,10 +1,10 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V11";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V12";
+import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V12";
 
-const BUILD="LIVE_TRAVEL_V11";
+const BUILD="LIVE_TRAVEL_V12";
 const HOST_ID="stable-live-tools";
 const state={weather:null,loadedAt:0,selectedEvent:null};
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
-const fmt=v=>new Intl.NumberFormat("ko-KR").format(Math.round(Number(v)||0));
 
 function host(){return document.getElementById(HOST_ID);}
 function activePlan(){
@@ -31,30 +31,29 @@ async function loadWeather(force=false){
   }catch(e){console.warn(`[${BUILD}] weather`,e);state.loadedAt=Date.now();}
 }
 
+function fallbackCard(text){
+  const f=longRangeWeather(text);if(!f)return"";
+  return `<article><b>${esc(f.label)} · 장기전망/평년</b><small>${esc(f.basis)}</small><p><strong>예상 기준 ${esc(f.highC)}℃ / ${esc(f.lowC)}℃</strong><br>정식 단기예보가 발표되면 자동으로 공식예보가 우선됩니다.</p><div class="stable-source-links"><a href="${esc(f.sourceUrl)}" target="_blank" rel="noopener noreferrer">월간 전망 원문 ↗</a>${f.officialUrl?`<a href="${esc(f.officialUrl)}" target="_blank" rel="noopener noreferrer">${esc(f.officialLabel)} ↗</a>`:""}</div></article>`;
+}
 function weatherHtml(day){
   const bundle=state.weather?.[day.date],rows=bundle?.locations||[];
-  if(!rows.length)return `<section class="stable-card stable-weather"><div class="stable-head"><div><h2>🌦 ${esc(day.date)} 공식 날씨</h2><p>공식 날씨 정보를 읽는 중입니다.</p></div><button class="btn small" type="button" data-stable-weather-refresh>다시 읽기</button></div></section>`;
-  return `<section class="stable-card stable-weather"><div class="stable-head"><div><h2>🌦 ${esc(day.date)} 공식 날씨</h2><p>출장일 예보 발표 전에는 평년값 대신 공식 발표대기 상태와 원문만 표시합니다.</p></div><button class="btn small" type="button" data-stable-weather-refresh>다시 읽기</button></div><div class="stable-weather-grid">${rows.map(loc=>{
+  if(!rows.length){
+    const fallback=fallbackCard(day.cities);
+    return `<section class="stable-card stable-weather"><div class="stable-head"><div><h2>🌦 ${esc(day.date)} 날씨</h2><p>공식 단기예보 전에는 월간전망 또는 9월 평년값을 표시합니다.</p></div><button class="btn small" type="button" data-stable-weather-refresh>다시 읽기</button></div><div class="stable-weather-grid">${fallback||"<article><b>장기 날씨 기준 준비 중</b></article>"}</div></section>`;
+  }
+  return `<section class="stable-card stable-weather"><div class="stable-head"><div><h2>🌦 ${esc(day.date)} 날씨</h2><p>공식 시간별 예보가 있으면 우선하고, 발표 전이면 월간전망/평년값을 사용합니다.</p></div><button class="btn small" type="button" data-stable-weather-refresh>다시 읽기</button></div><div class="stable-weather-grid">${rows.map(loc=>{
     const hourly=loc.kind==="official_hourly"?(loc.hourly||[]).slice(0,6):[];
-    return `<article><b>${esc(loc.city||"")}</b><small>${esc(loc.authority||"")}</small>${hourly.length?`<div class="stable-hourly">${hourly.map(r=>`<span><strong>${esc(r.time||"")}</strong>${r.temperature_c!=null?` ${esc(r.temperature_c)}℃`:""}${r.precip_probability_pct!=null?` · 비 ${esc(r.precip_probability_pct)}%`:""}${r.wind_speed!=null?` · 풍속 ${esc(r.wind_speed)}`:""}</span>`).join("")}</div>`:`<p><b>시간별 예보 발표 전</b><br>${esc(loc.reason||"공식 예보 범위 밖입니다.")}</p>`}${loc.source_url?`<a href="${esc(loc.source_url)}" target="_blank" rel="noopener noreferrer">공식 기상청 원문 ↗</a>`:""}</article>`;
+    if(hourly.length)return `<article><b>${esc(loc.city||"")} · 공식예보</b><small>${esc(loc.authority||"")}</small><div class="stable-hourly">${hourly.map(r=>`<span><strong>${esc(r.time||"")}</strong>${r.temperature_c!=null?` ${esc(r.temperature_c)}℃`:""}${r.precip_probability_pct!=null?` · 비 ${esc(r.precip_probability_pct)}%`:""}${r.wind_speed!=null?` · 풍속 ${esc(r.wind_speed)}`:""}</span>`).join("")}</div>${loc.source_url?`<a href="${esc(loc.source_url)}" target="_blank" rel="noopener noreferrer">공식 기상청 원문 ↗</a>`:""}</article>`;
+    return fallbackCard(`${loc.city||""} ${(loc.aliases||[]).join(" ")}`)||`<article><b>${esc(loc.city||"")} · 예보 발표 전</b><small>${esc(loc.authority||"")}</small><p>${esc(loc.reason||"공식 예보 범위 밖입니다.")}</p>${loc.source_url?`<a href="${esc(loc.source_url)}" target="_blank" rel="noopener noreferrer">공식 기상청 원문 ↗</a>`:""}</article>`;
   }).join("")}</div></section>`;
 }
 
-function bookingUrl(h){
-  const p=new URLSearchParams({ss:`${h.name} ${h.city||""}`.trim(),checkin:h.check_in,checkout:h.check_out,group_adults:"4",no_rooms:String(h.rooms||2),group_children:"0",selected_currency:"KRW",order:"price"});
-  return `https://www.booking.com/searchresults.ko.html?${p.toString()}`;
-}
-function hotelsHtml(){
-  const hotels=activePlan().officialSeed.hotels||[];
-  return `<section class="stable-card stable-hotels"><div class="stable-head"><div><h2>🏨 전체 호텔 실제 예약</h2><p>성인 4명 · 일정의 체크인/체크아웃 · ${hotels[0]?.rooms||2}실 조건을 링크에 직접 넣었습니다.</p></div></div><div class="stable-hotel-grid">${hotels.map(h=>`<article><div><span>${esc(h.city||"")}</span><b>${esc(h.name||"")}</b><small>${esc(h.check_in)} → ${esc(h.check_out)} · ${esc(h.nights||"")}박 · ${esc(h.rooms||2)}실</small>${h.min_krw!=null?`<strong>계획범위 4인 ₩${fmt(h.min_krw)}~₩${fmt(h.max_krw)}</strong>`:""}</div><div class="stable-hotel-actions"><a class="btn small primary" href="${esc(bookingUrl(h))}" target="_blank" rel="noopener noreferrer">Booking.com 실제 예약 ↗</a>${h.url?`<a class="btn small" href="${esc(h.url)}" target="_blank" rel="noopener noreferrer">호텔 공식 사이트 ↗</a>`:""}</div></article>`).join("")}</div></section>`;
-}
-
 function eventButton(e){
-  return `<button type="button" class="stable-map-event ${String(state.selectedEvent)===String(e.id)?"active":""}" data-stable-map-event="${esc(e.id)}"><span>${esc(e.time_start||"")}${e.time_end?`–${esc(e.time_end)}`:""}</span><span><b>${esc(e.title||"")}</b><small>${e.location?`📍 ${esc(e.location)}`:""}${e.transport?` · ${esc(e.transport)}`:""}</small></span><strong>지도 이동 →</strong></button>`;
+  return `<button type="button" class="stable-map-event ${String(state.selectedEvent)===String(e.id)?"active":""}" data-stable-map-event="${esc(e.id)}"><span>${esc(e.time_start||"")}${e.time_end?`–${esc(e.time_end)}`:""}</span><span><b>${esc(e.title||"")}</b><small>${e.location?`📍 ${esc(e.location)}`:""}${e.transport?` · ${esc(e.transport)}`:""}</small></span><strong>경로 보기 →</strong></button>`;
 }
 function mapScheduleHtml(day){
   const events=eventsForDay();
-  return `<section class="stable-card stable-map-schedule"><div class="stable-head"><div><h2>🗺 Day ${day.id} 세부일정 · 클릭하면 위 지도 이동</h2><p>일정 버튼은 지도 iframe을 직접 교체하므로 앱 재렌더링과 별개로 동작합니다.</p></div></div><div class="stable-map-events">${events.map(eventButton).join("")}</div></section>`;
+  return `<section class="stable-card stable-map-schedule"><div class="stable-head"><div><h2>🗺 Day ${day.id} 세부일정 · 클릭하면 위 지도에 경로 표시</h2><p>이동 일정은 명시된 출발·도착을, 장소 일정은 직전 일정 위치→선택 장소 경로를 표시합니다.</p></div></div><div class="stable-map-events">${events.map(eventButton).join("")}</div></section>`;
 }
 
 function parseMapUrl(href){
@@ -80,10 +79,21 @@ function modeFor(e){
   if(/도보|walk/.test(t))return"walking";
   return"driving";
 }
+function placeText(e){return String(e?.location||e?.title||"").trim();}
+function derivedRoute(e){
+  const events=eventsForDay(),idx=events.findIndex(x=>String(x.id)===String(e.id));
+  if(idx<=0)return null;
+  const destination=placeText(e);if(!destination)return null;
+  for(let i=idx-1;i>=0;i--){
+    const origin=placeText(events[i]);
+    if(origin&&origin!==destination&&!/[→⇒]/.test(origin))return{kind:"route",origin,destination,waypoints:"",mode:modeFor(e),derived:true};
+  }
+  return null;
+}
 function viewFor(e){
-  const a=parseMapUrl(e?.map_url);if(a)return a;
-  const b=routeFromText(e);if(b){b.mode=modeFor(e);return b;}
-  return{kind:"place",query:e?.location||e?.title||""};
+  const explicit=parseMapUrl(e?.map_url);if(explicit){explicit.mode=explicit.mode||modeFor(e);return explicit;}
+  const textRoute=routeFromText(e);if(textRoute){textRoute.mode=modeFor(e);return textRoute;}
+  return derivedRoute(e)||{kind:"place",query:placeText(e)};
 }
 function mapSrc(v){
   if(v.kind==="place")return `https://maps.google.com/maps?${new URLSearchParams({q:v.query,z:"17",output:"embed"}).toString()}`;
@@ -99,7 +109,7 @@ function focusMap(eventId){
   let shell=map.querySelector(":scope > .stable-map-shell");
   if(!shell){shell=document.createElement("div");shell.className="stable-map-shell";map.append(shell);}
   const title=v.kind==="route"?`${v.origin} → ${v.destination}`:v.query;
-  shell.innerHTML=`<div class="stable-map-bar"><div><b>${esc(e.title||title)}</b><small>${v.kind==="route"?`${esc(v.origin)} → ${esc(v.destination)}${v.waypoints?` · 경유 ${esc(v.waypoints.replaceAll("|"," → "))}`:""}`:`${esc(v.query)} · 확대 17`}</small></div><button type="button" data-stable-map-close>기본 지도로</button></div><iframe title="${esc(e.title||title)}" src="${esc(src)}" loading="eager" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  shell.innerHTML=`<div class="stable-map-bar"><div><b>${esc(e.title||title)}</b><small>${v.kind==="route"?`${esc(v.origin)} → ${esc(v.destination)}${v.waypoints?` · 경유 ${esc(v.waypoints.replaceAll("|"," → "))}`:""}${v.derived?" · 직전 일정 기준 경로":""}`:`${esc(v.query)} · 첫 일정은 위치 표시`}</small></div><button type="button" data-stable-map-close>기본 지도로</button></div><iframe title="${esc(e.title||title)}" src="${esc(src)}" loading="eager" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
   host()?.querySelectorAll("[data-stable-map-event]").forEach(b=>b.classList.toggle("active",String(b.dataset.stableMapEvent)===String(eventId)));
   map.scrollIntoView({behavior:"smooth",block:"center"});
 }
@@ -107,7 +117,7 @@ function focusMap(eventId){
 function render(){
   const h=host();if(!h)return;
   const tab=activeTab(),day=activeDay();
-  if(tab==="timeline"){h.hidden=false;h.innerHTML=`${weatherHtml(day)}${hotelsHtml()}`;return;}
+  if(tab==="timeline"){h.hidden=false;h.innerHTML=weatherHtml(day);return;}
   if(tab==="map"){h.hidden=false;h.innerHTML=`${weatherHtml(day)}${mapScheduleHtml(day)}`;return;}
   h.hidden=true;h.innerHTML="";
 }
