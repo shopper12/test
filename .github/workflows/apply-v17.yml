@@ -1,0 +1,58 @@
+name: Apply V17 verified route bundle
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/apply-v17.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply verified direct-only bundle
+        run: |
+          tar -xzf v17_bundle.tar.gz
+          rm -f timeline-runtime-v16.js v17_bundle.tar.gz .github/workflows/apply-v17.yml
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node --check app.js
+          node --check boot.js
+          node --check map-routing.mjs
+          node --check stable-tools.js
+          node --check timeline-runtime-v17.js
+          node --check unified-experience.js
+          node --check travel-live.js
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+          python -m py_compile scripts/update_flight_prices.py
+          python -m json.tool flight-prices.json >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          assert len(json.load(open('flight-prices.json', encoding='utf-8'))['fares']) == 7
+          forbidden=['Guangzhou','광저우','CZ3098','CZ307','csair','China Southern','route_f2_save']
+          roots=[p for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts and p.name not in {'transit-live.json','trip-live.json'}]
+          hits=[]
+          for p in roots:
+              try: text=p.read_text(encoding='utf-8')
+              except Exception: continue
+              for token in forbidden:
+                  if token in text: hits.append(f'{p}:{token}')
+          assert not hits, hits
+          PY
+
+      - name: Commit V17
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: direct-only itinerary and verified internal map routes"
+          git push origin HEAD:main
