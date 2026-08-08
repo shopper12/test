@@ -8,12 +8,17 @@ on:
     paths:
       - "scripts/update_trip_live.py"
       - "scripts/update_flight_prices.py"
+      - "scripts/update_transit_live.py"
       - "scripts/refine_trip_photos.py"
       - "scripts/update_official_web_content.py"
       - "scripts/update_official_web_content_fast.py"
       - "scripts/fill_official_photo_images.py"
       - "scripts/verify_map_mappings.mjs"
+      - "scripts/audit_map_continuity.mjs"
       - "travel-live.js"
+      - "live-transit-links.js"
+      - "live-transit-links.css"
+      - "transit-live.json"
       - "unified-nav.js"
       - "unified-experience.js"
       - "unified-experience.css"
@@ -36,13 +41,13 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v14
+  group: live-trip-intelligence-v15
   cancel-in-progress: true
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 14
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -59,35 +64,36 @@ jobs:
 
       - name: Syntax checks
         run: |
-          python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py scripts/fill_official_photo_images.py
+          python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/update_transit_live.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py scripts/fill_official_photo_images.py
           node --check boot.js
           node --check travel-live.js
+          node --check live-transit-links.js
           node --check unified-nav.js
           node --check unified-experience.js
           node --check stable-tools.js
           node --check map-routing.mjs
           node --check scripts/verify_map_mappings.mjs
+          node --check scripts/audit_map_continuity.mjs
           node --check weather-fallback.js
           node --check google-map-link-bridge.js
 
-      - name: Validate v14 right sidebar and every itinerary mapping
+      - name: Validate v15 map mapping and continuous joins
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
           python - <<'PY'
           from pathlib import Path
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
-          css=Path('map-sidebar.css').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V14' in boot and 'LIVE_TRAVEL_V14' in html
-          assert 'map-routing.mjs' in stable
-          assert 'map-sidebar.css?v=LIVE_TRAVEL_V14' in html
-          assert 'if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}' in stable
-          assert '#route-list [data-stable-map-event]' in stable
-          assert 'map-schedule-sidebar-item' in stable and 'map-schedule-sidebar-item' in css
-          assert 'window.__tripMapAudit' in stable and 'window.__tripMapFocus' in stable
-          assert '#main-content .map-schedule-section{display:none!important}' in css
+          live=Path('live-transit-links.js').read_text(encoding='utf-8')
+          routing=Path('map-routing.mjs').read_text(encoding='utf-8')
+          assert 'LIVE_TRAVEL_V15' in boot and 'LIVE_TRAVEL_V15' in html
+          assert 'live-transit-links' in boot and 'transit-live.json' in live
+          assert 'auditRouteContinuity' in stable and 'window.__tripMapContinuityAudit' in stable
+          assert 'derived_from_map_place' in routing and 'continuity_' in routing
+          assert 'entity-name-link hotel' in live and 'entity-name-link restaurant' in live
           assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
           PY
 
@@ -96,14 +102,18 @@ jobs:
           python scripts/update_trip_live.py
           python scripts/refine_trip_photos.py
 
+      - name: Refresh official public transport status
+        run: python scripts/update_transit_live.py
+
       - name: Replace weather and photos with official web sources
         run: |
           python scripts/update_official_web_content_fast.py
           python scripts/fill_official_photo_images.py
 
-      - name: Validate live snapshot
+      - name: Validate live snapshots
         run: |
           python -m json.tool trip-live.json >/dev/null
+          python -m json.tool transit-live.json >/dev/null
           python - <<'PY'
           import json
           p=json.load(open('trip-live.json',encoding='utf-8'))
@@ -120,24 +130,31 @@ jobs:
               for loc in day.get('locations',[]):
                   assert loc.get('authority') in allowed
                   assert loc.get('kind') in {'official_pending','official_hourly','official_unparsed','official_source_error'}
+          t=json.load(open('transit-live.json',encoding='utf-8'))
+          assert t.get('generated_at')
+          assert len(t.get('providers',[])) == 7
+          assert all(x.get('official') is True for x in t['providers'])
+          assert {x['id'] for x in t['providers']} == {'thsr','taoyuan_mrt','ns','db','hvv','dsb','rejseplanen'}
           PY
 
-      - name: Commit refreshed snapshot safely
+      - name: Commit refreshed snapshots safely
         run: |
-          if git diff --quiet -- trip-live.json; then
+          if git diff --quiet -- trip-live.json transit-live.json; then
             echo "No live changes"
             exit 0
           fi
           cp trip-live.json /tmp/trip-live.json
+          cp transit-live.json /tmp/transit-live.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for attempt in 1 2 3 4; do
             git fetch origin main
             git reset --hard origin/main
             cp /tmp/trip-live.json trip-live.json
-            git add trip-live.json
+            cp /tmp/transit-live.json transit-live.json
+            git add trip-live.json transit-live.json
             if git diff --cached --quiet; then exit 0; fi
-            git commit -m "chore: refresh official trip intelligence"
+            git commit -m "chore: refresh official trip and transit intelligence"
             if git push origin HEAD:main; then exit 0; fi
             sleep $((attempt * 2))
           done
@@ -158,17 +175,19 @@ jobs:
         with:
           ref: main
 
-      - name: Verify deployed build
+      - name: Verify deployed v15 build
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
-          grep -q 'LIVE_TRAVEL_V14' index.html
-          grep -q 'LIVE_TRAVEL_V14' boot.js
-          grep -q 'map-routing.mjs' stable-tools.js
-          grep -q 'map-sidebar.css?v=LIVE_TRAVEL_V14' index.html
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+          grep -q 'LIVE_TRAVEL_V15' index.html
+          grep -q 'LIVE_TRAVEL_V15' boot.js
+          grep -q 'live-transit-links' boot.js
+          grep -q 'transit-live.json' live-transit-links.js
+          grep -q 'auditRouteContinuity' stable-tools.js
           grep -q '#route-list \[data-stable-map-event\]' stable-tools.js
-          grep -q 'window.__tripMapAudit' stable-tools.js
           grep -q 'button.textContent="전체 일정"' unified-nav.js
+          python -m json.tool transit-live.json >/dev/null
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
