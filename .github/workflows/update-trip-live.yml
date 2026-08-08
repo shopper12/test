@@ -14,6 +14,7 @@ on:
       - "travel-live.js"
       - "unified-nav.js"
       - "google-maps-inline.js"
+      - "google-map-link-bridge.js"
       - "travel-live.css"
       - "google-maps-inline.css"
       - "index.html"
@@ -54,12 +55,14 @@ jobs:
           node --check travel-live.js
           node --check unified-nav.js
           node --check google-maps-inline.js
+          node --check google-map-link-bridge.js
 
       - name: Validate Google Maps inline behavior
         run: |
           python - <<'PY'
           from pathlib import Path
           js=Path('google-maps-inline.js').read_text(encoding='utf-8')
+          bridge=Path('google-map-link-bridge.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
           assert 'maps/embed/v1/directions' in js
@@ -68,6 +71,8 @@ jobs:
           assert 'localStorage' in js
           assert 'google-maps-inline.css' in html
           assert 'google-maps-inline.js' in boot
+          assert 'google-map-link-bridge.js' in boot
+          assert 'preventDefault' in bridge and 'data-inline-google-map' in bridge
           assert 'target="_blank"' not in js
           PY
 
