@@ -19,7 +19,9 @@ jobs:
         with:
           ref: main
       - name: Apply schedule precision patch
-        run: python scripts/apply_schedule_precision.py
+        run: |
+          python scripts/repair_schedule_patch.py
+          python scripts/apply_schedule_precision.py
       - name: Validate JavaScript and schedule data
         run: |
           node --check itinerary-data.js
