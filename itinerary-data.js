@@ -769,13 +769,13 @@ function buildEvents(mode) {
     e(
       "d6-10",
       6,
-      "00:05",
-      "00:30",
+      "23:16",
+      "23:40",
       "함부르크 중앙역 → 호텔",
       "교통·숙박",
       "Motel One Hamburg-Fleetinsel",
       "택시",
-      "25분",
+      "24분",
     ),
     e(
       "d7-01",
@@ -921,7 +921,7 @@ function buildEvents(mode) {
       "숙박",
       "CABINN Plus Esbjerg, Torvegade 27",
       "도보",
-      "50분",
+      "36분",
     ),
     e(
       "d8-04",
@@ -932,7 +932,7 @@ function buildEvents(mode) {
       "관광",
       "Sædding Strand, Esbjerg",
       "버스+도보",
-      "3시간",
+      "2시간 45분",
       {
         map_url:
           "https://www.google.com/maps/search/?api=1&query=Men+at+Sea+Esbjerg",
@@ -1018,7 +1018,7 @@ function buildEvents(mode) {
       "업무정리",
       "CABINN Plus 라운지/도심 업무공간",
       "도보",
-      "2시간 30분",
+      "2시간 10분",
     ),
     e(
       "d9-06",
@@ -1046,14 +1046,18 @@ function buildEvents(mode) {
       "d9-07",
       9,
       "18:28",
-      "19:20",
+      "19:10",
       "코펜하겐 중앙역 → CABINN Metro",
       "교통·숙박",
-      "Arne Jacobsens Allé 2, Copenhagen",
-      "기차+도보",
-      "55분",
+      "København H → Ørestad St. → CABINN Metro",
+      "지역열차+도보",
+      "42분",
       {
         booking_url: "https://en.cabinn.com/hotel/cabinn-metro",
+        notes: "IC850 18:28 도착 후 13분 환승 여유. Rejseplanen은 9/7~9/12 선로공사로 일부 열차 변경 가능성을 공지하므로 3일 전 재확인.",
+        schedule_legs: [
+          { status: "provisional", service: "Regional train Re 1116 후보", from: "København H", depart: "18:41 후보", to: "Ørestad St.", arrive: "18:51 후보", source_label: "Rejseplanen 현행 패턴 · 9/10 선로공사 재확인" },
+        ],
       },
     ),
     e(
@@ -1065,21 +1069,21 @@ function buildEvents(mode) {
       "식사",
       "Ørestad, Copenhagen",
       "도보",
-      "60분",
+      "75분",
       {
         official_url: "https://fields.steenstrom.dk/",
       },
     ),
     ...(saving
       ? [
-          e("d10c-01",10,"06:45","08:00","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → CPH","기차","75분"),
-          e("d10c-02",10,"10:10","12:10","CPH → CDG","항공","Copenhagen → Paris CDG","Air France","2시간",{booking_url:"https://www.google.com/travel/flights",notes:"현재 4인 Google Flights 자동운임 기준 귀국 최저가 경로.",schedule_legs:[{status:"confirmed",service:"Air France",from:"CPH",depart:"10:10",to:"CDG",arrive:"12:10",source_label:"Google Flights 현재 판매편"}]}),
+          e("d10c-01",10,"07:10","07:50","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → Ørestad St. → CPH","도보+지역열차","40분",{notes:"Rejseplanen은 9/7~9/12 선로공사로 일부 열차 변경 가능성을 공지. 3일 전 재확인하고 변경 시 택시로 대체.",schedule_legs:[{status:"provisional",service:"Regional train Re 1026 후보",from:"Ørestad St.",depart:"07:37 후보",to:"CPH Lufthavn",arrive:"07:44 후보",source_label:"Rejseplanen 현행 패턴 · 9/11 선로공사 재확인"}]}),
+          e("d10c-02",10,"10:10","12:10","CPH → CDG","항공","Copenhagen → Paris CDG","Air France","2시간",{booking_url:"https://www.google.com/travel/flights",notes:"현재 4인 Google Flights 자동운임 기준 귀국 최저가 경로.",schedule_legs:[{status:"confirmed",service:"Air France AF1751",from:"CPH",depart:"10:10",to:"CDG",arrive:"12:10",source_label:"Google Flights 현재 판매편"}]}),
           e("d10c-03",10,"12:10","14:40","파리 샤를드골 환승","환승","Paris Charles de Gaulle Airport","공항 내 이동","2시간 30분"),
-          e("d10c-04",10,"14:40","9/12 09:35","CDG → ICN","항공","Paris CDG → Incheon","Air France","11시간 55분",{booking_url:"https://www.google.com/travel/flights",notes:"CPH→CDG→ICN 연결발권. 4인 약 500만원으로 SAS 직항 약 1,790만원 대비 약 1,291만원 절감.",schedule_legs:[{status:"confirmed",service:"Air France",from:"CDG",depart:"14:40",to:"ICN",arrive:"9/12 09:35",source_label:"Google Flights 현재 판매편"}]}),
+          e("d10c-04",10,"14:40","9/12 09:35","CDG → ICN","항공","Paris CDG → Incheon","Air France","11시간 55분",{booking_url:"https://www.google.com/travel/flights",notes:"CPH→CDG→ICN 연결발권. 4인 약 500만원으로 SAS 직항 약 1,790만원 대비 약 1,291만원 절감.",schedule_legs:[{status:"confirmed",service:"Air France AF264",from:"CDG",depart:"14:40",to:"ICN",arrive:"9/12 09:35",source_label:"Google Flights 현재 판매편"}]}),
           e("d11-01",11,"09:35","10:35","인천 도착·입국","귀국","Incheon International Airport","도보","60분"),
         ]
       : [
-          e("d10-01",10,"06:45","08:00","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → CPH","기차","75분"),
+          e("d10-01",10,"07:10","07:50","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → Ørestad St. → CPH","도보+지역열차","40분",{notes:"Rejseplanen은 9/7~9/12 선로공사로 일부 열차 변경 가능성을 공지. 3일 전 재확인하고 변경 시 택시로 대체.",schedule_legs:[{status:"provisional",service:"Regional train Re 1026 후보",from:"Ørestad St.",depart:"07:37 후보",to:"CPH Lufthavn",arrive:"07:44 후보",source_label:"Rejseplanen 현행 패턴 · 9/11 선로공사 재확인"}]}),
           e("d10-02",10,"10:25","14:45","CPH → IST","항공","Copenhagen → Istanbul","Turkish Airlines","3시간 20분",{booking_url:"https://www.google.com/travel/flights",schedule_legs:[{status:"confirmed",service:"Turkish Airlines TK1784",from:"CPH",depart:"10:25",to:"IST",arrive:"14:45",source_label:"Google Flights 현재 판매편"}]}),
           e("d10-03",10,"14:45","17:00","이스탄불 환승","환승","Istanbul Airport","공항 내 이동","2시간 15분"),
           e("d10-04",10,"17:00","9/12 08:35","IST → ICN","항공","Istanbul → Incheon","Turkish Airlines","9시간 35분",{booking_url:"https://www.google.com/travel/flights",notes:"비용안보다 약 102만원(4인) 비싸지만 인천 도착은 약 1시간 빠름.",schedule_legs:[{status:"confirmed",service:"Turkish Airlines TK90",from:"IST",depart:"17:00",to:"ICN",arrive:"9/12 08:35",source_label:"Google Flights 현재 판매편"}]}),
@@ -1127,7 +1131,7 @@ function buildFlights(mode) {
     },
     saving
       ? {
-          id: "f3", day_id: 10, date: "2026-09-11", flight_no: "AF · CDG 1회 환승",
+          id: "f3", day_id: 10, date: "2026-09-11", flight_no: "AF1751 + AF264",
           origin: "CPH", destination: "ICN", depart_time: "10:10", arrive_time: "09:35+1",
           min_krw: null, max_krw: null, status: "CDG 1회 환승·최저가",
           alternative: "SAS 직항은 약 1,291만원(4인) 추가", url: "https://wwws.airfrance.co.kr/",
