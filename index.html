@@ -15,10 +15,10 @@
   <link rel="stylesheet" href="./styles.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./compare.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./interactive.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
-  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V10" />
-  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V10" />
-  <link rel="stylesheet" href="./unified-experience.css?v=LIVE_TRAVEL_V10" />
-  <link rel="stylesheet" href="./runtime-integrity.css?v=LIVE_TRAVEL_V10" />
+  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V11" />
+  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V11" />
+  <link rel="stylesheet" href="./unified-experience.css?v=LIVE_TRAVEL_V11" />
+  <link rel="stylesheet" href="./stable-tools.css?v=LIVE_TRAVEL_V11" />
 </head>
 <body>
   <header class="topbar">
@@ -44,16 +44,17 @@
   </section>
 
   <nav class="tabs shell no-print" id="tabs"></nav>
+  <section id="stable-live-tools" class="shell" aria-live="polite"></section>
   <main class="shell" id="main-content"></main>
 
   <footer class="footer shell">
-    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · <b>빌드 LIVE_TRAVEL_V10</b><br>
-    전체 일정에는 공식 날씨와 전체 호텔 실제 예약 링크를 런타임 고정 영역으로 표시합니다.<br>
-    지도 메뉴의 세부일정은 별도 안정화 모듈이 직접 Google Maps iframe을 갱신하므로 기존 보완 모듈의 재렌더링에 덮어쓰이지 않습니다.<br>
+    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · <b>빌드 LIVE_TRAVEL_V11</b><br>
+    전체 일정의 공식 날씨와 전체 호텔 실제 예약은 앱 본문 밖의 영구 영역에서 표시되어 일정 화면 재렌더링으로 사라지지 않습니다.<br>
+    지도 메뉴의 세부일정도 같은 영구 영역에서 표시하고, 클릭 시 지도 안에 Google Maps 내장 경로를 직접 띄웁니다.<br>
     항공 금액은 GitHub Actions가 Google Flights를 매시간 조회한 성인 4명 일반석 스냅샷입니다.<br>
-    날씨는 대만 CWA·네덜란드 KNMI·독일 DWD·덴마크 DMI·한국 KMA의 공식 예보만 사용하며, 예보 발표 전에는 평년값이나 과거자료를 표시하지 않습니다.<br>
+    날씨는 대만 CWA·네덜란드 KNMI·독일 DWD·덴마크 DMI·한국 KMA의 공식 예보만 사용하며, 예보 발표 전에는 공식 원문과 발표대기 상태를 표시합니다.<br>
     장소 사진은 호텔·식당·기업·관광지의 공식 웹사이트가 공개한 대표 이미지를 사용하고 Wikimedia/스톡 사진으로 대체하지 않습니다.<br>
-    호텔 Booking 링크는 성인 4명·2실·실제 체크인/체크아웃 조건으로 생성됩니다. 최종 객실가와 취소조건은 결제화면에서 확인하십시오.
+    호텔 Booking 링크는 성인 4명·일정 객실 수·실제 체크인/체크아웃 조건으로 생성됩니다. 최종 객실가와 취소조건은 결제화면에서 확인하십시오.
   </footer>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
@@ -72,6 +73,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V10"></script>
+  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V11"></script>
 </body>
 </html>
