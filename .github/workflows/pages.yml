@@ -27,7 +27,7 @@ jobs:
       - name: Refresh official transit snapshot for artifact
         run: python scripts/update_transit_live.py
 
-      - name: Validate v15 dashboard, transit and map continuity
+      - name: Validate v15 dashboard, transit and full map continuity
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
@@ -39,19 +39,22 @@ jobs:
           boot=Path('boot.js').read_text(encoding='utf-8')
           css=Path('map-sidebar.css').read_text(encoding='utf-8')
           live=Path('live-transit-links.js').read_text(encoding='utf-8')
+          routing=Path('map-routing.mjs').read_text(encoding='utf-8')
           assert 'LIVE_TRAVEL_V15' in boot and 'LIVE_TRAVEL_V15' in html
           assert 'live-transit-links' in boot and 'live-transit-links.css?v=LIVE_TRAVEL_V15' in html
           assert 'map-routing.mjs?v=LIVE_TRAVEL_V15' in stable
-          assert 'auditRouteContinuity' in stable and 'window.__tripMapContinuityAudit' in stable
-          assert '구간 연결' in stable and '연속경로' in Path('map-routing.mjs').read_text(encoding='utf-8')
+          assert 'auditFullRouteContinuity' in stable and 'window.__tripMapContinuityAudit' in stable
+          assert '전날→첫 일정' in routing and 'day_boundary' in routing
+          assert '구간 연결' in stable and '연속경로' in routing
           assert '#route-list [data-stable-map-event]' in stable
           assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
           assert '#main-content .map-schedule-section{display:none!important}' in css
-          assert 'transit-live.json' in live
+          assert 'transit-live.json' in live and '"ret"' in live and '"waterbus"' in live
           assert 'google.com/travel/hotels' in live
           assert 'entity-name-link hotel' in live and 'entity-name-link restaurant' in live
           t=json.load(open('transit-live.json',encoding='utf-8'))
-          assert t.get('generated_at') and len(t.get('providers',[]))==7
+          assert t.get('generated_at') and len(t.get('providers',[]))==9
+          assert {x['id'] for x in t['providers']} == {'thsr','taoyuan_mrt','ns','ret','waterbus','db','hvv','dsb','rejseplanen'}
           PY
           node --check map-routing.mjs
           node --check stable-tools.js
