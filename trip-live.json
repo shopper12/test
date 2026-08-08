@@ -1,0 +1,16 @@
+{
+  "schema_version": 3,
+  "generated_at": "2026-08-08T01:48:00Z",
+  "fresh_until": "2026-08-08T03:48:00Z",
+  "weather": {},
+  "photos": {},
+  "return_stopover": {
+    "recommended": false,
+    "reason": "첫 GitHub Actions 자동조회 후 갱신됩니다."
+  },
+  "sources": {
+    "weather": "Open-Meteo",
+    "photos": "Wikimedia Commons API",
+    "return_fares": "Google Flights via fast-flights"
+  }
+}
