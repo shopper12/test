@@ -2,10 +2,11 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import urlencode, quote
+from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 from fast_flights import FlightQuery, Passengers, create_query
@@ -17,6 +18,7 @@ from update_flight_prices import parse_offers, serialize_offer
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "trip-live.json"
 FARES = ROOT / "flight-prices.json"
+PHOTO_QUERY_VERSION = 2
 
 DAYS = [
     ("2026-09-02", "Taichung", 24.1477, 120.6736, "taiwan"),
@@ -41,41 +43,52 @@ BASELINES = {
     "incheon": dict(temp_min_c=19, temp_max_c=27, precip_probability_pct=35, wind_max_kmh=20, summary="초가을, 습도와 비 가능성 확인 필요", clothing="반팔/긴팔 혼용+얇은 겉옷", umbrella=True),
 }
 
+# Exact venue photos are used when Commons has them; otherwise the query deliberately
+# asks for the venue's immediate district/port and the UI treats the image as context.
 PHOTOS = {
-    "TIPC Port of Taichung": ["Port of Taichung Taiwan", "TIPC", "Taichung Port"],
-    "VESTAS O&M Base": ["Vestas offshore wind", "Vestas", "offshore wind turbine"],
-    "Holiday Inn Express Taichung Park": ["Taichung Park", "Holiday Inn Taichung"],
-    "Wuqi Fishing Harbor": ["Wuqi Fishing Port", "Wuqi Fishing Harbor"],
-    "Gaomei Wetlands": ["Gaomei Wetlands", "Gaomei"],
-    "Lukang Old Street": ["Lukang Old Street", "Lukang"],
-    "National Taichung Theater": ["National Taichung Theater"],
-    "Schiphol Airport": ["Amsterdam Airport Schiphol"],
-    "Holiday Inn Express Rotterdam Central": ["Rotterdam Centraal", "Rotterdam"],
-    "Markthal Rotterdam": ["Markthal Rotterdam"],
-    "Cube Houses": ["Cube houses Rotterdam", "Kubuswoningen"],
-    "Historic Delfshaven": ["Delfshaven Rotterdam"],
-    "Restaurant Bazar": ["Witte de Withstraat Rotterdam", "Rotterdam Bazar"],
-    "Kinderdijk": ["Kinderdijk windmills"],
-    "Port of Rotterdam Authority": ["World Port Center Rotterdam", "Port of Rotterdam"],
-    "Rotterdam Offshore Group": ["Port of Rotterdam offshore", "Rotterdam port"],
-    "TNO Kesslerpark": ["Rijswijk Netherlands", "TNO Netherlands"],
-    "Motel One Hamburg-Fleetinsel": ["Fleetinsel Hamburg", "Hamburg Fleet"],
-    "Speicherstadt": ["Speicherstadt Hamburg"],
-    "Skyborn Renewables": ["HafenCity Hamburg", "offshore wind Hamburg"],
-    "Elbphilharmonie": ["Elbphilharmonie Hamburg"],
-    "Oberhafen-Kantine": ["Oberhafen Hamburg"],
-    "CABINN Plus Esbjerg": ["Esbjerg Denmark city"],
-    "Men at Sea": ["Men at Sea Esbjerg"],
-    "Esbjerg Street Food": ["Esbjerg Denmark"],
-    "Blue Water Shipping": ["Port of Esbjerg", "Esbjerg harbor"],
-    "CABINN Metro": ["Orestad Copenhagen", "Copenhagen Orestad"],
-    "Field's Food Court": ["Fields Copenhagen", "Orestad Copenhagen"],
-    "Copenhagen Airport": ["Copenhagen Airport"],
+    "TIPC Port of Taichung": ["Port of Taichung Taiwan", "Taichung Port Taiwan"],
+    "VESTAS O&M Base": ["Vestas offshore wind turbine", "Vestas wind turbine Denmark"],
+    "Holiday Inn Express Taichung Park": ["Taichung Park Taiwan"],
+    "Wuqi Fishing Harbor": ["Wuqi Fishing Port Taiwan"],
+    "Gaomei Wetlands": ["Gaomei Wetlands Taichung"],
+    "Lukang Old Street": ["Lukang Old Street Taiwan"],
+    "National Taichung Theater": ["National Taichung Theater Taiwan"],
+    "Schiphol Airport": ["Amsterdam Airport Schiphol terminal"],
+    "Holiday Inn Express Rotterdam Central": ["Rotterdam Centraal station Netherlands"],
+    "Markthal Rotterdam": ["Markthal Rotterdam interior"],
+    "Cube Houses": ["Cube Houses Rotterdam Kubuswoningen"],
+    "Historic Delfshaven": ["Delfshaven Rotterdam Netherlands"],
+    "Restaurant Bazar": ["Witte de Withstraat Rotterdam Netherlands"],
+    "Kinderdijk": ["Kinderdijk windmills Netherlands"],
+    "Port of Rotterdam Authority": ["World Port Center Rotterdam Netherlands", "Port of Rotterdam Netherlands"],
+    "Rotterdam Offshore Group": ["Port of Rotterdam offshore Netherlands"],
+    "TNO Kesslerpark": ["Rijswijk Netherlands Kessler Park"],
+    "Motel One Hamburg-Fleetinsel": ["Fleetinsel Hamburg Germany"],
+    "Speicherstadt": ["Speicherstadt Hamburg Germany"],
+    "Skyborn Renewables": ["HafenCity Hamburg Germany", "offshore wind Hamburg Germany"],
+    "Elbphilharmonie": ["Elbphilharmonie Hamburg Germany"],
+    "Oberhafen-Kantine": ["Oberhafen Kantine Hamburg"],
+    "CABINN Plus Esbjerg": ["Esbjerg Denmark city centre"],
+    "Men at Sea": ["Men at Sea Esbjerg Denmark"],
+    "Esbjerg Street Food": ["Esbjerg Denmark city centre"],
+    "Blue Water Shipping": ["Port of Esbjerg Denmark offshore wind"],
+    "CABINN Metro": ["CABINN Metro Copenhagen Denmark", "Orestad Copenhagen Denmark"],
+    "Field's Food Court": ["Fields Copenhagen Orestad Denmark"],
+    "Copenhagen Airport": ["Copenhagen Airport Kastrup Denmark"],
 }
 
+# Sightseeing stopovers are only surfaced when the same ticket is cheaper than the
+# currently selected return itinerary and a 6-14h same-day layover leaves a safe buffer.
 STOP_CITIES = {
+    "AMS": {"city":"암스테르담", "plan":"Schiphol→공항철도로 Amsterdam Centraal. 운하·Dam Square 인근만 짧게 보고 국제선 3시간 전 공항 복귀.", "query":"Amsterdam Centraal Dam Square"},
+    "HEL": {"city":"헬싱키", "plan":"공항철도 I/P선→Helsinki Central. Senate Square·Market Square 중심으로 짧게 이동 후 공항 복귀.", "query":"Senate Square Helsinki"},
+    "FRA": {"city":"프랑크푸르트", "plan":"S-Bahn→Hauptwache/Frankfurt Hbf. Römerberg·Main 강변 중 한 권역만 보고 국제선 3시간 전 복귀.", "query":"Romerberg Frankfurt"},
+    "WAW": {"city":"바르샤바", "plan":"공항열차→Warszawa Centralna. 구시가지 또는 문화과학궁전 권역 중 한 곳만 방문 후 복귀.", "query":"Warsaw Old Town"},
+    "IST": {"city":"이스탄불", "plan":"공항 Metro M11 중심으로 도심 접근. 장시간 경유일 때만 Galata/구시가지 한 권역을 선택하고 교통변수를 고려해 3.5시간 전 공항 복귀.", "query":"Galata Tower Istanbul"},
+    "DOH": {"city":"도하", "plan":"Doha Metro Red Line→도심. Souq Waqif·Corniche 중 한 권역만 보고 국제선 3시간 전 공항 복귀.", "query":"Souq Waqif Doha"},
+    "DXB": {"city":"두바이", "plan":"Dubai Metro Red Line→Downtown. Burj Khalifa/Dubai Mall 권역만 짧게 보고 국제선 3시간 전 공항 복귀.", "query":"Burj Khalifa Dubai Mall"},
     "PVG": {"city":"상하이", "plan":"푸동공항→Maglev/Metro로 루자쭈이·와이탄 짧은 동선. 공항 재도착은 국제선 출발 3시간 전 목표.", "query":"The Bund Shanghai"},
-    "PEK": {"city":"베이징", "plan":"공항철도→둥즈먼 후 왕푸징·톈안먼 외곽 중심의 짧은 동선. 교통체증을 고려해 3시간 이상 공항 버퍼 확보.", "query":"Wangfujing Beijing"},
+    "PEK": {"city":"베이징", "plan":"공항철도→둥즈먼 후 왕푸징 중심의 짧은 동선. 교통체증을 고려해 3시간 이상 공항 버퍼 확보.", "query":"Wangfujing Beijing"},
     "PKX": {"city":"베이징", "plan":"다싱공항철도 이용. 도심 체류를 짧게 잡고 국제선 3시간 전 공항 복귀.", "query":"Qianmen Beijing"},
     "HKG": {"city":"홍콩", "plan":"Airport Express→Hong Kong Station, Central·Victoria Harbour 중심 3~4시간 관광 후 공항 복귀.", "query":"Central Hong Kong Victoria Harbour"},
     "TPE": {"city":"타이베이", "plan":"Airport MRT→Taipei Main Station, 중정기념당·시먼딩 중 1~2곳만 선택 후 공항 복귀.", "query":"Chiang Kai-shek Memorial Hall Taipei"},
@@ -86,9 +99,9 @@ STOP_CITIES = {
 
 
 def get_json(url: str, timeout: int = 25):
-    req = Request(url, headers={"User-Agent":"offshore-trip-dashboard/3.0 (+https://shopper12.github.io/test/)"})
-    with urlopen(req, timeout=timeout) as r:
-        return json.load(r)
+    req = Request(url, headers={"User-Agent":"offshore-trip-dashboard/4.0 (+https://shopper12.github.io/test/)"})
+    with urlopen(req, timeout=timeout) as response:
+        return json.load(response)
 
 
 def weather_row(date: str, city: str, lat: float, lon: float, baseline_key: str):
@@ -96,108 +109,190 @@ def weather_row(date: str, city: str, lat: float, lon: float, baseline_key: str)
     today = datetime.now(timezone.utc).date()
     if today <= target <= today + timedelta(days=16):
         params = urlencode({
-            "latitude":lat,"longitude":lon,"timezone":"auto","start_date":date,"end_date":date,
+            "latitude":lat, "longitude":lon, "timezone":"auto", "start_date":date, "end_date":date,
             "daily":"weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max",
         })
         try:
-            data=get_json("https://api.open-meteo.com/v1/forecast?"+params)
-            d=data.get("daily",{})
-            tmax=round(float(d.get("temperature_2m_max",[None])[0]),1)
-            tmin=round(float(d.get("temperature_2m_min",[None])[0]),1)
-            pop=int(d.get("precipitation_probability_max",[0])[0] or 0)
-            wind=round(float(d.get("wind_speed_10m_max",[0])[0] or 0),1)
-            code=int(d.get("weather_code",[0])[0] or 0)
-            if code>=95: summary="뇌우 가능"
-            elif code>=80: summary="소나기 가능"
-            elif code>=61: summary="비 가능"
-            elif code>=51: summary="이슬비 가능"
-            elif code>=45: summary="안개·흐림 가능"
-            elif code>=3: summary="흐림"
-            elif code>=1: summary="대체로 맑음"
-            else: summary="맑음"
-            base=BASELINES[baseline_key]
-            clothing=base["clothing"]
-            if tmax<17: clothing="긴팔+재킷/니트 레이어드"
-            elif tmax>27: clothing="통풍 좋은 여름옷+실내 냉방용 얇은 겉옷"
-            return {"city":city,"kind":"forecast","summary":summary,"temp_min_c":tmin,"temp_max_c":tmax,"precip_probability_pct":pop,"wind_max_kmh":wind,"clothing":clothing,"umbrella":pop>=35,"source":"Open-Meteo"}
+            data = get_json("https://api.open-meteo.com/v1/forecast?" + params)
+            daily = data.get("daily", {})
+            tmax = round(float(daily.get("temperature_2m_max", [None])[0]), 1)
+            tmin = round(float(daily.get("temperature_2m_min", [None])[0]), 1)
+            pop = int(daily.get("precipitation_probability_max", [0])[0] or 0)
+            wind = round(float(daily.get("wind_speed_10m_max", [0])[0] or 0), 1)
+            code = int(daily.get("weather_code", [0])[0] or 0)
+            if code >= 95: summary = "뇌우 가능"
+            elif code >= 80: summary = "소나기 가능"
+            elif code >= 61: summary = "비 가능"
+            elif code >= 51: summary = "이슬비 가능"
+            elif code >= 45: summary = "안개·흐림 가능"
+            elif code >= 3: summary = "흐림"
+            elif code >= 1: summary = "대체로 맑음"
+            else: summary = "맑음"
+            clothing = BASELINES[baseline_key]["clothing"]
+            if tmax < 17: clothing = "긴팔+재킷/니트 레이어드"
+            elif tmax > 27: clothing = "통풍 좋은 여름옷+실내 냉방용 얇은 겉옷"
+            return {"city":city, "kind":"forecast", "summary":summary, "temp_min_c":tmin, "temp_max_c":tmax, "precip_probability_pct":pop, "wind_max_kmh":wind, "clothing":clothing, "umbrella":pop >= 35, "source":"Open-Meteo"}
         except Exception as exc:
-            fallback=dict(BASELINES[baseline_key]); fallback.update(city=city,kind="climate_baseline",source="seasonal baseline",error=str(exc)); return fallback
-    fallback=dict(BASELINES[baseline_key]); fallback.update(city=city,kind="climate_baseline",source="September seasonal baseline"); return fallback
+            fallback = dict(BASELINES[baseline_key])
+            fallback.update(city=city, kind="climate_baseline", source="seasonal baseline", error=str(exc))
+            return fallback
+    fallback = dict(BASELINES[baseline_key])
+    fallback.update(city=city, kind="climate_baseline", source="September seasonal baseline")
+    return fallback
+
+
+def clean_credit(value: str) -> str:
+    value = re.sub(r"<[^>]+>", "", value or "")
+    value = re.sub(r"\s+", " ", value).strip()
+    return value[:120] or "Wikimedia Commons"
 
 
 def commons_photo(search_terms: list[str]):
     for term in search_terms:
         try:
-            params=urlencode({"action":"query","format":"json","generator":"search","gsrsearch":term,"gsrnamespace":6,"gsrlimit":5,"prop":"imageinfo","iiprop":"url|extmetadata","iiurlwidth":640,"origin":"*"})
-            data=get_json("https://commons.wikimedia.org/w/api.php?"+params)
-            pages=list((data.get("query",{}).get("pages",{}) or {}).values())
-            for p in pages:
-                info=(p.get("imageinfo") or [{}])[0]
-                url=info.get("thumburl") or info.get("url")
-                if not url: continue
-                meta=info.get("extmetadata") or {}
-                credit=(meta.get("Artist") or {}).get("value") or "Wikimedia Commons"
-                credit=credit.replace("<span>","").replace("</span>","")[:120]
-                page_url="https://commons.wikimedia.org/wiki/"+quote(p.get("title","").replace(" ","_"),safe=":_/()")
-                return {"url":url,"page_url":page_url,"credit":credit,"aliases":search_terms,"query":term}
+            params = urlencode({
+                "action":"query", "format":"json", "generator":"search", "gsrsearch":term,
+                "gsrnamespace":6, "gsrlimit":8, "indexpageids":1, "prop":"imageinfo",
+                "iiprop":"url|extmetadata", "iiurlwidth":640, "origin":"*",
+            })
+            data = get_json("https://commons.wikimedia.org/w/api.php?" + params)
+            query = data.get("query", {})
+            pages = query.get("pages", {}) or {}
+            ordered_ids = query.get("pageids", []) or list(pages.keys())
+            for page_id in ordered_ids:
+                page = pages.get(str(page_id), pages.get(page_id, {}))
+                title = str(page.get("title", ""))
+                if title.lower().endswith((".pdf", ".djvu", ".tif", ".tiff")):
+                    continue
+                info = (page.get("imageinfo") or [{}])[0]
+                url = info.get("thumburl") or info.get("url")
+                if not url:
+                    continue
+                meta = info.get("extmetadata") or {}
+                credit = clean_credit((meta.get("Artist") or {}).get("value") or "Wikimedia Commons")
+                page_url = "https://commons.wikimedia.org/wiki/" + quote(title.replace(" ", "_"), safe=":_/()")
+                return {"url":url, "page_url":page_url, "credit":credit, "aliases":search_terms, "query":term, "context_image":True, "query_version":PHOTO_QUERY_VERSION}
         except Exception:
             continue
-    return {"url":"","page_url":"","credit":"","aliases":search_terms,"query":search_terms[0]}
+    return {"url":"", "page_url":"", "credit":"", "aliases":search_terms, "query":search_terms[0], "context_image":True, "query_version":PHOTO_QUERY_VERSION}
 
 
 def parse_dt(date: str, time: str):
     return datetime.fromisoformat(f"{date}T{time}:00")
 
 
-def stopover_candidate():
-    query=create_query(flights=[FlightQuery(date="2026-09-11",from_airport="CPH",to_airport="ICN")],seat="economy",trip="one-way",passengers=Passengers(adults=4),language="ko",currency="KRW",max_stops=1)
-    offers=parse_offers(fetch_flights_html(query))
-    eligible=[]
-    for o in offers:
-        legs=o.get("legs") or []
-        if len(legs)!=2: continue
-        via=legs[0]["destination"]
-        if via not in STOP_CITIES: continue
-        if legs[1]["duration_minutes"]>300: continue
-        arr=parse_dt(legs[0]["arrival_date"],legs[0]["arrival_time"])
-        dep=parse_dt(legs[1]["departure_date"],legs[1]["departure_time"])
-        if arr.date()!=dep.date(): continue
-        layover=(dep-arr).total_seconds()/3600
-        if layover<6 or layover>14: continue
-        if arr.hour>15 or dep.hour<14: continue
-        eligible.append((o,layover,via))
-    current=None
+def current_return_total():
     try:
-        current=json.loads(FARES.read_text(encoding="utf-8")).get("fares",{}).get("route_f3",{}).get("selected",{}).get("total_krw")
+        return json.loads(FARES.read_text(encoding="utf-8")).get("fares", {}).get("route_f3", {}).get("selected", {}).get("total_krw")
     except Exception:
-        pass
+        return None
+
+
+def stopover_candidate():
+    query = create_query(
+        flights=[FlightQuery(date="2026-09-11", from_airport="CPH", to_airport="ICN")],
+        seat="economy", trip="one-way", passengers=Passengers(adults=4),
+        language="ko", currency="KRW", max_stops=1,
+    )
+    offers = parse_offers(fetch_flights_html(query))
+    eligible = []
+    for offer in offers:
+        legs = offer.get("legs") or []
+        if len(legs) != 2:
+            continue
+        via = legs[0].get("destination")
+        if via not in STOP_CITIES:
+            continue
+        try:
+            arr = parse_dt(legs[0]["arrival_date"], legs[0]["arrival_time"])
+            dep = parse_dt(legs[1]["departure_date"], legs[1]["departure_time"])
+        except Exception:
+            continue
+        # No overnight hotel: sightseeing must fit into a same-local-date connection.
+        if arr.date() != dep.date():
+            continue
+        layover = (dep - arr).total_seconds() / 3600
+        if not 6 <= layover <= 14:
+            continue
+        # Arriving too late or departing too early makes city sightseeing unrealistic.
+        if arr.hour > 15 or dep.hour < 14:
+            continue
+        eligible.append((offer, layover, via))
+
+    current = current_return_total()
     if not eligible:
-        return {"recommended":False,"reason":"6~14시간 당일 경유·동아시아 마지막 구간 5시간 이내 조건을 만족하는 더 나은 후보를 찾지 못했습니다.","query_url":query.url()}
-    eligible.sort(key=lambda x:x[0]["price"])
-    offer,layover,via=eligible[0]
-    ser=serialize_offer(offer); info=STOP_CITIES[via]
-    delta=int(ser["total_krw"])-int(current) if current else None
-    recommended=current is not None and int(ser["total_krw"])<int(current)
-    return {"recommended":recommended,"via_airport":via,"via_city":info["city"],"layover_hours":round(layover,1),"total_krw":ser["total_krw"],"per_person_krw":ser["per_person_krw"],"price_delta_vs_current_krw":delta,"current_total_krw":current,"sightseeing_plan":info["plan"],"city_map_url":"https://www.google.com/maps/search/?api=1&query="+quote(info["query"]),"query_url":query.url(),"legs":ser["legs"],"reason":"현재 채택편보다 저렴할 때만 추천 표시" if recommended else "관광 가능 후보는 있으나 현재 채택편보다 저렴하지 않아 유지"}
+        return {
+            "recommended":False,
+            "reason":"CPH→ICN 1회 경유 전체 후보 중 6~14시간 당일 관광·공항 복귀 버퍼 조건을 만족하는 후보를 찾지 못했습니다.",
+            "query_url":query.url(),
+            "monitored_airports":list(STOP_CITIES.keys()),
+        }
+
+    eligible.sort(key=lambda item: item[0]["price"])
+    offer, layover, via = eligible[0]
+    serialized = serialize_offer(offer)
+    info = STOP_CITIES[via]
+    delta = int(serialized["total_krw"]) - int(current) if current else None
+    recommended = current is not None and int(serialized["total_krw"]) < int(current)
+    return {
+        "recommended":recommended,
+        "via_airport":via,
+        "via_city":info["city"],
+        "layover_hours":round(layover, 1),
+        "total_krw":serialized["total_krw"],
+        "per_person_krw":serialized["per_person_krw"],
+        "price_delta_vs_current_krw":delta,
+        "current_total_krw":current,
+        "sightseeing_plan":info["plan"],
+        "city_map_url":"https://www.google.com/maps/search/?api=1&query=" + quote(info["query"]),
+        "query_url":query.url(),
+        "legs":serialized["legs"],
+        "monitored_airports":list(STOP_CITIES.keys()),
+        "reason":"현재 채택편보다 저렴하여 관광 경유 후보로 추천" if recommended else "관광 가능한 후보는 있으나 현재 채택편보다 저렴하지 않아 기존편 유지",
+    }
 
 
 def main():
-    now=datetime.now(timezone.utc).replace(microsecond=0)
-    previous={}
+    now = datetime.now(timezone.utc).replace(microsecond=0)
+    previous = {}
     if OUTPUT.exists():
-        try: previous=json.loads(OUTPUT.read_text(encoding="utf-8"))
-        except Exception: previous={}
-    weather={date:weather_row(date,city,lat,lon,key) for date,city,lat,lon,key in DAYS}
-    photos={}
-    old_photos=previous.get("photos",{})
-    for name,aliases in PHOTOS.items():
-        old=old_photos.get(name) or {}
-        photos[name]=old if old.get("url") else commons_photo([name,*aliases])
-    try: stopover=stopover_candidate()
-    except Exception as exc:
-        stopover=previous.get("return_stopover") or {"recommended":False,"reason":f"귀국 경유편 조회 오류: {exc}"}
-    payload={"schema_version":3,"generated_at":now.isoformat().replace("+00:00","Z"),"fresh_until":(now+timedelta(hours=2)).isoformat().replace("+00:00","Z"),"weather":weather,"photos":photos,"return_stopover":stopover,"sources":{"weather":"Open-Meteo forecast (up to 16 days) + seasonal baseline until forecast window","photos":"Wikimedia Commons API","return_fares":"Google Flights via fast-flights"}}
-    OUTPUT.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps(payload,ensure_ascii=False))
+        try:
+            previous = json.loads(OUTPUT.read_text(encoding="utf-8"))
+        except Exception:
+            previous = {}
 
-if __name__=="__main__": main()
+    weather = {date: weather_row(date, city, lat, lon, key) for date, city, lat, lon, key in DAYS}
+    old_photos = previous.get("photos", {})
+    photos = {}
+    for name, search_terms in PHOTOS.items():
+        old = old_photos.get(name) or {}
+        if old.get("url") and old.get("query_version") == PHOTO_QUERY_VERSION:
+            photos[name] = old
+        else:
+            photos[name] = commons_photo(search_terms)
+
+    try:
+        stopover = stopover_candidate()
+    except Exception as exc:
+        stopover = previous.get("return_stopover") or {"recommended":False, "reason":f"귀국 경유편 조회 오류: {exc}"}
+        stopover["last_error"] = str(exc)
+
+    payload = {
+        "schema_version":4,
+        "generated_at":now.isoformat().replace("+00:00", "Z"),
+        "fresh_until":(now + timedelta(hours=2)).isoformat().replace("+00:00", "Z"),
+        "weather":weather,
+        "photos":photos,
+        "return_stopover":stopover,
+        "sources":{
+            "weather":"Open-Meteo forecast (up to 16 days) + September seasonal baseline until forecast window",
+            "photos":"Wikimedia Commons API; exact venue or nearby-context imagery",
+            "return_fares":"Google Flights via fast-flights",
+        },
+    }
+    OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(payload, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()
