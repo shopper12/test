@@ -5,6 +5,7 @@ const AIRPORT_COORDS = new Map([
   ["Amsterdam Airport Schiphol", [52.3105,4.7683]],
   ["Copenhagen Airport", [55.6181,12.6560]],
   ["Istanbul Airport", [41.2753,28.7519]],
+  ["Paris Charles de Gaulle Airport", [49.0097,2.5479]],
 ]);
 
 const MAP_MANIFEST = Object.freeze({
@@ -75,6 +76,10 @@ const MAP_MANIFEST = Object.freeze({
   "d9-07": {kind:"route",origin:"København H, Copenhagen",waypoints:"Ørestad Station, Copenhagen",destination:"CABINN Metro, Arne Jacobsens Allé 2, Copenhagen",mode:"transit"},
   "d9-08": {kind:"place",query:"Field's Copenhagen, Arne Jacobsens Allé 12"},
 
+  "d10c-01": {kind:"route",origin:"CABINN Metro, Arne Jacobsens Allé 2, Copenhagen",destination:"Copenhagen Airport",mode:"transit"},
+  "d10c-02": {kind:"route",origin:"Copenhagen Airport",destination:"Paris Charles de Gaulle Airport",mode:"flight"},
+  "d10c-03": {kind:"place",query:"Paris Charles de Gaulle Airport"},
+  "d10c-04": {kind:"route",origin:"Paris Charles de Gaulle Airport",destination:"Incheon International Airport",mode:"flight"},
   "d10-01": {kind:"route",origin:"CABINN Metro, Arne Jacobsens Allé 2, Copenhagen",destination:"Copenhagen Airport",mode:"transit"},
   "d10-02": {kind:"route",origin:"Copenhagen Airport",destination:"Istanbul Airport",mode:"flight"},
   "d10-03": {kind:"place",query:"Istanbul Airport"},

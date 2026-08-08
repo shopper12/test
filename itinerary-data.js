@@ -66,29 +66,29 @@ const planMeta = {
     ...sharedMeta,
     key: "cost_optimized",
     tabLabel: "추천안 · 비용 최적",
-    tabNote: "TPE→AMS 직항 · 유럽 철도 · 코펜하겐 귀국",
+    tabNote: "TPE→AMS 직항 · 귀국 최저가 CPH→CDG→ICN",
     subtitle:
-      "첨부 계획서의 도시·업무장소 순서 유지 · 장거리 항공 3구간으로 단순화 · 숙박은 업무 접근성을 지키는 저가 후보",
+      "첨부 계획서의 도시·업무장소 순서 유지 · 귀국은 9/11 실시간 운임 기준 최저가 1회 경유 · 숙박은 업무 접근성을 지키는 저가 후보",
     taiwanWindow: "9/2 09:40–9/4 11:20",
     taiwanDuration: "약 2일 2시간",
     budgetMin: 17_800_000,
     budgetMax: 23_500_000,
     recommendation:
-      "대만 체류시간과 유럽 도착 동선을 단순화하고, 유럽 구간 철도로 비용을 절감하는 권고안",
+      "대만·유럽 동선을 단순화하고, 귀국은 CPH→CDG→ICN 1회 경유 최저가를 채택하는 권고안",
   },
   time_optimized: {
     ...sharedMeta,
     key: "time_optimized",
-    tabLabel: "비교안 · 직항 우선",
-    tabNote: "TPE→AMS 직항 · 나머지는 추천안과 동일",
+    tabLabel: "비교안 · 귀국시간 우선",
+    tabNote: "TPE→AMS 직항 · 귀국 CPH→IST→ICN 08:35 도착",
     subtitle:
-      "첨부 계획서의 도시·업무장소 순서 유지 · 대만에서 유럽만 직항으로 이동 · 귀국은 코펜하겐 1회 환승",
+      "첨부 계획서의 도시·업무장소 순서 유지 · 귀국은 비용안보다 약 1시간 빠른 이스탄불 1회 환승",
     taiwanWindow: "9/2 09:40–9/4 20:00",
     taiwanDuration: "약 2일 10시간",
     budgetMin: 19_700_000,
     budgetMax: 25_400_000,
     recommendation:
-      "TPE→AMS 직항을 유지하면서 유럽 내 이동시간을 우선하는 비교안",
+      "TPE→AMS 직항을 유지하고 귀국 도착시각을 우선하는 비교안",
   },
 };
 
@@ -179,10 +179,11 @@ function buildDays(mode) {
       id: 10,
       date: "2026-09-11",
       weekday: "금요일",
-      cities: "코펜하겐 → 이스탄불 → 인천",
+      cities: saving ? "코펜하겐 → 파리(CDG) → 인천" : "코펜하겐 → 이스탄불 → 인천",
       lodging: "기내박",
-      summary:
-        "10:25 CPH 출발 · 이스탄불 1회 환승 · 계획서 EBJ→ABZ→AMS보다 짧고 저렴",
+      summary: saving
+        ? "10:10 CPH 출발 · Air France 파리 1회 환승 · 4인 자동운임 약 500만원으로 SAS 직항보다 약 1,291만원 절감"
+        : "10:25 CPH 출발 · Turkish 이스탄불 1회 환승 · 비용안보다 약 1시간 빠른 08:35 인천 도착",
     },
     {
       id: 11,
@@ -190,7 +191,7 @@ function buildDays(mode) {
       weekday: "토요일",
       cities: "인천",
       lodging: "귀가",
-      summary: "08:35 인천 도착·입국",
+      summary: saving ? "09:35 인천 도착·입국" : "08:35 인천 도착·입국",
     },
   ];
 }
@@ -1041,69 +1042,21 @@ function buildEvents(mode) {
         official_url: "https://fields.steenstrom.dk/",
       },
     ),
-    e(
-      "d10-01",
-      10,
-      "06:45",
-      "08:00",
-      "체크아웃·코펜하겐공항 이동",
-      "출국·교통",
-      "CABINN Metro → CPH",
-      "기차",
-      "75분",
-    ),
-    e(
-      "d10-02",
-      10,
-      "10:25",
-      "14:45",
-      "CPH → IST",
-      "항공",
-      "Copenhagen → Istanbul",
-      "Turkish Airlines",
-      "3시간 20분",
-      {
-        booking_url: "https://www.google.com/travel/flights",
-      },
-    ),
-    e(
-      "d10-03",
-      10,
-      "14:45",
-      "17:00",
-      "이스탄불 환승",
-      "환승",
-      "Istanbul Airport",
-      "공항 내 이동",
-      "2시간 15분",
-    ),
-    e(
-      "d10-04",
-      10,
-      "17:00",
-      "9/12 08:35",
-      "IST → ICN",
-      "항공",
-      "Istanbul → Incheon",
-      "Turkish Airlines",
-      "9시간 35분",
-      {
-        booking_url: "https://www.google.com/travel/flights",
-        notes:
-          "CPH→IST→ICN 한 장 발권. 계획서 EBJ→ABZ→AMS→ICN보다 약 12시간 빠르고 현재 4인 기준 크게 저렴.",
-      },
-    ),
-    e(
-      "d11-01",
-      11,
-      "08:35",
-      "09:35",
-      "인천 도착·입국",
-      "귀국",
-      "Incheon International Airport",
-      "도보",
-      "60분",
-    ),
+    ...(saving
+      ? [
+          e("d10c-01",10,"06:45","08:00","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → CPH","기차","75분"),
+          e("d10c-02",10,"10:10","12:10","CPH → CDG","항공","Copenhagen → Paris CDG","Air France","2시간",{booking_url:"https://www.google.com/travel/flights",notes:"현재 4인 Google Flights 자동운임 기준 귀국 최저가 경로."}),
+          e("d10c-03",10,"12:10","14:40","파리 샤를드골 환승","환승","Paris Charles de Gaulle Airport","공항 내 이동","2시간 30분"),
+          e("d10c-04",10,"14:40","9/12 09:35","CDG → ICN","항공","Paris CDG → Incheon","Air France","11시간 55분",{booking_url:"https://www.google.com/travel/flights",notes:"CPH→CDG→ICN 연결발권. 4인 약 500만원으로 SAS 직항 약 1,790만원 대비 약 1,291만원 절감."}),
+          e("d11-01",11,"09:35","10:35","인천 도착·입국","귀국","Incheon International Airport","도보","60분"),
+        ]
+      : [
+          e("d10-01",10,"06:45","08:00","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → CPH","기차","75분"),
+          e("d10-02",10,"10:25","14:45","CPH → IST","항공","Copenhagen → Istanbul","Turkish Airlines","3시간 20분",{booking_url:"https://www.google.com/travel/flights"}),
+          e("d10-03",10,"14:45","17:00","이스탄불 환승","환승","Istanbul Airport","공항 내 이동","2시간 15분"),
+          e("d10-04",10,"17:00","9/12 08:35","IST → ICN","항공","Istanbul → Incheon","Turkish Airlines","9시간 35분",{booking_url:"https://www.google.com/travel/flights",notes:"비용안보다 약 102만원(4인) 비싸지만 인천 도착은 약 1시간 빠름."}),
+          e("d11-01",11,"08:35","09:35","인천 도착·입국","귀국","Incheon International Airport","도보","60분"),
+        ]),
   ];
 }
 
@@ -1144,23 +1097,21 @@ function buildFlights(mode) {
       notes: "TPE→AMS 직항으로 환승 없이 이동",
       sort_order: 20,
     },
-    {
-      id: "f3",
-      day_id: 10,
-      date: "2026-09-11",
-      flight_no: "TK1784 + TK90",
-      origin: "CPH",
-      destination: "ICN",
-      depart_time: "10:25",
-      arrive_time: "08:35+1",
-      min_krw: null,
-      max_krw: null,
-      status: "IST 1회 환승·권고",
-      alternative: "EBJ→ABZ→AMS→ICN 계획서 원안",
-      url: "https://www.turkishairlines.com/",
-      notes: "에스비에르에서 전날 DSB로 코펜하겐 이동",
-      sort_order: 30,
-    },
+    saving
+      ? {
+          id: "f3", day_id: 10, date: "2026-09-11", flight_no: "AF · CDG 1회 환승",
+          origin: "CPH", destination: "ICN", depart_time: "10:10", arrive_time: "09:35+1",
+          min_krw: null, max_krw: null, status: "CDG 1회 환승·최저가",
+          alternative: "SAS 직항은 약 1,291만원(4인) 추가", url: "https://wwws.airfrance.co.kr/",
+          notes: "4인 자동운임 약 500만원. SAS 직항 약 1,790만원 대비 약 72% 저렴.", sort_order: 30,
+        }
+      : {
+          id: "f3", day_id: 10, date: "2026-09-11", flight_no: "TK1784 + TK90",
+          origin: "CPH", destination: "ICN", depart_time: "10:25", arrive_time: "08:35+1",
+          min_krw: null, max_krw: null, status: "IST 1회 환승·도착시간 우선",
+          alternative: "Air France CDG 경유는 4인 약 102만원 저렴", url: "https://www.turkishairlines.com/",
+          notes: "비용안보다 약 1시간 빠르게 인천 도착.", sort_order: 30,
+        },
   ];
 }
 
@@ -2137,9 +2088,7 @@ function buildBudget(mode) {
       min_krw: 1_000_000,
       max_krw: 1_800_000,
       notes:
-        mode === "cost_optimized"
-          ? "중국남방 연결발권 수하물·좌석료 확인"
-          : "직항 수하물·좌석료 확인",
+        "항공 연결발권·직항 모두 수하물·좌석료 최종 예약화면 확인",
       sort_order: 50,
     },
   ];

@@ -62,7 +62,7 @@ function flightFareId(row){
   const destination=String(row?.destination||"").match(/[A-Z]{3}/)?.[0]||"";
   const maps={
     cost_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"route_f3"},
-    time_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"route_f3"},
+    time_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"compare_cph_time"},
   };
   return maps[state.itinerary]?.[`${origin}-${destination}`]||null;
 }
