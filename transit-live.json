@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "refresh_policy": "GitHub Actions hourly; official operator sources only",
+  "providers": []
+}
