@@ -12,8 +12,9 @@
   <link rel="stylesheet" href="./styles.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./compare.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./interactive.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
-  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V6" />
-  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V6" />
+  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V7" />
+  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V7" />
+  <link rel="stylesheet" href="./unified-experience.css?v=LIVE_TRAVEL_V7" />
 </head>
 <body>
   <header class="topbar">
@@ -43,10 +44,11 @@
 
   <footer class="footer shell">
     GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집<br>
+    전체 일정 메뉴에 항공·숙박·교통·렌터카 판단·음식점·메뉴·실제 예약 링크를 통합 표시하며 지도 메뉴에도 같은 일정을 표시합니다.<br>
     항공 금액은 GitHub Actions가 Google Flights를 매시간 조회한 성인 4명 일반석 스냅샷입니다.<br>
     날씨는 대만 CWA·네덜란드 KNMI·독일 DWD·덴마크 DMI·한국 KMA의 공식 예보만 사용하며, 예보 발표 전에는 평년값이나 과거자료를 표시하지 않습니다.<br>
     장소 사진은 호텔·식당·기업·관광지의 공식 웹사이트가 공개한 대표 이미지를 사용하고 Wikimedia/스톡 사진으로 대체하지 않습니다.<br>
-    지도 메뉴는 Google Maps Embed API를 대시보드 안에 직접 연동해 자동차·대중교통·도보 실제 경로를 표시합니다. Leaflet/OpenStreetMap·OSRM·Transitous는 Google Maps를 불러오지 못할 때의 내부 보조지도입니다.<br>
+    지도 메뉴는 Google Maps Embed API를 대시보드 안에 직접 연동합니다. 지도 아래 일정 카드를 누르면 해당 장소·이동구간의 자동차·대중교통·도보 경로를 같은 화면에서 표시합니다.<br>
     Google Maps Embed API 키는 공개 저장소에 저장하지 않고 사용 브라우저에만 저장할 수 있습니다. 각 서비스의 최종 예약·운행·기상 조건은 카드의 공식 원문 및 결제 링크에서 다시 확인하십시오.
   </footer>
 
@@ -66,6 +68,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V6"></script>
+  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V7"></script>
 </body>
 </html>
