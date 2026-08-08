@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-08T02:05:25Z",
-  "fresh_until": "2026-08-08T04:05:25Z",
+  "generated_at": "2026-08-08T02:08:10Z",
+  "fresh_until": "2026-08-08T04:08:10Z",
   "weather": {
     "2026-09-02": {
       "temp_min_c": 24,
@@ -398,16 +398,16 @@
       "query_version": 3
     },
     "Men at Sea": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/13-09-29-nordfriesisches-wattenmeer-RalfR-15.jpg/960px-13-09-29-nordfriesisches-wattenmeer-RalfR-15.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:13-09-29-nordfriesisches-wattenmeer-RalfR-15.jpg",
-      "credit": "Ralf Roletschek",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Man_by_the_Sea_%286767162535%29.jpg/960px-Man_by_the_Sea_%286767162535%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Man_by_the_Sea_(6767162535).jpg",
+      "credit": "Martin Nikolaj Christensen from Sorø, Denmark",
       "aliases": [
-        "Man by the Sea Esbjerg",
-        "Mennesket ved Havet Esbjerg"
+        "Mennesket ved Havet Esbjerg sculpture"
       ],
-      "query": "Man by the Sea Esbjerg",
+      "query": "Mennesket ved Havet Esbjerg sculpture",
       "context_image": true,
-      "query_version": 3
+      "query_version": 3,
+      "refined": true
     },
     "Esbjerg Street Food": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Esbjerg_-_Marktplatz1.jpg/960px-Esbjerg_-_Marktplatz1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
