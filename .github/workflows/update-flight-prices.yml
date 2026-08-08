@@ -26,31 +26,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Install pinned fare reader
         run: python -m pip install "fast-flights==3.0.1" "typing-extensions>=4.12,<5"
-
       - name: Query Google Flights
         id: prices
         continue-on-error: true
         run: python scripts/update_flight_prices.py
-
       - name: Validate snapshot
         run: |
           python -m json.tool flight-prices.json >/dev/null
-          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "8"
-
+          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "7"
+          python -c 'import json; f=json.load(open("flight-prices.json"))["fares"]; assert "route_f2_direct" in f'
       - name: Commit refreshed snapshot
         run: |
-          if git diff --quiet -- flight-prices.json; then
-            echo "No fare changes"
-            exit 0
-          fi
+          if git diff --quiet -- flight-prices.json; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add flight-prices.json
@@ -71,20 +64,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-
       - name: Validate refreshed snapshot
         run: |
           python -m json.tool flight-prices.json >/dev/null
-          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "8"
-
+          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "7"
       - name: Configure Pages
         uses: actions/configure-pages@v6
-
       - name: Upload refreshed dashboard
         uses: actions/upload-pages-artifact@v4
         with:
           path: .
-
       - name: Deploy refreshed dashboard
         id: deployment
         uses: actions/deploy-pages@v4
