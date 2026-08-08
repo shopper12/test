@@ -37,14 +37,14 @@ jobs:
           node --check /tmp/itinerary-data.mjs
           node --check /tmp/app.mjs
           node --check boot.js
-          node --check runtime-integrity.js
-          grep -q 'LIVE_TRAVEL_V10' index.html
-          grep -q 'LIVE_TRAVEL_V10' boot.js
-          grep -q 'runtime-integrity.js' boot.js
-          grep -q 'runtime-integrity.css' index.html
-          grep -q 'runtime-weather-panel' runtime-integrity.js
-          grep -q 'Booking.com 실제 예약' runtime-integrity.js
-          grep -q 'data-runtime-map-event-id' runtime-integrity.js
+          node --check stable-tools.js
+          grep -q 'LIVE_TRAVEL_V11' index.html
+          grep -q 'LIVE_TRAVEL_V11' boot.js
+          grep -q 'stable-tools.js' boot.js
+          grep -q 'stable-tools.css' index.html
+          grep -q 'id="stable-live-tools"' index.html
+          grep -q 'Booking.com 실제 예약' stable-tools.js
+          grep -q 'data-stable-map-event' stable-tools.js
           python -m py_compile scripts/update_flight_prices.py
           python -m json.tool flight-prices.json >/dev/null
           python -m json.tool trip-live.json >/dev/null
