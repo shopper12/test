@@ -1,9 +1,10 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V6";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V7";
 
 const STORAGE_KEY = "offshore-trip-google-maps-embed-key";
 const state = { itinerary: DEFAULT_ITINERARY, boundHost: null, selectedSegment: null, modeOverride: null };
 
 const esc = value => String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+const norm = value => String(value||"").toLowerCase().replace(/[^a-z0-9가-힣]+/g," ").trim();
 
 function activePlan(){
   const key=document.querySelector(".itinerary-tab.active")?.dataset?.itinerary;
@@ -50,21 +51,24 @@ function modeLabel(mode){
 function coord(point){ return `${Number(point.lat)},${Number(point.lng)}`; }
 
 function embedDirectionsUrl(key,a,b,mode,waypoints=[]){
-  const params=new URLSearchParams({
-    key,
-    origin:coord(a),
-    destination:coord(b),
-    mode,
-    units:"metric",
-    language:"ko",
-    region:"kr",
-  });
+  const params=new URLSearchParams({key,origin:coord(a),destination:coord(b),mode,units:"metric",language:"ko",region:"kr"});
   if(waypoints.length) params.set("waypoints",waypoints.map(coord).join("|"));
+  return `https://www.google.com/maps/embed/v1/directions?${params.toString()}`;
+}
+
+function embedDirectionsTextUrl(key,origin,destination,mode="driving",waypoints=""){
+  const params=new URLSearchParams({key,origin,destination,mode,units:"metric",language:"ko",region:"kr"});
+  if(waypoints)params.set("waypoints",waypoints);
   return `https://www.google.com/maps/embed/v1/directions?${params.toString()}`;
 }
 
 function embedPlaceUrl(key,point){
   const params=new URLSearchParams({key,q:coord(point),zoom:"15",language:"ko",region:"kr"});
+  return `https://www.google.com/maps/embed/v1/place?${params.toString()}`;
+}
+
+function embedPlaceQueryUrl(key,query){
+  const params=new URLSearchParams({key,q:String(query||""),zoom:"15",language:"ko",region:"kr"});
   return `https://www.google.com/maps/embed/v1/place?${params.toString()}`;
 }
 
@@ -96,7 +100,7 @@ function noKeyHtml(){
   return `<div class="google-map-key-setup">
     <div class="google-map-logo">Google Maps</div>
     <h3>대시보드 내부 Google Maps 경로 연동</h3>
-    <p>Google 공식 Maps Embed API는 무료·무제한이지만 API 키가 필수입니다. 키를 아래에 한 번 저장하면 이 브라우저에서는 외부 지도 탭을 열지 않고 자동차·대중교통·도보 경로를 이 화면에서 바로 확인합니다.</p>
+    <p>Maps Embed API 키를 아래에 한 번 저장하면 외부 지도 탭을 열지 않고 자동차·대중교통·도보 경로와 일정별 위치를 이 화면에서 바로 확인합니다.</p>
     <div class="google-map-key-row"><input id="google-maps-embed-key" type="password" autocomplete="off" placeholder="Google Maps Embed API key"><button type="button" class="btn primary" id="save-google-maps-key">저장 후 Google 지도 열기</button></div>
     <small>권장 제한: Maps Embed API만 허용 + HTTP referrer <b>https://shopper12.github.io/test/*</b>. 키는 이 브라우저 localStorage에만 저장됩니다.</small>
   </div>`;
@@ -106,9 +110,39 @@ function controlsHtml(segment){
   if(!segment) return "";
   const modes=["driving","transit","walking"];
   return `<div class="google-map-controls">
-    <div><b>${esc(segment.a.name)} → ${esc(segment.b.name)}</b><small>Google Maps 실제 경로 · 지도 안에서 직접 조작</small></div>
+    <div><b>${esc(segment.a.name)} → ${esc(segment.b.name)}</b><small>Google Maps 실제 경로 · 아래 일정 카드를 누르면 이 경로가 자동 변경됩니다.</small></div>
     <div class="google-map-mode-buttons">${modes.map(mode=>`<button type="button" data-google-map-mode="${mode}" class="${(state.modeOverride||segment.mode)===mode?"active":""}">${mode==="driving"?"🚗":mode==="transit"?"🚇":"🚶"} ${modeLabel(mode)}</button>`).join("")}</div>
   </div>`;
+}
+
+function mapShell(){return document.querySelector("#map > .google-map-shell");}
+function ensureKeyOrSetup(){
+  const host=document.querySelector("#map");if(!host)return false;
+  let shell=mapShell();
+  if(!shell){shell=document.createElement("div");shell.className="google-map-shell";host.append(shell);}
+  if(apiKey())return true;
+  shell.innerHTML=noKeyHtml();
+  shell.querySelector("#save-google-maps-key")?.addEventListener("click",()=>{
+    const input=shell.querySelector("#google-maps-embed-key");if(!input?.value.trim())return;
+    saveApiKey(input.value);renderGoogleMap();bindRouteList(true);
+  });
+  return false;
+}
+
+function showPlaceQuery(query,title=query){
+  if(!ensureKeyOrSetup())return;
+  const shell=mapShell(),key=apiKey();if(!shell||!key)return;
+  shell.innerHTML=`<div class="google-map-controls"><div><b>${esc(title||query)}</b><small>Google Maps 장소 보기 · 대시보드 내부</small></div></div>${iframeHtml(embedPlaceQueryUrl(key,query),title||query)}<button type="button" class="google-map-key-reset" id="reset-google-maps-key">Google Maps API 키 변경</button>`;
+  shell.querySelector("#reset-google-maps-key")?.addEventListener("click",()=>{saveApiKey("");renderGoogleMap();});
+}
+
+function showTextDirections(origin,destination,mode="driving",waypoints="",title=""){
+  if(!ensureKeyOrSetup())return;
+  const shell=mapShell(),key=apiKey();if(!shell||!key)return;
+  const modes=["driving","transit","walking"],active=mode;
+  shell.innerHTML=`<div class="google-map-controls"><div><b>${esc(title||`${origin} → ${destination}`)}</b><small>Google Maps 실제 경로 · 일정 카드에서 선택</small></div><div class="google-map-mode-buttons">${modes.map(m=>`<button type="button" data-text-route-mode="${m}" class="${active===m?"active":""}">${m==="driving"?"🚗":m==="transit"?"🚇":"🚶"} ${modeLabel(m)}</button>`).join("")}</div></div>${iframeHtml(embedDirectionsTextUrl(key,origin,destination,active,waypoints),title||`${origin} → ${destination}`)}<button type="button" class="google-map-key-reset" id="reset-google-maps-key">Google Maps API 키 변경</button>`;
+  shell.querySelectorAll("[data-text-route-mode]").forEach(button=>button.addEventListener("click",()=>showTextDirections(origin,destination,button.dataset.textRouteMode,waypoints,title)));
+  shell.querySelector("#reset-google-maps-key")?.addEventListener("click",()=>{saveApiKey("");renderGoogleMap();});
 }
 
 function renderGoogleMap(){
@@ -118,11 +152,7 @@ function renderGoogleMap(){
   if(!points.length) return;
 
   let shell=host.querySelector(":scope > .google-map-shell");
-  if(!shell){
-    shell=document.createElement("div");
-    shell.className="google-map-shell";
-    host.append(shell);
-  }
+  if(!shell){shell=document.createElement("div");shell.className="google-map-shell";host.append(shell);}
   state.boundHost=host;
 
   if(!key){
@@ -130,9 +160,7 @@ function renderGoogleMap(){
     shell.querySelector("#save-google-maps-key")?.addEventListener("click",()=>{
       const input=shell.querySelector("#google-maps-embed-key");
       if(!input?.value.trim()) return;
-      saveApiKey(input.value);
-      renderGoogleMap();
-      bindRouteList(true);
+      saveApiKey(input.value);renderGoogleMap();bindRouteList(true);
     });
     return;
   }
@@ -146,21 +174,40 @@ function renderGoogleMap(){
   const mode=state.modeOverride || segment.mode;
   const src=embedDirectionsUrl(key,segment.a,segment.b,mode);
   shell.innerHTML=`${controlsHtml(segment)}${iframeHtml(src,`${segment.a.name}에서 ${segment.b.name}까지 Google Maps 경로`)}<button type="button" class="google-map-key-reset" id="reset-google-maps-key">Google Maps API 키 변경</button>`;
-  shell.querySelectorAll("[data-google-map-mode]").forEach(button=>button.addEventListener("click",()=>{
-    state.modeOverride=button.dataset.googleMapMode;
-    renderGoogleMap();
-  }));
-  shell.querySelector("#reset-google-maps-key")?.addEventListener("click",()=>{
-    saveApiKey("");
-    renderGoogleMap();
-  });
+  shell.querySelectorAll("[data-google-map-mode]").forEach(button=>button.addEventListener("click",()=>{state.modeOverride=button.dataset.googleMapMode;renderGoogleMap();}));
+  shell.querySelector("#reset-google-maps-key")?.addEventListener("click",()=>{saveApiKey("");renderGoogleMap();});
 }
 
 function selectSegment(index){
-  state.selectedSegment=Number(index);
-  state.modeOverride=null;
-  renderGoogleMap();
+  state.selectedSegment=Number(index);state.modeOverride=null;renderGoogleMap();
   document.querySelectorAll("#route-list .route-stop").forEach((stop,i)=>stop.classList.toggle("route-selected",i===Number(index)));
+}
+
+function parseDirectionsFromMapUrl(href){
+  try{
+    const url=new URL(href,location.href),p=url.searchParams;
+    const origin=p.get("origin"),destination=p.get("destination");
+    if(origin&&destination)return{origin,destination,waypoints:p.get("waypoints")||"",mode:["driving","walking","bicycling","transit"].includes(p.get("travelmode"))?p.get("travelmode"):"driving"};
+  }catch{}
+  return null;
+}
+
+function scorePoint(event,point){
+  const target=norm(`${event.title||""} ${event.location||""}`),candidate=norm(`${point.name||""} ${point.popup||""}`);
+  if(!target||!candidate)return 0;
+  if(target.includes(norm(point.name))||candidate.includes(norm(event.location)))return 100;
+  let score=0;for(const token of target.split(" "))if(token.length>3&&candidate.includes(token))score+=6;return score;
+}
+
+function showEvent(event){
+  if(!event)return;
+  const explicit=parseDirectionsFromMapUrl(event.map_url||"");
+  if(explicit){showTextDirections(explicit.origin,explicit.destination,explicit.mode,explicit.waypoints,event.title);return;}
+  const points=routePoints();let bestIndex=-1,bestScore=0;
+  points.forEach((point,index)=>{const score=scorePoint(event,point);if(score>bestScore){bestScore=score;bestIndex=index;}});
+  if(bestIndex>0&&bestScore>=6){selectSegment(bestIndex);return;}
+  if(bestIndex===0&&bestScore>=6){showPlaceQuery(`${points[0].lat},${points[0].lng}`,event.title||points[0].name);return;}
+  showPlaceQuery(event.location||event.title,event.title||event.location);
 }
 
 function bindRouteList(force=false){
@@ -185,23 +232,13 @@ function bindRouteList(force=false){
     list.dataset.googleInlineBound="1";
     list.addEventListener("click",event=>{
       const button=event.target.closest("[data-google-segment]");
-      if(button){
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        selectSegment(button.dataset.googleSegment);
-        return;
-      }
+      if(button){event.preventDefault();event.stopImmediatePropagation();selectSegment(button.dataset.googleSegment);return;}
       const stop=event.target.closest(".route-stop");
       if(!stop || event.target.closest("a,button")) return;
       const index=stops.indexOf(stop);
       if(index>0 && Number(points[index-1].day_id)===Number(points[index].day_id)){
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        selectSegment(index);
-      } else if(index===0 && apiKey()){
-        const key=apiKey(),host=document.querySelector("#map"),shell=host?.querySelector(":scope > .google-map-shell");
-        if(shell) shell.innerHTML=`<div class="google-map-controls"><div><b>${esc(points[0].name)}</b><small>Google Maps 장소 보기</small></div></div>${iframeHtml(embedPlaceUrl(key,points[0]),points[0].name)}`;
-      }
+        event.preventDefault();event.stopImmediatePropagation();selectSegment(index);
+      } else if(index===0 && apiKey()) showPlaceQuery(`${points[0].lat},${points[0].lng}`,points[0].name);
     },true);
   }
 
@@ -211,15 +248,14 @@ function bindRouteList(force=false){
 
 function enhance(){
   if(!document.querySelector("#map")) return;
-  renderGoogleMap();
-  bindRouteList();
+  renderGoogleMap();bindRouteList();
   const note=document.querySelector("#route-list .map-live-note");
-  if(note && apiKey()) note.innerHTML="<b>Google Maps가 이 대시보드 안에 직접 연동되어 있습니다.</b> 장소나 ‘Google Maps · 경로’ 버튼을 누르면 외부 탭 없이 이 지도에서 자동차·대중교통·도보 실제 경로와 예상시간을 확인할 수 있습니다. Leaflet/OSRM은 Google Maps를 불러오지 못할 때의 내부 보조지도입니다.";
+  if(note && apiKey()) note.innerHTML="<b>Google Maps가 이 대시보드 안에 직접 연동되어 있습니다.</b> 위 경로목록이나 아래 전체 일정 카드를 누르면 외부 탭 없이 이 지도에서 자동차·대중교통·도보 실제 경로와 예상시간을 확인할 수 있습니다. Leaflet/OSRM은 Google Maps를 불러오지 못할 때의 내부 보조지도입니다.";
 }
 
-const observer=new MutationObserver(()=>{
-  clearTimeout(observer._timer);
-  observer._timer=setTimeout(enhance,140);
-});
+document.addEventListener("trip:map-event",event=>{showEvent(event.detail?.event);document.querySelector("#map")?.scrollIntoView({behavior:"smooth",block:"center"});});
+document.addEventListener("trip:map-place",event=>{if(event.detail?.query)showPlaceQuery(event.detail.query,event.detail.query);document.querySelector("#map")?.scrollIntoView({behavior:"smooth",block:"center"});});
+
+const observer=new MutationObserver(()=>{clearTimeout(observer._timer);observer._timer=setTimeout(enhance,140);});
 observer.observe(document.documentElement,{childList:true,subtree:true});
 window.addEventListener("load",enhance);
