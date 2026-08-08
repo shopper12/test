@@ -13,6 +13,8 @@ on:
       - "scripts/fill_official_photo_images.py"
       - "travel-live.js"
       - "unified-nav.js"
+      - "unified-experience.js"
+      - "unified-experience.css"
       - "google-maps-inline.js"
       - "google-map-link-bridge.js"
       - "travel-live.css"
@@ -28,7 +30,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v6
+  group: live-trip-intelligence-v7
   cancel-in-progress: true
 
 jobs:
@@ -54,26 +56,36 @@ jobs:
           python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py scripts/fill_official_photo_images.py
           node --check travel-live.js
           node --check unified-nav.js
+          node --check unified-experience.js
           node --check google-maps-inline.js
           node --check google-map-link-bridge.js
 
-      - name: Validate Google Maps inline behavior
+      - name: Validate unified itinerary and Google Maps behavior
         run: |
           python - <<'PY'
           from pathlib import Path
-          js=Path('google-maps-inline.js').read_text(encoding='utf-8')
+          maps=Path('google-maps-inline.js').read_text(encoding='utf-8')
           bridge=Path('google-map-link-bridge.js').read_text(encoding='utf-8')
+          unified=Path('unified-experience.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'maps/embed/v1/directions' in js
-          assert 'maps/embed/v1/place' in js
-          assert 'data-google-map-mode' in js
-          assert 'localStorage' in js
-          assert 'google-maps-inline.css' in html
-          assert 'google-maps-inline.js' in boot
-          assert 'google-map-link-bridge.js' in boot
+          assert 'maps/embed/v1/directions' in maps
+          assert 'maps/embed/v1/place' in maps
+          assert 'trip:map-event' in maps
+          assert 'trip:map-place' in maps
+          assert 'data-google-map-mode' in maps
+          assert 'localStorage' in maps
           assert 'preventDefault' in bridge and 'data-inline-google-map' in bridge
-          assert 'target="_blank"' not in js
+          assert 'unified-experience.js' in boot
+          assert 'unified-experience.css' in html
+          assert '항공 · 호텔 · 교통 · 맛집 · 예약 한눈에' in unified
+          assert 'Booking 실제 객실·결제' in unified
+          assert '실제 메뉴·예약 확인' in unified
+          assert 'event-official-weather' in unified
+          assert '공식 웹사이트 사진' in unified
+          assert 'map-schedule-section' in unified
+          assert 'data-map-event-id' in unified
+          assert 'target="_blank"' not in maps
           PY
 
       - name: Refresh fares, stopover and legacy snapshot
@@ -139,7 +151,7 @@ jobs:
     needs: refresh
     runs-on: ubuntu-latest
     concurrency:
-      group: pages-v6
+      group: pages-v7
       cancel-in-progress: true
     environment:
       name: github-pages
