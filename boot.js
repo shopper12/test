@@ -1,18 +1,16 @@
-const BUILD = "LIVE_TRAVEL_V9";
+const BUILD = "LIVE_TRAVEL_V10";
 document.documentElement.dataset.dashboardBuild = BUILD;
 window.__DASHBOARD_BUILD__ = BUILD;
 
-const modules = [
+const preloadModules = [
   ["travel-live", `./travel-live.js?v=${BUILD}`],
-  ["google-maps-inline", `./google-maps-inline.js?v=${BUILD}`],
   ["google-map-link-bridge", `./google-map-link-bridge.js?v=${BUILD}`],
   ["unified-experience", `./unified-experience.js?v=${BUILD}`],
-  ["hotel-booking-summary", `./hotel-booking-summary.js?v=${BUILD}`],
   ["unified-nav", `./unified-nav.js?v=${BUILD}`],
 ];
 
 const failures = [];
-for (const [name, url] of modules) {
+for (const [name, url] of preloadModules) {
   try {
     await import(url);
   } catch (error) {
@@ -24,9 +22,17 @@ for (const [name, url] of modules) {
 try {
   await import("./app.js?v=PDF_ROUTE_COST_OPTIMIZED_V2");
 } catch (error) {
+  failures.push({ name: "app", error });
   console.error(error);
   const main = document.querySelector("#main-content");
   if (main) main.innerHTML = `<div class="security-note"><b>대시보드 실행 오류</b><br>${String(error.message || error)}</div>`;
+}
+
+try {
+  await import(`./runtime-integrity.js?v=${BUILD}`);
+} catch (error) {
+  failures.push({ name: "runtime-integrity", error });
+  console.error(`[${BUILD}] runtime-integrity load failed`, error);
 }
 
 function showBuildStatus() {
@@ -37,7 +43,7 @@ function showBuildStatus() {
     badge.style.cssText = "position:fixed;right:8px;bottom:8px;z-index:5000;padding:5px 8px;border-radius:999px;background:rgba(17,36,48,.88);color:#fff;font:700 11px/1.2 system-ui,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.16);pointer-events:none";
     document.body.append(badge);
   }
-  badge.textContent = failures.length ? `${BUILD} · 보완모듈 ${failures.length}개 오류` : `${BUILD} · 최신`;
+  badge.textContent = failures.length ? `${BUILD} · 모듈 ${failures.length}개 오류` : `${BUILD} · 최신`;
   badge.title = failures.length ? failures.map(x => x.name).join(", ") : "현재 브라우저에 로드된 대시보드 버전";
 }
 
