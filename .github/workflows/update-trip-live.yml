@@ -9,6 +9,7 @@ on:
       - "scripts/update_trip_live.py"
       - "scripts/refine_trip_photos.py"
       - "scripts/update_official_web_content.py"
+      - "scripts/update_official_web_content_fast.py"
       - "travel-live.js"
       - "travel-live.css"
       - "index.html"
@@ -45,7 +46,7 @@ jobs:
 
       - name: Syntax checks
         run: |
-          python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py scripts/update_official_web_content.py
+          python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py
           node --check travel-live.js
 
       - name: Refresh fares, stopover and legacy snapshot
@@ -54,7 +55,7 @@ jobs:
           python scripts/refine_trip_photos.py
 
       - name: Replace weather and photos with official web sources
-        run: python scripts/update_official_web_content.py
+        run: python scripts/update_official_web_content_fast.py
 
       - name: Validate live snapshot
         run: |
