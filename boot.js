@@ -1,4 +1,4 @@
-const BUILD = "LIVE_TRAVEL_V10";
+const BUILD = "LIVE_TRAVEL_V11";
 document.documentElement.dataset.dashboardBuild = BUILD;
 window.__DASHBOARD_BUILD__ = BUILD;
 
@@ -20,7 +20,7 @@ for (const [name, url] of preloadModules) {
 }
 
 try {
-  await import("./app.js?v=PDF_ROUTE_COST_OPTIMIZED_V2");
+  await import(`./app.js?v=${BUILD}`);
 } catch (error) {
   failures.push({ name: "app", error });
   console.error(error);
@@ -29,10 +29,10 @@ try {
 }
 
 try {
-  await import(`./runtime-integrity.js?v=${BUILD}`);
+  await import(`./stable-tools.js?v=${BUILD}`);
 } catch (error) {
-  failures.push({ name: "runtime-integrity", error });
-  console.error(`[${BUILD}] runtime-integrity load failed`, error);
+  failures.push({ name: "stable-tools", error });
+  console.error(`[${BUILD}] stable-tools load failed`, error);
 }
 
 function showBuildStatus() {
