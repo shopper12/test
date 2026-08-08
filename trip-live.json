@@ -1,7 +1,7 @@
 {
-  "schema_version": 4,
-  "generated_at": "2026-08-08T02:02:49Z",
-  "fresh_until": "2026-08-08T04:02:49Z",
+  "schema_version": 5,
+  "generated_at": "2026-08-08T02:05:25Z",
+  "fresh_until": "2026-08-08T04:05:25Z",
   "weather": {
     "2026-09-02": {
       "temp_min_c": 24,
@@ -147,7 +147,7 @@
       ],
       "query": "Port of Taichung Taiwan",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "VESTAS O&M Base": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Blyth_Offshore_Wind_Turbines_-_geograph.org.uk_-_394707.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
@@ -159,18 +159,18 @@
       ],
       "query": "Vestas offshore wind turbine",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Holiday Inn Express Taichung Park": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/20250208_143705_Taichung_Park_Bridge_from_West.jpg/960px-20250208_143705_Taichung_Park_Bridge_from_West.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:20250208_143705_Taichung_Park_Bridge_from_West.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/20250208_143444_Taichung_Park_Doves.jpg/960px-20250208_143444_Taichung_Park_Doves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:20250208_143444_Taichung_Park_Doves.jpg",
       "credit": "Saimmx",
       "aliases": [
         "Taichung Park Taiwan"
       ],
       "query": "Taichung Park Taiwan",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Wuqi Fishing Harbor": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/2022_Wuqi_Fishing_Port.jpg/960px-2022_Wuqi_Fishing_Port.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -181,7 +181,7 @@
       ],
       "query": "Wuqi Fishing Port Taiwan",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Gaomei Wetlands": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Bolboschoenus_planiculmis_at_the_Gaomei_Wetlands_Wildlife_Refuge.jpg/960px-Bolboschoenus_planiculmis_at_the_Gaomei_Wetlands_Wildlife_Refuge.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -192,7 +192,7 @@
       ],
       "query": "Gaomei Wetlands Taichung",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Lukang Old Street": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Geoffrey_2003_002_Lukang.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
@@ -203,18 +203,18 @@
       ],
       "query": "Lukang Old Street Taiwan",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "National Taichung Theater": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/National_Taichung_Theater.jpg/960px-National_Taichung_Theater.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:National_Taichung_Theater.jpg",
-      "credit": "Taichung photo",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Illuminated_buildings_viewed_from_National_Taichung_Theater_20210914.jpg/960px-Illuminated_buildings_viewed_from_National_Taichung_Theater_20210914.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Illuminated_buildings_viewed_from_National_Taichung_Theater_20210914.jpg",
+      "credit": "Cheng-en Cheng",
       "aliases": [
         "National Taichung Theater Taiwan"
       ],
       "query": "National Taichung Theater Taiwan",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Schiphol Airport": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Amsterdam_Airport_Schiphol_PD_2011_15.JPG/960px-Amsterdam_Airport_Schiphol_PD_2011_15.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -225,7 +225,7 @@
       ],
       "query": "Amsterdam Airport Schiphol terminal",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Holiday Inn Express Rotterdam Central": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/20180225_004_Rotterdam_-_Centraal_Station.jpg/960px-20180225_004_Rotterdam_-_Centraal_Station.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -236,18 +236,18 @@
       ],
       "query": "Rotterdam Centraal station Netherlands",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Markthal Rotterdam": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Interior_of_Markthal_%28Rotterdam%29.jpg/960px-Interior_of_Markthal_%28Rotterdam%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Interior_of_Markthal_(Rotterdam).jpg",
-      "credit": "Thomas Dahlstrøm Nielsen",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/B_Markthalle_-_Rotterdam.jpg/960px-B_Markthalle_-_Rotterdam.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:B_Markthalle_-_Rotterdam.jpg",
+      "credit": "W. Bulach",
       "aliases": [
         "Markthal Rotterdam interior"
       ],
       "query": "Markthal Rotterdam interior",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Cube Houses": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/1503_Het_Potlood_en_kubuswoningen%2C_Rotterdam_009.jpg/960px-1503_Het_Potlood_en_kubuswoningen%2C_Rotterdam_009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -258,7 +258,7 @@
       ],
       "query": "Cube Houses Rotterdam Kubuswoningen",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Historic Delfshaven": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Delfshaven_Rotterdam_%28the_Netherlands%29_13.JPG/960px-Delfshaven_Rotterdam_%28the_Netherlands%29_13.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -269,7 +269,7 @@
       ],
       "query": "Delfshaven Rotterdam Netherlands",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Restaurant Bazar": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/%27Fifteen_Minutes_of_Fame%27_-_Witte_de_Withstraat_Rotterdam_%2828164113224%29.jpg/960px-%27Fifteen_Minutes_of_Fame%27_-_Witte_de_Withstraat_Rotterdam_%2828164113224%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -280,7 +280,7 @@
       ],
       "query": "Witte de Withstraat Rotterdam Netherlands",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Kinderdijk": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Kinderdijk%2C_Nederwaard_molens_no_1tm5_RM30543tm7_IMG_9354_2021-06-13_11.04.jpg/960px-Kinderdijk%2C_Nederwaard_molens_no_1tm5_RM30543tm7_IMG_9354_2021-06-13_11.04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -291,19 +291,19 @@
       ],
       "query": "Kinderdijk windmills Netherlands",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Port of Rotterdam Authority": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/%28NLD-South_Holland%29_Rotterdam_World_Port_Center_2025-06-04.jpg/960px-%28NLD-South_Holland%29_Rotterdam_World_Port_Center_2025-06-04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:(NLD-South_Holland)_Rotterdam_World_Port_Center_2025-06-04.jpg",
-      "credit": "S5A-0043",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/%27World_Port_Centre%27_Rotterdam_%286821045812%29.jpg/960px-%27World_Port_Centre%27_Rotterdam_%286821045812%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:%27World_Port_Centre%27_Rotterdam_(6821045812).jpg",
+      "credit": "FaceMePLS from The Hague, The Netherlands",
       "aliases": [
         "World Port Center Rotterdam Netherlands",
         "Port of Rotterdam Netherlands"
       ],
       "query": "World Port Center Rotterdam Netherlands",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Rotterdam Offshore Group": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/OFFSHORE_WENDUINE_%2825098573134%29.jpg/960px-OFFSHORE_WENDUINE_%2825098573134%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -314,29 +314,31 @@
       ],
       "query": "Port of Rotterdam offshore Netherlands",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "TNO Kesslerpark": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Children_play_in_the_Concourse_fountains_at_night%2C_Kessler_Park%2C_Kansas_City%2C_Missouri.jpg/960px-Children_play_in_the_Concourse_fountains_at_night%2C_Kessler_Park%2C_Kansas_City%2C_Missouri.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Children_play_in_the_Concourse_fountains_at_night%2C_Kessler_Park%2C_Kansas_City%2C_Missouri.jpg",
-      "credit": "Smuckola",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Jaagpad_rijswijk_zh.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Jaagpad_rijswijk_zh.jpg",
+      "credit": "Arvey",
       "aliases": [
-        "Rijswijk Netherlands Kessler Park"
+        "Rijswijk Netherlands",
+        "TNO Rijswijk Netherlands"
       ],
-      "query": "Rijswijk Netherlands Kessler Park",
+      "query": "Rijswijk Netherlands",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Motel One Hamburg-Fleetinsel": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/AstridNorth2012Hamburg_1.jpg/960px-AstridNorth2012Hamburg_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:AstridNorth2012Hamburg_1.jpg",
-      "credit": "JuKob from Germany",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Fleetinsel_%28Hamburg-Neustadt%29.Steigenberger.phb.ajb.jpg/960px-Fleetinsel_%28Hamburg-Neustadt%29.Steigenberger.phb.ajb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Fleetinsel_(Hamburg-Neustadt).Steigenberger.phb.ajb.jpg",
+      "credit": "Ajepbah",
       "aliases": [
-        "Fleetinsel Hamburg Germany"
+        "Fleetinsel Hamburg",
+        "Hamburg Fleetinsel"
       ],
-      "query": "Fleetinsel Hamburg Germany",
+      "query": "Fleetinsel Hamburg",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Speicherstadt": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Hamburg%2C_Speicherstadt%2C_Block_P_--_2016_--_3330-6.jpg/960px-Hamburg%2C_Speicherstadt%2C_Block_P_--_2016_--_3330-6.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -347,7 +349,7 @@
       ],
       "query": "Speicherstadt Hamburg Germany",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Skyborn Renewables": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Ericush%C3%B6ft_%28Hamburg-HafenCity%29.08.12471.ajb.jpg/960px-Ericush%C3%B6ft_%28Hamburg-HafenCity%29.08.12471.ajb.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -359,7 +361,7 @@
       ],
       "query": "HafenCity Hamburg Germany",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Elbphilharmonie": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Elbphilharmonie_Hamburg.jpg/960px-Elbphilharmonie_Hamburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -370,7 +372,7 @@
       ],
       "query": "Elbphilharmonie Hamburg Germany",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Oberhafen-Kantine": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/OberhafenKantineHamburg.jpg/960px-OberhafenKantineHamburg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -381,40 +383,43 @@
       ],
       "query": "Oberhafen Kantine Hamburg",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "CABINN Plus Esbjerg": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/A_regional_geography_of_the_world%2C_with_diagrams_and_entirely_new_maps_%281922%29_%2814586432698%29.jpg/960px-A_regional_geography_of_the_world%2C_with_diagrams_and_entirely_new_maps_%281922%29_%2814586432698%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:A_regional_geography_of_the_world%2C_with_diagrams_and_entirely_new_maps_(1922)_(14586432698).jpg",
-      "credit": "Internet Archive Book Images",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Esbjerg_2015_harbour.jpg/960px-Esbjerg_2015_harbour.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Esbjerg_2015_harbour.jpg",
+      "credit": "Smiley.toerist",
       "aliases": [
-        "Esbjerg Denmark city centre"
+        "Esbjerg Denmark harbour",
+        "Esbjerg Denmark"
       ],
-      "query": "Esbjerg Denmark city centre",
+      "query": "Esbjerg Denmark harbour",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Men at Sea": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Coat_of_arms_of_Esbjerg.svg/960px-Coat_of_arms_of_Esbjerg.svg.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_Esbjerg.svg",
-      "credit": "Wikimedia Commons",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/13-09-29-nordfriesisches-wattenmeer-RalfR-15.jpg/960px-13-09-29-nordfriesisches-wattenmeer-RalfR-15.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:13-09-29-nordfriesisches-wattenmeer-RalfR-15.jpg",
+      "credit": "Ralf Roletschek",
       "aliases": [
-        "Men at Sea Esbjerg Denmark"
+        "Man by the Sea Esbjerg",
+        "Mennesket ved Havet Esbjerg"
       ],
-      "query": "Men at Sea Esbjerg Denmark",
+      "query": "Man by the Sea Esbjerg",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Esbjerg Street Food": {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/A_regional_geography_of_the_world%2C_with_diagrams_and_entirely_new_maps_%281922%29_%2814586432698%29.jpg/960px-A_regional_geography_of_the_world%2C_with_diagrams_and_entirely_new_maps_%281922%29_%2814586432698%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
-      "page_url": "https://commons.wikimedia.org/wiki/File:A_regional_geography_of_the_world%2C_with_diagrams_and_entirely_new_maps_(1922)_(14586432698).jpg",
-      "credit": "Internet Archive Book Images",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Esbjerg_-_Marktplatz1.jpg/960px-Esbjerg_-_Marktplatz1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "page_url": "https://commons.wikimedia.org/wiki/File:Esbjerg_-_Marktplatz1.jpg",
+      "credit": "Taxiarchos228",
       "aliases": [
-        "Esbjerg Denmark city centre"
+        "Torvet Esbjerg Denmark",
+        "Esbjerg Denmark harbour"
       ],
-      "query": "Esbjerg Denmark city centre",
+      "query": "Torvet Esbjerg Denmark",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Blue Water Shipping": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Udskibning_af_vindm%C3%B8ller_fra_Esbjergs_%C3%98sthavn.jpg/960px-Udskibning_af_vindm%C3%B8ller_fra_Esbjergs_%C3%98sthavn.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -425,7 +430,7 @@
       ],
       "query": "Port of Esbjerg Denmark offshore wind",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "CABINN Metro": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Blue_Wall_%2816905090465%29.jpg/960px-Blue_Wall_%2816905090465%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -437,7 +442,7 @@
       ],
       "query": "CABINN Metro Copenhagen Denmark",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Field's Food Court": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Amager_Vest%2C_Copenhagen%2C_Denmark_-_panoramio_%281%29.jpg/960px-Amager_Vest%2C_Copenhagen%2C_Denmark_-_panoramio_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -448,7 +453,7 @@
       ],
       "query": "Fields Copenhagen Orestad Denmark",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     },
     "Copenhagen Airport": {
       "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Aerial_view_of_Copenhagen_Airport%28Kastrup%29_%28CPH_IATA%29%2C_Copenhagen%2C_Denmark_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg/960px-Aerial_view_of_Copenhagen_Airport%28Kastrup%29_%28CPH_IATA%29%2C_Copenhagen%2C_Denmark_%28Ank_Kumar%2C_Infosys_Limited%29_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
@@ -459,43 +464,13 @@
       ],
       "query": "Copenhagen Airport Kastrup Denmark",
       "context_image": true,
-      "query_version": 2
+      "query_version": 3
     }
   },
   "return_stopover": {
-    "recommended": true,
-    "via_airport": "IST",
-    "via_city": "이스탄불",
-    "layover_hours": 6.2,
-    "total_krw": 5077807,
-    "per_person_krw": 1269452,
-    "price_delta_vs_current_krw": -940335,
-    "current_total_krw": 6018142,
-    "sightseeing_plan": "공항 Metro M11 중심으로 도심 접근. 장시간 경유일 때만 Galata/구시가지 한 권역을 선택하고 교통변수를 고려해 3.5시간 전 공항 복귀.",
-    "city_map_url": "https://www.google.com/maps/search/?api=1&query=Galata%20Tower%20Istanbul",
+    "recommended": false,
+    "reason": "현재 검색에서는 도시별 최소 관광 가능 경유시간(공항 왕복·출입국·재검색·관광 2시간 이상)을 충족하면서 기존 귀국편보다 싼 후보가 없습니다.",
     "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
-    "legs": [
-      {
-        "origin": "CPH",
-        "destination": "IST",
-        "departure_date": "2026-09-11",
-        "departure_time": "06:30",
-        "arrival_date": "2026-09-11",
-        "arrival_time": "10:50",
-        "duration_minutes": 200,
-        "aircraft": "Boeing 737"
-      },
-      {
-        "origin": "IST",
-        "destination": "ICN",
-        "departure_date": "2026-09-11",
-        "departure_time": "17:00",
-        "arrival_date": "2026-09-12",
-        "arrival_time": "08:35",
-        "duration_minutes": 575,
-        "aircraft": "Boeing 777"
-      }
-    ],
     "monitored_airports": [
       "AMS",
       "HEL",
@@ -513,7 +488,26 @@
       "HND",
       "KIX"
     ],
-    "reason": "현재 채택편보다 저렴하여 관광 경유 후보로 추천"
+    "rejected_short_layovers": [
+      {
+        "via": "IST",
+        "layover_hours": 6.2,
+        "required_hours": 9.5,
+        "price": 5077807
+      },
+      {
+        "via": "HEL",
+        "layover_hours": 2.5,
+        "required_hours": 7.0,
+        "price": 5833558
+      },
+      {
+        "via": "IST",
+        "layover_hours": 2.2,
+        "required_hours": 9.5,
+        "price": 6018142
+      }
+    ]
   },
   "sources": {
     "weather": "Open-Meteo forecast (up to 16 days) + September seasonal baseline until forecast window",
