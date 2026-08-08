@@ -24,6 +24,7 @@ jobs:
           python scripts/apply_schedule_precision.py
       - name: Validate JavaScript and schedule data
         run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
           node --check itinerary-data.js
           node --check stable-tools.js
           node --check timeline-runtime-v17.js
@@ -32,8 +33,8 @@ jobs:
           grep -q 'ECE 396' itinerary-data.js
           grep -q 'DSB IC 850' itinerary-data.js
           grep -q 'transport-schedule' stable-tools.js
-          node scripts/verify_map_mappings.mjs
-          node scripts/audit_map_continuity.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
       - name: Commit precise schedule UI
         run: |
           if git diff --quiet -- itinerary-data.js stable-tools.js timeline-runtime-v17.js map-sidebar.css live-transit-links.css; then
