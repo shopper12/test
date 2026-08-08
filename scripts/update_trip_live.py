@@ -18,7 +18,7 @@ from update_flight_prices import parse_offers, serialize_offer
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "trip-live.json"
 FARES = ROOT / "flight-prices.json"
-PHOTO_QUERY_VERSION = 2
+PHOTO_QUERY_VERSION = 3
 
 DAYS = [
     ("2026-09-02", "Taichung", 24.1477, 120.6736, "taiwan"),
@@ -43,8 +43,8 @@ BASELINES = {
     "incheon": dict(temp_min_c=19, temp_max_c=27, precip_probability_pct=35, wind_max_kmh=20, summary="초가을, 습도와 비 가능성 확인 필요", clothing="반팔/긴팔 혼용+얇은 겉옷", umbrella=True),
 }
 
-# Exact venue photos are used when Commons has them; otherwise the query deliberately
-# asks for the venue's immediate district/port and the UI treats the image as context.
+# Exact venue photos are preferred. When Commons has no exact venue image, use a
+# clearly related district/port photo as context rather than a generic stock image.
 PHOTOS = {
     "TIPC Port of Taichung": ["Port of Taichung Taiwan", "Taichung Port Taiwan"],
     "VESTAS O&M Base": ["Vestas offshore wind turbine", "Vestas wind turbine Denmark"],
@@ -62,44 +62,44 @@ PHOTOS = {
     "Kinderdijk": ["Kinderdijk windmills Netherlands"],
     "Port of Rotterdam Authority": ["World Port Center Rotterdam Netherlands", "Port of Rotterdam Netherlands"],
     "Rotterdam Offshore Group": ["Port of Rotterdam offshore Netherlands"],
-    "TNO Kesslerpark": ["Rijswijk Netherlands Kessler Park"],
-    "Motel One Hamburg-Fleetinsel": ["Fleetinsel Hamburg Germany"],
+    "TNO Kesslerpark": ["Rijswijk Netherlands", "TNO Rijswijk Netherlands"],
+    "Motel One Hamburg-Fleetinsel": ["Fleetinsel Hamburg", "Hamburg Fleetinsel"],
     "Speicherstadt": ["Speicherstadt Hamburg Germany"],
     "Skyborn Renewables": ["HafenCity Hamburg Germany", "offshore wind Hamburg Germany"],
     "Elbphilharmonie": ["Elbphilharmonie Hamburg Germany"],
     "Oberhafen-Kantine": ["Oberhafen Kantine Hamburg"],
-    "CABINN Plus Esbjerg": ["Esbjerg Denmark city centre"],
-    "Men at Sea": ["Men at Sea Esbjerg Denmark"],
-    "Esbjerg Street Food": ["Esbjerg Denmark city centre"],
+    "CABINN Plus Esbjerg": ["Esbjerg Denmark harbour", "Esbjerg Denmark"],
+    "Men at Sea": ["Man by the Sea Esbjerg", "Mennesket ved Havet Esbjerg"],
+    "Esbjerg Street Food": ["Torvet Esbjerg Denmark", "Esbjerg Denmark harbour"],
     "Blue Water Shipping": ["Port of Esbjerg Denmark offshore wind"],
     "CABINN Metro": ["CABINN Metro Copenhagen Denmark", "Orestad Copenhagen Denmark"],
     "Field's Food Court": ["Fields Copenhagen Orestad Denmark"],
     "Copenhagen Airport": ["Copenhagen Airport Kastrup Denmark"],
 }
 
-# Sightseeing stopovers are only surfaced when the same ticket is cheaper than the
-# currently selected return itinerary and a 6-14h same-day layover leaves a safe buffer.
+# min_layover is deliberately conservative: it includes immigration, round-trip
+# airport-city transport, at least ~2h of useful sightseeing, and a safe return buffer.
 STOP_CITIES = {
-    "AMS": {"city":"암스테르담", "plan":"Schiphol→공항철도로 Amsterdam Centraal. 운하·Dam Square 인근만 짧게 보고 국제선 3시간 전 공항 복귀.", "query":"Amsterdam Centraal Dam Square"},
-    "HEL": {"city":"헬싱키", "plan":"공항철도 I/P선→Helsinki Central. Senate Square·Market Square 중심으로 짧게 이동 후 공항 복귀.", "query":"Senate Square Helsinki"},
-    "FRA": {"city":"프랑크푸르트", "plan":"S-Bahn→Hauptwache/Frankfurt Hbf. Römerberg·Main 강변 중 한 권역만 보고 국제선 3시간 전 복귀.", "query":"Romerberg Frankfurt"},
-    "WAW": {"city":"바르샤바", "plan":"공항열차→Warszawa Centralna. 구시가지 또는 문화과학궁전 권역 중 한 곳만 방문 후 복귀.", "query":"Warsaw Old Town"},
-    "IST": {"city":"이스탄불", "plan":"공항 Metro M11 중심으로 도심 접근. 장시간 경유일 때만 Galata/구시가지 한 권역을 선택하고 교통변수를 고려해 3.5시간 전 공항 복귀.", "query":"Galata Tower Istanbul"},
-    "DOH": {"city":"도하", "plan":"Doha Metro Red Line→도심. Souq Waqif·Corniche 중 한 권역만 보고 국제선 3시간 전 공항 복귀.", "query":"Souq Waqif Doha"},
-    "DXB": {"city":"두바이", "plan":"Dubai Metro Red Line→Downtown. Burj Khalifa/Dubai Mall 권역만 짧게 보고 국제선 3시간 전 공항 복귀.", "query":"Burj Khalifa Dubai Mall"},
-    "PVG": {"city":"상하이", "plan":"푸동공항→Maglev/Metro로 루자쭈이·와이탄 짧은 동선. 공항 재도착은 국제선 출발 3시간 전 목표.", "query":"The Bund Shanghai"},
-    "PEK": {"city":"베이징", "plan":"공항철도→둥즈먼 후 왕푸징 중심의 짧은 동선. 교통체증을 고려해 3시간 이상 공항 버퍼 확보.", "query":"Wangfujing Beijing"},
-    "PKX": {"city":"베이징", "plan":"다싱공항철도 이용. 도심 체류를 짧게 잡고 국제선 3시간 전 공항 복귀.", "query":"Qianmen Beijing"},
-    "HKG": {"city":"홍콩", "plan":"Airport Express→Hong Kong Station, Central·Victoria Harbour 중심 3~4시간 관광 후 공항 복귀.", "query":"Central Hong Kong Victoria Harbour"},
-    "TPE": {"city":"타이베이", "plan":"Airport MRT→Taipei Main Station, 중정기념당·시먼딩 중 1~2곳만 선택 후 공항 복귀.", "query":"Chiang Kai-shek Memorial Hall Taipei"},
-    "NRT": {"city":"도쿄", "plan":"Narita Express/Skyliner로 우에노·도쿄역 권역 중 한 곳만 방문. 공항 복귀시간을 넉넉히 확보.", "query":"Ueno Tokyo"},
-    "HND": {"city":"도쿄", "plan":"모노레일/게이큐로 시나가와·하마마쓰초·도쿄역 권역의 짧은 관광 후 복귀.", "query":"Tokyo Station"},
-    "KIX": {"city":"오사카", "plan":"난카이/하루카로 난바 또는 우메다 한 곳만 방문 후 간사이공항으로 복귀.", "query":"Dotonbori Osaka"},
+    "AMS": {"city":"암스테르담", "min_layover":7.0, "plan":"Schiphol→공항철도로 Amsterdam Centraal. 운하·Dam Square 인근만 짧게 보고 국제선 3시간 전 공항 복귀.", "query":"Amsterdam Centraal Dam Square"},
+    "HEL": {"city":"헬싱키", "min_layover":7.0, "plan":"공항철도 I/P선→Helsinki Central. Senate Square·Market Square 중심으로 짧게 이동 후 공항 복귀.", "query":"Senate Square Helsinki"},
+    "FRA": {"city":"프랑크푸르트", "min_layover":7.5, "plan":"S-Bahn→도심. Römerberg·Main 강변 중 한 권역만 보고 국제선 3시간 전 복귀.", "query":"Romerberg Frankfurt"},
+    "WAW": {"city":"바르샤바", "min_layover":7.0, "plan":"공항열차→Warszawa Centralna. 구시가지 또는 문화과학궁전 권역 중 한 곳만 방문 후 복귀.", "query":"Warsaw Old Town"},
+    "IST": {"city":"이스탄불", "min_layover":9.5, "plan":"공항 Metro M11 중심으로 도심 접근. Galata/구시가지 한 권역만 선택하고 교통변수를 고려해 3.5시간 전 공항 복귀.", "query":"Galata Tower Istanbul"},
+    "DOH": {"city":"도하", "min_layover":7.0, "plan":"Doha Metro Red Line→도심. Souq Waqif·Corniche 중 한 권역만 보고 국제선 3시간 전 공항 복귀.", "query":"Souq Waqif Doha"},
+    "DXB": {"city":"두바이", "min_layover":8.0, "plan":"Dubai Metro Red Line→Downtown. Burj Khalifa/Dubai Mall 권역만 짧게 보고 국제선 3시간 전 공항 복귀.", "query":"Burj Khalifa Dubai Mall"},
+    "PVG": {"city":"상하이", "min_layover":8.5, "plan":"푸동공항→Maglev/Metro로 루자쭈이·와이탄 짧은 동선. 국제선 출발 3시간 전 공항 복귀.", "query":"The Bund Shanghai"},
+    "PEK": {"city":"베이징", "min_layover":9.0, "plan":"공항철도→둥즈먼 후 왕푸징 중심의 짧은 동선. 교통체증을 고려해 3시간 이상 공항 버퍼 확보.", "query":"Wangfujing Beijing"},
+    "PKX": {"city":"베이징", "min_layover":9.0, "plan":"다싱공항철도 이용. 도심 체류를 짧게 잡고 국제선 3시간 전 공항 복귀.", "query":"Qianmen Beijing"},
+    "HKG": {"city":"홍콩", "min_layover":7.5, "plan":"Airport Express→Hong Kong Station, Central·Victoria Harbour 중심 관광 후 공항 복귀.", "query":"Central Hong Kong Victoria Harbour"},
+    "TPE": {"city":"타이베이", "min_layover":8.0, "plan":"Airport MRT→Taipei Main Station, 중정기념당·시먼딩 중 1~2곳만 선택 후 공항 복귀.", "query":"Chiang Kai-shek Memorial Hall Taipei"},
+    "NRT": {"city":"도쿄", "min_layover":9.0, "plan":"Narita Express/Skyliner로 우에노·도쿄역 권역 중 한 곳만 방문. 국제선 3시간 전 공항 복귀.", "query":"Ueno Tokyo"},
+    "HND": {"city":"도쿄", "min_layover":7.5, "plan":"모노레일/게이큐로 시나가와·하마마쓰초·도쿄역 권역의 짧은 관광 후 복귀.", "query":"Tokyo Station"},
+    "KIX": {"city":"오사카", "min_layover":8.5, "plan":"난카이/하루카로 난바 또는 우메다 한 곳만 방문 후 간사이공항으로 복귀.", "query":"Dotonbori Osaka"},
 }
 
 
 def get_json(url: str, timeout: int = 25):
-    req = Request(url, headers={"User-Agent":"offshore-trip-dashboard/4.0 (+https://shopper12.github.io/test/)"})
+    req = Request(url, headers={"User-Agent":"offshore-trip-dashboard/4.1 (+https://shopper12.github.io/test/)"})
     with urlopen(req, timeout=timeout) as response:
         return json.load(response)
 
@@ -152,7 +152,7 @@ def commons_photo(search_terms: list[str]):
         try:
             params = urlencode({
                 "action":"query", "format":"json", "generator":"search", "gsrsearch":term,
-                "gsrnamespace":6, "gsrlimit":8, "indexpageids":1, "prop":"imageinfo",
+                "gsrnamespace":6, "gsrlimit":10, "indexpageids":1, "prop":"imageinfo",
                 "iiprop":"url|extmetadata", "iiurlwidth":640, "origin":"*",
             })
             data = get_json("https://commons.wikimedia.org/w/api.php?" + params)
@@ -196,12 +196,14 @@ def stopover_candidate():
     )
     offers = parse_offers(fetch_flights_html(query))
     eligible = []
+    rejected_short = []
     for offer in offers:
         legs = offer.get("legs") or []
         if len(legs) != 2:
             continue
         via = legs[0].get("destination")
-        if via not in STOP_CITIES:
+        info = STOP_CITIES.get(via)
+        if not info:
             continue
         try:
             arr = parse_dt(legs[0]["arrival_date"], legs[0]["arrival_time"])
@@ -212,10 +214,10 @@ def stopover_candidate():
         if arr.date() != dep.date():
             continue
         layover = (dep - arr).total_seconds() / 3600
-        if not 6 <= layover <= 14:
+        if layover > 16 or arr.hour > 15 or dep.hour < 14:
             continue
-        # Arriving too late or departing too early makes city sightseeing unrealistic.
-        if arr.hour > 15 or dep.hour < 14:
+        if layover < float(info["min_layover"]):
+            rejected_short.append({"via":via, "layover_hours":round(layover,1), "required_hours":info["min_layover"], "price":offer.get("price")})
             continue
         eligible.append((offer, layover, via))
 
@@ -223,9 +225,10 @@ def stopover_candidate():
     if not eligible:
         return {
             "recommended":False,
-            "reason":"CPH→ICN 1회 경유 전체 후보 중 6~14시간 당일 관광·공항 복귀 버퍼 조건을 만족하는 후보를 찾지 못했습니다.",
+            "reason":"현재 검색에서는 도시별 최소 관광 가능 경유시간(공항 왕복·출입국·재검색·관광 2시간 이상)을 충족하면서 기존 귀국편보다 싼 후보가 없습니다.",
             "query_url":query.url(),
             "monitored_airports":list(STOP_CITIES.keys()),
+            "rejected_short_layovers":sorted(rejected_short, key=lambda x: x.get("price") or 10**12)[:5],
         }
 
     eligible.sort(key=lambda item: item[0]["price"])
@@ -239,6 +242,7 @@ def stopover_candidate():
         "via_airport":via,
         "via_city":info["city"],
         "layover_hours":round(layover, 1),
+        "minimum_sightseeing_layover_hours":info["min_layover"],
         "total_krw":serialized["total_krw"],
         "per_person_krw":serialized["per_person_krw"],
         "price_delta_vs_current_krw":delta,
@@ -248,7 +252,8 @@ def stopover_candidate():
         "query_url":query.url(),
         "legs":serialized["legs"],
         "monitored_airports":list(STOP_CITIES.keys()),
-        "reason":"현재 채택편보다 저렴하여 관광 경유 후보로 추천" if recommended else "관광 가능한 후보는 있으나 현재 채택편보다 저렴하지 않아 기존편 유지",
+        "rejected_short_layovers":sorted(rejected_short, key=lambda x: x.get("price") or 10**12)[:5],
+        "reason":"현재 채택편보다 저렴하고 관광 가능 시간도 확보되어 추천" if recommended else "관광 가능한 후보는 있으나 현재 채택편보다 저렴하지 않아 기존편 유지",
     }
 
 
@@ -278,7 +283,7 @@ def main():
         stopover["last_error"] = str(exc)
 
     payload = {
-        "schema_version":4,
+        "schema_version":5,
         "generated_at":now.isoformat().replace("+00:00", "Z"),
         "fresh_until":(now + timedelta(hours=2)).isoformat().replace("+00:00", "Z"),
         "weather":weather,
