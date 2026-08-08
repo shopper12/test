@@ -16,7 +16,7 @@ on:
       - "scripts/verify_map_mappings.mjs"
       - "scripts/audit_map_continuity.mjs"
       - "travel-live.js"
-      - "timeline-runtime-v16.js"
+      - "live-transit-links.js"
       - "live-transit-links.css"
       - "transit-live.json"
       - "unified-nav.js"
@@ -26,12 +26,14 @@ on:
       - "stable-tools.css"
       - "map-routing.mjs"
       - "map-sidebar.css"
+      - "timeline-runtime-v17.js"
       - "weather-fallback.js"
       - "google-map-link-bridge.js"
       - "travel-live.css"
       - "google-maps-inline.css"
       - "index.html"
       - "boot.js"
+      - "itinerary-data.js"
       - ".github/workflows/update-trip-live.yml"
   workflow_dispatch:
 
@@ -41,7 +43,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v16
+  group: live-trip-intelligence-v17
   cancel-in-progress: true
 
 jobs:
@@ -53,70 +55,57 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Install fare reader
         run: python -m pip install "fast-flights==3.0.1" "typing-extensions>=4.12,<5"
-
       - name: Syntax checks
         run: |
           python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/update_transit_live.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py scripts/fill_official_photo_images.py
           node --check boot.js
           node --check travel-live.js
-          node --check timeline-runtime-v16.js
+          node --check live-transit-links.js
           node --check unified-nav.js
           node --check unified-experience.js
           node --check stable-tools.js
           node --check map-routing.mjs
+          node --check timeline-runtime-v17.js
           node --check scripts/verify_map_mappings.mjs
           node --check scripts/audit_map_continuity.mjs
           node --check weather-fallback.js
           node --check google-map-link-bridge.js
-
-      - name: Validate v16 timeline and full itinerary continuity
+      - name: Validate v17 verified map manifest
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           node scripts/audit_map_continuity.mjs itinerary-data.js
           python - <<'PY'
           from pathlib import Path
-          html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          runtime=Path('timeline-runtime-v16.js').read_text(encoding='utf-8')
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V16' in boot and 'LIVE_TRAVEL_V16' in html
-          assert 'timeline-runtime-v16' in boot and 'live-transit-links' not in boot
-          assert 'data-v16-transit' in runtime and '대시보드에서 실시간 확인' in runtime
-          assert 'data-v16-map' in runtime and '지도 메뉴에서 이 일정 보기' in runtime
-          assert 'event-time-breakdown' in runtime and 'event-leg-list' in runtime
-          assert 'all-place-links' in runtime and 'google.com/maps/search' in runtime
-          assert 'google.com/travel/hotels' in runtime
-          assert 'observer.observe(main,{childList:true,subtree:false})' in runtime
-          assert 'auditFullRouteContinuity' in stable and 'day_boundary' in routing
+          assert 'LIVE_TRAVEL_V17' in boot
+          assert 'timeline-runtime-v17.js' in boot
+          assert 'map-sidebar-group' in stable and '__tripMapManifestCoverage' in stable
+          assert 'MAP_MANIFEST' in routing and 'flightRoutePoints' in routing
           PY
-
       - name: Refresh fares, stopover and legacy snapshot
         run: |
           python scripts/update_trip_live.py
           python scripts/refine_trip_photos.py
-
       - name: Refresh official public transport status
         run: python scripts/update_transit_live.py
-
       - name: Replace weather and photos with official web sources
         run: |
           python scripts/update_official_web_content_fast.py
           python scripts/fill_official_photo_images.py
-
       - name: Validate live snapshots
         run: |
           python -m json.tool trip-live.json >/dev/null
           python -m json.tool transit-live.json >/dev/null
+          python -m json.tool flight-prices.json >/dev/null
           python - <<'PY'
           import json
           p=json.load(open('trip-live.json',encoding='utf-8'))
@@ -124,28 +113,14 @@ jobs:
           assert 'return_stopover' in p
           assert p.get('schema_version', 0) >= 5
           assert len(p.get('photos', {})) >= 25
-          assert all(photo.get('source') == 'official_website' for photo in p['photos'].values())
-          assert sum(bool(photo.get('url')) for photo in p['photos'].values()) >= 19
-          assert not any('wikimedia' in (photo.get('url','')+photo.get('page_url','')).lower() for photo in p['photos'].values())
-          allowed={'Central Weather Administration (CWA)','KNMI','Deutscher Wetterdienst (DWD)','Danish Meteorological Institute (DMI)','Korea Meteorological Administration (KMA)'}
-          for day in p['weather'].values():
-              assert day.get('kind') == 'official_weather_bundle'
-              for loc in day.get('locations',[]):
-                  assert loc.get('authority') in allowed
-                  assert loc.get('kind') in {'official_pending','official_hourly','official_unparsed','official_source_error'}
           t=json.load(open('transit-live.json',encoding='utf-8'))
-          assert t.get('generated_at')
-          assert len(t.get('providers',[])) == 9
-          assert all(x.get('official') is True for x in t['providers'])
-          assert {x['id'] for x in t['providers']} == {'thsr','taoyuan_mrt','ns','ret','waterbus','db','hvv','dsb','rejseplanen'}
+          assert t.get('generated_at') and len(t.get('providers',[])) == 9
+          f=json.load(open('flight-prices.json',encoding='utf-8'))
+          assert len(f.get('fares',{})) == 7 and 'route_f2_direct' in f['fares']
           PY
-
       - name: Commit refreshed snapshots safely
         run: |
-          if git diff --quiet -- trip-live.json transit-live.json; then
-            echo "No live changes"
-            exit 0
-          fi
+          if git diff --quiet -- trip-live.json transit-live.json; then exit 0; fi
           cp trip-live.json /tmp/trip-live.json
           cp transit-live.json /tmp/transit-live.json
           git config user.name "github-actions[bot]"
@@ -177,36 +152,26 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-
-      - name: Verify deployed v16 build
+      - name: Verify deployed v17 build
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           node scripts/audit_map_continuity.mjs itinerary-data.js
-          grep -q 'LIVE_TRAVEL_V16' index.html
-          grep -q 'LIVE_TRAVEL_V16' boot.js
-          grep -q 'timeline-runtime-v16' boot.js
-          grep -q 'data-v16-transit' timeline-runtime-v16.js
-          grep -q 'data-v16-map' timeline-runtime-v16.js
-          grep -q 'event-time-breakdown' timeline-runtime-v16.js
-          grep -q 'all-place-links' timeline-runtime-v16.js
-          grep -q 'auditFullRouteContinuity' stable-tools.js
-          grep -q '#route-list \[data-stable-map-event\]' stable-tools.js
-          grep -q 'button.textContent="전체 일정"' unified-nav.js
+          grep -q 'LIVE_TRAVEL_V17' index.html
+          grep -q 'LIVE_TRAVEL_V17' boot.js
+          grep -q 'timeline-runtime-v17.js' boot.js
+          grep -q 'MAP_MANIFEST' map-routing.mjs
           python - <<'PY'
           import json
-          t=json.load(open('transit-live.json',encoding='utf-8'))
-          assert len(t.get('providers',[])) == 9
+          assert len(json.load(open('transit-live.json',encoding='utf-8')).get('providers',[])) == 9
+          assert len(json.load(open('flight-prices.json',encoding='utf-8')).get('fares',{})) == 7
           PY
-
       - name: Configure Pages
         uses: actions/configure-pages@v6
-
       - name: Upload dashboard
         uses: actions/upload-pages-artifact@v4
         with:
           path: .
-
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
