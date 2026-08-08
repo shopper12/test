@@ -1,4 +1,4 @@
-const BUILD = "LIVE_TRAVEL_V15";
+const BUILD = "LIVE_TRAVEL_V16";
 document.documentElement.dataset.dashboardBuild = BUILD;
 window.__DASHBOARD_BUILD__ = BUILD;
 
@@ -7,7 +7,6 @@ const preloadModules = [
   ["google-map-link-bridge", `./google-map-link-bridge.js?v=${BUILD}`],
   ["unified-experience", `./unified-experience.js?v=${BUILD}`],
   ["unified-nav", `./unified-nav.js?v=${BUILD}`],
-  ["live-transit-links", `./live-transit-links.js?v=${BUILD}`],
 ];
 
 const failures = [];
@@ -34,6 +33,13 @@ try {
 } catch (error) {
   failures.push({ name: "stable-tools", error });
   console.error(`[${BUILD}] stable-tools load failed`, error);
+}
+
+try {
+  await import(`./timeline-runtime-v16.js?v=${BUILD}`);
+} catch (error) {
+  failures.push({ name: "timeline-runtime-v16", error });
+  console.error(`[${BUILD}] timeline runtime load failed`, error);
 }
 
 function showBuildStatus() {
