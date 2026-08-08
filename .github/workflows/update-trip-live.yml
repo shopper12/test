@@ -7,16 +7,20 @@ on:
     branches: [main]
     paths:
       - "scripts/update_trip_live.py"
+      - "scripts/update_flight_prices.py"
       - "scripts/refine_trip_photos.py"
       - "scripts/update_official_web_content.py"
       - "scripts/update_official_web_content_fast.py"
       - "scripts/fill_official_photo_images.py"
+      - "scripts/verify_map_mappings.mjs"
       - "travel-live.js"
       - "unified-nav.js"
       - "unified-experience.js"
       - "unified-experience.css"
       - "stable-tools.js"
       - "stable-tools.css"
+      - "map-routing.mjs"
+      - "map-sidebar.css"
       - "weather-fallback.js"
       - "google-map-link-bridge.js"
       - "travel-live.css"
@@ -32,7 +36,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v13
+  group: live-trip-intelligence-v14
   cancel-in-progress: true
 
 jobs:
@@ -61,40 +65,30 @@ jobs:
           node --check unified-nav.js
           node --check unified-experience.js
           node --check stable-tools.js
+          node --check map-routing.mjs
+          node --check scripts/verify_map_mappings.mjs
           node --check weather-fallback.js
           node --check google-map-link-bridge.js
 
-      - name: Validate v13 stable map click and integrated itinerary
+      - name: Validate v14 right sidebar and every itinerary mapping
         run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           python - <<'PY'
           from pathlib import Path
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
-          unified=Path('unified-experience.js').read_text(encoding='utf-8')
-          nav=Path('unified-nav.js').read_text(encoding='utf-8')
-          weather=Path('weather-fallback.js').read_text(encoding='utf-8')
+          css=Path('map-sidebar.css').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V13' in boot and 'LIVE_TRAVEL_V13' in html
-          assert 'stable-tools.js' in boot
-          assert 'weather-fallback.js' in stable and 'weather-fallback.js' in unified
-          assert 'id="stable-live-tools"' in html
-          assert 'derivedRoute' in stable
-          assert 'saddr' in stable and 'daddr' in stable and 'output:"embed"' in stable
-          assert '경로 보기' in stable
-          assert 'document.addEventListener("pointerup"' in stable
-          assert 'window.__tripMapFocus=focusMap' in stable
+          assert 'LIVE_TRAVEL_V14' in boot and 'LIVE_TRAVEL_V14' in html
+          assert 'map-routing.mjs' in stable
+          assert 'map-sidebar.css?v=LIVE_TRAVEL_V14' in html
+          assert 'if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}' in stable
+          assert '#route-list [data-stable-map-event]' in stable
+          assert 'map-schedule-sidebar-item' in stable and 'map-schedule-sidebar-item' in css
+          assert 'window.__tripMapAudit' in stable and 'window.__tripMapFocus' in stable
+          assert '#main-content .map-schedule-section{display:none!important}' in css
           assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
-          assert 'mainObserver.observe(main,{childList:true,subtree:true})' not in stable
-          assert 'hotelsHtml' not in stable and 'Booking.com 실제 예약' not in stable
-          assert 'Google Flights 최저가 비교' in unified
-          assert 'Skyscanner 교차비교' in unified
-          assert 'Google Hotels 최저가 비교' in unified
-          assert 'dailyBoardHtml' not in unified
-          assert 'document.querySelectorAll(".unified-day-board").forEach(el=>el.remove())' in unified
-          assert 'button.textContent="전체 일정"' in nav
-          assert 'AccuWeather 2026년 9월 월간전망 평균' in weather
-          assert 'DMI 7일 예보' in weather
-          assert 'KMA 1개월 전망' in weather
           PY
 
       - name: Refresh fares, stopover and legacy snapshot
@@ -138,22 +132,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for attempt in 1 2 3 4; do
-            echo "snapshot push attempt $attempt"
             git fetch origin main
             git reset --hard origin/main
             cp /tmp/trip-live.json trip-live.json
             git add trip-live.json
-            if git diff --cached --quiet; then
-              echo "Remote already contains equivalent snapshot"
-              exit 0
-            fi
+            if git diff --cached --quiet; then exit 0; fi
             git commit -m "chore: refresh official trip intelligence"
-            if git push origin HEAD:main; then
-              exit 0
-            fi
+            if git push origin HEAD:main; then exit 0; fi
             sleep $((attempt * 2))
           done
-          echo "Failed to publish generated snapshot after retries" >&2
           exit 1
 
   deploy:
@@ -173,14 +160,14 @@ jobs:
 
       - name: Verify deployed build
         run: |
-          grep -q 'LIVE_TRAVEL_V13' index.html
-          grep -q 'LIVE_TRAVEL_V13' boot.js
-          grep -q 'weather-fallback.js' unified-experience.js
-          grep -q 'Google Flights 최저가 비교' unified-experience.js
-          grep -q 'Google Hotels 최저가 비교' unified-experience.js
-          grep -q 'derivedRoute' stable-tools.js
-          grep -q 'document.addEventListener("pointerup"' stable-tools.js
-          grep -q 'subtree:false' stable-tools.js
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          grep -q 'LIVE_TRAVEL_V14' index.html
+          grep -q 'LIVE_TRAVEL_V14' boot.js
+          grep -q 'map-routing.mjs' stable-tools.js
+          grep -q 'map-sidebar.css?v=LIVE_TRAVEL_V14' index.html
+          grep -q '#route-list \[data-stable-map-event\]' stable-tools.js
+          grep -q 'window.__tripMapAudit' stable-tools.js
           grep -q 'button.textContent="전체 일정"' unified-nav.js
 
       - name: Configure Pages
