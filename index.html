@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./styles.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./compare.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./interactive.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
-  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V3" />
+  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V4" />
 </head>
 <body>
   <header class="topbar">
@@ -43,8 +43,8 @@
   <footer class="footer shell">
     GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · Leaflet/OpenStreetMap·OSRM 육상경로<br>
     항공 금액은 GitHub Actions가 Google Flights를 매시간 조회한 성인 4명 일반석 스냅샷입니다.<br>
-    날씨는 Open-Meteo 실제 예보(최대 16일), 장소 사진은 Wikimedia Commons, 대중교통 실시간 경로는 Google Maps 링크를 사용합니다.<br>
-    Transit/지도 데이터 출처와 각 서비스의 최종 예약·운행 조건은 링크에서 다시 확인하십시오. 공개 저장소 기반이므로 여권번호, 연락처, 계약자료 등 비공개 정보는 입력하지 마십시오.
+    날씨는 Open-Meteo 실제 예보(최대 16일), 장소 사진은 Wikimedia Commons, 유럽 대중교통 지도선은 Transitous/MOTIS GTFS, 실시간 경로 확인은 Google Maps를 사용합니다.<br>
+    <a href="https://transitous.org/sources/" target="_blank" rel="noreferrer">Transitous 데이터 출처</a> · 각 서비스의 최종 예약·운행 조건은 링크에서 다시 확인하십시오. 공개 저장소 기반이므로 여권번호, 연락처, 계약자료 등 비공개 정보는 입력하지 마십시오.
   </footer>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
@@ -63,6 +63,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V3"></script>
+  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V4"></script>
 </body>
 </html>
