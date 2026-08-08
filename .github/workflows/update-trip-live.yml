@@ -77,7 +77,7 @@ jobs:
           node --check weather-fallback.js
           node --check google-map-link-bridge.js
 
-      - name: Validate v15 map mapping and continuous joins
+      - name: Validate v15 map mapping and full itinerary continuity
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
@@ -91,8 +91,10 @@ jobs:
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
           assert 'LIVE_TRAVEL_V15' in boot and 'LIVE_TRAVEL_V15' in html
           assert 'live-transit-links' in boot and 'transit-live.json' in live
-          assert 'auditRouteContinuity' in stable and 'window.__tripMapContinuityAudit' in stable
+          assert 'auditFullRouteContinuity' in stable and 'window.__tripMapContinuityAudit' in stable
+          assert 'day_boundary' in routing and '전날→첫 일정' in routing
           assert 'derived_from_map_place' in routing and 'continuity_' in routing
+          assert '"ret"' in live and '"waterbus"' in live
           assert 'entity-name-link hotel' in live and 'entity-name-link restaurant' in live
           assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
           PY
@@ -132,9 +134,9 @@ jobs:
                   assert loc.get('kind') in {'official_pending','official_hourly','official_unparsed','official_source_error'}
           t=json.load(open('transit-live.json',encoding='utf-8'))
           assert t.get('generated_at')
-          assert len(t.get('providers',[])) == 7
+          assert len(t.get('providers',[])) == 9
           assert all(x.get('official') is True for x in t['providers'])
-          assert {x['id'] for x in t['providers']} == {'thsr','taoyuan_mrt','ns','db','hvv','dsb','rejseplanen'}
+          assert {x['id'] for x in t['providers']} == {'thsr','taoyuan_mrt','ns','ret','waterbus','db','hvv','dsb','rejseplanen'}
           PY
 
       - name: Commit refreshed snapshots safely
@@ -184,10 +186,14 @@ jobs:
           grep -q 'LIVE_TRAVEL_V15' boot.js
           grep -q 'live-transit-links' boot.js
           grep -q 'transit-live.json' live-transit-links.js
-          grep -q 'auditRouteContinuity' stable-tools.js
+          grep -q 'auditFullRouteContinuity' stable-tools.js
           grep -q '#route-list \[data-stable-map-event\]' stable-tools.js
           grep -q 'button.textContent="전체 일정"' unified-nav.js
-          python -m json.tool transit-live.json >/dev/null
+          python - <<'PY'
+          import json
+          t=json.load(open('transit-live.json',encoding='utf-8'))
+          assert len(t.get('providers',[])) == 9
+          PY
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
