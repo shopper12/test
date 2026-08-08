@@ -1,6 +1,100 @@
 {
   "schema_version": 1,
-  "generated_at": null,
+  "generated_at": "2026-08-08T05:59:27.039321Z",
   "refresh_policy": "GitHub Actions hourly; official operator sources only",
-  "providers": []
+  "providers": [
+    {
+      "id": "thsr",
+      "name": "Taiwan High Speed Rail (THSR)",
+      "country": "Taiwan",
+      "mode": "rail",
+      "status_url": "https://en.thsrc.com.tw/ArticleContent/3ec1c04f-d3de-45b1-becc-cba412d55123",
+      "planner_url": "https://en.thsrc.com.tw/ArticleContent/a3b630bb-1066-4352-a1ef-58c7b4e8ef7c",
+      "official": true,
+      "status": "normal",
+      "summary": "THSR 공식 운행상태: on schedule",
+      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetch_ok": true
+    },
+    {
+      "id": "taoyuan_mrt",
+      "name": "Taoyuan Airport MRT",
+      "country": "Taiwan",
+      "mode": "metro",
+      "status_url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/dep-A18",
+      "planner_url": "https://www.tymetro.com.tw/tymetro-new/en/_pages/travel-guide/timetable-A18",
+      "official": true,
+      "status": "normal",
+      "summary": "A18 Taoyuan HSR Station 공식 시간표 제공 중",
+      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetch_ok": true
+    },
+    {
+      "id": "ns",
+      "name": "NS Netherlands",
+      "country": "Netherlands",
+      "mode": "rail",
+      "status_url": "https://www.ns.nl/en/travel-information",
+      "planner_url": "https://www.ns.nl/en/travel-information",
+      "official": true,
+      "status": "live",
+      "summary": "NS Journey Planner가 공사·지연·취소를 최신 반영",
+      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetch_ok": true
+    },
+    {
+      "id": "db",
+      "name": "Deutsche Bahn",
+      "country": "Germany",
+      "mode": "rail",
+      "status_url": "https://www.bahn.de/service/fahrplaene",
+      "planner_url": "https://int.bahn.de/en",
+      "official": true,
+      "status": "live",
+      "summary": "Fahrpläne & aktuelle Meldungen Unsere Services informieren Sie aktuell über Pünktlichkeit, Verspätung und Änderungen an Ihrer Verbindung oder begleiten Sie mit individuellen Fahrplänen bei Ihrer Reise. Startseite Info & Services Fahrpläne & aktuelle Meldungen Fahrpläne & aktuelle",
+      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetch_ok": true
+    },
+    {
+      "id": "hvv",
+      "name": "HVV Hamburg",
+      "country": "Germany",
+      "mode": "metro_bus",
+      "status_url": "https://www.hvv.de/en/timetables/all-departures/",
+      "planner_url": "https://www.hvv.de/en",
+      "official": true,
+      "status": "live",
+      "summary": "All departures Jump to content To startpage Menu Open submenu Homepage Timetables Timetables Tickets Service About us meinhvv Contact All departures Timetable info Announcements All departures Line timetable Timetable at station / stop Plan of lifts Network and fare zone plans Your search term Search Open search de Tim",
+      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetch_ok": true
+    },
+    {
+      "id": "dsb",
+      "name": "DSB Denmark",
+      "country": "Denmark",
+      "mode": "rail",
+      "status_url": "https://www.dsb.dk/en/traffic-information/",
+      "planner_url": "https://www.dsb.dk/en/",
+      "official": true,
+      "status": "source_error",
+      "summary": "공식 사이트 자동조회 실패 — 아래 공식 실시간 링크에서 직접 확인",
+      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetch_ok": false,
+      "error": "HTTP Error 404: Not Found",
+      "previous_summary": null
+    },
+    {
+      "id": "rejseplanen",
+      "name": "Rejseplanen",
+      "country": "Denmark",
+      "mode": "multimodal",
+      "status_url": "https://www.rejseplanen.dk/bin/query.exe/en",
+      "planner_url": "https://www.rejseplanen.dk/bin/query.exe/en",
+      "official": true,
+      "status": "live",
+      "summary": "Timetable valid from 07.08.26 to 21.10.26. All information is issued without liability. Software/Data: 5.45.Rejseplanen.19.1.9 (customer/hcudk/release/2026.3.0.3) [2026-06-18].t0 -",
+      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetch_ok": true
+    }
+  ]
 }
