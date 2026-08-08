@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate dashboard source and every map event
+      - name: Validate v15 dashboard, transit and map continuity
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
@@ -34,29 +34,36 @@ jobs:
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
           css=Path('map-sidebar.css').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V14' in boot and 'LIVE_TRAVEL_V14' in html
-          assert 'map-routing.mjs' in stable
-          assert 'map-sidebar.css?v=LIVE_TRAVEL_V14' in html
-          assert 'if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}' in stable
+          live=Path('live-transit-links.js').read_text(encoding='utf-8')
+          assert 'LIVE_TRAVEL_V15' in boot and 'LIVE_TRAVEL_V15' in html
+          assert 'live-transit-links' in boot and 'live-transit-links.css?v=LIVE_TRAVEL_V15' in html
+          assert 'map-routing.mjs?v=LIVE_TRAVEL_V15' in stable
+          assert 'auditRouteContinuity' in stable and 'window.__tripMapContinuityAudit' in stable
+          assert '구간 연결' in stable and '연속경로' in Path('map-routing.mjs').read_text(encoding='utf-8')
           assert '#route-list [data-stable-map-event]' in stable
-          assert 'map-schedule-sidebar-item' in stable and 'map-schedule-sidebar-item' in css
-          assert 'window.__tripMapAudit' in stable and 'window.__tripMapFocus' in stable
           assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
           assert '#main-content .map-schedule-section{display:none!important}' in css
+          assert 'transit-live.json' in live
+          assert 'Google Hotels' not in live or 'google.com/travel/hotels' in live
+          assert 'entity-name-link hotel' in live and 'entity-name-link restaurant' in live
           PY
           node --check map-routing.mjs
           node --check stable-tools.js
           node --check boot.js
+          node --check live-transit-links.js
           node --check scripts/verify_map_mappings.mjs
+          node --check scripts/audit_map_continuity.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
           node --check unified-experience.js
           node --check weather-fallback.js
           grep -q 'Google Flights 최저가 비교' unified-experience.js
           grep -q 'Google Hotels 최저가 비교' unified-experience.js
           grep -q 'button.textContent="전체 일정"' unified-nav.js
-          python -m py_compile scripts/update_flight_prices.py
+          python -m py_compile scripts/update_flight_prices.py scripts/update_transit_live.py
           python -m json.tool flight-prices.json >/dev/null
           python -m json.tool trip-live.json >/dev/null
+          python -m json.tool transit-live.json >/dev/null
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
