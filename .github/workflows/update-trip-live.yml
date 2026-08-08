@@ -15,8 +15,8 @@ on:
       - "unified-nav.js"
       - "unified-experience.js"
       - "unified-experience.css"
-      - "hotel-booking-summary.js"
-      - "google-maps-inline.js"
+      - "runtime-integrity.js"
+      - "runtime-integrity.css"
       - "google-map-link-bridge.js"
       - "travel-live.css"
       - "google-maps-inline.css"
@@ -31,7 +31,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v9
+  group: live-trip-intelligence-v10
   cancel-in-progress: true
 
 jobs:
@@ -59,46 +59,39 @@ jobs:
           node --check travel-live.js
           node --check unified-nav.js
           node --check unified-experience.js
-          node --check hotel-booking-summary.js
-          node --check google-maps-inline.js
+          node --check runtime-integrity.js
           node --check google-map-link-bridge.js
 
-      - name: Validate hotel booking and Google Maps focus behavior
+      - name: Validate v10 runtime repairs
         run: |
           python - <<'PY'
           from pathlib import Path
-          maps=Path('google-maps-inline.js').read_text(encoding='utf-8')
-          bridge=Path('google-map-link-bridge.js').read_text(encoding='utf-8')
-          unified=Path('unified-experience.js').read_text(encoding='utf-8')
-          hotels=Path('hotel-booking-summary.js').read_text(encoding='utf-8')
+          runtime=Path('runtime-integrity.js').read_text(encoding='utf-8')
+          css=Path('runtime-integrity.css').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V9' in boot and 'LIVE_TRAVEL_V9' in html
-          assert 'const failures = []' in boot
-          assert 'maps/embed/v1/directions' in maps
-          assert 'maps/embed/v1/place' in maps
-          assert 'trip:map-event' in maps
-          assert 'trip:map-place' in maps
-          assert 'customView' in maps
-          assert 'routeTextParts' in maps
-          assert 'renderCustomView' in maps
-          assert 'zoom:"17"' in maps
-          assert 'map-focused' in Path('unified-experience.css').read_text(encoding='utf-8')
-          assert 'preventDefault' in bridge and 'data-inline-google-map' in bridge
-          assert 'hotel-booking-summary.js' in boot
-          assert '전체 숙박 예약' in hotels
-          assert 'Booking 실제 객실·예약/결제' in hotels
-          assert 'group_adults:"4"' in hotels
-          assert 'no_rooms:String(h.rooms||2)' in hotels
-          assert 'unified-experience.css' in html
-          assert '항공 · 호텔 · 교통 · 맛집 · 예약 한눈에' in unified
-          assert 'Booking 실제 객실·결제' in unified
-          assert '실제 메뉴·예약 확인' in unified
-          assert 'event-official-weather' in unified
-          assert '공식 웹사이트 사진' in unified
-          assert 'map-schedule-section' in unified
-          assert 'data-map-event-id' in unified
-          assert 'target="_blank"' not in maps
+          assert 'LIVE_TRAVEL_V10' in boot and 'LIVE_TRAVEL_V10' in html
+          assert 'runtime-integrity.js' in boot
+          assert 'runtime-integrity.css' in html
+          assert 'google-maps-inline' not in boot
+          assert 'hotel-booking-summary' not in boot
+          assert 'runtime-weather-panel' in runtime
+          assert '시간별 예보 발표 전' in runtime
+          assert 'data-runtime-weather-refresh' in runtime
+          assert 'runtime-hotel-panel' in runtime
+          assert 'Booking.com 실제 예약' in runtime
+          assert 'group_adults:"4"' in runtime
+          assert 'no_rooms:String(h.rooms||2)' in runtime
+          assert 'window.location.assign(url)' in runtime
+          assert 'runtime-map-schedule' in runtime
+          assert 'data-runtime-map-event-id' in runtime
+          assert 'focusMapEvent' in runtime
+          assert 'output:"embed"' in runtime
+          assert 'maps/embed/v1/directions' in runtime
+          assert 'map-focused' in runtime
+          assert '.runtime-weather-grid' in css
+          assert '.runtime-hotel-grid' in css
+          assert '.runtime-map-event' in css
           PY
 
       - name: Refresh fares, stopover and legacy snapshot
@@ -177,10 +170,13 @@ jobs:
 
       - name: Verify deployed build
         run: |
-          grep -q 'LIVE_TRAVEL_V9' index.html
-          grep -q 'LIVE_TRAVEL_V9' boot.js
-          grep -q 'hotel-booking-summary.js' boot.js
-          grep -q 'customView' google-maps-inline.js
+          grep -q 'LIVE_TRAVEL_V10' index.html
+          grep -q 'LIVE_TRAVEL_V10' boot.js
+          grep -q 'runtime-integrity.js' boot.js
+          grep -q 'runtime-integrity.css' index.html
+          grep -q 'runtime-weather-panel' runtime-integrity.js
+          grep -q 'Booking.com 실제 예약' runtime-integrity.js
+          grep -q 'data-runtime-map-event-id' runtime-integrity.js
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
