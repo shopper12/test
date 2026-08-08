@@ -17,6 +17,7 @@ on:
       - "unified-experience.css"
       - "stable-tools.js"
       - "stable-tools.css"
+      - "weather-fallback.js"
       - "google-map-link-bridge.js"
       - "travel-live.css"
       - "google-maps-inline.css"
@@ -31,7 +32,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v11
+  group: live-trip-intelligence-v12
   cancel-in-progress: true
 
 jobs:
@@ -60,32 +61,36 @@ jobs:
           node --check unified-nav.js
           node --check unified-experience.js
           node --check stable-tools.js
+          node --check weather-fallback.js
           node --check google-map-link-bridge.js
 
-      - name: Validate v11 permanent controls
+      - name: Validate v12 integrated itinerary behavior
         run: |
           python - <<'PY'
           from pathlib import Path
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
-          css=Path('stable-tools.css').read_text(encoding='utf-8')
+          unified=Path('unified-experience.js').read_text(encoding='utf-8')
+          nav=Path('unified-nav.js').read_text(encoding='utf-8')
+          weather=Path('weather-fallback.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V11' in boot and 'LIVE_TRAVEL_V11' in html
+          assert 'LIVE_TRAVEL_V12' in boot and 'LIVE_TRAVEL_V12' in html
           assert 'stable-tools.js' in boot
-          assert 'runtime-integrity.js' not in boot
-          assert 'stable-tools.css' in html
+          assert 'weather-fallback.js' in stable and 'weather-fallback.js' in unified
           assert 'id="stable-live-tools"' in html
-          assert 'Booking.com 실제 예약' in stable
-          assert 'group_adults:"4"' in stable
-          assert 'no_rooms:String(h.rooms||2)' in stable
-          assert '공식 날씨' in stable
-          assert 'data-stable-weather-refresh' in stable
-          assert 'data-stable-map-event' in stable
-          assert 'stable-map-shell' in stable
-          assert 'output:"embed"' in stable
-          assert '#stable-live-tools' in css
-          assert '.stable-hotel-grid' in css
-          assert '.stable-map-event' in css
+          assert 'derivedRoute' in stable
+          assert 'saddr' in stable and 'daddr' in stable and 'output:"embed"' in stable
+          assert '경로 보기' in stable
+          assert 'hotelsHtml' not in stable and 'Booking.com 실제 예약' not in stable
+          assert 'Google Flights 최저가 비교' in unified
+          assert 'Skyscanner 교차비교' in unified
+          assert 'Google Hotels 최저가 비교' in unified
+          assert 'dailyBoardHtml' not in unified
+          assert 'document.querySelectorAll(".unified-day-board").forEach(el=>el.remove())' in unified
+          assert 'button.textContent="전체 일정"' in nav
+          assert 'AccuWeather 2026년 9월 월간전망 평균' in weather
+          assert 'DMI 7일 예보' in weather
+          assert 'KMA 1개월 전망' in weather
           PY
 
       - name: Refresh fares, stopover and legacy snapshot
@@ -164,13 +169,13 @@ jobs:
 
       - name: Verify deployed build
         run: |
-          grep -q 'LIVE_TRAVEL_V11' index.html
-          grep -q 'LIVE_TRAVEL_V11' boot.js
-          grep -q 'stable-tools.js' boot.js
-          grep -q 'stable-tools.css' index.html
-          grep -q 'id="stable-live-tools"' index.html
-          grep -q 'Booking.com 실제 예약' stable-tools.js
-          grep -q 'data-stable-map-event' stable-tools.js
+          grep -q 'LIVE_TRAVEL_V12' index.html
+          grep -q 'LIVE_TRAVEL_V12' boot.js
+          grep -q 'weather-fallback.js' unified-experience.js
+          grep -q 'Google Flights 최저가 비교' unified-experience.js
+          grep -q 'Google Hotels 최저가 비교' unified-experience.js
+          grep -q 'derivedRoute' stable-tools.js
+          grep -q 'button.textContent="전체 일정"' unified-nav.js
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
