@@ -39,6 +39,24 @@ SOURCES = [
         "official": True,
     },
     {
+        "id": "ret",
+        "name": "RET Rotterdam",
+        "country": "Netherlands",
+        "mode": "metro_bus_tram",
+        "status_url": "https://www.ret.nl/en/home/travelling-with-the-ret/status-updates.html",
+        "planner_url": "https://www.ret.nl/en/home/travelling-with-the-ret/plan-your-trip.html",
+        "official": True,
+    },
+    {
+        "id": "waterbus",
+        "name": "Waterbus / WaterShuttle Rotterdam",
+        "country": "Netherlands",
+        "mode": "ferry",
+        "status_url": "https://www.waterbus.nl/en/travel-information/service-reports/",
+        "planner_url": "https://www.waterbus.nl/en/",
+        "official": True,
+    },
+    {
         "id": "db",
         "name": "Deutsche Bahn",
         "country": "Germany",
@@ -108,6 +126,14 @@ def summarize(source: dict, text: str) -> tuple[str, str]:
     if sid == "ns":
         s = clip(text, "Current situation on the track", 280)
         return "live", s or "NS Journey Planner가 공사·지연·취소를 최신 반영"
+    if sid == "ret":
+        s = clip(text, "Status updates", 420) or clip(text, "diversions", 420)
+        has_alert = any(marker in low for marker in ("diversion", "not served", "delay", "disruption"))
+        return ("alert" if has_alert else "live"), s or "RET 버스·트램·메트로 최신 우회·장애정보 사용"
+    if sid == "waterbus":
+        s = clip(text, "Service Announcements", 420) or clip(text, "service", 420)
+        has_alert = any(marker in low for marker in ("delay", "cancel", "closure", "disruption", "service announcement"))
+        return ("alert" if has_alert else "live"), s or "Waterbus/WaterShuttle 공식 운항·서비스 알림 사용"
     if sid == "db":
         s = clip(text, "Fahrpläne & aktuelle Meldungen", 280) or clip(text, "Aktuelle Verkehrs", 280)
         return "live", s or "DB Reiseauskunft/DB Navigator 최신 운행정보 사용"
@@ -157,9 +183,9 @@ def main() -> None:
             )
         rows.append(row)
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": now,
-        "refresh_policy": "GitHub Actions hourly; official operator sources only",
+        "refresh_policy": "GitHub Actions hourly; official operator and official journey-planner sources",
         "providers": rows,
     }
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
