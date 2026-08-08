@@ -1,6 +1,7 @@
 const STORAGE_KEY="offshore-trip-google-maps-embed-key";
 const PENDING_KEY="offshore-trip-inline-google-map-request";
 
+const esc=value=>String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
 function apiKey(){return String(window.GOOGLE_MAPS_EMBED_KEY||localStorage.getItem(STORAGE_KEY)||"").trim();}
 function isGoogleMapsUrl(href=""){return /https?:\/\/(www\.)?(google\.[^/]+\/maps|maps\.google\.[^/]+|maps\.app\.goo\.gl)/i.test(href);}
 
@@ -33,13 +34,13 @@ function applyPending(){
   const shell=document.querySelector("#map > .google-map-shell");if(!shell)return false;
   const src=embedUrl(request,key);if(!src)return false;
   const title=request.type==="directions"?`${request.origin} → ${request.destination}`:request.q;
-  shell.innerHTML=`<div class="google-map-controls"><div><b>${String(title||"Google Maps")}</b><small>외부 탭 없이 대시보드 안에서 Google Maps 표시</small></div></div><iframe class="google-map-frame" title="Google Maps" src="${src}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  shell.innerHTML=`<div class="google-map-controls"><div><b>${esc(title||"Google Maps")}</b><small>외부 탭 없이 대시보드 안에서 Google Maps 표시</small></div></div><iframe class="google-map-frame" title="Google Maps" src="${esc(src)}" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
   sessionStorage.removeItem(PENDING_KEY);
   return true;
 }
 
-function openInsideDashboard(href){
-  const request=parseGoogleMapsRequest(href);if(!request)return false;
+function openInsideDashboard(href,fallbackText=""){
+  const request=parseGoogleMapsRequest(href)||{type:"place",q:String(fallbackText||"현재 일정 장소").trim()};
   sessionStorage.setItem(PENDING_KEY,JSON.stringify(request));
   const mapTab=document.querySelector('#tabs [data-tab="map"]');
   if(mapTab&&!mapTab.classList.contains("active"))mapTab.click();
@@ -57,7 +58,9 @@ function rewriteLinks(){
 
 document.addEventListener("click",event=>{
   const a=event.target.closest('a[data-inline-google-map="1"]');if(!a)return;
-  if(openInsideDashboard(a.href)){event.preventDefault();event.stopImmediatePropagation();}
+  const card=a.closest(".event-card,.ops-card,tr,.return-stopover-panel");
+  const fallback=card?.querySelector(".event-title,b,td:nth-child(2)")?.textContent||a.textContent||"현재 일정 장소";
+  if(openInsideDashboard(a.href,fallback)){event.preventDefault();event.stopImmediatePropagation();}
 },true);
 
 const observer=new MutationObserver(()=>{clearTimeout(observer._t);observer._t=setTimeout(()=>{rewriteLinks();applyPending();},100);});
