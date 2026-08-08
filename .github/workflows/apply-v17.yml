@@ -18,10 +18,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Apply verified direct-only bundle
+      - name: Reassemble and apply verified bundle
+        shell: bash
         run: |
-          tar -xzf v17_bundle.tar.gz
-          rm -f timeline-runtime-v16.js v17_bundle.tar.gz .github/workflows/apply-v17.yml
+          cat v17part_00 v17part_01 v17part_02 v17part_03 v17part_04 v17part_05 v17part_06 v17part_07 > /tmp/v17_bundle.b64
+          base64 -d /tmp/v17_bundle.b64 > /tmp/v17_bundle.tar.gz
+          gzip -t /tmp/v17_bundle.tar.gz
+          tar -xzf /tmp/v17_bundle.tar.gz
+          rm -f timeline-runtime-v16.js v17_bundle.tar.gz v17part_00 v17part_01 v17part_02 v17part_03 v17part_04 v17part_05 v17part_06 v17part_07 .github/workflows/apply-v17.yml
+
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node --check app.js
           node --check boot.js
@@ -34,19 +39,32 @@ jobs:
           node scripts/audit_map_continuity.mjs itinerary-data.js
           python -m py_compile scripts/update_flight_prices.py
           python -m json.tool flight-prices.json >/dev/null
+
           python - <<'PY'
-          import json
+          import json, re
           from pathlib import Path
-          assert len(json.load(open('flight-prices.json', encoding='utf-8'))['fares']) == 7
-          forbidden=['Guangzhou','광저우','CZ3098','CZ307','csair','China Southern','route_f2_save']
-          roots=[p for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts and p.name not in {'transit-live.json','trip-live.json'}]
+          fares=json.load(open('flight-prices.json',encoding='utf-8'))
+          assert len(fares.get('fares',{})) == 7, len(fares.get('fares',{}))
+          checks=[
+            ('Guangzhou',re.compile(r'Guangzhou')),
+            ('광저우',re.compile(r'광저우')),
+            ('CAN token',re.compile(r'\bCAN\b')),
+            ('CZ3098',re.compile(r'CZ3098')),
+            ('CZ307',re.compile(r'CZ307')),
+            ('csair',re.compile(r'csair',re.I)),
+            ('China Southern',re.compile(r'China Southern',re.I)),
+            ('route_f2_save',re.compile(r'route_f2_save')),
+          ]
           hits=[]
-          for p in roots:
+          for p in Path('.').rglob('*'):
+              if not p.is_file() or '.git' in p.parts: continue
               try: text=p.read_text(encoding='utf-8')
               except Exception: continue
-              for token in forbidden:
-                  if token in text: hits.append(f'{p}:{token}')
+              for label,pattern in checks:
+                  if pattern.search(text): hits.append(f'{p}:{label}')
           assert not hits, hits
+          print('Forbidden Guangzhou/CAN references: 0')
+          print('Fare routes:',len(fares['fares']))
           PY
 
       - name: Commit V17
