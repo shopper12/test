@@ -1,7 +1,7 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V12";
-import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V12";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V13";
+import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V13";
 
-const BUILD="LIVE_TRAVEL_V12";
+const BUILD="LIVE_TRAVEL_V13";
 const HOST_ID="stable-live-tools";
 const state={weather:null,loadedAt:0,selectedEvent:null};
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
@@ -103,8 +103,8 @@ function mapSrc(v){
   return `https://maps.google.com/maps?${p.toString()}`;
 }
 function focusMap(eventId){
-  const e=eventsForDay().find(x=>String(x.id)===String(eventId));if(!e)return;
-  const map=document.getElementById("map");if(!map)return;
+  const e=eventsForDay().find(x=>String(x.id)===String(eventId));if(!e)return false;
+  const map=document.getElementById("map");if(!map)return false;
   const v=viewFor(e),src=mapSrc(v);state.selectedEvent=eventId;
   let shell=map.querySelector(":scope > .stable-map-shell");
   if(!shell){shell=document.createElement("div");shell.className="stable-map-shell";map.append(shell);}
@@ -112,7 +112,9 @@ function focusMap(eventId){
   shell.innerHTML=`<div class="stable-map-bar"><div><b>${esc(e.title||title)}</b><small>${v.kind==="route"?`${esc(v.origin)} → ${esc(v.destination)}${v.waypoints?` · 경유 ${esc(v.waypoints.replaceAll("|"," → "))}`:""}${v.derived?" · 직전 일정 기준 경로":""}`:`${esc(v.query)} · 첫 일정은 위치 표시`}</small></div><button type="button" data-stable-map-close>기본 지도로</button></div><iframe title="${esc(e.title||title)}" src="${esc(src)}" loading="eager" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
   host()?.querySelectorAll("[data-stable-map-event]").forEach(b=>b.classList.toggle("active",String(b.dataset.stableMapEvent)===String(eventId)));
   map.scrollIntoView({behavior:"smooth",block:"center"});
+  return true;
 }
+window.__tripMapFocus=focusMap;
 
 function render(){
   const h=host();if(!h)return;
@@ -123,14 +125,34 @@ function render(){
 }
 async function sync(forceWeather=false){await loadWeather(forceWeather);render();}
 
+let lastPointerEvent="";
+function activateMapEvent(target,eventType){
+  const button=target?.closest?.("[data-stable-map-event]");if(!button)return false;
+  const token=`${eventType}:${button.dataset.stableMapEvent}`;
+  if(token===lastPointerEvent)return true;
+  lastPointerEvent=token;setTimeout(()=>{lastPointerEvent="";},250);
+  focusMap(button.dataset.stableMapEvent);
+  return true;
+}
+document.addEventListener("pointerup",e=>{
+  if(activateMapEvent(e.target,"pointerup")){e.preventDefault();e.stopPropagation();}
+},true);
 document.addEventListener("click",e=>{
   const refresh=e.target.closest("[data-stable-weather-refresh]");if(refresh){e.preventDefault();sync(true);return;}
-  const eventButton=e.target.closest("[data-stable-map-event]");if(eventButton){e.preventDefault();e.stopPropagation();focusMap(eventButton.dataset.stableMapEvent);return;}
-  const close=e.target.closest("[data-stable-map-close]");if(close){e.preventDefault();document.querySelector("#map > .stable-map-shell")?.remove();state.selectedEvent=null;render();}
+  if(activateMapEvent(e.target,"click")){e.preventDefault();e.stopPropagation();return;}
+  const close=e.target.closest("[data-stable-map-close]");if(close){e.preventDefault();document.querySelector("#map > .stable-map-shell")?.remove();state.selectedEvent=null;render();return;}
+  if(e.target.closest(".day-tab,.itinerary-tab,#tabs [data-tab]"))setTimeout(render,120);
 },true);
 
-const observer=new MutationObserver(()=>{clearTimeout(observer._t);observer._t=setTimeout(()=>render(),70);});
-observer.observe(document.getElementById("tabs")||document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
-observer.observe(document.getElementById("main-content")||document.documentElement,{childList:true,subtree:true});
+// Critical: watch only direct children of #main-content. Leaflet continuously mutates
+// descendants inside #map; observing the full subtree replaced schedule buttons between
+// pointerdown and pointerup, so browsers could never produce a stable click target.
+const tabObserver=new MutationObserver(()=>{clearTimeout(tabObserver._t);tabObserver._t=setTimeout(render,50);});
+tabObserver.observe(document.getElementById("tabs")||document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
+const main=document.getElementById("main-content");
+if(main){
+  const mainObserver=new MutationObserver(()=>{clearTimeout(mainObserver._t);mainObserver._t=setTimeout(render,80);});
+  mainObserver.observe(main,{childList:true,subtree:false});
+}
 window.addEventListener("load",()=>sync(false));
 sync(false);
