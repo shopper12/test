@@ -37,9 +37,19 @@ jobs:
           node --check /tmp/itinerary-data.mjs
           node --check /tmp/app.mjs
           node --check boot.js
+          node --check runtime-integrity.js
+          grep -q 'LIVE_TRAVEL_V10' index.html
+          grep -q 'LIVE_TRAVEL_V10' boot.js
+          grep -q 'runtime-integrity.js' boot.js
+          grep -q 'runtime-integrity.css' index.html
+          grep -q 'runtime-weather-panel' runtime-integrity.js
+          grep -q 'Booking.com 실제 예약' runtime-integrity.js
+          grep -q 'data-runtime-map-event-id' runtime-integrity.js
           python -m py_compile scripts/update_flight_prices.py
           python -m json.tool flight-prices.json >/dev/null
+          python -m json.tool trip-live.json >/dev/null
           test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "8"
+          test "$(python -c 'import json; print(len(json.load(open("trip-live.json"))["weather"]))')" = "11"
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
