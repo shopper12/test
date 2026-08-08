@@ -33,6 +33,11 @@ jobs:
           text = Path('app.js').read_text(encoding='utf-8')
           text = text.replace('"./itinerary-data.js?v=PDF_ROUTE_COST_OPTIMIZED_V2"', '"./itinerary-data.mjs"')
           Path('/tmp/app.mjs').write_text(text, encoding='utf-8')
+          stable = Path('stable-tools.js').read_text(encoding='utf-8')
+          assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
+          assert 'document.addEventListener("pointerup"' in stable
+          assert 'window.__tripMapFocus=focusMap' in stable
+          assert 'mainObserver.observe(main,{childList:true,subtree:true})' not in stable
           PY
           node --check /tmp/itinerary-data.mjs
           node --check /tmp/app.mjs
@@ -40,8 +45,8 @@ jobs:
           node --check stable-tools.js
           node --check unified-experience.js
           node --check weather-fallback.js
-          grep -q 'LIVE_TRAVEL_V12' index.html
-          grep -q 'LIVE_TRAVEL_V12' boot.js
+          grep -q 'LIVE_TRAVEL_V13' index.html
+          grep -q 'LIVE_TRAVEL_V13' boot.js
           grep -q 'stable-tools.js' boot.js
           grep -q 'id="stable-live-tools"' index.html
           grep -q 'derivedRoute' stable-tools.js
