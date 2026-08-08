@@ -16,7 +16,7 @@ on:
       - "scripts/verify_map_mappings.mjs"
       - "scripts/audit_map_continuity.mjs"
       - "travel-live.js"
-      - "live-transit-links.js"
+      - "timeline-runtime-v16.js"
       - "live-transit-links.css"
       - "transit-live.json"
       - "unified-nav.js"
@@ -41,7 +41,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v15
+  group: live-trip-intelligence-v16
   cancel-in-progress: true
 
 jobs:
@@ -67,7 +67,7 @@ jobs:
           python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/update_transit_live.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py scripts/fill_official_photo_images.py
           node --check boot.js
           node --check travel-live.js
-          node --check live-transit-links.js
+          node --check timeline-runtime-v16.js
           node --check unified-nav.js
           node --check unified-experience.js
           node --check stable-tools.js
@@ -77,26 +77,27 @@ jobs:
           node --check weather-fallback.js
           node --check google-map-link-bridge.js
 
-      - name: Validate v15 map mapping and full itinerary continuity
+      - name: Validate v16 timeline and full itinerary continuity
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           node scripts/audit_map_continuity.mjs itinerary-data.js
           python - <<'PY'
           from pathlib import Path
-          stable=Path('stable-tools.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          live=Path('live-transit-links.js').read_text(encoding='utf-8')
+          runtime=Path('timeline-runtime-v16.js').read_text(encoding='utf-8')
+          stable=Path('stable-tools.js').read_text(encoding='utf-8')
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V15' in boot and 'LIVE_TRAVEL_V15' in html
-          assert 'live-transit-links' in boot and 'transit-live.json' in live
-          assert 'auditFullRouteContinuity' in stable and 'window.__tripMapContinuityAudit' in stable
-          assert 'day_boundary' in routing and '전날→첫 일정' in routing
-          assert 'derived_from_map_place' in routing and 'continuity_' in routing
-          assert '"ret"' in live and '"waterbus"' in live
-          assert 'entity-name-link hotel' in live and 'entity-name-link restaurant' in live
-          assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
+          assert 'LIVE_TRAVEL_V16' in boot and 'LIVE_TRAVEL_V16' in html
+          assert 'timeline-runtime-v16' in boot and 'live-transit-links' not in boot
+          assert 'data-v16-transit' in runtime and '대시보드에서 실시간 확인' in runtime
+          assert 'data-v16-map' in runtime and '지도 메뉴에서 이 일정 보기' in runtime
+          assert 'event-time-breakdown' in runtime and 'event-leg-list' in runtime
+          assert 'all-place-links' in runtime and 'google.com/maps/search' in runtime
+          assert 'google.com/travel/hotels' in runtime
+          assert 'observer.observe(main,{childList:true,subtree:false})' in runtime
+          assert 'auditFullRouteContinuity' in stable and 'day_boundary' in routing
           PY
 
       - name: Refresh fares, stopover and legacy snapshot
@@ -177,15 +178,18 @@ jobs:
         with:
           ref: main
 
-      - name: Verify deployed v15 build
+      - name: Verify deployed v16 build
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           node scripts/audit_map_continuity.mjs itinerary-data.js
-          grep -q 'LIVE_TRAVEL_V15' index.html
-          grep -q 'LIVE_TRAVEL_V15' boot.js
-          grep -q 'live-transit-links' boot.js
-          grep -q 'transit-live.json' live-transit-links.js
+          grep -q 'LIVE_TRAVEL_V16' index.html
+          grep -q 'LIVE_TRAVEL_V16' boot.js
+          grep -q 'timeline-runtime-v16' boot.js
+          grep -q 'data-v16-transit' timeline-runtime-v16.js
+          grep -q 'data-v16-map' timeline-runtime-v16.js
+          grep -q 'event-time-breakdown' timeline-runtime-v16.js
+          grep -q 'all-place-links' timeline-runtime-v16.js
           grep -q 'auditFullRouteContinuity' stable-tools.js
           grep -q '#route-list \[data-stable-map-event\]' stable-tools.js
           grep -q 'button.textContent="전체 일정"' unified-nav.js
