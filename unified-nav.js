@@ -4,7 +4,7 @@ function unifyNavigation(){
   document.querySelectorAll("#tabs [data-tab]").forEach(button=>{
     const key=button.dataset.tab;
     if(mergedTabs.has(key))button.hidden=true;
-    if(key==="timeline")button.textContent="전체 일정 · 예약/교통/맛집";
+    if(key==="timeline")button.textContent="전체 일정";
   });
 }
 
