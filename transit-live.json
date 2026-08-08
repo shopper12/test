@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-08T05:59:27.039321Z",
+  "generated_at": "2026-08-08T06:02:06.737155Z",
   "refresh_policy": "GitHub Actions hourly; official operator sources only",
   "providers": [
     {
@@ -13,7 +13,7 @@
       "official": true,
       "status": "normal",
       "summary": "THSR 공식 운행상태: on schedule",
-      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetched_at": "2026-08-08T06:02:06.737155Z",
       "fetch_ok": true
     },
     {
@@ -26,7 +26,7 @@
       "official": true,
       "status": "normal",
       "summary": "A18 Taoyuan HSR Station 공식 시간표 제공 중",
-      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetched_at": "2026-08-08T06:02:06.737155Z",
       "fetch_ok": true
     },
     {
@@ -39,7 +39,7 @@
       "official": true,
       "status": "live",
       "summary": "NS Journey Planner가 공사·지연·취소를 최신 반영",
-      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetched_at": "2026-08-08T06:02:06.737155Z",
       "fetch_ok": true
     },
     {
@@ -52,7 +52,7 @@
       "official": true,
       "status": "live",
       "summary": "Fahrpläne & aktuelle Meldungen Unsere Services informieren Sie aktuell über Pünktlichkeit, Verspätung und Änderungen an Ihrer Verbindung oder begleiten Sie mit individuellen Fahrplänen bei Ihrer Reise. Startseite Info & Services Fahrpläne & aktuelle Meldungen Fahrpläne & aktuelle",
-      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetched_at": "2026-08-08T06:02:06.737155Z",
       "fetch_ok": true
     },
     {
@@ -65,7 +65,7 @@
       "official": true,
       "status": "live",
       "summary": "All departures Jump to content To startpage Menu Open submenu Homepage Timetables Timetables Tickets Service About us meinhvv Contact All departures Timetable info Announcements All departures Line timetable Timetable at station / stop Plan of lifts Network and fare zone plans Your search term Search Open search de Tim",
-      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetched_at": "2026-08-08T06:02:06.737155Z",
       "fetch_ok": true
     },
     {
@@ -73,15 +73,13 @@
       "name": "DSB Denmark",
       "country": "Denmark",
       "mode": "rail",
-      "status_url": "https://www.dsb.dk/en/traffic-information/",
-      "planner_url": "https://www.dsb.dk/en/",
+      "status_url": "https://www.dsb.dk/trafikinformation/",
+      "planner_url": "https://www.rejseplanen.dk/bin/query.exe/en",
       "official": true,
-      "status": "source_error",
-      "summary": "공식 사이트 자동조회 실패 — 아래 공식 실시간 링크에서 직접 확인",
-      "fetched_at": "2026-08-08T05:59:27.039321Z",
-      "fetch_ok": false,
-      "error": "HTTP Error 404: Not Found",
-      "previous_summary": null
+      "status": "alert",
+      "summary": "akutte ændringer. Akutte ændringer Akutte ændringer i trafikken i dag og de kommende dage Seneste opdatering 7. aug. 13:00 Fredericia - Kolding Kolding - Esbjerg - Sønderborg Togene til og fra Kolding begynder at køre igen Seneste opdatering 16. juli 12:35 Nykøbing F - Næstved - København - Helsingør Næstved - Køge - København - Helsingør Slagelse - CPH Lufthavn Færre regionaltog på Sjælland fra den 20. juli frem til og med den 16. august Planlagte ændringer Find planlagte ændringer i togtrafikken og kommende spora",
+      "fetched_at": "2026-08-08T06:02:06.737155Z",
+      "fetch_ok": true
     },
     {
       "id": "rejseplanen",
@@ -93,7 +91,7 @@
       "official": true,
       "status": "live",
       "summary": "Timetable valid from 07.08.26 to 21.10.26. All information is issued without liability. Software/Data: 5.45.Rejseplanen.19.1.9 (customer/hcudk/release/2026.3.0.3) [2026-06-18].t0 -",
-      "fetched_at": "2026-08-08T05:59:27.039321Z",
+      "fetched_at": "2026-08-08T06:02:06.737155Z",
       "fetch_ok": true
     }
   ]
