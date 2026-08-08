@@ -15,10 +15,10 @@
   <link rel="stylesheet" href="./styles.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./compare.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./interactive.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
-  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V11" />
-  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V11" />
-  <link rel="stylesheet" href="./unified-experience.css?v=LIVE_TRAVEL_V11" />
-  <link rel="stylesheet" href="./stable-tools.css?v=LIVE_TRAVEL_V11" />
+  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V12" />
+  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V12" />
+  <link rel="stylesheet" href="./unified-experience.css?v=LIVE_TRAVEL_V12" />
+  <link rel="stylesheet" href="./stable-tools.css?v=LIVE_TRAVEL_V12" />
 </head>
 <body>
   <header class="topbar">
@@ -48,13 +48,13 @@
   <main class="shell" id="main-content"></main>
 
   <footer class="footer shell">
-    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · <b>빌드 LIVE_TRAVEL_V11</b><br>
-    전체 일정의 공식 날씨와 전체 호텔 실제 예약은 앱 본문 밖의 영구 영역에서 표시되어 일정 화면 재렌더링으로 사라지지 않습니다.<br>
-    지도 메뉴의 세부일정도 같은 영구 영역에서 표시하고, 클릭 시 지도 안에 Google Maps 내장 경로를 직접 띄웁니다.<br>
-    항공 금액은 GitHub Actions가 Google Flights를 매시간 조회한 성인 4명 일반석 스냅샷입니다.<br>
-    날씨는 대만 CWA·네덜란드 KNMI·독일 DWD·덴마크 DMI·한국 KMA의 공식 예보만 사용하며, 예보 발표 전에는 공식 원문과 발표대기 상태를 표시합니다.<br>
-    장소 사진은 호텔·식당·기업·관광지의 공식 웹사이트가 공개한 대표 이미지를 사용하고 Wikimedia/스톡 사진으로 대체하지 않습니다.<br>
-    호텔 Booking 링크는 성인 4명·일정 객실 수·실제 체크인/체크아웃 조건으로 생성됩니다. 최종 객실가와 취소조건은 결제화면에서 확인하십시오.
+    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · <b>빌드 LIVE_TRAVEL_V12</b><br>
+    사이트 주소는 업데이트와 관계없이 https://shopper12.github.io/test/ 로 유지됩니다.<br>
+    항공·호텔·음식점 예약은 별도 메뉴로 분리하지 않고 ‘전체 일정’의 해당 세부 일정 카드에서 바로 연결합니다.<br>
+    항공은 Google Flights 최저가 비교와 Skyscanner 교차비교, 호텔은 Google Hotels의 여러 예약 파트너 가격 비교로 연결합니다.<br>
+    지도 메뉴에서 세부일정을 누르면 이동 일정은 출발→도착 경로, 장소 일정은 직전 일정→선택 장소 경로를 지도 안에 표시합니다.<br>
+    날씨는 공식 시간별 예보를 최우선으로 사용하고, 아직 발표 전이면 AccuWeather 월간전망 또는 9월 평년값을 표시하며 각국 공식 장기전망 링크를 함께 제공합니다.<br>
+    덴마크 DMI는 2026년부터 월·계절 장기예보를 중단했으므로 공식 단기예보 전에는 월간전망/평년값을 보조 기준으로 사용합니다.
   </footer>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
@@ -73,6 +73,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V11"></script>
+  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V12"></script>
 </body>
 </html>
