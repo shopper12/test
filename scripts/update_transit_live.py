@@ -61,8 +61,8 @@ SOURCES = [
         "name": "DSB Denmark",
         "country": "Denmark",
         "mode": "rail",
-        "status_url": "https://www.dsb.dk/en/traffic-information/",
-        "planner_url": "https://www.dsb.dk/en/",
+        "status_url": "https://www.dsb.dk/trafikinformation/",
+        "planner_url": "https://www.rejseplanen.dk/bin/query.exe/en",
         "official": True,
     },
     {
@@ -78,7 +78,7 @@ SOURCES = [
 
 
 def fetch_text(url: str) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "en-US,en;q=0.8"})
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "da,en-US;q=0.9,en;q=0.8"})
     with urllib.request.urlopen(req, timeout=18) as r:
         raw = r.read().decode(r.headers.get_content_charset() or "utf-8", errors="replace")
     raw = re.sub(r"(?is)<script.*?</script>|<style.*?</style>", " ", raw)
@@ -115,8 +115,14 @@ def summarize(source: dict, text: str) -> tuple[str, str]:
         s = clip(text, "All departures", 320)
         return "live", s or "HVV 정류장별 실시간 출발정보 사용"
     if sid == "dsb":
-        s = clip(text, "Acute changes", 420) or clip(text, "Traffic information", 420)
-        return ("alert" if "acute changes" in low else "live"), s or "DSB Trafikinformation 최신 운행정보 사용"
+        s = (
+            clip(text, "Akutte ændringer", 520)
+            or clip(text, "Planlagte ændringer", 520)
+            or clip(text, "Trafikinformation", 520)
+            or clip(text, "Acute changes", 520)
+        )
+        has_alert = any(marker in low for marker in ("akutte ændringer", "acute changes", "togbus", "aflyst", "forsink"))
+        return ("alert" if has_alert else "live"), s or "DSB Trafikinformation 최신 운행정보 사용"
     if sid == "rejseplanen":
         s = clip(text, "Timetable valid", 180)
         return "live", s or "Rejseplanen 최신 통합 대중교통 경로 사용"
