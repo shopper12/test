@@ -34,18 +34,6 @@ ROUTES = [
         "reason": "계획서 첫날 TIPC 회의에 맞춘 타이중 직항",
     },
     {
-        "id": "route_f2_save",
-        "label": "비용 최적 · 타이베이 → 광저우 → 암스테르담",
-        "date": "2026-09-04",
-        "origin": "TPE",
-        "destination": "AMS",
-        "max_stops": 1,
-        "preferred_departure": "14:50",
-        "preferred_arrival": "06:35",
-        "via": ["CAN"],
-        "reason": "직항보다 저렴한 광저우 1회 환승",
-    },
-    {
         "id": "route_f2_direct",
         "label": "시간 우선 · 타이베이 → 암스테르담 직항",
         "date": "2026-09-04",
@@ -54,7 +42,7 @@ ROUTES = [
         "max_stops": 0,
         "preferred_departure": "23:10",
         "preferred_arrival": "07:40",
-        "reason": "광저우 환승을 없애는 중화항공 직항",
+        "reason": "대만에서 유럽으로 환승 없이 이동하는 중화항공 직항",
     },
     {
         "id": "route_f3",

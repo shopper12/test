@@ -1,4 +1,4 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V10";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 
 const BUILD="LIVE_TRAVEL_V10";
 const WEATHER_URL="./trip-live.json";

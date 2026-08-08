@@ -66,7 +66,7 @@ const planMeta = {
     ...sharedMeta,
     key: "cost_optimized",
     tabLabel: "추천안 · 비용 최적",
-    tabNote: "광저우 환승 · 유럽 철도 · 코펜하겐 귀국",
+    tabNote: "TPE→AMS 직항 · 유럽 철도 · 코펜하겐 귀국",
     subtitle:
       "첨부 계획서의 도시·업무장소 순서 유지 · 장거리 항공 3구간으로 단순화 · 숙박은 업무 접근성을 지키는 저가 후보",
     taiwanWindow: "9/2 09:40–9/4 11:20",
@@ -74,7 +74,7 @@ const planMeta = {
     budgetMin: 17_800_000,
     budgetMax: 23_500_000,
     recommendation:
-      "광저우 7시간 환승을 감수하고 4인 항공비를 가장 크게 줄일 때 선택",
+      "대만 체류시간과 유럽 도착 동선을 단순화하고, 유럽 구간 철도로 비용을 절감하는 권고안",
   },
   time_optimized: {
     ...sharedMeta,
@@ -88,7 +88,7 @@ const planMeta = {
     budgetMin: 19_700_000,
     budgetMax: 25_400_000,
     recommendation:
-      "4인 약 190만원을 더 내고 광저우 환승과 약 8시간의 추가 이동을 피할 때 선택",
+      "TPE→AMS 직항을 유지하면서 유럽 내 이동시간을 우선하는 비교안",
   },
 };
 
@@ -117,13 +117,9 @@ function buildDays(mode) {
       id: 3,
       date: "2026-09-04",
       weekday: "금요일",
-      cities: saving
-        ? "타이중 → 타오위안 → 광저우 → 암스테르담"
-        : "타이중 → 타오위안 → 암스테르담",
+      cities: "타이중 → 타오위안 → 암스테르담",
       lodging: "기내박",
-      summary: saving
-        ? "14:50 TPE→CAN→AMS · 직항보다 4인 약 190만원 절감 · 24시간 무비자 환승 조건 확인"
-        : "타이중 오전 관광 · 23:10 TPE→AMS 중화항공 직항",
+      summary: "타이중 오전 일정 · 23:10 TPE→AMS 중화항공 직항",
     },
     {
       id: 4,
@@ -201,97 +197,7 @@ function buildDays(mode) {
 
 function buildEvents(mode) {
   const saving = mode === "cost_optimized";
-  const europeDeparture = saving
-    ? [
-        e(
-          "d3-01",
-          3,
-          "08:00",
-          "09:00",
-          "조식·체크아웃",
-          "숙박",
-          "Holiday Inn Express Taichung Park",
-          "도보",
-          "60분",
-        ),
-        e(
-          "d3-02",
-          3,
-          "09:00",
-          "11:20",
-          "타이중 → 타오위안공항",
-          "교통",
-          "Taichung → THSR Taoyuan → TPE",
-          "택시+THSR+Airport MRT",
-          "2시간 20분",
-          {
-            booking_url: "https://en.thsrc.com.tw/",
-            min_cost_krw: 110_000,
-            max_cost_krw: 180_000,
-            cost_basis: "4인",
-          },
-        ),
-        e(
-          "d3-03",
-          3,
-          "11:20",
-          "14:00",
-          "출국수속·점심",
-          "출국",
-          "Taoyuan International Airport T2",
-          "도보",
-          "2시간 40분",
-        ),
-        e(
-          "d3-04",
-          3,
-          "14:50",
-          "17:15",
-          "TPE → CAN",
-          "항공",
-          "Taipei → Guangzhou",
-          "China Southern",
-          "2시간 25분",
-          {
-            booking_url: "https://www.google.com/travel/flights",
-            notes:
-              "TPE→CAN→AMS 한 장 발권·수하물 AMS 연결 여부를 결제 전 확인.",
-          },
-        ),
-        e(
-          "d3-05",
-          3,
-          "17:15",
-          "9/5 00:20",
-          "광저우 환승",
-          "환승",
-          "Guangzhou Baiyun International Airport",
-          "공항 내 이동",
-          "7시간 5분",
-          {
-            official_url:
-              "https://en.nia.gov.cn/n147418/n147463/c156086/content.html",
-            notes:
-              "대한민국 일반여권·확정된 제3국 항공권 기준 24시간 무비자 환승. 발권·수하물 연결 조건은 항공사 재확인.",
-          },
-        ),
-        e(
-          "d3-06",
-          3,
-          "00:20",
-          "06:35",
-          "CAN → AMS",
-          "항공",
-          "Guangzhou → Amsterdam",
-          "China Southern",
-          "12시간 15분",
-          {
-            booking_url: "https://www.google.com/travel/flights",
-            notes: "Google Flights 4인 일정 채택가 자동조회.",
-          },
-        ),
-      ]
-    : [
+  const europeDeparture = [
         e(
           "d3-01",
           3,
@@ -1225,23 +1131,17 @@ function buildFlights(mode) {
       id: "f2",
       day_id: 3,
       date: "2026-09-04",
-      flight_no: saving ? "CZ3098 + CZ307" : "CI73 직항",
+      flight_no: "CI73 직항",
       origin: "TPE",
       destination: "AMS",
-      depart_time: saving ? "14:50" : "23:10",
-      arrive_time: saving ? "06:35+1" : "07:40+1",
+      depart_time: "23:10",
+      arrive_time: "07:40+1",
       min_krw: null,
       max_krw: null,
-      status: saving ? "CAN 1회 환승·최저비용" : "직항·시간 우선",
-      alternative: saving
-        ? "CI73 직항은 4인 약 190만원 추가"
-        : "중국남방 CAN 환승은 4인 약 190만원 절감",
-      url: saving
-        ? "https://www.csair.com/"
-        : "https://www.china-airlines.com/",
-      notes: saving
-        ? "24시간 무비자 환승·수하물 연결발권 확인"
-        : "광저우 환승과 약 8시간의 추가 이동 제거",
+      status: "직항·권고",
+      alternative: "TPE 출발 다른 유럽 경유편은 필요 시 별도 비교",
+      url: "https://www.china-airlines.com/",
+      notes: "TPE→AMS 직항으로 환승 없이 이동",
       sort_order: 20,
     },
     {
@@ -1600,76 +1500,7 @@ const restaurants = [
 
 function buildMapPoints(mode) {
   const saving = mode === "cost_optimized";
-  const day3 = saving
-    ? [
-        {
-          id: "p14",
-          day_id: 3,
-          name: "Holiday Inn Express Taichung Park",
-          lat: 24.1406,
-          lng: 120.6841,
-          sort_order: 1,
-          segment_type: "car",
-          popup: "09:00 출발",
-          url: "",
-        },
-        {
-          id: "p15",
-          day_id: 3,
-          name: "THSR Taichung",
-          lat: 24.1127,
-          lng: 120.616,
-          sort_order: 2,
-          segment_type: "car",
-          popup: "고속철도 환승",
-          url: "https://en.thsrc.com.tw/",
-        },
-        {
-          id: "p16",
-          day_id: 3,
-          name: "THSR Taoyuan",
-          lat: 25.0138,
-          lng: 121.2147,
-          sort_order: 3,
-          segment_type: "hsr",
-          popup: "Airport MRT 환승",
-          url: "",
-        },
-        {
-          id: "p17",
-          day_id: 3,
-          name: "Taoyuan Airport",
-          lat: 25.0797,
-          lng: 121.2342,
-          sort_order: 4,
-          segment_type: "subway",
-          popup: "14:50 출발",
-          url: "",
-        },
-        {
-          id: "p18",
-          day_id: 3,
-          name: "Guangzhou Airport",
-          lat: 23.3924,
-          lng: 113.2988,
-          sort_order: 5,
-          segment_type: "flight",
-          popup: "7시간 5분 환승",
-          url: "",
-        },
-        {
-          id: "p19",
-          day_id: 3,
-          name: "Schiphol Airport",
-          lat: 52.3105,
-          lng: 4.7683,
-          sort_order: 6,
-          segment_type: "flight",
-          popup: "9/5 06:35 도착",
-          url: "",
-        },
-      ]
-    : [
+  const day3 = [
         {
           id: "p14",
           day_id: 3,

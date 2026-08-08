@@ -12,11 +12,6 @@ const OUTLOOKS=[
     officialLabel:"대만 CWA 1개월 장기전망",officialUrl:"https://www.cwa.gov.tw/Data/fcst_pdf/FW14.pdf"
   },
   {
-    key:"guangzhou",aliases:["guangzhou","광저우","can airport"," can "],
-    label:"광저우",highC:31,lowC:23,basis:"AccuWeather 2026년 9월 월간전망 평균",
-    sourceUrl:"https://www.accuweather.com/en/cn/guangzhou/102255/september-weather/102255?year=2026"
-  },
-  {
     key:"rotterdam",aliases:["rotterdam","로테르담","rijswijk","라이스베이크","amsterdam","암스테르담","schiphol","ams"],
     label:"로테르담권",highC:19,lowC:12,basis:"AccuWeather 2026년 9월 월간전망 평균",
     sourceUrl:"https://www.accuweather.com/en/nl/rotterdam-noord/3509201/september-weather/3509201?year=2026",

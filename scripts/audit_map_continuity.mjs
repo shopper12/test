@@ -1,20 +1,16 @@
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { auditFullRouteContinuity } from '../map-routing.mjs';
+import { auditFullRouteContinuity, manifestCoverage } from '../map-routing.mjs';
 
 const dataPath=process.argv[2]||'./itinerary-data.js';
-const source=fs.readFileSync(dataPath,'utf8');
-const temp='/tmp/itinerary-continuity.mjs';
-fs.writeFileSync(temp,source);
-const mod=await import(`${pathToFileURL(temp).href}?t=${Date.now()}`);
-const {ITINERARIES}=mod;
-let failures=0,total=0,boundaries=0;
+const source=fs.readFileSync(dataPath,'utf8'),temp='/tmp/itinerary-route-audit.mjs';fs.writeFileSync(temp,source);
+const {ITINERARIES}=await import(`${pathToFileURL(temp).href}?t=${Date.now()}`);
+let failures=0,total=0;
 for(const [key,plan] of Object.entries(ITINERARIES)){
-  const rows=auditFullRouteContinuity(plan.officialSeed.events||[],plan.officialSeed.days||[]);
-  const bad=rows.filter(r=>!r.connected),dayBoundary=rows.filter(r=>r.day_boundary);
-  failures+=bad.length;total+=rows.length;boundaries+=dayBoundary.length;
-  for(const r of bad)console.error(`${key}\tDay ${r.from_day}->${r.day_id}\t${r.from_id} -> ${r.to_id}\tGAP\t${r.from} != ${r.to}\t${r.source}`);
-  console.log(`${key}: checked ${rows.length} itinerary joins (${dayBoundary.length} day-boundary), gaps ${bad.length}`);
+  const events=plan.officialSeed.events||[],coverage=manifestCoverage(events),routes=auditFullRouteContinuity(events),bad=routes.filter(r=>!r.connected||!r.verified);
+  failures+=bad.length+(coverage.total-coverage.covered);total+=routes.length;
+  for(const r of bad)console.error(`${key}\t${r.from_id}\tBROKEN\t${r.from} -> ${r.to}`);
+  console.log(`${key}: verified movement routes ${routes.length-bad.length}/${routes.length}; manifest ${coverage.covered}/${coverage.total}`);
 }
-if(failures){console.error(`TOTAL: ${total} joins / ${boundaries} day-boundary / GAPS ${failures}`);process.exit(1);}
-console.log(`TOTAL: ${total} joins / ${boundaries} day-boundary / GAPS 0`);
+if(failures){console.error(`TOTAL: ${total} movement routes / failures ${failures}`);process.exit(1);}
+console.log(`TOTAL: ${total}/${total} movement routes internally complete`);

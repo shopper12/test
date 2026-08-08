@@ -1,206 +1,140 @@
-const AIRPORT_ALIASES = new Map([
-  ["ICN", "Incheon International Airport"],
-  ["RMQ", "Taichung International Airport"],
-  ["TPE", "Taoyuan International Airport"],
-  ["CAN", "Guangzhou Baiyun International Airport"],
-  ["AMS", "Amsterdam Airport Schiphol"],
-  ["CPH", "Copenhagen Airport"],
-  ["IST", "Istanbul Airport"],
-]);
-const FLIGHT_CITY_ALIASES = new Map([
-  ["incheon", "Incheon International Airport"],
-  ["인천", "Incheon International Airport"],
-  ["taichung", "Taichung International Airport"],
-  ["타이중", "Taichung International Airport"],
-  ["taipei", "Taoyuan International Airport"],
-  ["타이베이", "Taoyuan International Airport"],
-  ["guangzhou", "Guangzhou Baiyun International Airport"],
-  ["광저우", "Guangzhou Baiyun International Airport"],
-  ["amsterdam", "Amsterdam Airport Schiphol"],
-  ["암스테르담", "Amsterdam Airport Schiphol"],
-  ["copenhagen", "Copenhagen Airport"],
-  ["코펜하겐", "Copenhagen Airport"],
-  ["istanbul", "Istanbul Airport"],
-  ["이스탄불", "Istanbul Airport"],
+const AIRPORT_COORDS = new Map([
+  ["Incheon International Airport", [37.4602,126.4407]],
+  ["Taichung International Airport", [24.2647,120.6206]],
+  ["Taoyuan International Airport", [25.0797,121.2342]],
+  ["Amsterdam Airport Schiphol", [52.3105,4.7683]],
+  ["Copenhagen Airport", [55.6181,12.6560]],
+  ["Istanbul Airport", [41.2753,28.7519]],
 ]);
 
-const GENERIC_HOTEL = /^(?:호텔|호텔[·\s-]*체크인|호텔\s*(?:회의공간\/공용공간|공용공간))$/i;
-const AMBIGUOUS = /호텔\s*(?:회의공간|공용공간)|라운지\/도심\s*업무공간|호텔[·\s-]*체크인/i;
+const MAP_MANIFEST = Object.freeze({
+  "d1-01": {kind:"place",query:"Incheon International Airport"},
+  "d1-02": {kind:"route",origin:"Incheon International Airport",destination:"Taichung International Airport",mode:"flight"},
+  "d1-03": {kind:"route",origin:"Taichung International Airport",destination:"Holiday Inn Express Taichung Park",mode:"driving"},
+  "d1-04": {kind:"place",query:"Taichung Park, Taichung, Taiwan"},
+  "d1-05": {kind:"route",origin:"Holiday Inn Express Taichung Park",destination:"Port of Taichung, Taiwan International Ports Corporation",mode:"driving"},
+  "d1-06": {kind:"place",query:"Port of Taichung, Taiwan International Ports Corporation"},
+  "d1-07": {kind:"route",origin:"Port of Taichung, Taiwan International Ports Corporation",waypoints:"Wuqi Fishing Harbor",destination:"Gaomei Wetlands",mode:"driving"},
+  "d1-08": {kind:"route",origin:"Gaomei Wetlands",destination:"Holiday Inn Express Taichung Park",mode:"driving"},
+
+  "d2-01": {kind:"route",origin:"Holiday Inn Express Taichung Park",destination:"24.0765986,120.3773545",mode:"driving"},
+  "d2-02": {kind:"place",query:"24.0765986,120.3773545"},
+  "d2-03": {kind:"place",query:"24.0765986,120.3773545"},
+  "d2-04": {kind:"route",origin:"24.0765986,120.3773545",waypoints:"Lukang Old Street",destination:"Lukang Longshan Temple, Changhua, Taiwan",mode:"driving"},
+  "d2-05": {kind:"route",origin:"Lukang Longshan Temple, Changhua, Taiwan",destination:"Holiday Inn Express Taichung Park",mode:"driving"},
+  "d2-06": {kind:"place",query:"Chun Shui Tang Siwei Original Store, Taichung"},
+
+  "d3-01": {kind:"route",origin:"Holiday Inn Express Taichung Park",waypoints:"National Taichung Theater",destination:"Calligraphy Greenway, Taichung",mode:"driving"},
+  "d3-02": {kind:"route",origin:"Calligraphy Greenway, Taichung",waypoints:"Miyahara, Taichung",destination:"Taichung Station",mode:"driving"},
+  "d3-03": {kind:"route",origin:"Taichung Station",waypoints:"THSR Taichung Station|THSR Taoyuan Station",destination:"Taoyuan International Airport",mode:"transit"},
+  "d3-04": {kind:"place",query:"Taoyuan International Airport Terminal 1"},
+  "d3-05": {kind:"route",origin:"Taoyuan International Airport",destination:"Amsterdam Airport Schiphol",mode:"flight"},
+
+  "d4-01": {kind:"route",origin:"Amsterdam Airport Schiphol",destination:"Rotterdam Centraal",mode:"transit"},
+  "d4-02": {kind:"place",query:"Holiday Inn Express Rotterdam - Central Station"},
+  "d4-03": {kind:"route",origin:"Holiday Inn Express Rotterdam - Central Station",waypoints:"Markthal Rotterdam|Cube Houses Rotterdam",destination:"Oude Haven Rotterdam",mode:"walking"},
+  "d4-04": {kind:"place",query:"Holiday Inn Express Rotterdam - Central Station"},
+  "d4-05": {kind:"route",origin:"Holiday Inn Express Rotterdam - Central Station",waypoints:"Historic Delfshaven Rotterdam|Erasmus Bridge Rotterdam",destination:"Restaurant Bazar Rotterdam",mode:"transit"},
+
+  "d5-01": {kind:"place",query:"Holiday Inn Express Rotterdam - Central Station"},
+  "d5-02": {kind:"place",query:"Holiday Inn Express Rotterdam - Central Station"},
+  "d5-03": {kind:"route",origin:"Holiday Inn Express Rotterdam - Central Station",waypoints:"Erasmusbrug Waterbus Rotterdam",destination:"Kinderdijk Windmills",mode:"transit"},
+  "d5-04": {kind:"route",origin:"Kinderdijk Windmills",destination:"Fenix Food Factory Rotterdam",mode:"transit"},
+
+  "d6-01": {kind:"place",query:"Holiday Inn Express Rotterdam - Central Station"},
+  "d6-02": {kind:"route",origin:"Holiday Inn Express Rotterdam - Central Station",destination:"Port of Rotterdam Authority, Wilhelminakade 909, Rotterdam",mode:"driving"},
+  "d6-03": {kind:"place",query:"Port of Rotterdam Authority, World Port Center, Wilhelminakade 909, Rotterdam"},
+  "d6-04": {kind:"route",origin:"Port of Rotterdam Authority, Wilhelminakade 909, Rotterdam",waypoints:"Wilhelminaplein Rotterdam",destination:"Rotterdam Offshore Group, Drutenstraat 7, Rotterdam",mode:"driving"},
+  "d6-05": {kind:"place",query:"Rotterdam Offshore Group, Drutenstraat 7, Rotterdam"},
+  "d6-06": {kind:"route",origin:"Rotterdam Offshore Group, Drutenstraat 7, Rotterdam",destination:"TNO Kesslerpark 1, Rijswijk",mode:"driving"},
+  "d6-07": {kind:"place",query:"TNO Kesslerpark 1, Rijswijk"},
+  "d6-08": {kind:"route",origin:"TNO Kesslerpark 1, Rijswijk",waypoints:"Holiday Inn Express Rotterdam - Central Station",destination:"Rotterdam Centraal",mode:"driving"},
+  "d6-09": {kind:"route",origin:"Rotterdam Centraal",destination:"Hamburg Hbf",mode:"transit"},
+  "d6-10": {kind:"route",origin:"Hamburg Hbf",destination:"Motel One Hamburg-Fleetinsel",mode:"driving"},
+
+  "d7-01": {kind:"place",query:"Motel One Hamburg-Fleetinsel"},
+  "d7-02": {kind:"place",query:"Speicherstadt, Hamburg"},
+  "d7-03": {kind:"route",origin:"Speicherstadt, Hamburg",destination:"Oberhafen-Kantine, Stockmeyerstraße 39, Hamburg",mode:"walking"},
+  "d7-04": {kind:"route",origin:"Oberhafen-Kantine, Stockmeyerstraße 39, Hamburg",destination:"Skyborn Renewables, Ericusspitze 2-4, Hamburg",mode:"walking"},
+  "d7-05": {kind:"place",query:"Skyborn Renewables, Ericusspitze 2-4, Hamburg"},
+  "d7-06": {kind:"place",query:"HafenCity, Hamburg"},
+  "d7-07": {kind:"route",origin:"HafenCity, Hamburg",waypoints:"Elbphilharmonie Hamburg",destination:"Landungsbrücken Hamburg",mode:"transit"},
+
+  "d8-01": {kind:"route",origin:"Motel One Hamburg-Fleetinsel",destination:"Hamburg Hbf",mode:"transit"},
+  "d8-02": {kind:"route",origin:"Hamburg Hbf",waypoints:"Kolding Station",destination:"Esbjerg Station",mode:"transit"},
+  "d8-03": {kind:"route",origin:"Esbjerg Station",destination:"CABINN Plus Esbjerg, Torvegade 27, Esbjerg",mode:"walking"},
+  "d8-04": {kind:"route",origin:"CABINN Plus Esbjerg, Torvegade 27, Esbjerg",waypoints:"Men at Sea Esbjerg",destination:"Fisheries and Maritime Museum Esbjerg",mode:"transit"},
+  "d8-05": {kind:"place",query:"Esbjerg Street Food"},
+
+  "d9-01": {kind:"place",query:"CABINN Plus Esbjerg, Torvegade 27, Esbjerg"},
+  "d9-02": {kind:"route",origin:"CABINN Plus Esbjerg, Torvegade 27, Esbjerg",destination:"Blue Water Shipping, Trafikhavnskaj 9, Esbjerg",mode:"driving"},
+  "d9-03": {kind:"place",query:"Blue Water Shipping, Trafikhavnskaj 9, Esbjerg"},
+  "d9-04": {kind:"route",origin:"Blue Water Shipping, Trafikhavnskaj 9, Esbjerg",waypoints:"Esbjerg Centrum",destination:"CABINN Plus Esbjerg, Torvegade 27, Esbjerg",mode:"driving"},
+  "d9-05": {kind:"place",query:"CABINN Plus Esbjerg, Torvegade 27, Esbjerg"},
+  "d9-06": {kind:"route",origin:"Esbjerg Station",destination:"København H, Copenhagen",mode:"transit"},
+  "d9-07": {kind:"route",origin:"København H, Copenhagen",waypoints:"Ørestad Station, Copenhagen",destination:"CABINN Metro, Arne Jacobsens Allé 2, Copenhagen",mode:"transit"},
+  "d9-08": {kind:"place",query:"Field's Copenhagen, Arne Jacobsens Allé 12"},
+
+  "d10-01": {kind:"route",origin:"CABINN Metro, Arne Jacobsens Allé 2, Copenhagen",destination:"Copenhagen Airport",mode:"transit"},
+  "d10-02": {kind:"route",origin:"Copenhagen Airport",destination:"Istanbul Airport",mode:"flight"},
+  "d10-03": {kind:"place",query:"Istanbul Airport"},
+  "d10-04": {kind:"route",origin:"Istanbul Airport",destination:"Incheon International Airport",mode:"flight"},
+  "d11-01": {kind:"place",query:"Incheon International Airport"},
+});
+
+const AMBIGUOUS=/^(?:Taichung|Rotterdam|Hamburg|Copenhagen|Esbjerg|호텔|공항|도심|라운지)$/i;
+const clone=x=>JSON.parse(JSON.stringify(x));
 
 export function modeForEvent(event){
+  const m=MAP_MANIFEST[String(event?.id||"")]?.mode;if(m)return m;
   const t=`${event?.category||""} ${event?.transport||""}`.toLowerCase();
-  if(/항공|flight|airline/.test(t))return "driving";
-  if(/thsr|mrt|metro|subway|rail|train|기차|철도|열차|버스|bus|tram|waterbus|watershuttle|ferry|u-bahn|s-bahn|dsb|db\/|ns\//.test(t))return "transit";
+  if(/항공|flight|airline/.test(t))return "flight";
+  if(/thsr|mrt|metro|subway|rail|train|기차|철도|열차|버스|bus|tram|waterbus|ferry|u-bahn|s-bahn/.test(t))return "transit";
   if(/도보|walk/.test(t))return "walking";
   return "driving";
 }
+export function normalizePlace(raw){return String(raw||"").trim();}
+function canonicalPlace(raw){return String(raw||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/terminal\s*[12]/g,"").replace(/[^a-z0-9가-힣]+/g," ").trim();}
+export function samePlace(a,b){const x=canonicalPlace(a),y=canonicalPlace(b);return Boolean(x&&y&&(x===y||x.includes(y)||y.includes(x)));}
 
-export function normalizePlace(raw, day={}){
-  let text=String(raw||"").trim();
-  if(!text)return "";
-  if(GENERIC_HOTEL.test(text) && day?.lodging && !/기내박|귀가/.test(day.lodging))return String(day.lodging).trim();
-  if(/CABINN\s*Plus\s*라운지\/도심\s*업무공간/i.test(text))return "CABINN Plus Esbjerg, Torvegade 27, Esbjerg";
-  if(/^가오메이$/i.test(text))return "Gaomei Wetlands";
-  if(/^코펜하겐\s*중앙역$/i.test(text))return "København H, Copenhagen";
-  if(/^함부르크\s*중앙역$/i.test(text))return "Hamburg Hbf";
-  if(/^타오위안공항$/i.test(text))return "Taoyuan International Airport";
-  if(/^타이중공항$/i.test(text))return "Taichung International Airport";
-  if(/^인천공항$/i.test(text))return "Incheon International Airport";
-  if(AIRPORT_ALIASES.has(text.toUpperCase()))return AIRPORT_ALIASES.get(text.toUpperCase());
-  return text;
+export function parseMapUrl(href){
+  if(!href)return null;try{const u=new URL(href,"https://dashboard.local/"),p=u.searchParams;const origin=p.get("origin")||p.get("saddr"),destination=p.get("destination")||p.get("daddr");if(origin&&destination)return{kind:"route",origin,destination,waypoints:p.get("waypoints")||"",mode:p.get("travelmode")||"driving",source:"legacy_map_url"};const q=p.get("query")||p.get("q");if(q)return{kind:"place",query:q,source:"legacy_map_url"};}catch{}return null;
 }
+export function routeFromText(event){const parts=String(event?.location||event?.title||"").split(/\s*(?:→|->|⇒)\s*/).filter(Boolean);return parts.length>=2?{kind:"route",origin:parts[0],destination:parts.at(-1),waypoints:parts.slice(1,-1).join("|"),mode:modeForEvent(event),source:"legacy_text"}:null;}
+export function placeForEvent(event){return String(event?.location||event?.title||"").trim();}
 
-function normalizeEndpoint(raw,day={},event={}){
-  const place=normalizePlace(raw,day);
-  const isFlight=/항공|flight|china southern|china airlines|turkish/i.test(`${event?.category||""} ${event?.transport||""}`);
-  if(isFlight){
-    const alias=FLIGHT_CITY_ALIASES.get(place.toLowerCase());
-    if(alias)return alias;
-  }
-  return place;
+export function eventMapView(_dayEvents,event){
+  const view=MAP_MANIFEST[String(event?.id||"")];
+  if(view)return{...clone(view),source:"verified_manifest",verified:true};
+  const explicit=parseMapUrl(event?.map_url);if(explicit)return{...explicit,verified:false};
+  const text=routeFromText(event);if(text)return{...text,verified:false};
+  return{kind:"place",query:placeForEvent(event),source:"fallback_unverified",verified:false};
 }
-
-function canonicalPlace(raw){
-  let text=String(raw||"").toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'');
-  text=text.replace(/terminal\s*[12]|\bt[12]\b/g,'').replace(/international airport/g,'airport').replace(/airport schiphol/g,'schiphol airport');
-  text=text.replace(/motel one hamburg fleetinsel/g,'motel one fleetinsel').replace(/cabin[n]? plus esbjerg.*$/g,'cabinn plus esbjerg');
-  text=text.replace(/københavn/g,'kobenhavn').replace(/[^a-z0-9가-힣]+/g,' ').trim();
-  return text;
-}
-export function samePlace(a,b){
-  const x=canonicalPlace(a),y=canonicalPlace(b);if(!x||!y)return false;
-  return x===y||x.includes(y)||y.includes(x);
-}
-
-export function parseMapUrl(href, day={}, event={}){
-  if(!href)return null;
-  try{
-    const u=new URL(href,"https://dashboard.local/"),p=u.searchParams;
-    const origin=p.get("origin")||p.get("saddr"),destination=p.get("destination")||p.get("daddr");
-    if(origin&&destination)return{
-      kind:"route",origin:normalizeEndpoint(origin,day,event),destination:normalizeEndpoint(destination,day,event),
-      waypoints:String(p.get("waypoints")||"").split("|").map(x=>normalizeEndpoint(x,day,event)).filter(Boolean).join("|"),
-      mode:p.get("travelmode")||"",source:"map_url_route"
-    };
-    const q=p.get("query")||p.get("q");
-    if(q)return{kind:"place",query:normalizeEndpoint(q,day,event),source:"map_url_place"};
-  }catch{}
-  return null;
-}
-
-export function routeFromText(event, day={}){
-  for(const raw of [event?.location,event?.title]){
-    const parts=String(raw||"").split(/\s*(?:→|->|⇒)\s*/).map(x=>normalizeEndpoint(x,day,event)).filter(Boolean);
-    if(parts.length>=2)return{
-      kind:"route",origin:parts[0],destination:parts.at(-1),waypoints:parts.slice(1,-1).join("|"),
-      mode:modeForEvent(event),source:"text_route"
-    };
-  }
-  return null;
-}
-
-export function placeForEvent(event, day={}){return normalizeEndpoint(event?.location||event?.title||"",day,event);}
-
-export function endpointForEvent(event, day={}){
-  const explicit=parseMapUrl(event?.map_url,day,event);
-  if(explicit?.kind==="route")return explicit.destination;
-  if(explicit?.kind==="place")return explicit.query;
-  const text=routeFromText(event,day);
-  if(text?.kind==="route")return text.destination;
-  return placeForEvent(event,day);
-}
-
-function continuityRoute(prevEnd,route,mode){
-  if(!prevEnd||samePlace(prevEnd,route.origin))return route;
-  const points=[route.origin,...String(route.waypoints||"").split("|")].filter(Boolean);
-  const unique=[];for(const p of points)if(!samePlace(p,prevEnd)&&!unique.some(x=>samePlace(x,p)))unique.push(p);
-  return{...route,origin:prevEnd,waypoints:unique.join("|"),mode:route.mode||mode,source:`continuity_${route.source||"route"}`,continuityFixed:true};
-}
-
-export function eventMapView(dayEvents,event,day={},previousEndpoint=""){
-  const events=(dayEvents||[]).slice().sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
-  const idx=events.findIndex(x=>String(x.id)===String(event?.id));
-  const prevEnd=idx>0?endpointForEvent(events[idx-1],day):String(previousEndpoint||"").trim();
-  const mode=modeForEvent(event);
-  const explicit=parseMapUrl(event?.map_url,day,event);
-  if(explicit?.kind==="route")return continuityRoute(prevEnd,{...explicit,mode:explicit.mode||mode},mode);
-  if(explicit?.kind==="place"){
-    if(prevEnd&&!samePlace(prevEnd,explicit.query))return{kind:"route",origin:prevEnd,destination:explicit.query,waypoints:"",mode,source:idx===0?"day_boundary_from_map_place":"derived_from_map_place",derived:true,dayBoundary:idx===0};
-    return{...explicit,source:prevEnd&&samePlace(prevEnd,explicit.query)?"same_place":explicit.source,dayBoundary:idx===0&&Boolean(prevEnd)};
-  }
-  const textRoute=routeFromText(event,day);
-  if(textRoute){const view=continuityRoute(prevEnd,textRoute,mode);return idx===0&&prevEnd?{...view,dayBoundary:true}:view;}
-  const destination=placeForEvent(event,day);
-  if(destination&&prevEnd&&!samePlace(prevEnd,destination))return{kind:"route",origin:prevEnd,destination,waypoints:"",mode,source:idx===0?"day_boundary_route":"derived_route",derived:true,dayBoundary:idx===0};
-  return{kind:"place",query:destination,source:prevEnd&&samePlace(prevEnd,destination)?"same_place":"place",dayBoundary:idx===0&&Boolean(prevEnd)};
-}
+export function endpointForEvent(event){const v=eventMapView([],event);return v.kind==="route"?v.destination:v.query;}
+export function eventMapType(event){return eventMapView([],event).kind;}
+export function manifestCoverage(events){const ids=(events||[]).map(e=>String(e.id));return{total:ids.length,covered:ids.filter(id=>MAP_MANIFEST[id]).length,missing:ids.filter(id=>!MAP_MANIFEST[id])};}
 
 export function googleMapsEmbedUrl(view){
-  if(!view)return "";
+  if(!view)return"";
   if(view.kind==="place")return `https://maps.google.com/maps?${new URLSearchParams({q:view.query||"",z:"17",output:"embed"}).toString()}`;
+  if(view.mode==="flight")return"";
   const destination=view.waypoints?`${String(view.waypoints).replaceAll("|"," to:")} to:${view.destination}`:view.destination;
   const p=new URLSearchParams({output:"embed",saddr:view.origin||"",daddr:destination||""});
   if(view.mode==="walking")p.set("dirflg","w");else if(view.mode==="transit")p.set("dirflg","r");else p.set("dirflg","d");
   return `https://maps.google.com/maps?${p.toString()}`;
 }
-
 export function googleMapsOpenUrl(view){
-  if(!view)return "https://www.google.com/maps";
+  if(!view)return"https://www.google.com/maps";
   if(view.kind==="place")return `https://www.google.com/maps/search/?${new URLSearchParams({api:"1",query:view.query||""}).toString()}`;
-  const p=new URLSearchParams({api:"1",origin:view.origin||"",destination:view.destination||"",travelmode:view.mode||"driving"});
-  if(view.waypoints)p.set("waypoints",view.waypoints);
-  return `https://www.google.com/maps/dir/?${p.toString()}`;
+  const p=new URLSearchParams({api:"1",origin:view.origin||"",destination:view.destination||"",travelmode:view.mode==="walking"?"walking":view.mode==="transit"?"transit":"driving"});if(view.waypoints)p.set("waypoints",view.waypoints);return `https://www.google.com/maps/dir/?${p.toString()}`;
 }
+export function flightRoutePoints(view){if(view?.mode!=="flight")return[];const a=AIRPORT_COORDS.get(view.origin),b=AIRPORT_COORDS.get(view.destination);return a&&b?[{name:view.origin,lat:a[0],lng:a[1]},{name:view.destination,lat:b[0],lng:b[1]}]:[];}
+export function mappingLabel(view){return view?.kind==="route"?"이동 경로":"장소";}
 
-export function mappingLabel(view){
-  if(view?.dayBoundary&&view?.kind==="route")return "전날→첫 일정";
-  if(view?.continuityFixed)return "연속경로";
-  if(view?.kind==="route")return view.derived?"직전 일정→경로":"경로";
-  return view?.source==="same_place"?"같은 장소":"위치";
+export function auditEventMappings(events){
+  return (events||[]).map(event=>{const view=eventMapView([],event),target=view.kind==="route"?`${view.origin} → ${view.destination}`:view.query||"",mapped=view.kind==="route"?Boolean(view.origin&&view.destination&&!samePlace(view.origin,view.destination)):Boolean(view.query);return{day_id:Number(event.day_id),id:event.id,title:event.title,mapped,kind:view.kind,source:view.source,target,ambiguous:AMBIGUOUS.test(String(target).trim()),verified:Boolean(view.verified)};});
 }
-
-export function auditEventMappings(events,days){
-  const dayMap=new Map((days||[]).map(d=>[Number(d.id),d]));
-  const grouped=new Map();for(const e of events||[]){const id=Number(e.day_id);if(!grouped.has(id))grouped.set(id,[]);grouped.get(id).push(e);}
-  const rows=[];
-  for(const [dayId,dayEvents] of [...grouped.entries()].sort((a,b)=>a[0]-b[0])){
-    const day=dayMap.get(dayId)||{},sorted=dayEvents.slice().sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
-    for(const event of sorted){
-      const view=eventMapView(sorted,event,day),target=view?.kind==="route"?`${view.origin} → ${view.destination}`:view?.query||"";
-      const mapped=Boolean(view&&(view.kind==="route"?view.origin&&view.destination:view.query));
-      rows.push({day_id:dayId,id:event.id,title:event.title,mapped,kind:view?.kind||"none",source:view?.source||"none",target,ambiguous:AMBIGUOUS.test(target),continuityFixed:Boolean(view?.continuityFixed)});
-    }
-  }
-  return rows;
+export function auditRouteContinuity(events){
+  return auditEventMappings(events).filter(r=>r.kind==="route").map(r=>({day_id:r.day_id,from_id:r.id,to_id:r.id,from:r.target.split(" → ")[0]||"",to:r.target.split(" → ").at(-1)||"",connected:r.mapped&&!r.ambiguous,day_boundary:false,verified:r.verified}));
 }
-
-export function auditRouteContinuity(events,days){
-  const dayMap=new Map((days||[]).map(d=>[Number(d.id),d])),grouped=new Map();
-  for(const e of events||[]){const id=Number(e.day_id);if(!grouped.has(id))grouped.set(id,[]);grouped.get(id).push(e);}
-  const rows=[];
-  for(const [dayId,dayEvents] of [...grouped.entries()].sort((a,b)=>a[0]-b[0])){
-    const day=dayMap.get(dayId)||{},sorted=dayEvents.slice().sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
-    for(let i=1;i<sorted.length;i++){
-      const prev=sorted[i-1],event=sorted[i],prevEnd=endpointForEvent(prev,day),view=eventMapView(sorted,event,day);
-      const start=view?.kind==="route"?view.origin:view?.query||"";
-      rows.push({day_id:dayId,from_id:prev.id,to_id:event.id,from:prevEnd,to:start,connected:Boolean(prevEnd&&start&&samePlace(prevEnd,start)),kind:view?.kind||"none",source:view?.source||"none",day_boundary:false});
-    }
-  }
-  return rows;
-}
-
-export function auditFullRouteContinuity(events,days){
-  const dayMap=new Map((days||[]).map(d=>[Number(d.id),d]));
-  const grouped=new Map();for(const e of events||[]){const id=Number(e.day_id);if(!grouped.has(id))grouped.set(id,[]);grouped.get(id).push(e);}
-  for(const rows of grouped.values())rows.sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
-  const all=(events||[]).slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||(a.sort_order||0)-(b.sort_order||0));
-  const rows=[];
-  for(let i=1;i<all.length;i++){
-    const prev=all[i-1],event=all[i],prevDay=dayMap.get(Number(prev.day_id))||{},day=dayMap.get(Number(event.day_id))||{};
-    const prevEnd=endpointForEvent(prev,prevDay),dayEvents=grouped.get(Number(event.day_id))||[];
-    const boundary=Number(prev.day_id)!==Number(event.day_id),view=eventMapView(dayEvents,event,day,boundary?prevEnd:"");
-    const start=view?.kind==="route"?view.origin:view?.query||"";
-    rows.push({day_id:Number(event.day_id),from_day:Number(prev.day_id),from_id:prev.id,to_id:event.id,from:prevEnd,to:start,connected:Boolean(prevEnd&&start&&samePlace(prevEnd,start)),kind:view?.kind||"none",source:view?.source||"none",day_boundary:boundary});
-  }
-  return rows;
-}
+export function auditFullRouteContinuity(events){return auditRouteContinuity(events);}

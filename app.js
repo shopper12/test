@@ -1,7 +1,7 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import {
   APP_VERSION, DEFAULT_ITINERARY, ITINERARIES,
-} from "./itinerary-data.js?v=PDF_ROUTE_COST_OPTIMIZED_V2";
+} from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 
 const SUPABASE_URL = "https://wrozrvsplryfjgckmxvl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_g1uvMhgnSTskTzGCKglOag_cIVpzZ2a";
@@ -128,7 +128,7 @@ function flightFareId(row){
   const maps={
     cost_optimized:{
       "ICN-RMQ":"route_f1",
-      "TPE-AMS":"route_f2_save",
+      "TPE-AMS":"route_f2_direct",
       "CPH-ICN":"route_f3",
     },
     time_optimized:{
@@ -331,34 +331,30 @@ function renderPlanDecision(){
   const stamp=koreaStamp(state.livePrices?.generated_at);
   const baseline=Number(tripMeta.pdfAirfareBaseline||0);
   const first=fareTotal("route_f1");
-  const savingMid=fareTotal("route_f2_save");
   const directMid=fareTotal("route_f2_direct");
   const home=fareTotal("route_f3");
   const selected=selectedFlightTotal();
-  const savingTotal=[first,savingMid,home].every(v=>v!=null)?first+savingMid+home:null;
-  const directTotal=[first,directMid,home].every(v=>v!=null)?first+directMid+home:null;
   const selectedSaving=selected!=null&&baseline?baseline-selected:null;
-  const directPremium=savingMid!=null&&directMid!=null?directMid-savingMid:null;
   const oldHamburgFlight=fareTotal("compare_ams_ham");
   const returnSaving=home!=null?8_246_596-home:null;
   if(state.itineraryKey==="cost_optimized"){
     return `<section class="decision-panel">
-      <div class="section-head"><h2>계획서 대비 비용 최적화</h2><span>${esc(stamp)} 조회</span></div>
+      <div class="section-head"><h2>계획서 대비 비용·동선 최적화</h2><span>${esc(stamp)} 조회</span></div>
       <div class="compare-grid">
-        <article class="compare-card selected-card"><h3>추천안 항공 3구간</h3><p><b>${esc(fareText(selected))}</b></p><p>계획서 항공 표기 합계 4인 ₩${fmt(baseline)} 대비 ${selectedSaving==null?"차액 재조회 중":`약 ₩${fmt(selectedSaving)} 절감`}. 도시·업무장소 순서는 그대로 유지.</p></article>
-        <article class="compare-card selected-card"><h3>TPE→CAN→AMS 채택</h3><p><b>${esc(fareText(savingMid))}</b></p><p>9/4 14:50 출발 → 9/5 06:35 도착. 중화항공 직항보다 ${directPremium==null?"차액 재조회 중":`4인 약 ₩${fmt(directPremium)} 절감`}하되 광저우에서 7시간 5분 환승.</p></article>
-        <article class="compare-card selected-card"><h3>로테르담→함부르크 철도</h3><p><b>4인 약 ₩210,000~₩500,000</b></p><p>NS/DB 네덜란드발 조기운임 €33부터. 현재 조회 KLM 항공 ${oldHamburgFlight==null?"가격 재조회 중":`4인 ₩${fmt(oldHamburgFlight)}`}과 비교해 공항 이동·수속까지 줄임.</p></article>
+        <article class="compare-card selected-card"><h3>추천안 항공 3구간</h3><p><b>${esc(fareText(selected))}</b></p><p>계획서 항공 표기 합계 4인 ₩${fmt(baseline)} 대비 ${selectedSaving==null?"차액 재조회 중":`약 ₩${fmt(selectedSaving)} 절감`}. 대만→유럽은 TPE→AMS 직항으로 고정.</p></article>
+        <article class="compare-card selected-card"><h3>TPE→AMS 직항</h3><p><b>${esc(fareText(directMid))}</b></p><p>9/4 23:10 출발 → 9/5 07:40 도착. 중화항공 CI73 직항으로 환승 없이 이동.</p></article>
+        <article class="compare-card selected-card"><h3>로테르담→함부르크 철도</h3><p><b>4인 약 ₩210,000~₩500,000</b></p><p>NS/DB 네덜란드발 조기운임 기준. 현재 조회 KLM 항공 ${oldHamburgFlight==null?"가격 재조회 중":`4인 ₩${fmt(oldHamburgFlight)}`}과 비교해 공항 이동·수속을 줄임.</p></article>
         <article class="compare-card selected-card"><h3>에스비에르→CPH 육상 + IST 환승</h3><p><b>${esc(fareText(home))}</b></p><p>계획서 EBJ→ABZ→AMS→ICN 표기액보다 ${returnSaving==null?"차액 재조회 중":`4인 약 ₩${fmt(returnSaving)} 절감`}하고 9월 12일 08:35 도착.</p></article>
       </div>
     </section>`;
   }
   return `<section class="decision-panel">
-    <div class="section-head"><h2>직항 우선안 비교</h2><span>${esc(stamp)} 조회</span></div>
+    <div class="section-head"><h2>직항 우선안</h2><span>${esc(stamp)} 조회</span></div>
     <div class="compare-grid">
-      <article class="compare-card selected-card"><h3>직항 우선안 항공 3구간</h3><p><b>${esc(fareText(selected))}</b></p><p>계획서 항공 표기 합계 대비 ${selectedSaving==null?"차액 재조회 중":`4인 약 ₩${fmt(selectedSaving)} 절감`}.</p></article>
-      <article class="compare-card selected-card"><h3>TPE→AMS 직항 채택</h3><p><b>${esc(fareText(directMid))}</b></p><p>9/4 23:10 출발 → 9/5 07:40 도착. 광저우 환승을 없애고 대만에서 약 8시간을 더 확보.</p></article>
-      <article class="compare-card muted-card"><h3>비용 최적안과 차이</h3><p><b>${directPremium==null?"차액 재조회 중":`4인 ₩${fmt(directPremium)} 추가`}</b></p><p>나머지 업무·호텔·철도·귀국편은 비용 최적안과 동일. 일정 단순성을 우선할 때 선택.</p></article>
-      <article class="compare-card selected-card"><h3>비용 최적안 총항공</h3><p><b>${esc(fareText(savingTotal))}</b></p><p>직항 대신 CAN 환승을 허용하면 ${directTotal!=null&&savingTotal!=null?`4인 ₩${fmt(directTotal-savingTotal)} 절감`:"현재 차액 재조회 중"}.</p></article>
+      <article class="compare-card selected-card"><h3>직항 우선안 항공 3구간</h3><p><b>${esc(fareText(selected))}</b></p><p>대만→유럽은 TPE→AMS 직항으로 고정하고 나머지 업무·호텔·철도·귀국편은 권고안과 동일합니다.</p></article>
+      <article class="compare-card selected-card"><h3>TPE→AMS 직항</h3><p><b>${esc(fareText(directMid))}</b></p><p>9/4 23:10 출발 → 9/5 07:40 도착. 중화항공 CI73 직항.</p></article>
+      <article class="compare-card selected-card"><h3>유럽 도시간 이동</h3><p><b>철도 중심</b></p><p>로테르담→함부르크, 함부르크→에스비에르, 에스비에르→코펜하겐을 철도로 연결합니다.</p></article>
+      <article class="compare-card selected-card"><h3>귀국</h3><p><b>${esc(fareText(home))}</b></p><p>CPH→IST→ICN 한 번 환승으로 귀국합니다.</p></article>
     </div>
   </section>`;
 }

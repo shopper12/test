@@ -1,6 +1,6 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V16";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 
-const BUILD="LIVE_TRAVEL_V16",TRANSIT_URL="./transit-live.json";
+const BUILD="LIVE_TRAVEL_V17",TRANSIT_URL="./transit-live.json";
 const s={plan:DEFAULT_ITINERARY,transit:null,loaded:0,modalEvent:null};
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
 const norm=v=>String(v||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9가-힣]+/g," ").trim();
@@ -44,7 +44,7 @@ function totalMinutes(e){const a=clock(e.time_start),b=clock(e.time_end);return 
 function at(e,n){const a=clock(e.time_start);if(a==null)return"";const v=(a+n)%1440;return `${String(Math.floor(v/60)).padStart(2,"0")}:${String(v%60).padStart(2,"0")}`;}
 const leg=(e,a,b,label,kind)=>({start:at(e,a),end:at(e,b),minutes:b-a,label,kind});
 function tpe(e){const t=totalMinutes(e)||140;return[leg(e,0,25,"택시 · 타이중 시내 → THSR Taichung","move"),leg(e,25,45,"THSR 승차 대기·탑승","wait"),leg(e,45,90,"THSR · Taichung → Taoyuan","move"),leg(e,90,102,"A18 환승·도보","wait"),leg(e,102,125,"Airport MRT · A18 → TPE","move"),leg(e,125,t,"터미널 이동·출국 준비 버퍼","wait")];}
-function fixed(e){const t=totalMinutes(e);if(!t)return null;if((s.plan==="cost_optimized"&&e.id==="d3-02")||(s.plan==="time_optimized"&&e.id==="d3-03"))return tpe(e);if(s.plan==="time_optimized"&&e.id==="d3-01")return[leg(e,0,20,"택시 · 호텔 → National Taichung Theater","move"),leg(e,20,t,"극장·Calligraphy Greenway 관람·도보","stay")];if(s.plan==="time_optimized"&&e.id==="d3-02")return[leg(e,0,10,"택시 · 극장권 → Miyahara/구도심","move"),leg(e,10,t,"Miyahara·구도심 도보·점심","stay")];const z={
+function fixed(e){const t=totalMinutes(e);if(!t)return null;if(e.id==="d3-03")return tpe(e);if(e.id==="d3-01")return[leg(e,0,20,"택시 · 호텔 → National Taichung Theater","move"),leg(e,20,t,"극장·Calligraphy Greenway 관람·도보","stay")];if(e.id==="d3-02")return[leg(e,0,10,"택시 · 극장권 → Miyahara/구도심","move"),leg(e,10,t,"Miyahara·구도심 도보·점심","stay")];const z={
 "d1-03":[[0,40,"입국심사·수하물","stay"],[40,85,"택시 · RMQ → 호텔","move"],[85,110,"호텔 짐 보관","stay"]],
 "d1-07":[[0,15,"차량 · TIPC → Wuqi Fishing Harbor","move"],[15,45,"우치어항 체류","stay"],[45,65,"차량 · 우치어항 → Gaomei Wetlands","move"],[65,130,"가오메이 습지 체류·일몰","stay"]],
 "d1-08":[[0,75,"차량 · Gaomei Wetlands → 호텔","move"],[75,100,"호텔 체크인","stay"]],

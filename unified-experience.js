@@ -1,4 +1,4 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V12";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V12";
 
 const LIVE_URL="./trip-live.json";
@@ -86,7 +86,7 @@ function weatherHtml(day,event){
 
 function flightFareId(row){
   const origin=String(row?.origin||"").match(/[A-Z]{3}/)?.[0]||"",destination=String(row?.destination||"").match(/[A-Z]{3}/)?.[0]||"";
-  const ids={cost_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_save","CPH-ICN":"route_f3"},time_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"route_f3"}};
+  const ids={cost_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"route_f3"},time_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"route_f3"}};
   return ids[uiState.itinerary]?.[`${origin}-${destination}`]||null;
 }
 function fareFor(row){const id=flightFareId(row);return id?uiState.fares?.fares?.[id]:null;}

@@ -1,4 +1,4 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V5";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 
 const LIVE_URL = "./trip-live.json";
 const FARES_URL = "./flight-prices.json";
@@ -61,7 +61,7 @@ function flightFareId(row){
   const origin=String(row?.origin||"").match(/[A-Z]{3}/)?.[0]||"";
   const destination=String(row?.destination||"").match(/[A-Z]{3}/)?.[0]||"";
   const maps={
-    cost_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_save","CPH-ICN":"route_f3"},
+    cost_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"route_f3"},
     time_optimized:{"ICN-RMQ":"route_f1","TPE-AMS":"route_f2_direct","CPH-ICN":"route_f3"},
   };
   return maps[state.itinerary]?.[`${origin}-${destination}`]||null;

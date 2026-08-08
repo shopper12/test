@@ -5,7 +5,7 @@
 - 일정: 2026-09-02 ~ 2026-09-12
 - 경로: 인천 → 타이중·루강 → 네덜란드 → 함부르크 → 에스비에르 → 코펜하겐 → 인천
 - 업무장소: 계획서의 TIPC, Vestas O&M Base, Port of Rotterdam, ROG, TNO, Skyborn, Blue Water Shipping 등 7곳
-- 추천안: TPE→CAN→AMS 1회 환승, 유럽 도시간 철도, CPH→IST→ICN 귀국
+- 추천안: TPE→AMS 직항, 유럽 도시간 철도, CPH→IST→ICN 귀국
 - 비교안: TPE→AMS 직항. 나머지 일정은 추천안과 동일
 - 지도: Leaflet + OpenStreetMap + OSRM 실제 자동차 경로
 - 항공가격: GitHub Actions가 Google Flights를 성인 4명·일반석 조건으로 매시간 자동조회

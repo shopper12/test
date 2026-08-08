@@ -1,10 +1,10 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V15";
-import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V15";
-import { auditEventMappings, auditFullRouteContinuity, endpointForEvent, eventMapView, googleMapsEmbedUrl, googleMapsOpenUrl, mappingLabel } from "./map-routing.mjs?v=LIVE_TRAVEL_V15";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
+import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V17";
+import { auditEventMappings, auditFullRouteContinuity, eventMapView, flightRoutePoints, googleMapsEmbedUrl, manifestCoverage, mappingLabel } from "./map-routing.mjs?v=LIVE_TRAVEL_V17";
 
-const BUILD="LIVE_TRAVEL_V15";
+const BUILD="LIVE_TRAVEL_V17";
 const HOST_ID="stable-live-tools";
-const state={weather:null,loadedAt:0,selectedEvent:null};
+const state={weather:null,loadedAt:0,selectedEvent:null,flightMap:null};
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
 
 function host(){return document.getElementById(HOST_ID);}
@@ -18,12 +18,7 @@ function allEventsSorted(){return (activePlan().officialSeed.events||[]).slice()
 function eventsForDay(dayId){return allEventsSorted().filter(e=>Number(e.day_id)===Number(dayId));}
 function eventsForMap(){const id=selectedDayId();return id==null?allEventsSorted():eventsForDay(id);}
 function eventById(id){return (activePlan().officialSeed.events||[]).find(e=>String(e.id)===String(id));}
-function previousGlobalEvent(event){const rows=allEventsSorted(),idx=rows.findIndex(e=>String(e.id)===String(event?.id));return idx>0?rows[idx-1]:null;}
-function viewFor(event){
-  const day=dayForEvent(event),dayEvents=eventsForDay(event.day_id),first=dayEvents[0],prev=String(first?.id)===String(event?.id)?previousGlobalEvent(event):null;
-  const prevEnd=prev?endpointForEvent(prev,dayForEvent(prev)):"";
-  return eventMapView(dayEvents,event,day,prevEnd);
-}
+function viewFor(event){return eventMapView(eventsForDay(event.day_id),event,dayForEvent(event));}
 
 async function loadWeather(force=false){
   if(!force&&state.weather&&Date.now()-state.loadedAt<300000)return;
@@ -39,33 +34,50 @@ function weatherHtml(day){
 
 function mapSidebarItem(event){
   const view=viewFor(event),label=mappingLabel(view),active=String(state.selectedEvent)===String(event.id),allDays=selectedDayId()==null;
-  return `<button type="button" class="map-schedule-sidebar-item ${active?"active":""}" data-stable-map-event="${esc(event.id)}"><span class="map-sidebar-time">${esc(event.time_start||"")}${event.time_end?`<small>~ ${esc(event.time_end)}</small>`:""}</span><span class="map-sidebar-body"><b>${allDays?`Day ${esc(event.day_id)} · `:""}${esc(event.title||"")}</b><small>${event.location?`📍 ${esc(event.location)}`:""}${event.transport?` · ${esc(event.transport)}`:""}</small></span><span class="map-sidebar-kind ${view.kind}">${esc(label)}</span></button>`;
+  return `<button type="button" class="map-schedule-sidebar-item ${active?"active":""} ${view.kind}" data-stable-map-event="${esc(event.id)}" data-map-kind="${esc(view.kind)}"><span class="map-sidebar-time">${esc(event.time_start||"")}${event.time_end?`<small>~ ${esc(event.time_end)}</small>`:""}</span><span class="map-sidebar-body"><b>${allDays?`Day ${esc(event.day_id)} · `:""}${esc(event.title||"")}</b><small>${view.kind==="route"?`🧭 ${esc(view.origin)} → ${esc(view.destination)}`:`📍 ${esc(view.query)}`}</small></span><span class="map-sidebar-kind ${view.kind}">${view.kind==="route"?"이동 경로":"장소"}</span></button>`;
+}
+function mapGroup(title,icon,items,kind){
+  return `<section class="map-sidebar-group ${kind}"><div class="map-sidebar-group-head"><b>${icon} ${title}</b><span>${items.length}개</span></div><div class="map-schedule-sidebar-list">${items.length?items.map(mapSidebarItem).join(""):`<div class="empty">해당 일정이 없습니다.</div>`}</div></section>`;
 }
 function mapSidebarHtml(){
-  const events=eventsForMap(),days=activePlan().officialSeed.days,all=allEventsSorted(),audit=auditEventMappings(events,days),valid=audit.filter(r=>r.mapped&&!r.ambiguous).length,id=selectedDayId();
-  const fullJoins=auditFullRouteContinuity(all,days),joins=id==null?fullJoins:fullJoins.filter(r=>Number(r.day_id)===id),connected=joins.filter(r=>r.connected).length,boundaries=joins.filter(r=>r.day_boundary).length;
-  const boundaryText=boundaries?` · 날짜경계 ${boundaries}`:"";
-  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 상세 일정":`Day ${id} 상세 일정`}</b><small>${events.length}개 일정 · 지도 매핑 ${valid}/${events.length} · 구간 연결 ${connected}/${joins.length}${boundaryText}</small></div><span class="map-audit-ok">${valid===events.length&&connected===joins.length?"전체 연결 완료":"경로 점검 필요"}</span></div><div class="map-schedule-sidebar-list">${events.map(mapSidebarItem).join("")}</div>`;
+  const events=eventsForMap(),all=allEventsSorted(),audit=auditEventMappings(events),valid=audit.filter(r=>r.mapped&&!r.ambiguous&&r.verified).length,id=selectedDayId();
+  const routes=events.filter(e=>viewFor(e).kind==="route"),places=events.filter(e=>viewFor(e).kind==="place");
+  const routeAudit=auditFullRouteContinuity(id==null?all:events),connected=routeAudit.filter(r=>r.connected&&r.verified).length,cov=manifestCoverage(events);
+  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 지도 일정":`Day ${id} 지도 일정`}</b><small>${events.length}개 · 검증 매핑 ${valid}/${events.length} · 이동경로 ${connected}/${routeAudit.length}</small></div><span class="map-audit-ok">${valid===events.length&&connected===routeAudit.length&&cov.covered===cov.total?"전체 검증 완료":"경로 점검 필요"}</span></div>${mapGroup("이동 경로","🧭",routes,"route")}${mapGroup("장소·체류","📍",places,"place")}`;
 }
 function renderMapSidebar(){
   if(activeTab()!=="map")return false;const list=document.getElementById("route-list");if(!list)return false;
-  const key=`${activePlanKey()}:${selectedDayId()??"all"}:${eventsForMap().length}`;if(list.dataset.stableSidebarKey===key&&list.querySelector("[data-stable-map-event]"))return true;
+  const key=`${activePlanKey()}:${selectedDayId()??"all"}:${eventsForMap().length}:v17`;if(list.dataset.stableSidebarKey===key&&list.querySelector("[data-stable-map-event]"))return true;
   list.dataset.stableSidebarKey=key;list.classList.add("map-schedule-sidebar");list.innerHTML=mapSidebarHtml();return true;
 }
 function scheduleMapSidebar(){[40,120,260,520,900].forEach(ms=>setTimeout(renderMapSidebar,ms));}
 
+function destroyFlightMap(){if(state.flightMap){try{state.flightMap.remove();}catch{}state.flightMap=null;}}
+function renderFlightRoute(shell,event,view){
+  const pts=flightRoutePoints(view),host=shell.querySelector("[data-flight-map]");if(!host||pts.length!==2)return false;
+  if(!window.L){host.innerHTML=`<div class="flight-route-fallback"><b>${esc(view.origin)}</b><span>✈</span><b>${esc(view.destination)}</b></div>`;return true;}
+  destroyFlightMap();state.flightMap=L.map(host,{scrollWheelZoom:true,zoomControl:true});L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap"}).addTo(state.flightMap);
+  const ll=pts.map(p=>[p.lat,p.lng]);pts.forEach(p=>L.marker([p.lat,p.lng]).bindPopup(`<b>${esc(p.name)}</b>`).addTo(state.flightMap));L.polyline(ll,{weight:4,dashArray:"10 8",opacity:.9}).addTo(state.flightMap);state.flightMap.fitBounds(ll,{padding:[45,45]});setTimeout(()=>state.flightMap?.invalidateSize(),80);return true;
+}
 function focusMap(eventId){
   const event=eventById(eventId),map=document.getElementById("map");if(!event||!map)return false;
-  const view=viewFor(event),src=googleMapsEmbedUrl(view),openUrl=googleMapsOpenUrl(view);if(!src)return false;
-  state.selectedEvent=event.id;let shell=map.querySelector(":scope > .event-map-shell");if(!shell){shell=document.createElement("div");shell.className="event-map-shell";map.append(shell);}
+  const view=viewFor(event);state.selectedEvent=event.id;destroyFlightMap();let shell=map.querySelector(":scope > .event-map-shell");if(!shell){shell=document.createElement("div");shell.className="event-map-shell";map.append(shell);}
   const target=view.kind==="route"?`${view.origin} → ${view.destination}`:view.query;
-  shell.innerHTML=`<div class="event-map-bar"><div><b>${esc(event.title||target)}</b><small>${esc(target)} · ${esc(mappingLabel(view))}${view.waypoints?` · 경유 ${esc(view.waypoints.replaceAll("|"," → "))}`:""}</small></div><div class="event-map-actions"><a href="${esc(openUrl)}" target="_blank" rel="noreferrer">Google Maps ↗</a><button type="button" data-event-map-close>기본 지도</button></div></div><iframe title="${esc(event.title||target)}" src="${esc(src)}" loading="eager" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  const via=view.waypoints?` · 경유 ${esc(view.waypoints.replaceAll("|"," → "))}`:"";
+  if(view.kind==="route"&&view.mode==="flight"){
+    shell.innerHTML=`<div class="event-map-bar"><div><b>✈ ${esc(event.title||target)}</b><small>${esc(target)} · 이동 경로${via}</small></div><div class="event-map-actions"><button type="button" data-event-map-close>기본 지도</button></div></div><div class="flight-route-map" data-flight-map aria-label="${esc(event.title||target)} 항공 경로"></div>`;
+    renderFlightRoute(shell,event,view);
+  }else{
+    const src=googleMapsEmbedUrl(view);if(!src)return false;
+    shell.innerHTML=`<div class="event-map-bar"><div><b>${view.kind==="route"?"🧭":"📍"} ${esc(event.title||target)}</b><small>${esc(target)} · ${esc(mappingLabel(view))}${via}</small></div><div class="event-map-actions"><button type="button" data-event-map-close>기본 지도</button></div></div><iframe title="${esc(event.title||target)}" src="${esc(src)}" loading="eager" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  }
   document.querySelectorAll("#route-list [data-stable-map-event]").forEach(button=>button.classList.toggle("active",String(button.dataset.stableMapEvent)===String(event.id)));
-  shell.querySelector("[data-event-map-close]")?.addEventListener("click",()=>{shell.remove();state.selectedEvent=null;document.querySelectorAll("#route-list [data-stable-map-event]").forEach(button=>button.classList.remove("active"));});return true;
+  shell.querySelector("[data-event-map-close]")?.addEventListener("click",()=>{destroyFlightMap();shell.remove();state.selectedEvent=null;document.querySelectorAll("#route-list [data-stable-map-event]").forEach(button=>button.classList.remove("active"));});return true;
 }
 window.__tripMapFocus=focusMap;
-window.__tripMapAudit=()=>auditEventMappings(activePlan().officialSeed.events||[],activePlan().officialSeed.days||[]);
-window.__tripMapContinuityAudit=()=>auditFullRouteContinuity(activePlan().officialSeed.events||[],activePlan().officialSeed.days||[]);
+window.__tripMapAudit=()=>auditEventMappings(activePlan().officialSeed.events||[]);
+window.__tripMapContinuityAudit=()=>auditFullRouteContinuity(activePlan().officialSeed.events||[]);
+window.__tripMapManifestCoverage=()=>manifestCoverage(activePlan().officialSeed.events||[]);
 
 function render(){const h=host();if(!h)return;const tab=activeTab();if(tab==="timeline"){h.hidden=false;h.innerHTML=weatherHtml(activeDay());return;}if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}h.hidden=true;h.innerHTML="";}
 async function sync(forceWeather=false){await loadWeather(forceWeather);render();}

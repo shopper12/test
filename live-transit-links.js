@@ -1,4 +1,4 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V16";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 
 const TRANSIT_URL="./transit-live.json";
 const state={transit:null,loadedAt:0,itinerary:DEFAULT_ITINERARY,modalEventId:null};

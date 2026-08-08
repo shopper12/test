@@ -1,4 +1,4 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V8";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 
 const STORAGE_KEY = "offshore-trip-google-maps-embed-key";
 const state = {
@@ -63,7 +63,7 @@ function modeForSegment(type){
 
 function modeForEvent(event){
   const text=`${event?.category||""} ${event?.transport||""}`.toLowerCase();
-  if(/항공|flight|airline|china southern|turkish|jin air|jinair/.test(text))return "flying";
+  if(/항공|flight|airline|turkish|jin air|jinair/.test(text))return "flying";
   if(/thsr|mrt|metro|subway|rail|train|기차|철도|열차|버스|bus|u-bahn|s-bahn|dsb|db\/|ns\//.test(text))return "transit";
   if(/택시|taxi|car|자동차|기사차량|렌터카/.test(text))return "driving";
   if(/도보|walk/.test(text))return "walking";
