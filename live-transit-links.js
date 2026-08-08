@@ -19,6 +19,8 @@ function providerIdsForEvent(event){
   if(/THSR|high.?speed/i.test(text))ids.push("thsr");
   if(/Airport MRT|Taoyuan.*MRT|공항.*MRT/i.test(text))ids.push("taoyuan_mrt");
   if(/NS\/|NS |Schiphol.*Rotterdam|Rotterdam Centraal/i.test(text)&&/train|rail|철도|열차|교통|NS/i.test(text))ids.push("ns");
+  if(/Waterbus|WaterShuttle|Erasmusbrug.*Kinderdijk|Kinderdijk.*Water/i.test(text))ids.push("waterbus");
+  if(/RET|metro|subway|tram|버스|bus/i.test(text)&&/Rotterdam|Rijswijk|Wilhelminaplein|Erasmusbrug/i.test(text))ids.push("ret");
   if(/DB\/|DB |Hamburg Hbf|Hamburg.*Esbjerg|Rotterdam.*Hamburg/i.test(text)&&/train|rail|철도|열차|교통|DB/i.test(text))ids.push("db");
   if(/HVV|U-Bahn|S-Bahn|Landungsbr|HafenCity/i.test(text)&&/버스|bus|bahn|metro|subway|교통/i.test(text))ids.push("hvv");
   if(/DSB|Esbjerg St\.?|København H|Copenhagen Central/i.test(text)&&/train|rail|철도|열차|교통|DSB/i.test(text)){ids.push("dsb","rejseplanen");}
