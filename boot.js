@@ -1,5 +1,6 @@
 try {
   await import("./travel-live.js?v=LIVE_TRAVEL_V5");
+  await import("./unified-nav.js?v=LIVE_TRAVEL_V5");
   await import("./app.js?v=PDF_ROUTE_COST_OPTIMIZED_V2");
 } catch (error) {
   console.error(error);
