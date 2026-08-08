@@ -15,11 +15,12 @@
   <link rel="stylesheet" href="./styles.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./compare.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./interactive.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
-  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V14" />
-  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V14" />
-  <link rel="stylesheet" href="./unified-experience.css?v=LIVE_TRAVEL_V14" />
-  <link rel="stylesheet" href="./stable-tools.css?v=LIVE_TRAVEL_V14" />
-  <link rel="stylesheet" href="./map-sidebar.css?v=LIVE_TRAVEL_V14" />
+  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V15" />
+  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V15" />
+  <link rel="stylesheet" href="./unified-experience.css?v=LIVE_TRAVEL_V15" />
+  <link rel="stylesheet" href="./stable-tools.css?v=LIVE_TRAVEL_V15" />
+  <link rel="stylesheet" href="./map-sidebar.css?v=LIVE_TRAVEL_V15" />
+  <link rel="stylesheet" href="./live-transit-links.css?v=LIVE_TRAVEL_V15" />
 </head>
 <body>
   <header class="topbar">
@@ -49,14 +50,14 @@
   <main class="shell" id="main-content"></main>
 
   <footer class="footer shell">
-    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · <b>빌드 LIVE_TRAVEL_V14</b><br>
+    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · <b>빌드 LIVE_TRAVEL_V15</b><br>
     사이트 주소는 업데이트와 관계없이 https://shopper12.github.io/test/ 로 유지됩니다.<br>
     항공·호텔·음식점 예약은 별도 메뉴로 분리하지 않고 ‘전체 일정’의 해당 세부 일정 카드에서 바로 연결합니다.<br>
-    항공은 Google Flights 최저가 비교와 Skyscanner 교차비교, 호텔은 Google Hotels의 여러 예약 파트너 가격 비교로 연결합니다.<br>
-    지도 메뉴의 세부일정은 지도 위 별도 영역을 만들지 않고 지도 오른쪽 일정 패널에 표시하며, 각 항목을 누르면 해당 경로 또는 위치가 지도에 표시됩니다.<br>
-    두 일정안의 모든 세부일정은 자동 매핑 검사를 통과해야만 Pages 배포가 진행되며, 애매한 호텔·역·공항 표현은 실제 장소명으로 정규화합니다.<br>
-    날씨는 공식 시간별 예보를 최우선으로 사용하고, 아직 발표 전이면 AccuWeather 월간전망 또는 9월 평년값을 표시하며 각국 공식 장기전망 링크를 함께 제공합니다.<br>
-    덴마크 DMI는 2026년부터 월·계절 장기예보를 중단했으므로 공식 단기예보 전에는 월간전망/평년값을 보조 기준으로 사용합니다.
+    세부일정의 호텔·음식점 이름은 각각 Google Hotels 가격비교 또는 해당 음식점 공식/지도 페이지의 외부 링크로 연결합니다.<br>
+    THSR·Taoyuan Airport MRT·NS·DB·HVV·DSB·Rejseplanen의 공식 교통정보를 시간별로 다시 읽어 transit-live.json에 반영하고 각 대중교통 일정에 최신 상태·시간표 링크를 표시합니다.<br>
+    지도 일정은 단일 장소도 직전 일정과 연결하며, 명시 경로의 출발점이 직전 도착점과 다르면 원래 출발점을 경유지로 보존해 연속 경로로 자동 보정합니다.<br>
+    모든 세부일정의 지도 매핑과 같은 날 인접 일정의 출발·도착 연속성 검사를 통과해야 Pages 배포가 진행됩니다.<br>
+    날씨는 공식 시간별 예보를 최우선으로 사용하고, 아직 발표 전이면 AccuWeather 월간전망 또는 9월 평년값을 표시하며 각국 공식 장기전망 링크를 함께 제공합니다.
   </footer>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
@@ -75,6 +76,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V14"></script>
+  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V15"></script>
 </body>
 </html>
