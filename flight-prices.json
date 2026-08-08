@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-08T18:58:08Z",
-  "fresh_until": "2026-08-08T20:58:08Z",
+  "generated_at": "2026-08-08T19:44:10Z",
+  "fresh_until": "2026-08-08T21:44:10Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -381,8 +381,7 @@
       },
       "selected_reason": "비용 최저안보다 약 1시간 빠른 인천 도착 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 235 (char 234)"
+      "status": "ok"
     },
     "compare_cph_direct": {
       "label": "비교 · 코펜하겐 → 인천 직항",
@@ -437,7 +436,5 @@
       "status": "ok"
     }
   },
-  "errors": [
-    "compare_cph_time: Extra data: line 1 column 235 (char 234)"
-  ]
+  "errors": []
 }
