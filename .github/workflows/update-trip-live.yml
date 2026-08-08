@@ -15,8 +15,8 @@ on:
       - "unified-nav.js"
       - "unified-experience.js"
       - "unified-experience.css"
-      - "runtime-integrity.js"
-      - "runtime-integrity.css"
+      - "stable-tools.js"
+      - "stable-tools.css"
       - "google-map-link-bridge.js"
       - "travel-live.css"
       - "google-maps-inline.css"
@@ -31,7 +31,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v10
+  group: live-trip-intelligence-v11
   cancel-in-progress: true
 
 jobs:
@@ -59,39 +59,33 @@ jobs:
           node --check travel-live.js
           node --check unified-nav.js
           node --check unified-experience.js
-          node --check runtime-integrity.js
+          node --check stable-tools.js
           node --check google-map-link-bridge.js
 
-      - name: Validate v10 runtime repairs
+      - name: Validate v11 permanent controls
         run: |
           python - <<'PY'
           from pathlib import Path
-          runtime=Path('runtime-integrity.js').read_text(encoding='utf-8')
-          css=Path('runtime-integrity.css').read_text(encoding='utf-8')
+          stable=Path('stable-tools.js').read_text(encoding='utf-8')
+          css=Path('stable-tools.css').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V10' in boot and 'LIVE_TRAVEL_V10' in html
-          assert 'runtime-integrity.js' in boot
-          assert 'runtime-integrity.css' in html
-          assert 'google-maps-inline' not in boot
-          assert 'hotel-booking-summary' not in boot
-          assert 'runtime-weather-panel' in runtime
-          assert '시간별 예보 발표 전' in runtime
-          assert 'data-runtime-weather-refresh' in runtime
-          assert 'runtime-hotel-panel' in runtime
-          assert 'Booking.com 실제 예약' in runtime
-          assert 'group_adults:"4"' in runtime
-          assert 'no_rooms:String(h.rooms||2)' in runtime
-          assert 'window.location.assign(url)' in runtime
-          assert 'runtime-map-schedule' in runtime
-          assert 'data-runtime-map-event-id' in runtime
-          assert 'focusMapEvent' in runtime
-          assert 'output:"embed"' in runtime
-          assert 'maps/embed/v1/directions' in runtime
-          assert 'map-focused' in runtime
-          assert '.runtime-weather-grid' in css
-          assert '.runtime-hotel-grid' in css
-          assert '.runtime-map-event' in css
+          assert 'LIVE_TRAVEL_V11' in boot and 'LIVE_TRAVEL_V11' in html
+          assert 'stable-tools.js' in boot
+          assert 'runtime-integrity.js' not in boot
+          assert 'stable-tools.css' in html
+          assert 'id="stable-live-tools"' in html
+          assert 'Booking.com 실제 예약' in stable
+          assert 'group_adults:"4"' in stable
+          assert 'no_rooms:String(h.rooms||2)' in stable
+          assert '공식 날씨' in stable
+          assert 'data-stable-weather-refresh' in stable
+          assert 'data-stable-map-event' in stable
+          assert 'stable-map-shell' in stable
+          assert 'output:"embed"' in stable
+          assert '#stable-live-tools' in css
+          assert '.stable-hotel-grid' in css
+          assert '.stable-map-event' in css
           PY
 
       - name: Refresh fares, stopover and legacy snapshot
@@ -170,13 +164,13 @@ jobs:
 
       - name: Verify deployed build
         run: |
-          grep -q 'LIVE_TRAVEL_V10' index.html
-          grep -q 'LIVE_TRAVEL_V10' boot.js
-          grep -q 'runtime-integrity.js' boot.js
-          grep -q 'runtime-integrity.css' index.html
-          grep -q 'runtime-weather-panel' runtime-integrity.js
-          grep -q 'Booking.com 실제 예약' runtime-integrity.js
-          grep -q 'data-runtime-map-event-id' runtime-integrity.js
+          grep -q 'LIVE_TRAVEL_V11' index.html
+          grep -q 'LIVE_TRAVEL_V11' boot.js
+          grep -q 'stable-tools.js' boot.js
+          grep -q 'stable-tools.css' index.html
+          grep -q 'id="stable-live-tools"' index.html
+          grep -q 'Booking.com 실제 예약' stable-tools.js
+          grep -q 'data-stable-map-event' stable-tools.js
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
