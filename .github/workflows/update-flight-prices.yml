@@ -1,5 +1,6 @@
 name: Update live flight prices
 
+# V17: refresh direct-vs-one-stop return comparison from current main.
 on:
   schedule:
     - cron: "17 * * * *"
@@ -40,7 +41,7 @@ jobs:
         run: |
           python -m json.tool flight-prices.json >/dev/null
           test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "7"
-          python -c 'import json; f=json.load(open("flight-prices.json"))["fares"]; assert "route_f2_direct" in f'
+          python -c 'import json; f=json.load(open("flight-prices.json"))["fares"]; assert "route_f2_direct" in f; assert "route_f3" in f; assert "compare_cph_time" in f; assert "compare_cph_direct" in f'
       - name: Commit refreshed snapshot
         run: |
           if git diff --quiet -- flight-prices.json; then exit 0; fi
