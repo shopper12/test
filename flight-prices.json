@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-08T04:28:10Z",
-  "fresh_until": "2026-08-08T06:28:10Z",
+  "generated_at": "2026-08-08T05:56:44Z",
+  "fresh_until": "2026-08-08T07:56:44Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -204,10 +204,10 @@
             "origin": "CPH",
             "destination": "CDG",
             "departure_date": "2026-09-11",
-            "departure_time": "06:05",
+            "departure_time": "10:10",
             "arrival_date": "2026-09-11",
-            "arrival_time": "08:15",
-            "duration_minutes": 130,
+            "arrival_time": "12:10",
+            "duration_minutes": 120,
             "aircraft": "Airbus A220-300 Passenger"
           },
           {
