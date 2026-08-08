@@ -12,7 +12,8 @@
   <link rel="stylesheet" href="./styles.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./compare.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
   <link rel="stylesheet" href="./interactive.css?v=PDF_ROUTE_COST_OPTIMIZED_V2" />
-  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V5" />
+  <link rel="stylesheet" href="./travel-live.css?v=LIVE_TRAVEL_V6" />
+  <link rel="stylesheet" href="./google-maps-inline.css?v=LIVE_TRAVEL_V6" />
 </head>
 <body>
   <header class="topbar">
@@ -41,12 +42,12 @@
   <main class="shell" id="main-content"></main>
 
   <footer class="footer shell">
-    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집 · Leaflet/OpenStreetMap·OSRM 육상경로<br>
+    GitHub Pages 무료 호스팅 · 로그인 없는 Supabase 익명 공동편집<br>
     항공 금액은 GitHub Actions가 Google Flights를 매시간 조회한 성인 4명 일반석 스냅샷입니다.<br>
     날씨는 대만 CWA·네덜란드 KNMI·독일 DWD·덴마크 DMI·한국 KMA의 공식 예보만 사용하며, 예보 발표 전에는 평년값이나 과거자료를 표시하지 않습니다.<br>
-    장소 사진은 호텔·식당·기업·관광지의 공식 웹사이트가 공개한 대표 이미지 메타데이터만 사용하고 Wikimedia/스톡 사진으로 대체하지 않습니다.<br>
-    지도는 자동차 OSRM 도로선과 유럽 대중교통 Transitous/MOTIS GTFS 경로를 Leaflet 화면 안에 직접 표시합니다. 대만 THSR/Airport MRT는 공개 라우팅 데이터가 없는 구간은 일정 지점 연결선으로 표시합니다.<br>
-    각 서비스의 최종 예약·운행·기상 조건은 카드의 공식 원문 및 결제 링크에서 다시 확인하십시오. 공개 저장소 기반이므로 여권번호, 연락처, 계약자료 등 비공개 정보는 입력하지 마십시오.
+    장소 사진은 호텔·식당·기업·관광지의 공식 웹사이트가 공개한 대표 이미지를 사용하고 Wikimedia/스톡 사진으로 대체하지 않습니다.<br>
+    지도 메뉴는 Google Maps Embed API를 대시보드 안에 직접 연동해 자동차·대중교통·도보 실제 경로를 표시합니다. Leaflet/OpenStreetMap·OSRM·Transitous는 Google Maps를 불러오지 못할 때의 내부 보조지도입니다.<br>
+    Google Maps Embed API 키는 공개 저장소에 저장하지 않고 사용 브라우저에만 저장할 수 있습니다. 각 서비스의 최종 예약·운행·기상 조건은 카드의 공식 원문 및 결제 링크에서 다시 확인하십시오.
   </footer>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
@@ -65,6 +66,6 @@
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V5"></script>
+  <script type="module" src="./boot.js?v=LIVE_TRAVEL_V6"></script>
 </body>
 </html>
