@@ -32,7 +32,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v12
+  group: live-trip-intelligence-v13
   cancel-in-progress: true
 
 jobs:
@@ -64,7 +64,7 @@ jobs:
           node --check weather-fallback.js
           node --check google-map-link-bridge.js
 
-      - name: Validate v12 integrated itinerary behavior
+      - name: Validate v13 stable map click and integrated itinerary
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -74,13 +74,17 @@ jobs:
           weather=Path('weather-fallback.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V12' in boot and 'LIVE_TRAVEL_V12' in html
+          assert 'LIVE_TRAVEL_V13' in boot and 'LIVE_TRAVEL_V13' in html
           assert 'stable-tools.js' in boot
           assert 'weather-fallback.js' in stable and 'weather-fallback.js' in unified
           assert 'id="stable-live-tools"' in html
           assert 'derivedRoute' in stable
           assert 'saddr' in stable and 'daddr' in stable and 'output:"embed"' in stable
           assert '경로 보기' in stable
+          assert 'document.addEventListener("pointerup"' in stable
+          assert 'window.__tripMapFocus=focusMap' in stable
+          assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
+          assert 'mainObserver.observe(main,{childList:true,subtree:true})' not in stable
           assert 'hotelsHtml' not in stable and 'Booking.com 실제 예약' not in stable
           assert 'Google Flights 최저가 비교' in unified
           assert 'Skyscanner 교차비교' in unified
@@ -169,12 +173,14 @@ jobs:
 
       - name: Verify deployed build
         run: |
-          grep -q 'LIVE_TRAVEL_V12' index.html
-          grep -q 'LIVE_TRAVEL_V12' boot.js
+          grep -q 'LIVE_TRAVEL_V13' index.html
+          grep -q 'LIVE_TRAVEL_V13' boot.js
           grep -q 'weather-fallback.js' unified-experience.js
           grep -q 'Google Flights 최저가 비교' unified-experience.js
           grep -q 'Google Hotels 최저가 비교' unified-experience.js
           grep -q 'derivedRoute' stable-tools.js
+          grep -q 'document.addEventListener("pointerup"' stable-tools.js
+          grep -q 'subtree:false' stable-tools.js
           grep -q 'button.textContent="전체 일정"' unified-nav.js
 
       - name: Configure Pages
