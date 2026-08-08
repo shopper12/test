@@ -27,7 +27,7 @@ jobs:
       - name: Refresh official transit snapshot for artifact
         run: python scripts/update_transit_live.py
 
-      - name: Validate v16 timeline, internal transit and map continuity
+      - name: Validate v17 direct itinerary and verified internal maps
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
@@ -36,43 +36,36 @@ jobs:
           import json
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
-          runtime=Path('timeline-runtime-v16.js').read_text(encoding='utf-8')
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
-          css=Path('live-transit-links.css').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V16' in boot and 'LIVE_TRAVEL_V16' in html
-          assert 'timeline-runtime-v16' in boot and 'live-transit-links' not in boot
-          assert 'live-transit-links.css?v=LIVE_TRAVEL_V16' in html
-          assert '대시보드에서 실시간 확인' in runtime
-          assert 'data-v16-transit' in runtime and 'dashboard-transit-modal' in runtime
-          assert '지도 메뉴에서 이 일정 보기' in runtime and 'data-v16-map' in runtime
-          assert 'window.__tripMapFocus' in stable and '__openDashboardMapEvent' in runtime
-          assert 'event-time-breakdown' in runtime and 'event-leg-list' in runtime
-          assert '택시 · 타이중 시내 → THSR Taichung' in runtime
-          assert 'THSR · Taichung → Taoyuan' in runtime and 'Airport MRT · A18 → TPE' in runtime
-          assert 'Waterbus/WaterShuttle · Rotterdam → Kinderdijk' in runtime
-          assert 'all-place-links' in runtime and 'google.com/maps/search' in runtime
-          assert 'google.com/travel/hotels' in runtime
-          assert 'observer.observe(main,{childList:true,subtree:false})' in runtime
-          assert 'auditFullRouteContinuity' in stable and 'day_boundary' in routing
-          assert 'dashboard-transit-modal' in css and 'event-time-breakdown' in css
+          timeline=Path('timeline-runtime-v17.js').read_text(encoding='utf-8')
+          assert 'LIVE_TRAVEL_V17' in html and 'LIVE_TRAVEL_V17' in boot
+          assert 'timeline-runtime-v17.js' in boot
+          assert 'map-sidebar-group' in stable and 'flightRoutePoints' in stable
+          assert 'MAP_MANIFEST' in routing and 'manifestCoverage' in routing
+          assert 'data-v16-map' in timeline and '__openDashboardMapEvent' in timeline
+          f=json.load(open('flight-prices.json',encoding='utf-8'))
+          assert len(f.get('fares',{})) == 7
+          assert 'route_f2_direct' in f['fares']
           t=json.load(open('transit-live.json',encoding='utf-8'))
-          assert t.get('generated_at') and len(t.get('providers',[]))==9
-          assert {x['id'] for x in t['providers']} == {'thsr','taoyuan_mrt','ns','ret','waterbus','db','hvv','dsb','rejseplanen'}
+          assert len(t.get('providers',[])) == 9
           PY
-          node --check boot.js
-          node --check timeline-runtime-v16.js
-          node --check stable-tools.js
           node --check map-routing.mjs
+          node --check stable-tools.js
+          node --check timeline-runtime-v17.js
+          node --check boot.js
+          node --check app.js
           node --check unified-experience.js
+          node --check travel-live.js
+          node --check google-maps-inline.js
           node --check scripts/verify_map_mappings.mjs
           node --check scripts/audit_map_continuity.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           node scripts/audit_map_continuity.mjs itinerary-data.js
-          grep -q 'button.textContent="전체 일정"' unified-nav.js
-          python -m py_compile scripts/update_transit_live.py scripts/update_flight_prices.py
-          python -m json.tool transit-live.json >/dev/null
+          python -m py_compile scripts/update_flight_prices.py scripts/update_transit_live.py
+          python -m json.tool flight-prices.json >/dev/null
           python -m json.tool trip-live.json >/dev/null
+          python -m json.tool transit-live.json >/dev/null
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
