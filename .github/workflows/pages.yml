@@ -38,13 +38,17 @@ jobs:
           node --check /tmp/app.mjs
           node --check boot.js
           node --check stable-tools.js
-          grep -q 'LIVE_TRAVEL_V11' index.html
-          grep -q 'LIVE_TRAVEL_V11' boot.js
+          node --check unified-experience.js
+          node --check weather-fallback.js
+          grep -q 'LIVE_TRAVEL_V12' index.html
+          grep -q 'LIVE_TRAVEL_V12' boot.js
           grep -q 'stable-tools.js' boot.js
-          grep -q 'stable-tools.css' index.html
           grep -q 'id="stable-live-tools"' index.html
-          grep -q 'Booking.com 실제 예약' stable-tools.js
-          grep -q 'data-stable-map-event' stable-tools.js
+          grep -q 'derivedRoute' stable-tools.js
+          grep -q 'Google Flights 최저가 비교' unified-experience.js
+          grep -q 'Google Hotels 최저가 비교' unified-experience.js
+          grep -q 'button.textContent="전체 일정"' unified-nav.js
+          grep -q 'AccuWeather 2026년 9월 월간전망 평균' weather-fallback.js
           python -m py_compile scripts/update_flight_prices.py
           python -m json.tool flight-prices.json >/dev/null
           python -m json.tool trip-live.json >/dev/null
