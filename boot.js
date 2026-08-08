@@ -1,4 +1,4 @@
-const BUILD = "LIVE_TRAVEL_V14";
+const BUILD = "LIVE_TRAVEL_V15";
 document.documentElement.dataset.dashboardBuild = BUILD;
 window.__DASHBOARD_BUILD__ = BUILD;
 
@@ -7,6 +7,7 @@ const preloadModules = [
   ["google-map-link-bridge", `./google-map-link-bridge.js?v=${BUILD}`],
   ["unified-experience", `./unified-experience.js?v=${BUILD}`],
   ["unified-nav", `./unified-nav.js?v=${BUILD}`],
+  ["live-transit-links", `./live-transit-links.js?v=${BUILD}`],
 ];
 
 const failures = [];
