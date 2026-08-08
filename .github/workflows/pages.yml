@@ -24,12 +24,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Refresh official transit snapshot for artifact
+        run: python scripts/update_transit_live.py
+
       - name: Validate v15 dashboard, transit and map continuity
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           python - <<'PY'
           from pathlib import Path
+          import json
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
@@ -44,8 +48,10 @@ jobs:
           assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
           assert '#main-content .map-schedule-section{display:none!important}' in css
           assert 'transit-live.json' in live
-          assert 'Google Hotels' not in live or 'google.com/travel/hotels' in live
+          assert 'google.com/travel/hotels' in live
           assert 'entity-name-link hotel' in live and 'entity-name-link restaurant' in live
+          t=json.load(open('transit-live.json',encoding='utf-8'))
+          assert t.get('generated_at') and len(t.get('providers',[]))==7
           PY
           node --check map-routing.mjs
           node --check stable-tools.js
