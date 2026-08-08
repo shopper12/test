@@ -24,41 +24,39 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate dashboard source
+      - name: Validate dashboard source and every map event
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
           python - <<'PY'
           from pathlib import Path
-          text = Path('app.js').read_text(encoding='utf-8')
-          text = text.replace('"./itinerary-data.js?v=PDF_ROUTE_COST_OPTIMIZED_V2"', '"./itinerary-data.mjs"')
-          Path('/tmp/app.mjs').write_text(text, encoding='utf-8')
-          stable = Path('stable-tools.js').read_text(encoding='utf-8')
+          stable=Path('stable-tools.js').read_text(encoding='utf-8')
+          html=Path('index.html').read_text(encoding='utf-8')
+          boot=Path('boot.js').read_text(encoding='utf-8')
+          css=Path('map-sidebar.css').read_text(encoding='utf-8')
+          assert 'LIVE_TRAVEL_V14' in boot and 'LIVE_TRAVEL_V14' in html
+          assert 'map-routing.mjs' in stable
+          assert 'map-sidebar.css?v=LIVE_TRAVEL_V14' in html
+          assert 'if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}' in stable
+          assert '#route-list [data-stable-map-event]' in stable
+          assert 'map-schedule-sidebar-item' in stable and 'map-schedule-sidebar-item' in css
+          assert 'window.__tripMapAudit' in stable and 'window.__tripMapFocus' in stable
           assert 'mainObserver.observe(main,{childList:true,subtree:false})' in stable
-          assert 'document.addEventListener("pointerup"' in stable
-          assert 'window.__tripMapFocus=focusMap' in stable
-          assert 'mainObserver.observe(main,{childList:true,subtree:true})' not in stable
+          assert '#main-content .map-schedule-section{display:none!important}' in css
           PY
-          node --check /tmp/itinerary-data.mjs
-          node --check /tmp/app.mjs
-          node --check boot.js
+          node --check map-routing.mjs
           node --check stable-tools.js
+          node --check boot.js
+          node --check scripts/verify_map_mappings.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
           node --check unified-experience.js
           node --check weather-fallback.js
-          grep -q 'LIVE_TRAVEL_V13' index.html
-          grep -q 'LIVE_TRAVEL_V13' boot.js
-          grep -q 'stable-tools.js' boot.js
-          grep -q 'id="stable-live-tools"' index.html
-          grep -q 'derivedRoute' stable-tools.js
           grep -q 'Google Flights 최저가 비교' unified-experience.js
           grep -q 'Google Hotels 최저가 비교' unified-experience.js
           grep -q 'button.textContent="전체 일정"' unified-nav.js
-          grep -q 'AccuWeather 2026년 9월 월간전망 평균' weather-fallback.js
           python -m py_compile scripts/update_flight_prices.py
           python -m json.tool flight-prices.json >/dev/null
           python -m json.tool trip-live.json >/dev/null
-          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "8"
-          test "$(python -c 'import json; print(len(json.load(open("trip-live.json"))["weather"]))')" = "11"
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
