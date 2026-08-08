@@ -1,0 +1,18 @@
+/* LIVE_TRAVEL_V14: detailed itinerary is rendered inside the map's right sidebar. */
+.map-layout{grid-template-columns:minmax(0,1fr) minmax(370px,430px)}
+.map-schedule-sidebar{padding:0;display:flex;flex-direction:column;max-height:590px;overflow:hidden}
+.map-schedule-sidebar-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-bottom:1px solid #e4ebee;background:#f8fbfc;position:sticky;top:0;z-index:2}
+.map-schedule-sidebar-head>div{display:grid;gap:3px}.map-schedule-sidebar-head b{font-size:.86rem}.map-schedule-sidebar-head small{font-size:.68rem;color:#68767d}
+.map-audit-ok{font-size:.64rem;font-weight:800;padding:4px 7px;border-radius:999px;background:#e8f7ef;color:#17603d;white-space:nowrap}
+.map-schedule-sidebar-list{overflow:auto;min-height:0;flex:1;padding:7px}
+.map-schedule-sidebar-item{width:100%;display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:8px;align-items:center;text-align:left;border:1px solid transparent;border-bottom-color:#edf2f3;background:#fff;padding:9px 8px;cursor:pointer;border-radius:9px}
+.map-schedule-sidebar-item:hover,.map-schedule-sidebar-item:focus-visible,.map-schedule-sidebar-item.active{border-color:#83abc4;background:#f2f9fc;outline:none;box-shadow:0 3px 10px rgba(25,48,61,.07)}
+.map-sidebar-time{font:800 .69rem/1.25 ui-monospace,SFMono-Regular,Menlo,monospace;color:#355d70;display:grid;gap:2px}.map-sidebar-time small{font-size:.6rem;color:#78868d}
+.map-sidebar-body{display:grid;gap:3px;min-width:0}.map-sidebar-body b{font-size:.76rem;line-height:1.35}.map-sidebar-body small{font-size:.64rem;line-height:1.35;color:#6a7880;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.map-sidebar-kind{font-size:.61rem;font-weight:800;padding:4px 6px;border-radius:999px;white-space:nowrap}.map-sidebar-kind.route{background:#e8f0fe;color:#174ea6}.map-sidebar-kind.place{background:#eef7ee;color:#2b6a3f}
+.event-map-shell{position:absolute;inset:0;z-index:1900;background:#fff;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-height:420px}.event-map-shell iframe{display:block;width:100%;height:100%;min-height:420px;border:0;flex:1}
+.event-map-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 11px;background:#f8fbfd;border-bottom:1px solid #dce6eb}.event-map-bar>div:first-child{display:grid;gap:2px;min-width:0}.event-map-bar b{font-size:.82rem}.event-map-bar small{font-size:.66rem;color:#68767d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.event-map-actions{display:flex;gap:6px;align-items:center}.event-map-actions a,.event-map-actions button{border:1px solid #cbd5da;background:#fff;border-radius:8px;padding:6px 8px;font:700 .68rem/1.2 inherit;color:#174ea6;cursor:pointer;text-decoration:none;white-space:nowrap}.event-map-actions button{color:#33444d}
+#main-content .map-schedule-section{display:none!important}
+@media(max-width:1000px){.map-layout{grid-template-columns:1fr}.map-schedule-sidebar{max-height:330px}.map-schedule-sidebar-item{grid-template-columns:58px minmax(0,1fr) auto}}
+@media(max-width:600px){.map-schedule-sidebar-item{grid-template-columns:50px minmax(0,1fr)}.map-sidebar-kind{grid-column:2;width:max-content}.event-map-bar{align-items:flex-start;flex-direction:column}.event-map-actions{width:100%}.event-map-actions a,.event-map-actions button{flex:1;text-align:center}}
