@@ -13,7 +13,9 @@ on:
       - "scripts/fill_official_photo_images.py"
       - "travel-live.js"
       - "unified-nav.js"
+      - "google-maps-inline.js"
       - "travel-live.css"
+      - "google-maps-inline.css"
       - "index.html"
       - "boot.js"
       - ".github/workflows/update-trip-live.yml"
@@ -25,7 +27,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: live-trip-intelligence-v5
+  group: live-trip-intelligence-v6
   cancel-in-progress: true
 
 jobs:
@@ -51,6 +53,23 @@ jobs:
           python -m py_compile scripts/update_trip_live.py scripts/update_flight_prices.py scripts/refine_trip_photos.py scripts/update_official_web_content.py scripts/update_official_web_content_fast.py scripts/fill_official_photo_images.py
           node --check travel-live.js
           node --check unified-nav.js
+          node --check google-maps-inline.js
+
+      - name: Validate Google Maps inline behavior
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          js=Path('google-maps-inline.js').read_text(encoding='utf-8')
+          html=Path('index.html').read_text(encoding='utf-8')
+          boot=Path('boot.js').read_text(encoding='utf-8')
+          assert 'maps/embed/v1/directions' in js
+          assert 'maps/embed/v1/place' in js
+          assert 'data-google-map-mode' in js
+          assert 'localStorage' in js
+          assert 'google-maps-inline.css' in html
+          assert 'google-maps-inline.js' in boot
+          assert 'target="_blank"' not in js
+          PY
 
       - name: Refresh fares, stopover and legacy snapshot
         run: |
@@ -115,7 +134,7 @@ jobs:
     needs: refresh
     runs-on: ubuntu-latest
     concurrency:
-      group: pages-v5
+      group: pages-v6
       cancel-in-progress: true
     environment:
       name: github-pages
