@@ -1,13 +1,45 @@
+const BUILD = "LIVE_TRAVEL_V9";
+document.documentElement.dataset.dashboardBuild = BUILD;
+window.__DASHBOARD_BUILD__ = BUILD;
+
+const modules = [
+  ["travel-live", `./travel-live.js?v=${BUILD}`],
+  ["google-maps-inline", `./google-maps-inline.js?v=${BUILD}`],
+  ["google-map-link-bridge", `./google-map-link-bridge.js?v=${BUILD}`],
+  ["unified-experience", `./unified-experience.js?v=${BUILD}`],
+  ["hotel-booking-summary", `./hotel-booking-summary.js?v=${BUILD}`],
+  ["unified-nav", `./unified-nav.js?v=${BUILD}`],
+];
+
+const failures = [];
+for (const [name, url] of modules) {
+  try {
+    await import(url);
+  } catch (error) {
+    failures.push({ name, error });
+    console.error(`[${BUILD}] ${name} load failed`, error);
+  }
+}
+
 try {
-  await import("./travel-live.js?v=LIVE_TRAVEL_V8");
-  await import("./google-maps-inline.js?v=LIVE_TRAVEL_V8");
-  await import("./google-map-link-bridge.js?v=LIVE_TRAVEL_V8");
-  await import("./unified-experience.js?v=LIVE_TRAVEL_V8");
-  await import("./hotel-booking-summary.js?v=LIVE_TRAVEL_V8");
-  await import("./unified-nav.js?v=LIVE_TRAVEL_V8");
   await import("./app.js?v=PDF_ROUTE_COST_OPTIMIZED_V2");
 } catch (error) {
   console.error(error);
   const main = document.querySelector("#main-content");
   if (main) main.innerHTML = `<div class="security-note"><b>대시보드 실행 오류</b><br>${String(error.message || error)}</div>`;
 }
+
+function showBuildStatus() {
+  let badge = document.querySelector("#dashboard-build-badge");
+  if (!badge) {
+    badge = document.createElement("div");
+    badge.id = "dashboard-build-badge";
+    badge.style.cssText = "position:fixed;right:8px;bottom:8px;z-index:5000;padding:5px 8px;border-radius:999px;background:rgba(17,36,48,.88);color:#fff;font:700 11px/1.2 system-ui,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.16);pointer-events:none";
+    document.body.append(badge);
+  }
+  badge.textContent = failures.length ? `${BUILD} · 보완모듈 ${failures.length}개 오류` : `${BUILD} · 최신`;
+  badge.title = failures.length ? failures.map(x => x.name).join(", ") : "현재 브라우저에 로드된 대시보드 버전";
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showBuildStatus, { once: true });
+else showBuildStatus();
