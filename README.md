@@ -39,6 +39,10 @@
 
 `lowest`는 해당 날짜·노선·환승조건의 절대최저가, `selected`는 대시보드 일정에 맞춘 채택편 가격입니다. 개별 검색이 실패하면 마지막 성공값을 `stale`로 유지하며 최신 가격으로 표시하지 않습니다.
 
+## 저장소 통합
+
+이 프로젝트의 유일한 정본 저장소는 `shopper12/test`입니다. 과거 Lovable/TanStack 기반 `shopper12/wind-tour-tracker`에서 재사용 가치가 있는 로그인·Supabase realtime·지도 코드는 `archive/wind-tour-tracker/`에 보존했습니다. 과거 일정 seed는 현재 V17보다 오래되어 병합하지 않았고, `.env`는 보안상 공개 저장소에 복사하지 않았습니다.
+
 ## 배포
 
 GitHub Actions의 `Deploy GitHub Pages` 워크플로로 자동 배포합니다.
