@@ -1,0 +1,8 @@
+Legacy repository consolidation record
+
+Source repository: shopper12/wind-tour-tracker
+Source main commit: 3dbe673f52f36762621795206db626d2efb75816
+Canonical repository: shopper12/test
+Merged on: 2026-08-09 KST
+
+The source .env and obsolete itinerary seed were intentionally not copied.
