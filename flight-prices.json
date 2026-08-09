@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-09T07:15:47Z",
-  "fresh_until": "2026-08-09T09:15:47Z",
+  "generated_at": "2026-08-09T08:03:38Z",
+  "fresh_until": "2026-08-09T10:03:38Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -299,16 +299,16 @@
             "origin": "AMS",
             "destination": "HAM",
             "departure_date": "2026-09-07",
-            "departure_time": "06:55",
+            "departure_time": "20:50",
             "arrival_date": "2026-09-07",
-            "arrival_time": "07:55",
-            "duration_minutes": 60,
+            "arrival_time": "21:55",
+            "duration_minutes": 65,
             "aircraft": "Embraer 195 E2"
           }
         ]
       },
       "selected_reason": "계획서 항공과 로테르담발 국제열차 비교",
-      "selected_fallback": true,
+      "selected_fallback": false,
       "status": "ok"
     },
     "compare_cph_time": {
