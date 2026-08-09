@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-08-09T10:08:14.491137Z",
+  "generated_at": "2026-08-09T11:05:36.837125Z",
   "refresh_policy": "GitHub Actions hourly; official operator and official journey-planner sources",
   "providers": [
     {
@@ -13,7 +13,7 @@
       "official": true,
       "status": "normal",
       "summary": "THSR 공식 운행상태: on schedule",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -26,7 +26,7 @@
       "official": true,
       "status": "normal",
       "summary": "A18 Taoyuan HSR Station 공식 시간표 제공 중",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -39,7 +39,7 @@
       "official": true,
       "status": "live",
       "summary": "NS Journey Planner가 공사·지연·취소를 최신 반영",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -52,7 +52,7 @@
       "official": true,
       "status": "alert",
       "summary": "Status updates Quick navigate Status updates Status updates Diversions Home Mijn RET You are logged in as Travel history Payment cards Invoices My products Personal data Favorites and preferences Log off Login You are not currently logged in. Login Don't have an account yet? Start here Mijn RET You are logged in as Travel history Payment cards Invoices My products Personal data Favorites and preferences Log off Login",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -65,7 +65,7 @@
       "official": true,
       "status": "alert",
       "summary": "Service Announcements - Waterbus Skip navigation Plan Your Trip Travel Information Schedule Route and Stop Information Service Announcements Waterbus App Ferry Tales Magazine News Destinations All Destinations All stops Tickets & Prices One-way and round-trip Day Pass Subscription Groups Tickets and Fares OV-pay and Check-in Customer Service Contact Lost and Found Frequently Asked Questions e-tickets this.positionMen",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -78,7 +78,7 @@
       "official": true,
       "status": "live",
       "summary": "Fahrpläne & aktuelle Meldungen Unsere Services informieren Sie aktuell über Pünktlichkeit, Verspätung und Änderungen an Ihrer Verbindung oder begleiten Sie mit individuellen Fahrplänen bei Ihrer Reise. Startseite Info & Services Fahrpläne & aktuelle Meldungen Fahrpläne & aktuelle",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -91,7 +91,7 @@
       "official": true,
       "status": "live",
       "summary": "All departures Jump to content To startpage Menu Open submenu Homepage Timetables Timetables Tickets Service About us meinhvv Contact All departures Timetable info Announcements All departures Line timetable Timetable at station / stop Plan of lifts Network and fare zone plans Your search term Search Open search de Tim",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -104,7 +104,7 @@
       "official": true,
       "status": "alert",
       "summary": "akutte ændringer. Akutte ændringer Akutte ændringer i trafikken i dag og de kommende dage Seneste opdatering 8. aug. 10:40 Ændringer på alle S-togs linjer Seneste opdatering 16. juli 12:35 Nykøbing F - Næstved - København - Helsingør Næstved - Køge - København - Helsingør Slagelse - CPH Lufthavn Færre regionaltog på Sjælland fra den 20. juli frem til og med den 16. august Planlagte ændringer Find planlagte ændringer i togtrafikken og kommende sporarbejde Se alle planlagte ændringer Større ændringer Læs mere om de s",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     },
     {
@@ -117,7 +117,7 @@
       "official": true,
       "status": "live",
       "summary": "Timetable valid from 07.08.26 to 21.10.26. All information is issued without liability. Software/Data: 5.45.Rejseplanen.19.1.9 (customer/hcudk/release/2026.3.0.3) [2026-06-18].t0 -",
-      "fetched_at": "2026-08-09T10:08:14.491137Z",
+      "fetched_at": "2026-08-09T11:05:36.837125Z",
       "fetch_ok": true
     }
   ]
