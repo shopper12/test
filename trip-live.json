@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-10T06:53:48Z",
-  "fresh_until": "2026-08-10T08:53:48Z",
+  "generated_at": "2026-08-10T09:00:27Z",
+  "fresh_until": "2026-08-10T11:00:27Z",
   "weather": {
     "2026-09-02": {
       "date": "2026-09-02",
@@ -18,7 +18,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -42,7 +42,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -66,7 +66,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=68",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -90,7 +90,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "KNMI - Weer - Verwachtingen",
@@ -113,7 +113,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "KNMI - Weer - Verwachtingen",
@@ -137,7 +137,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "KNMI - Weer - Verwachtingen",
@@ -153,7 +153,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -177,7 +177,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:50Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -199,7 +199,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:51Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -216,7 +216,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:51Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
@@ -239,7 +239,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-10T06:54:16Z",
+          "checked_at": "2026-08-10T09:00:51Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
@@ -257,7 +257,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-10T06:54:17Z",
+          "checked_at": "2026-08-10T09:00:51Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Forside | DMI",
@@ -280,7 +280,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-10T06:54:17Z",
+          "checked_at": "2026-08-10T09:00:51Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Forside | DMI",
@@ -303,7 +303,7 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 120,
-          "checked_at": "2026-08-10T06:54:17Z",
+          "checked_at": "2026-08-10T09:00:51Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Short-Range Forecasts - Korea Meteorological Administration",
@@ -461,13 +461,12 @@
       "content_image_fallback": true
     },
     "Rotterdam Offshore Group": {
-      "url": "",
+      "url": "https://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
       "page_url": "https://www.rotterdamoffshore.com/",
-      "credit": "official website",
+      "credit": "ROG, your partner for dockside and on-site services",
       "source": "official_website",
       "official": true,
-      "name": "Rotterdam Offshore Group",
-      "error": "<urlopen error timed out>"
+      "name": "Rotterdam Offshore Group"
     },
     "TNO Kesslerpark": {
       "url": "https://www.tno.nl/publish/pages/329/488.jpg",
@@ -608,16 +607,16 @@
     ],
     "rejected_short_layovers": [
       {
-        "via": "HEL",
-        "layover_hours": 2.5,
-        "required_hours": 7.0,
-        "price": 5845328
+        "via": "IST",
+        "layover_hours": 6.2,
+        "required_hours": 9.5,
+        "price": 5117207
       },
       {
         "via": "IST",
         "layover_hours": 2.2,
         "required_hours": 9.5,
-        "price": 6058316
+        "price": 6064838
       }
     ]
   },
@@ -626,5 +625,5 @@
     "photos": "First-party official/business/tourism website representative metadata or page-content images only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-10T06:54:14Z"
+  "official_web_generated_at": "2026-08-10T09:00:48Z"
 }
