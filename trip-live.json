@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-11T22:22:14Z",
-  "fresh_until": "2026-08-12T00:22:14Z",
+  "generated_at": "2026-08-11T23:21:06Z",
+  "fresh_until": "2026-08-12T01:21:06Z",
   "weather": {
     "2026-09-02": {
       "date": "2026-09-02",
@@ -18,7 +18,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-11T22:22:37Z",
+          "checked_at": "2026-08-11T23:21:36Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -42,7 +42,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-11T22:22:37Z",
+          "checked_at": "2026-08-11T23:21:37Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -66,7 +66,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=68",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-11T22:22:37Z",
+          "checked_at": "2026-08-11T23:21:37Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -90,12 +90,11 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-11T22:22:37Z",
+          "checked_at": "2026-08-11T23:21:37Z",
           "hourly": [],
-          "source_reachable": true,
-          "source_page_title": "KNMI - Weer - Verwachtingen",
-          "kind": "official_pending",
-          "reason": "KNMI의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+          "source_reachable": false,
+          "kind": "official_source_error",
+          "reason": "공식 기상기관 페이지 접근 실패: HTTP Error 403: Forbidden"
         }
       ]
     },
@@ -113,12 +112,11 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-11T22:22:37Z",
+          "checked_at": "2026-08-11T23:21:37Z",
           "hourly": [],
-          "source_reachable": true,
-          "source_page_title": "KNMI - Weer - Verwachtingen",
-          "kind": "official_pending",
-          "reason": "KNMI의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+          "source_reachable": false,
+          "kind": "official_source_error",
+          "reason": "공식 기상기관 페이지 접근 실패: HTTP Error 403: Forbidden"
         }
       ]
     },
@@ -137,12 +135,11 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-11T22:22:37Z",
+          "checked_at": "2026-08-11T23:21:37Z",
           "hourly": [],
-          "source_reachable": true,
-          "source_page_title": "KNMI - Weer - Verwachtingen",
-          "kind": "official_pending",
-          "reason": "KNMI의 시간대별 예보 발표 범위(48시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
+          "source_reachable": false,
+          "kind": "official_source_error",
+          "reason": "공식 기상기관 페이지 접근 실패: HTTP Error 403: Forbidden"
         },
         {
           "city": "Hamburg",
@@ -153,7 +150,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-11T22:22:38Z",
+          "checked_at": "2026-08-11T23:21:37Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -177,7 +174,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-11T22:22:38Z",
+          "checked_at": "2026-08-11T23:21:37Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -199,7 +196,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-11T22:22:38Z",
+          "checked_at": "2026-08-11T23:21:38Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -216,7 +213,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-11T22:22:38Z",
+          "checked_at": "2026-08-11T23:21:38Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
@@ -239,7 +236,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-11T22:22:38Z",
+          "checked_at": "2026-08-11T23:21:38Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
@@ -257,7 +254,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-11T22:22:38Z",
+          "checked_at": "2026-08-11T23:21:39Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Forside | DMI",
@@ -280,7 +277,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-11T22:22:38Z",
+          "checked_at": "2026-08-11T23:21:39Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Forside | DMI",
@@ -303,7 +300,7 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 120,
-          "checked_at": "2026-08-11T22:22:39Z",
+          "checked_at": "2026-08-11T23:21:39Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Short-Range Forecasts - Korea Meteorological Administration",
@@ -371,9 +368,9 @@
       "name": "National Taichung Theater"
     },
     "Chun Shui Tang Siwei Original Store": {
-      "url": "https://www.chunshuitang.com.tw/upload/location_list_pic/enL_location_23L26_10YhKvJWb9.webp",
+      "url": "",
       "page_url": "https://www.chunshuitang.com.tw/en/location-detail/original_store/",
-      "credit": "Original Store | Chun Shui Tang Humanistic Tea House",
+      "credit": "One moment, please...",
       "source": "official_website",
       "official": true,
       "name": "Chun Shui Tang Siwei Original Store"
@@ -439,34 +436,31 @@
       "name": "Restaurant Bazar"
     },
     "Kinderdijk": {
-      "url": "https://kinderdijk.nl/wp-content/uploads/2025/12/Kinderdijk_Middelkade-1200x1200.jpg",
+      "url": "",
       "page_url": "https://kinderdijk.com/",
-      "credit": "Kinderdijk UNESCO World Heritage",
+      "credit": "official website",
       "source": "official_website",
       "official": true,
       "name": "Kinderdijk",
-      "image_alt": "The windmills of Kinderdijk on a summer day, with a few visitors walking along the Nature Trail.",
-      "content_image_score": 24,
-      "content_image_fallback": true
+      "error": "<urlopen error timed out>"
     },
     "Port of Rotterdam Authority": {
-      "url": "https://www.portofrotterdam.com/sites/default/files/styles/header_homepage_mobile/public/2021-06/container-schip-rotterdam-terminal.jpg?h=b9b2c2a7&itok=gBOKdMoq",
+      "url": "",
       "page_url": "https://www.portofrotterdam.com/en",
-      "credit": "Port of Rotterdam | Rotterdam Port Authority",
+      "credit": "official website",
       "source": "official_website",
       "official": true,
       "name": "Port of Rotterdam Authority",
-      "image_alt": "Header image",
-      "content_image_score": 28,
-      "content_image_fallback": true
+      "error": "HTTP Error 520: <none>"
     },
     "Rotterdam Offshore Group": {
-      "url": "https://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
+      "url": "",
       "page_url": "https://www.rotterdamoffshore.com/",
-      "credit": "ROG, your partner for dockside and on-site services",
+      "credit": "official website",
       "source": "official_website",
       "official": true,
-      "name": "Rotterdam Offshore Group"
+      "name": "Rotterdam Offshore Group",
+      "error": "<urlopen error timed out>"
     },
     "TNO Kesslerpark": {
       "url": "https://www.tno.nl/publish/pages/329/488.jpg",
@@ -485,15 +479,13 @@
       "name": "Motel One Hamburg-Fleetinsel"
     },
     "Speicherstadt": {
-      "url": "https://www.hamburg.com/resource/image/1172418/landscape_ratio16x9/610/343/c931b9b0e693eccb193ec9061c7e11a5/ADA853C54DB25A65D248414445DFDC61/landungsbruecken1-img.webp",
+      "url": "",
       "page_url": "https://www.hamburg.com/visitors/sights/maritime/",
-      "credit": "Maritime Sights",
+      "credit": "official website",
       "source": "official_website",
       "official": true,
       "name": "Speicherstadt",
-      "image_alt": "Total view of the Landungsbrücken piers and terminal building with River Elbe and harbour cranes at dusk",
-      "content_image_score": 12,
-      "content_image_fallback": true
+      "error": "<urlopen error timed out>"
     },
     "Skyborn Renewables": {
       "url": "https://cdn.sanity.io/images/hj3rn54t/production/791eabb3a728f9f219c28e2e427459667190ffc0-400x400.png?w=1500&fit=max&auto=format",
@@ -529,7 +521,7 @@
       "source": "official_website",
       "official": true,
       "name": "CABINN Plus Esbjerg",
-      "error": "HTTP Error 404: Not Found"
+      "error": "<urlopen error timed out>"
     },
     "Men at Sea": {
       "url": "",
@@ -557,12 +549,13 @@
       "name": "Blue Water Shipping"
     },
     "CABINN Metro": {
-      "url": "https://en.cabinn.com/typo3temp/assets/images/csm_CabInn_Metro_067_-_bygningen_671ceff5f7_f5daafc0206f1c5c2e0b127cfc4abd75.jpg",
+      "url": "",
       "page_url": "https://en.cabinn.com/hotel/cabinn-metro",
-      "credit": "CABINN Metro",
+      "credit": "official website",
       "source": "official_website",
       "official": true,
-      "name": "CABINN Metro"
+      "name": "CABINN Metro",
+      "error": "<urlopen error timed out>"
     },
     "Field's Food Court": {
       "url": "https://img.uniform.global/p/hwzO26lASzePZ9R51iN_MQ/mwGloGWhSTWwYjKlQqPvLg-field-s-886.png",
@@ -610,13 +603,13 @@
         "via": "IST",
         "layover_hours": 6.2,
         "required_hours": 9.5,
-        "price": 5088302
+        "price": 5087062
       },
       {
         "via": "IST",
         "layover_hours": 2.2,
         "required_hours": 9.5,
-        "price": 6030580
+        "price": 6029111
       }
     ]
   },
@@ -625,5 +618,5 @@
     "photos": "First-party official/business/tourism website representative metadata or page-content images only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-11T22:22:35Z"
+  "official_web_generated_at": "2026-08-11T23:21:33Z"
 }
