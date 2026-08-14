@@ -1,0 +1,66 @@
+name: Apply dynamic itinerary integration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-dynamic-trip-update.yml'
+      - 'scripts/apply_dynamic_trip_update.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply itinerary and live-link patch
+        run: python3 scripts/apply_dynamic_trip_update.py
+
+      - name: Validate JavaScript modules
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          cp stable-tools.js /tmp/stable-tools.mjs
+          cp timeline-runtime-v17.js /tmp/timeline-runtime-v17.mjs
+          cp report-memo.js /tmp/report-memo.mjs
+          node --check /tmp/itinerary-data.mjs
+          node --check /tmp/stable-tools.mjs
+          node --check /tmp/timeline-runtime-v17.mjs
+          node --check /tmp/report-memo.mjs
+          node --check map-routing.mjs
+
+      - name: Validate canonical map mappings
+        run: |
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+
+      - name: Verify requested meetings and exact flights
+        run: |
+          grep -q 'DNV Hamburg 해상풍력 기술미팅' itinerary-data.js
+          grep -q 'Skyborn Renewables 해상풍력 사업개발 미팅' itinerary-data.js
+          grep -q 'OWC Germany 해상풍력 기술미팅' itinerary-data.js
+          grep -q 'OWC Denmark 해상풍력 기술미팅' itinerary-data.js
+          grep -q 'Brooktorkai 18' itinerary-data.js
+          grep -q 'Air France AF1751' itinerary-data.js
+          grep -q 'Air France AF264' itinerary-data.js
+          grep -q 'Turkish Airlines TK20' itinerary-data.js
+          grep -q '__tripDashboardLiveData' app.js
+          grep -q 'buildReportMemo' timeline-runtime-v17.js
+
+      - name: Commit integrated update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add itinerary-data.js map-routing.mjs app.js stable-tools.js timeline-runtime-v17.js live-transit-links.css
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'feat: integrate DNV Skyborn OWC route and live report memos'
+            git push
+          fi
