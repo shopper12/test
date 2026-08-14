@@ -29,6 +29,11 @@ const state = {
   livePriceError: null,
 };
 
+// Single live data source for the timeline decorators and verified map sidebar.
+// This reuses the existing Supabase/local state instead of maintaining a second copy.
+window.__tripDashboardLiveData = () => state.data;
+window.__tripDashboardPlanKey = () => state.itineraryKey;
+
 const tabs = [
   ["timeline","전체 일정"],["map","지도"],["airhotel","항공·숙박"],["budget","예산"],
   ["meetings","회의·방문기관"],["transport","교통·렌터카"],["restaurants","맛집"],
@@ -134,7 +139,7 @@ function flightFareId(row){
     time_optimized:{
       "ICN-RMQ":"route_f1",
       "TPE-AMS":"route_f2_direct",
-      "CPH-ICN":"route_f3",
+      "CPH-ICN":"compare_cph_time",
     },
   };
   return maps[state.itineraryKey]?.[`${origin}-${destination}`]||null;
@@ -312,6 +317,7 @@ function renderContent(){
   main.innerHTML=handlers[state.tab]();
   bindDynamicEvents();
   if(state.tab==="map") setTimeout(drawMap,0);
+  queueMicrotask(()=>window.dispatchEvent(new CustomEvent("trip-data-changed",{detail:{itineraryKey:state.itineraryKey,activeDay:state.activeDay}})));
 }
 
 function renderDayTabs(){
@@ -563,7 +569,7 @@ function renderVerify(){
   const checks=[
     ["선택 일정",`${tripMeta.tabLabel} · ${tripMeta.recommendation}`,"적용 완료"],
     ["업무장소 원칙",eventRule,"적용 완료"],
-    ["업무장소","TIPC·VESTAS·Port of Rotterdam·ROG·TNO·Skyborn·Blue Water Shipping","계획서 일치"],
+    ["업무장소",meetings.map(m=>m.organization).join(" · "),"계획서 + 추가 요청 반영"],
     ["대만 체류",`${tripMeta.taiwanWindow}, ${tripMeta.taiwanDuration}`,"요청 반영"],
     ["항공",`${flights.length}개 구간 · 성인 4명 최저가 매시간 자동조회 · ${flightPending.length}개 발권 전`,flightPending.length?"발권 필요":"완료"],
     ["기관방문",`${meetings.length}개 일정 중 ${meetingPending.length}개 미확정`,meetingPending.length?"회신 필요":"완료"],
@@ -577,7 +583,10 @@ function renderVerify(){
     ["Port of Rotterdam","https://www.portofrotterdam.com/en"],
     ["Rotterdam Offshore Group","https://www.rotterdamoffshore.com/"],
     ["TNO Kesslerpark","https://www.tno.nl/en/about-tno/contact/locations/rijswijk-kesslerpark/"],
+    ["DNV Hamburg","https://www.dnv.com/contact/digital-solutions/"],
     ["Skyborn Hamburg","https://www.skybornrenewables.com/contact"],
+    ["OWC Hamburg","https://owcltd.com/offices/hamburg/"],
+    ["OWC Denmark","https://owcltd.com/offices/aarhus-2/"],
     ["Blue Water Esbjerg","https://www.bws.net/contact/denmark/esbjerg"],
     ["NS 암스테르담–함부르크","https://www.nsinternational.com/en/germany/train-hamburg"],
     ["DB 덴마크 조기운임","https://int.bahn.de/en/offers/saver-fare-flexible-fare/saver-fare-europe-denmark"],

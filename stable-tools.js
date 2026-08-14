@@ -1,25 +1,26 @@
 import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V17";
-import { auditEventMappings, auditFullRouteContinuity, eventMapView, flightRoutePoints, googleMapsEmbedUrl, manifestCoverage, mappingLabel } from "./map-routing.mjs?v=LIVE_TRAVEL_V17";
+import { auditEventMappings, auditFullRouteContinuity, eventMapView, flightRoutePoints, googleMapsEmbedUrl, manifestCoverage, mappingLabel, parseMapUrl } from "./map-routing.mjs?v=LIVE_TRAVEL_V17";
 
 const BUILD="LIVE_TRAVEL_V17";
 const HOST_ID="stable-live-tools";
-const state={weather:null,loadedAt:0,selectedEvent:null,flightMap:null};
+const state={weather:null,loadedAt:0,selectedEvent:null,flightMap:null,dataRevision:0};
 const esc=v=>String(v??"").replace(/[&<>'\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'\"':"&quot;"}[c]));
 
 function host(){return document.getElementById(HOST_ID);}
 function activePlanKey(){return document.querySelector(".itinerary-tab.active")?.dataset?.itinerary||DEFAULT_ITINERARY;}
 function activePlan(){return ITINERARIES[activePlanKey()]||ITINERARIES[DEFAULT_ITINERARY];}
+function liveSeed(){const x=window.__tripDashboardLiveData?.();return x?.events&&x?.days?x:activePlan().officialSeed;}
 function activeTab(){return document.querySelector("#tabs [data-tab].active")?.dataset?.tab||"timeline";}
 function selectedDayId(){const button=document.querySelector(".day-tab.active");return button?Number(button.dataset.day):null;}
-function activeDay(){const p=activePlan(),id=selectedDayId()??1;return p.officialSeed.days.find(d=>Number(d.id)===id)||p.officialSeed.days[0];}
-function dayForEvent(event){return activePlan().officialSeed.days.find(d=>Number(d.id)===Number(event?.day_id))||{};}
+function activeDay(){const seed=liveSeed(),id=selectedDayId()??1;return seed.days.find(d=>Number(d.id)===id)||seed.days[0];}
+function dayForEvent(event){return liveSeed().days.find(d=>Number(d.id)===Number(event?.day_id))||{};}
 function timeMinutes(value){const m=String(value||"").match(/(?:^|\s)(\d{1,2}):(\d{2})/);return m?Number(m[1])*60+Number(m[2]):9999;}
-function allEventsSorted(){return (activePlan().officialSeed.events||[]).slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||timeMinutes(a.time_start)-timeMinutes(b.time_start)||(a.sort_order||0)-(b.sort_order||0)||String(a.id).localeCompare(String(b.id)));}
+function allEventsSorted(){return (liveSeed().events||[]).slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||timeMinutes(a.time_start)-timeMinutes(b.time_start)||(a.sort_order||0)-(b.sort_order||0)||String(a.id).localeCompare(String(b.id)));}
 function eventsForDay(dayId){return allEventsSorted().filter(e=>Number(e.day_id)===Number(dayId));}
 function eventsForMap(){const id=selectedDayId();return id==null?allEventsSorted():eventsForDay(id);}
-function eventById(id){return (activePlan().officialSeed.events||[]).find(e=>String(e.id)===String(id));}
-function viewFor(event){return eventMapView(eventsForDay(event.day_id),event,dayForEvent(event));}
+function eventById(id){return (liveSeed().events||[]).find(e=>String(e.id)===String(id));}
+function viewFor(event){const explicit=parseMapUrl(event?.map_url);return explicit?{...explicit,source:"live_event_map_url",verified:true}:eventMapView(eventsForDay(event.day_id),event,dayForEvent(event));}
 
 async function loadWeather(force=false){
   if(!force&&state.weather&&Date.now()-state.loadedAt<300000)return;
@@ -40,7 +41,7 @@ function mapSidebarItem(event){
   return `<button type="button" class="map-schedule-sidebar-item ${active?"active":""} ${view.kind}" data-stable-map-event="${esc(event.id)}" data-map-kind="${esc(view.kind)}"><span class="map-sidebar-time">${esc(event.time_start||"")}${event.time_end?`<small>~ ${esc(event.time_end)}</small>`:""}</span><span class="map-sidebar-body"><b>${esc(event.title||"")}</b><small>${view.kind==="route"?`🧭 ${esc(view.origin)} → ${esc(view.destination)}`:`📍 ${esc(view.query)}`}</small>${scheduleLegsHtml(event,true)}</span><span class="map-sidebar-kind ${view.kind}">${view.kind==="route"?"이동 경로":"장소·체류"}</span></button>`;
 }
 function mapDayGroup(dayId,items){
-  const day=activePlan().officialSeed.days.find(d=>Number(d.id)===Number(dayId))||{};
+  const day=liveSeed().days.find(d=>Number(d.id)===Number(dayId))||{};
   return `<section class="map-sidebar-group day" data-map-day="${esc(dayId)}"><div class="map-sidebar-group-head"><div><b>Day ${esc(dayId)} · ${esc(day.date||"")}</b><small>${esc(day.cities||"")}</small></div><span>${items.length}개 · 시간순</span></div><div class="map-schedule-sidebar-list">${items.map(mapSidebarItem).join("")}</div></section>`;
 }
 function mapSidebarHtml(){
@@ -52,11 +53,12 @@ function mapSidebarHtml(){
 }
 function renderMapSidebar(){
   if(activeTab()!=="map")return false;const list=document.getElementById("route-list");if(!list)return false;
-  const key=`${activePlanKey()}:${selectedDayId()??"all"}:${eventsForMap().length}:v17-time`;
+  const key=`${activePlanKey()}:${selectedDayId()??"all"}:${eventsForMap().length}:${state.dataRevision}:v17-live`;
   if(list.dataset.stableSidebarKey===key&&list.querySelector("[data-stable-map-event]"))return true;
   list.dataset.stableSidebarKey=key;list.classList.add("map-schedule-sidebar");list.innerHTML=mapSidebarHtml();return true;
 }
 function scheduleMapSidebar(){[40,120,260,520,900].forEach(ms=>setTimeout(renderMapSidebar,ms));}
+window.addEventListener("trip-data-changed",()=>{state.dataRevision+=1;state.selectedEvent=null;scheduleMapSidebar();setTimeout(render,0);});
 
 function destroyFlightMap(){if(state.flightMap){try{state.flightMap.remove();}catch{}state.flightMap=null;}}
 function renderFlightRoute(shell,event,view){
@@ -81,9 +83,9 @@ function focusMap(eventId){
   shell.querySelector("[data-event-map-close]")?.addEventListener("click",()=>{destroyFlightMap();shell.remove();state.selectedEvent=null;document.querySelectorAll("#route-list [data-stable-map-event]").forEach(button=>button.classList.remove("active"));});return true;
 }
 window.__tripMapFocus=focusMap;
-window.__tripMapAudit=()=>auditEventMappings(activePlan().officialSeed.events||[]);
-window.__tripMapContinuityAudit=()=>auditFullRouteContinuity(activePlan().officialSeed.events||[]);
-window.__tripMapManifestCoverage=()=>manifestCoverage(activePlan().officialSeed.events||[]);
+window.__tripMapAudit=()=>auditEventMappings(liveSeed().events||[]);
+window.__tripMapContinuityAudit=()=>auditFullRouteContinuity(liveSeed().events||[]);
+window.__tripMapManifestCoverage=()=>manifestCoverage(liveSeed().events||[]);
 window.__tripMapChronologicalAudit=()=>eventsForMap().map(e=>({id:e.id,day_id:Number(e.day_id),time_start:e.time_start,minutes:timeMinutes(e.time_start),kind:viewFor(e).kind,title:e.title}));
 
 function render(){const h=host();if(!h)return;const tab=activeTab();if(tab==="timeline"){h.hidden=false;h.innerHTML=weatherHtml(activeDay());return;}if(tab==="map"){h.hidden=true;h.innerHTML="";scheduleMapSidebar();return;}h.hidden=true;h.innerHTML="";}
