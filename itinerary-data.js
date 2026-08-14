@@ -57,7 +57,7 @@ const sharedMeta = {
   sourcePlan: SOURCE_PLAN,
   includesAwtec: false,
   flightCount: 3,
-  businessLocationRule: "첨부 계획서의 업무장소 7곳만 유지",
+  businessLocationRule: "첨부 계획서 업무장소 + 2026-08-14 요청 OWC Germany/Denmark 기술미팅",
   pdfAirfareBaseline: PDF_AIRFARE_BASELINE,
 };
 
@@ -155,7 +155,7 @@ function buildDays(mode) {
       cities: "함부르크",
       lodging: "Motel One Hamburg-Fleetinsel",
       summary:
-        "Skyborn Renewables 회의 · HafenCity·Speicherstadt·Elbphilharmonie",
+        "Skyborn Renewables 회의 · OWC Germany 기술미팅 · HafenCity·Elbphilharmonie",
     },
     {
       id: 8,
@@ -173,7 +173,7 @@ function buildDays(mode) {
       cities: "에스비에르 → 코펜하겐",
       lodging: "CABINN Metro Copenhagen",
       summary:
-        "Blue Water Shipping 회의·내용정리 후 DSB로 코펜하겐 이동 · EBJ/ABZ 환승 제거",
+        "Blue Water Shipping 회의 · OWC Denmark 기술미팅 · 15:32 DSB로 코펜하겐 이동",
     },
     {
       id: 10,
@@ -847,26 +847,65 @@ function buildEvents(mode) {
       },
     ),
     e(
+      "d7-055",
+      7,
+      "15:15",
+      "15:40",
+      "Skyborn Renewables → OWC Hamburg 이동",
+      "교통",
+      "Ericusspitze 2-4 → Alter Wall 69, Hamburg",
+      "도보/택시",
+      "25분",
+      {
+        sort_order: 55,
+        map_url:
+          "https://www.google.com/maps/dir/?api=1&origin=Skyborn+Renewables+Ericusspitze+2-4+Hamburg&destination=OWC+Alter+Wall+69+Hamburg",
+        notes: "Skyborn 회의 종료 후 OWC Germany 미팅 장소로 바로 이동.",
+      },
+    ),
+    e(
       "d7-06",
       7,
-      "15:30",
-      "17:30",
-      "Skyborn 회의내용 정리",
-      "업무정리",
-      "HafenCity",
+      "15:45",
+      "17:15",
+      "OWC Germany 해상풍력 기술미팅 (요청 중)",
+      "업무",
+      "OWC Hamburg, Alter Wall 69, 20457 Hamburg",
       "도보",
-      "2시간",
+      "90분",
+      {
+        official_url: "https://owcltd.com/offices/hamburg/",
+        map_url:
+          "https://www.google.com/maps/search/?api=1&query=OWC+Alter+Wall+69+20457+Hamburg",
+        meeting_status: "OWC 회신·참석자 확인 대기",
+        attendees: [
+          "풍력사업실 김동일 차장",
+          "풍력사업실 송승택 차장",
+          "사업금융부 박보인 차장",
+          "법무실 박주선 팀장",
+        ],
+        meeting_agenda: [
+          "유럽 해상풍력 Owner’s Engineering 및 Technical Advisory 수행 사례",
+          "개발 초기 기술성 검토 및 Technical Risk 관리 방식",
+          "WTG·Foundation·Cable·Offshore Substation 설계 및 기술검토",
+          "설계 최적화·사업비·LCoE 절감 Engineering Approach",
+          "독일 해상풍력 프로젝트·기술자문 사례 및 시장 특성",
+          "국내 해상풍력 사업 적용 시 기술적 시사점",
+        ],
+        notes:
+          "희망일 9/8 또는 9/9 오후 중 현 교통표상 9/8을 우선 반영. 9/9는 10:53 Hamburg Hbf 출발 확정 열차 때문에 오후 미팅 불가. 독일팀에는 독일 프로젝트·기술자문 사례를 중심으로 요청. 시간·참석자는 OWC 일정에 맞춰 조정 가능.",
+      },
     ),
     e(
       "d7-07",
       7,
-      "17:30",
+      "17:20",
       "20:30",
       "Elbphilharmonie Plaza·Landungsbrücken·저녁",
       "관광·식사",
-      "Hamburg HafenCity",
+      "OWC Hamburg → Elbphilharmonie → Landungsbrücken",
       "도보+U-Bahn",
-      "3시간",
+      "3시간 10분",
       {
         booking_url:
           "https://www.elbphilharmonie.de/en/plaza-tickets",
@@ -1013,12 +1052,52 @@ function buildEvents(mode) {
       "d9-05",
       9,
       "13:00",
+      "14:30",
+      "OWC Denmark 해상풍력 기술미팅 (요청 중)",
+      "업무",
+      "CABINN Plus Esbjerg / OWC 지정 Esbjerg 장소(협의 중)",
+      "도보/택시",
+      "90분",
+      {
+        official_url: "https://owcltd.com/offices/",
+        map_url:
+          "https://www.google.com/maps/search/?api=1&query=CABINN+Plus+Esbjerg+Torvegade+27",
+        meeting_status: "OWC Denmark 회신·Esbjerg 참석자·장소 확인 대기",
+        attendees: [
+          "풍력사업실 김동일 차장",
+          "풍력사업실 송승택 차장",
+          "사업금융부 박보인 차장",
+          "법무실 박주선 팀장",
+        ],
+        meeting_agenda: [
+          "덴마크 및 북해 해상풍력 Owner’s Engineering·Technical Advisory 사례",
+          "개발 초기 Technical Risk·설계 의사결정 관리",
+          "WTG·Foundation·Cable·Offshore Substation 패키지 기술검토",
+          "Engineering 최적화와 사업비·LCoE 절감",
+          "Asset Management 및 BoP O&M 기술지원 사례",
+          "독일 대비 덴마크 해상풍력 시장·프로젝트 환경 차이",
+          "국내 사업 적용 가능한 기술적 시사점",
+        ],
+        notes:
+          "덴마크팀과 9/10 오후 별도 미팅 요청을 반영. OWC Denmark 공식 사무실은 Aarhus이므로 Esbjerg 방문 미팅 장소는 OWC 측과 협의 후 확정. 오전 Blue Water Shipping 회의 후 진행하며 15:32 DSB IC850 탑승을 위해 14:30 종료 권고. O&M·Asset Management 사례를 중점 요청.",
+      },
+    ),
+    e(
+      "d9-055",
+      9,
+      "14:30",
       "15:10",
-      "독일·덴마크 방문내용 정리",
-      "업무정리",
-      "CABINN Plus 라운지/도심 업무공간",
-      "도보",
-      "2시간 10분",
+      "OWC 미팅 종료·짐 회수 → Esbjerg Station",
+      "교통",
+      "Esbjerg meeting venue → CABINN Plus → Esbjerg St.",
+      "도보/택시",
+      "40분",
+      {
+        sort_order: 55,
+        map_url:
+          "https://www.google.com/maps/dir/?api=1&origin=CABINN+Plus+Esbjerg+Torvegade+27&destination=Esbjerg+Station",
+        notes: "15:32 IC850 탑승 기준 20분 이상 승차 여유 확보. OWC 미팅 장소가 호텔 외부로 확정되면 출발 동선 재산정.",
+      },
     ),
     e(
       "d9-06",
