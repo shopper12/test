@@ -1,0 +1,45 @@
+name: Finalize live route linkage
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/finalize-live-route-link.yml'
+      - 'scripts/finalize_live_route_link.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply final linkage fixes
+        run: python3 scripts/finalize_live_route_link.py
+      - name: Validate modules and maps
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          cp stable-tools.js /tmp/stable-tools.mjs
+          cp timeline-runtime-v17.js /tmp/timeline-runtime-v17.mjs
+          node --check /tmp/itinerary-data.mjs
+          node --check /tmp/stable-tools.mjs
+          node --check /tmp/timeline-runtime-v17.mjs
+          node --check map-routing.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+          grep -q 'live_event_text' stable-tools.js
+          grep -q '현재 일정·지도 연동' stable-tools.js
+          grep -q 'TK20 시각 재확인' itinerary-data.js
+      - name: Commit final linkage
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add stable-tools.js timeline-runtime-v17.js itinerary-data.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: keep edited schedule map and report context synchronized'
+            git push
+          fi
