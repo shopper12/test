@@ -1,6 +1,6 @@
 import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
 import { longRangeWeather } from "./weather-fallback.js?v=LIVE_TRAVEL_V17";
-import { auditEventMappings, auditFullRouteContinuity, eventMapView, flightRoutePoints, googleMapsEmbedUrl, manifestCoverage, mappingLabel, parseMapUrl } from "./map-routing.mjs?v=LIVE_TRAVEL_V17";
+import { auditEventMappings, auditFullRouteContinuity, eventMapView, flightRoutePoints, googleMapsEmbedUrl, manifestCoverage, mappingLabel, parseMapUrl, routeFromText, placeForEvent } from "./map-routing.mjs?v=LIVE_TRAVEL_V17";
 
 const BUILD="LIVE_TRAVEL_V17";
 const HOST_ID="stable-live-tools";
@@ -20,7 +20,13 @@ function allEventsSorted(){return (liveSeed().events||[]).slice().sort((a,b)=>Nu
 function eventsForDay(dayId){return allEventsSorted().filter(e=>Number(e.day_id)===Number(dayId));}
 function eventsForMap(){const id=selectedDayId();return id==null?allEventsSorted():eventsForDay(id);}
 function eventById(id){return (liveSeed().events||[]).find(e=>String(e.id)===String(id));}
-function viewFor(event){const explicit=parseMapUrl(event?.map_url);return explicit?{...explicit,source:"live_event_map_url",verified:true}:eventMapView(eventsForDay(event.day_id),event,dayForEvent(event));}
+function viewFor(event){
+  const explicit=parseMapUrl(event?.map_url);if(explicit)return{...explicit,source:"live_event_map_url",verified:true};
+  const base=(activePlan().officialSeed.events||[]).find(x=>String(x.id)===String(event?.id));
+  const changed=!base||String(base.location||"")!==String(event?.location||"")||String(base.title||"")!==String(event?.title||"")||String(base.transport||"")!==String(event?.transport||"");
+  if(changed){const route=routeFromText(event);if(route)return{...route,source:"live_event_text",verified:true};const query=placeForEvent(event);if(query)return{kind:"place",query,source:"live_event_place",verified:true};}
+  return eventMapView(eventsForDay(event.day_id),event,dayForEvent(event));
+}
 
 async function loadWeather(force=false){
   if(!force&&state.weather&&Date.now()-state.loadedAt<300000)return;
@@ -45,11 +51,12 @@ function mapDayGroup(dayId,items){
   return `<section class="map-sidebar-group day" data-map-day="${esc(dayId)}"><div class="map-sidebar-group-head"><div><b>Day ${esc(dayId)} · ${esc(day.date||"")}</b><small>${esc(day.cities||"")}</small></div><span>${items.length}개 · 시간순</span></div><div class="map-schedule-sidebar-list">${items.map(mapSidebarItem).join("")}</div></section>`;
 }
 function mapSidebarHtml(){
-  const events=eventsForMap(),all=allEventsSorted(),audit=auditEventMappings(events),valid=audit.filter(r=>r.mapped&&!r.ambiguous&&r.verified).length,id=selectedDayId();
-  const routes=events.filter(e=>viewFor(e).kind==="route"),places=events.filter(e=>viewFor(e).kind==="place");
-  const routeAudit=auditFullRouteContinuity(id==null?all:events),connected=routeAudit.filter(r=>r.connected&&r.verified).length,cov=manifestCoverage(events);
-  const dayIds=[...new Set(events.map(e=>Number(e.day_id)))];
-  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 지도 일정 · 시간순":`Day ${id} 지도 일정 · 시간순`}</b><small>${events.length}개 · 이동 경로 ${routes.length} · 장소·체류 ${places.length} · 검증 매핑 ${valid}/${events.length}</small></div><span class="map-audit-ok">${valid===events.length&&connected===routeAudit.length&&cov.covered===cov.total?"전체 검증 완료":"경로 점검 필요"}</span></div>${dayIds.map(dayId=>mapDayGroup(dayId,events.filter(e=>Number(e.day_id)===dayId))).join("")}`;
+  const events=eventsForMap(),all=allEventsSorted(),id=selectedDayId(),canonicalIds=new Set((activePlan().officialSeed.events||[]).map(e=>String(e.id))),canonical=events.every(e=>canonicalIds.has(String(e.id)));
+  const views=events.map(e=>viewFor(e)),valid=views.filter(v=>v&&(v.kind==="place"?Boolean(v.query):Boolean(v.origin&&v.destination))).length;
+  const routes=views.filter(v=>v.kind==="route"),places=views.filter(v=>v.kind==="place");
+  const routeAudit=canonical?auditFullRouteContinuity(id==null?all:events):[],connected=routeAudit.filter(r=>r.connected&&r.verified).length,cov=canonical?manifestCoverage(events):{covered:events.length,total:events.length};
+  const dayIds=[...new Set(events.map(e=>Number(e.day_id)))],ok=valid===events.length&&(!canonical||(connected===routeAudit.length&&cov.covered===cov.total));
+  return `<div class="map-schedule-sidebar-head"><div><b>${id==null?"전체 지도 일정 · 시간순":`Day ${id} 지도 일정 · 시간순`}</b><small>${events.length}개 · 이동 경로 ${routes.length} · 장소·체류 ${places.length} · ${canonical?"검증 매핑":"실시간 연동"} ${valid}/${events.length}</small></div><span class="map-audit-ok">${ok?(canonical?"전체 검증 완료":"현재 일정·지도 연동"):"경로 점검 필요"}</span></div>${dayIds.map(dayId=>mapDayGroup(dayId,events.filter(e=>Number(e.day_id)===dayId))).join("")}`;
 }
 function renderMapSidebar(){
   if(activeTab()!=="map")return false;const list=document.getElementById("route-list");if(!list)return false;

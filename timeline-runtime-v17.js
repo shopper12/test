@@ -59,7 +59,7 @@ function fixed(e){const t=totalMinutes(e);if(!t)return null;if(e.id==="d3-03")re
 "d5-04":[[0,15,"RET 메트로 · Katendrecht 방면","move"],[15,-1,"Fenix Food Factory·항만 저녁","stay"]],
 "d6-04":[[0,35,"Wilhelminaplein 인근 점심","stay"],[35,55,"택시 · ROG 이동","move"]],
 "d6-08":[[0,40,"택시 · TNO → Rotterdam Centraal","move"],[40,70,"도보·짐 회수·승차 준비","wait"]],
-"d7-07":[[0,15,"도보 · HafenCity → Elbphilharmonie","move"],[15,95,"Elbphilharmonie Plaza 체류","stay"],[95,110,"HVV U-Bahn · Landungsbrücken","move"],[110,180,"Landungsbrücken 산책·저녁","stay"]],
+"d7-07":[[0,15,"도보 · OWC Alter Wall 69 → Elbphilharmonie","move"],[15,95,"Elbphilharmonie Plaza 체류","stay"],[95,110,"HVV U-Bahn · Landungsbrücken","move"],[110,180,"Landungsbrücken 산책·저녁","stay"]],
 "d8-01":[[0,50,"조식·체크아웃","stay"],[50,75,"U-Bahn 또는 택시 · Hamburg Hbf","move"],[75,105,"역 도보·승차 준비","wait"]],
 "d8-03":[[0,12,"도보 · Esbjerg St. → CABINN Plus","move"],[12,50,"호텔 체크인·정비","stay"]],
 "d8-04":[[0,25,"버스 · 도심 → Sædding Strand","move"],[25,180,"Men at Sea·박물관 외부 도보 체류","stay"]],

@@ -1155,7 +1155,7 @@ function buildEvents(mode) {
           e("d10-01",10,"07:10","07:50","체크아웃·코펜하겐공항 이동","출국·교통","CABINN Metro → Ørestad St. → CPH","도보+지역열차","40분",{notes:"Rejseplanen은 9/7~9/12 선로공사로 일부 열차 변경 가능성을 공지. 3일 전 재확인하고 변경 시 택시로 대체.",schedule_legs:[{status:"provisional",service:"Regional train Re 1026 후보",from:"Ørestad St.",depart:"07:37 후보",to:"CPH Lufthavn",arrive:"07:44 후보",source_label:"Rejseplanen 현행 패턴 · 9/11 선로공사 재확인"}]}),
           e("d10-02",10,"10:25","14:45","CPH → IST","항공","Copenhagen → Istanbul","Turkish Airlines","3시간 20분",{booking_url:"https://www.google.com/travel/flights",schedule_legs:[{status:"confirmed",service:"Turkish Airlines TK1784",from:"CPH",depart:"10:25",to:"IST",arrive:"14:45",source_label:"Google Flights 현재 판매편"}]}),
           e("d10-03",10,"14:45","17:00","이스탄불 환승","환승","Istanbul Airport","공항 내 이동","2시간 15분"),
-          e("d10-04",10,"17:00","9/12 08:35","IST → ICN","항공","Istanbul → Incheon","Turkish Airlines","9시간 35분",{booking_url:"https://www.google.com/travel/flights",notes:"비용안보다 약 102만원(4인) 비싸지만 인천 도착은 약 1시간 빠름.",schedule_legs:[{status:"confirmed",service:"Turkish Airlines TK20",from:"IST",depart:"17:00 판매화면 / 정규표 16:50",to:"ICN",arrive:"9/12 08:35",source_label:"Google Flights 날짜별 판매편 + TK20 계절운항표 · 발권 전 최종 재확인"}]}),
+          e("d10-04",10,"17:00","9/12 08:35","IST → ICN","항공","Istanbul → Incheon","Turkish Airlines","9시간 35분",{booking_url:"https://www.google.com/travel/flights",notes:"9/12 08:35 ICN 도착 비교안. TK20 출발시각은 날짜별 판매화면과 계절운항표에 10분 차이가 있어 발권 직전 재확인.",schedule_legs:[{status:"confirmed",service:"Turkish Airlines TK20",from:"IST",depart:"17:00 판매화면 / 정규표 16:50",to:"ICN",arrive:"9/12 08:35",source_label:"Google Flights 날짜별 판매편 + TK20 계절운항표 · 발권 전 최종 재확인"}]}),
           e("d11-01",11,"08:35","09:35","인천 도착·입국","귀국","Incheon International Airport","도보","60분"),
         ]),
   ];
@@ -1203,15 +1203,15 @@ function buildFlights(mode) {
           id: "f3", day_id: 10, date: "2026-09-11", flight_no: "AF1751 + AF264",
           origin: "CPH", destination: "ICN", depart_time: "10:10", arrive_time: "09:35+1",
           min_krw: null, max_krw: null, status: "귀국일 고정·CDG 1회 환승",
-          alternative: "SAS 직항은 약 1,291만원(4인) 추가", url: "https://wwws.airfrance.co.kr/",
+          alternative: "SAS 직항 및 다른 1회 경유편은 최신 자동운임으로 비교", url: "https://wwws.airfrance.co.kr/",
           notes: "AF1751 + AF264 · 9/11 10:10 CPH 출발 · 9/12 09:35 ICN 도착. 운임은 자동조회값 사용.", sort_order: 30,
         }
       : {
           id: "f3", day_id: 10, date: "2026-09-11", flight_no: "TK1784 + TK20",
           origin: "CPH", destination: "ICN", depart_time: "10:25", arrive_time: "08:35+1",
-          min_krw: null, max_krw: null, status: "IST 1회 환승·도착시간 우선",
-          alternative: "Air France CDG 경유는 4인 약 102만원 저렴", url: "https://www.turkishairlines.com/",
-          notes: "비용안보다 약 1시간 빠르게 인천 도착.", sort_order: 30,
+          min_krw: null, max_krw: null, status: "IST 1회 환승·TK20 시각 재확인",
+          alternative: "Air France CDG 경유 비용안과 최신 자동운임 비교", url: "https://www.turkishairlines.com/",
+          notes: "TK1784 + TK20 · 9/11 CPH 출발 · 9/12 08:35 ICN 도착. TK20 출발시각은 발권 직전 재확인.", sort_order: 30,
         },
   ];
 }
@@ -1268,7 +1268,7 @@ const hotels = [
     alternative: "Premier Inn Hamburg City Zentrum",
     url: "https://www.motel-one.com/en/hotels/hamburg/hotel-hamburg-fleetinsel/",
     notes:
-      "공식 공개 시작가 약 US$109/실·박. Skyborn·Speicherstadt 도보권.",
+      "공식 공개 시작가 약 US$109/실·박. DNV·Skyborn·OWC Hamburg를 하루에 연결하기 좋은 도심권.",
     sort_order: 30,
   },
   {
