@@ -1,0 +1,41 @@
+name: Finalize semantic live linkage
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/finalize-semantic-live-link.yml'
+      - 'scripts/finalize_semantic_live_link.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply semantic linkage
+        run: python3 scripts/finalize_semantic_live_link.py
+      - name: Validate source and canonical map audit
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          cp stable-tools.js /tmp/stable-tools.mjs
+          cp report-memo.js /tmp/report-memo.mjs
+          node --check /tmp/stable-tools.mjs
+          node --check /tmp/report-memo.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+          grep -q 'live_semantic_manifest' stable-tools.js
+      - name: Commit semantic linkage
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add stable-tools.js report-memo.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: preserve map and report links across collaborative edits'
+            git push
+          fi
