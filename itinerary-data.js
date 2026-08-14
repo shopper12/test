@@ -910,7 +910,7 @@ function buildEvents(mode) {
         booking_url:
           "https://www.elbphilharmonie.de/en/plaza-tickets",
         map_url:
-          "https://www.google.com/maps/dir/?api=1&origin=Skyborn+Renewables+Hamburg&destination=Landungsbrucken&waypoints=Elbphilharmonie",
+          "https://www.google.com/maps/dir/?api=1&origin=OWC+Alter+Wall+69+Hamburg&destination=Landungsbrucken&waypoints=Elbphilharmonie",
         notes: "플라자 현장권은 무료이나 사전예약 수수료가 있을 수 있음.",
       },
     ),
