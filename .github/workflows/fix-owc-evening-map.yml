@@ -1,0 +1,37 @@
+name: Fix OWC evening map link
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-owc-evening-map.yml'
+      - 'scripts/fix_owc_evening_map.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fix link
+        run: python3 scripts/fix_owc_evening_map.py
+      - name: Validate
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node --check /tmp/itinerary-data.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add itinerary-data.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: route Hamburg evening from OWC meeting'
+            git push
+          fi
