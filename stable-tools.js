@@ -22,9 +22,11 @@ function eventsForMap(){const id=selectedDayId();return id==null?allEventsSorted
 function eventById(id){return (liveSeed().events||[]).find(e=>String(e.id)===String(id));}
 function viewFor(event){
   const explicit=parseMapUrl(event?.map_url);if(explicit)return{...explicit,source:"live_event_map_url",verified:true};
-  const base=(activePlan().officialSeed.events||[]).find(x=>String(x.id)===String(event?.id));
+  const official=activePlan().officialSeed.events||[];
+  const base=official.find(x=>String(x.id)===String(event?.id))||official.find(x=>Number(x.day_id)===Number(event?.day_id)&&String(x.title||"").trim()===String(event?.title||"").trim());
   const changed=!base||String(base.location||"")!==String(event?.location||"")||String(base.title||"")!==String(event?.title||"")||String(base.transport||"")!==String(event?.transport||"");
   if(changed){const route=routeFromText(event);if(route)return{...route,source:"live_event_text",verified:true};const query=placeForEvent(event);if(query)return{kind:"place",query,source:"live_event_place",verified:true};}
+  if(base&&String(base.id)!==String(event?.id))return{...eventMapView([],base,dayForEvent(event)),source:"live_semantic_manifest",verified:true};
   return eventMapView(eventsForDay(event.day_id),event,dayForEvent(event));
 }
 

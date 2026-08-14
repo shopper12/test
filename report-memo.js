@@ -33,16 +33,17 @@ function timeLabel(event) {
 function meetingFor(event, meetings = []) {
   const hint = MEETING_HINTS[String(event?.id || "")];
   const hay = norm(`${event?.title || ""} ${event?.location || ""}`);
-  const rows = (meetings || []).filter((m) => Number(m?.day_id) === Number(event?.day_id));
-  if (hint) {
-    const n = norm(hint);
-    const hit = rows.find((m) => norm(`${m?.organization || ""} ${m?.agenda || ""}`).includes(n));
-    if (hit) return hit;
-  }
-  return rows.find((m) => {
+  const all = meetings || [], sameDay = all.filter((m) => Number(m?.day_id) === Number(event?.day_id));
+  const match = (rows) => rows.find((m) => {
     const org = norm(m?.organization);
     return org && (hay.includes(org) || org.split(" ").some((token) => token.length >= 4 && hay.includes(token)));
-  }) || null;
+  });
+  if (hint) {
+    const n = norm(hint);
+    const hit = sameDay.find((m) => norm(`${m?.organization || ""} ${m?.agenda || ""}`).includes(n)) || all.find((m) => norm(`${m?.organization || ""} ${m?.agenda || ""}`).includes(n));
+    if (hit) return hit;
+  }
+  return match(sameDay) || match(all) || null;
 }
 
 function agendaText(meeting, event) {
