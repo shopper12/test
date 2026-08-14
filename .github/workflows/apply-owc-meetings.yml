@@ -1,0 +1,54 @@
+name: Apply OWC meeting schedule
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-owc-meetings.yml'
+      - 'scripts/apply_owc_meetings.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply OWC meetings
+        run: python3 scripts/apply_owc_meetings.py
+
+      - name: Validate JavaScript modules
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node --check /tmp/itinerary-data.mjs
+          node --check map-routing.mjs
+
+      - name: Validate canonical map mappings
+        run: |
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+
+      - name: Verify OWC schedule content
+        run: |
+          grep -q 'OWC Germany 해상풍력 기술미팅' itinerary-data.js
+          grep -q 'OWC Denmark 해상풍력 기술미팅' itinerary-data.js
+          grep -q 'Alter Wall 69' itinerary-data.js
+          grep -q 'd9-055' map-routing.mjs
+
+      - name: Commit schedule update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add itinerary-data.js map-routing.mjs
+          if git diff --cached --quiet; then
+            echo 'No changes to commit'
+          else
+            git commit -m 'feat: add OWC Germany and Denmark technical meetings'
+            git push
+          fi
