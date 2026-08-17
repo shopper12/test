@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-17T10:07:21Z",
-  "fresh_until": "2026-08-17T12:07:21Z",
+  "generated_at": "2026-08-17T11:00:05Z",
+  "fresh_until": "2026-08-17T13:00:05Z",
   "weather": {
     "2026-09-02": {
       "date": "2026-09-02",
@@ -18,7 +18,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-17T10:08:01Z",
+          "checked_at": "2026-08-17T11:00:30Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -42,7 +42,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-17T10:08:01Z",
+          "checked_at": "2026-08-17T11:00:30Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -66,7 +66,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=68",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-17T10:08:01Z",
+          "checked_at": "2026-08-17T11:00:30Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Cities/Counties Forecast | Central Weather Administration",
@@ -90,7 +90,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-17T10:08:01Z",
+          "checked_at": "2026-08-17T11:00:30Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "KNMI - Weer - Verwachtingen",
@@ -113,7 +113,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-17T10:08:01Z",
+          "checked_at": "2026-08-17T11:00:30Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "KNMI - Weer - Verwachtingen",
@@ -137,7 +137,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/verwachtingen",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-17T10:08:01Z",
+          "checked_at": "2026-08-17T11:00:30Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "KNMI - Weer - Verwachtingen",
@@ -153,7 +153,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-17T10:08:01Z",
+          "checked_at": "2026-08-17T11:00:30Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -177,7 +177,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-17T10:08:02Z",
+          "checked_at": "2026-08-17T11:00:31Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -199,7 +199,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 72,
-          "checked_at": "2026-08-17T10:08:02Z",
+          "checked_at": "2026-08-17T11:00:31Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
@@ -216,7 +216,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-17T10:08:02Z",
+          "checked_at": "2026-08-17T11:00:31Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
@@ -239,7 +239,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-17T10:08:02Z",
+          "checked_at": "2026-08-17T11:00:31Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
@@ -257,7 +257,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-17T10:08:03Z",
+          "checked_at": "2026-08-17T11:00:31Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Forside | DMI",
@@ -280,7 +280,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/",
           "forecast_horizon_hours": 48,
-          "checked_at": "2026-08-17T10:08:03Z",
+          "checked_at": "2026-08-17T11:00:31Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Forside | DMI",
@@ -303,7 +303,7 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 120,
-          "checked_at": "2026-08-17T10:08:03Z",
+          "checked_at": "2026-08-17T11:00:31Z",
           "hourly": [],
           "source_reachable": true,
           "source_page_title": "Short-Range Forecasts - Korea Meteorological Administration",
@@ -461,13 +461,12 @@
       "content_image_fallback": true
     },
     "Rotterdam Offshore Group": {
-      "url": "",
+      "url": "https://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
       "page_url": "https://www.rotterdamoffshore.com/",
-      "credit": "official website",
+      "credit": "ROG, your partner for dockside and on-site services",
       "source": "official_website",
       "official": true,
-      "name": "Rotterdam Offshore Group",
-      "error": "<urlopen error timed out>"
+      "name": "Rotterdam Offshore Group"
     },
     "TNO Kesslerpark": {
       "url": "https://www.tno.nl/publish/pages/329/488.jpg",
@@ -505,7 +504,7 @@
       "name": "Skyborn Renewables"
     },
     "Elbphilharmonie": {
-      "url": "https://d3c80vss50ue25.cloudfront.net/media/filer_public_thumbnails/filer_public/35/e1/35e1b5db-386b-4baa-909a-33fddd9956e4/260321_epgs_simon_rattle_symphonieorchester__chor_br_c_sophie_wolter_21.jpg__1300x1080_q85_crop_subject_location-960%2C640_subsampling-2_upscale.jpg",
+      "url": "https://d3c80vss50ue25.cloudfront.net/media/filer_public_thumbnails/filer_public/4e/93/4e9340b4-b096-4659-8d62-f7f46af046e6/augustin_hadelich_c_suxiao_yang_1.jpg__1300x1080_q85_crop_subject_location-960%2C645_subsampling-2_upscale.jpg",
       "page_url": "https://www.elbphilharmonie.de/en/",
       "credit": "Elbphilharmonie Laeiszhalle Hamburg - Elbphilharmonie",
       "source": "official_website",
@@ -516,12 +515,13 @@
       "content_image_fallback": true
     },
     "Oberhafen-Kantine": {
-      "url": "https://oberhafenkantine-hamburg.de/wp-content/uploads/2025/07/Haltung_Titelbild-242x300.jpg",
+      "url": "",
       "page_url": "https://www.oberhafenkantine-hamburg.de/",
-      "credit": "Home - Oberhafen-Kantine",
+      "credit": "official website",
       "source": "official_website",
       "official": true,
-      "name": "Oberhafen-Kantine"
+      "name": "Oberhafen-Kantine",
+      "error": "<urlopen error [Errno 101] Network is unreachable>"
     },
     "CABINN Plus Esbjerg": {
       "url": "",
@@ -609,7 +609,7 @@
         "via": "IST",
         "layover_hours": 2.2,
         "required_hours": 9.5,
-        "price": 6051422
+        "price": 6060500
       }
     ]
   },
@@ -618,5 +618,5 @@
     "photos": "First-party official/business/tourism website representative metadata or page-content images only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-17T10:07:59Z"
+  "official_web_generated_at": "2026-08-17T11:00:28Z"
 }
