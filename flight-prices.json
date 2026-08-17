@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-17T14:44:28Z",
-  "fresh_until": "2026-08-17T16:44:28Z",
+  "generated_at": "2026-08-17T15:39:39Z",
+  "fresh_until": "2026-08-17T17:39:39Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -16,8 +16,8 @@
       "destination": "RMQ",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDIoAGoFEgNJQ05yBRIDUk1RQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 489600,
-        "per_person_krw": 122400,
+        "total_krw": 489200,
+        "per_person_krw": 122300,
         "airlines": [
           "진에어"
         ],
@@ -37,8 +37,8 @@
         ]
       },
       "selected": {
-        "total_krw": 489600,
-        "per_person_krw": 122400,
+        "total_krw": 489200,
+        "per_person_krw": 122300,
         "airlines": [
           "진에어"
         ],
@@ -68,8 +68,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAGoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5467833,
-        "per_person_krw": 1366958,
+        "total_krw": 5467796,
+        "per_person_krw": 1366949,
         "airlines": [
           "중화항공"
         ],
@@ -89,8 +89,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5467833,
-        "per_person_krw": 1366958,
+        "total_krw": 5467796,
+        "per_person_krw": 1366949,
         "airlines": [
           "중화항공"
         ],
@@ -120,8 +120,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5062646,
-        "per_person_krw": 1265662,
+        "total_krw": 5060331,
+        "per_person_krw": 1265083,
         "airlines": [
           "SAS항공",
           "아시아나항공"
@@ -152,8 +152,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5062646,
-        "per_person_krw": 1265662,
+        "total_krw": 5060331,
+        "per_person_krw": 1265083,
         "airlines": [
           "SAS항공",
           "아시아나항공"
@@ -185,8 +185,7 @@
       },
       "selected_reason": "9/11 귀국편 중 현재 4인 총액이 가장 낮은 1회 경유편",
       "selected_fallback": true,
-      "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "status": "ok"
     },
     "compare_rmq_ams": {
       "label": "비교 · 타이중 → 홍콩 → 암스테르담",
@@ -195,8 +194,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4784842,
-        "per_person_krw": 1196210,
+        "total_krw": 4784810,
+        "per_person_krw": 1196202,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -227,8 +226,8 @@
         ]
       },
       "selected": {
-        "total_krw": 7154366,
-        "per_person_krw": 1788592,
+        "total_krw": 7154318,
+        "per_person_krw": 1788580,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -269,8 +268,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 2178339,
-        "per_person_krw": 544585,
+        "total_krw": 2177403,
+        "per_person_krw": 544351,
         "airlines": [
           "KLM"
         ],
@@ -290,8 +289,8 @@
         ]
       },
       "selected": {
-        "total_krw": 2178339,
-        "per_person_krw": 544585,
+        "total_krw": 2177403,
+        "per_person_krw": 544351,
         "airlines": [
           "KLM"
         ],
@@ -312,8 +311,7 @@
       },
       "selected_reason": "계획서 항공과 로테르담발 국제열차 비교",
       "selected_fallback": true,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     },
     "compare_cph_time": {
       "label": "시간 우선 · 코펜하겐 → 이스탄불 → 인천",
@@ -322,8 +320,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5062646,
-        "per_person_krw": 1265662,
+        "total_krw": 5060331,
+        "per_person_krw": 1265083,
         "airlines": [
           "SAS항공",
           "아시아나항공"
@@ -354,8 +352,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6056249,
-        "per_person_krw": 1514062,
+        "total_krw": 6053480,
+        "per_person_krw": 1513370,
         "airlines": [
           "터키항공"
         ],
@@ -386,8 +384,7 @@
       },
       "selected_reason": "비용 최저안보다 약 1시간 빠른 인천 도착 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 232 (char 231)"
+      "status": "ok"
     },
     "compare_cph_direct": {
       "label": "비교 · 코펜하겐 → 인천 직항",
@@ -396,8 +393,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 18016290,
-        "per_person_krw": 4504072,
+        "total_krw": 18008052,
+        "per_person_krw": 4502013,
         "airlines": [
           "SAS항공"
         ],
@@ -417,8 +414,8 @@
         ]
       },
       "selected": {
-        "total_krw": 18016290,
-        "per_person_krw": 4504072,
+        "total_krw": 18008052,
+        "per_person_krw": 4502013,
         "airlines": [
           "SAS항공"
         ],
@@ -439,14 +436,8 @@
       },
       "selected_reason": "귀국 직항의 시간·가격 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     }
   },
-  "errors": [
-    "route_f3: Extra data: line 1 column 234 (char 233)",
-    "compare_ams_ham: Extra data: line 1 column 236 (char 235)",
-    "compare_cph_time: Extra data: line 1 column 232 (char 231)",
-    "compare_cph_direct: Extra data: line 1 column 236 (char 235)"
-  ]
+  "errors": []
 }
