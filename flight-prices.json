@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-18T01:50:27Z",
-  "fresh_until": "2026-08-18T03:50:27Z",
+  "generated_at": "2026-08-18T03:08:08Z",
+  "fresh_until": "2026-08-18T05:08:08Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -59,7 +59,8 @@
       },
       "selected_reason": "계획서 첫날 TIPC 회의에 맞춘 타이중 직항",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "route_f2_direct": {
       "label": "시간 우선 · 타이베이 → 암스테르담 직항",
@@ -111,7 +112,8 @@
       },
       "selected_reason": "대만에서 유럽으로 환승 없이 이동하는 중화항공 직항",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "route_f3": {
       "label": "비용 최적 · 코펜하겐 → 파리 → 인천",
@@ -185,7 +187,8 @@
       },
       "selected_reason": "9/11 귀국편 중 현재 4인 총액이 가장 낮은 1회 경유편",
       "selected_fallback": true,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "compare_rmq_ams": {
       "label": "비교 · 타이중 → 홍콩 → 암스테르담",
@@ -259,7 +262,8 @@
       },
       "selected_reason": "계획서의 홍콩 경유 선택지 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "compare_ams_ham": {
       "label": "비교 · 암스테르담 → 함부르크 직항",
@@ -312,7 +316,7 @@
       "selected_reason": "계획서 항공과 로테르담발 국제열차 비교",
       "selected_fallback": true,
       "status": "stale",
-      "error": "Extra data: line 1 column 233 (char 232)"
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "compare_cph_time": {
       "label": "시간 우선 · 코펜하겐 → 이스탄불 → 인천",
@@ -385,7 +389,8 @@
       },
       "selected_reason": "비용 최저안보다 약 1시간 빠른 인천 도착 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 236 (char 235)"
     },
     "compare_cph_direct": {
       "label": "비교 · 코펜하겐 → 인천 직항",
@@ -437,10 +442,17 @@
       },
       "selected_reason": "귀국 직항의 시간·가격 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     }
   },
   "errors": [
-    "compare_ams_ham: Extra data: line 1 column 233 (char 232)"
+    "route_f2_direct: Extra data: line 1 column 235 (char 234)",
+    "compare_rmq_ams: Extra data: line 1 column 235 (char 234)",
+    "route_f1: Extra data: line 1 column 235 (char 234)",
+    "route_f3: Extra data: line 1 column 235 (char 234)",
+    "compare_cph_direct: Extra data: line 1 column 235 (char 234)",
+    "compare_ams_ham: Extra data: line 1 column 235 (char 234)",
+    "compare_cph_time: Extra data: line 1 column 236 (char 235)"
   ]
 }
