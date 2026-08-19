@@ -1,0 +1,52 @@
+name: Apply Premier Suites Rotterdam booking
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-premier-suites-rotterdam.yml'
+      - 'scripts/apply_premier_suites_rotterdam.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply Premier Suites booking and route update
+        run: python3 scripts/apply_premier_suites_rotterdam.py
+      - name: Validate JavaScript and route mappings
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          cp report-memo.js /tmp/report-memo.mjs
+          cp timeline-runtime-v17.js /tmp/timeline-runtime-v17.mjs
+          node --check /tmp/itinerary-data.mjs
+          node --check /tmp/report-memo.mjs
+          node --check /tmp/timeline-runtime-v17.mjs
+          node --check map-routing.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+      - name: Verify booking facts
+        run: |
+          grep -q 'PREMIER SUITES Rotterdam' itinerary-data.js
+          grep -q 'Weena 710' itinerary-data.js
+          grep -q '10:00~11:00 얼리체크인 요청' itinerary-data.js
+          grep -q '가능한 경우 제공' itinerary-data.js
+          grep -q '공식 기본 체크인 15:00' itinerary-data.js
+          grep -q '07:40' itinerary-data.js
+          ! grep -q 'Holiday Inn Express Rotterdam - Central Station' map-routing.mjs
+          grep -q 'PREMIER SUITES Rotterdam, Weena 710' map-routing.mjs
+      - name: Commit booking update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add itinerary-data.js map-routing.mjs timeline-runtime-v17.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat: use booked Premier Suites Rotterdam and early check-in request'
+            git push
+          fi
