@@ -84,13 +84,15 @@ export function buildReportMemo(event, day = {}, meetings = []) {
     const org = clean(meeting?.organization || title);
     const agenda = agendaText(meeting, event) || "현지 해상풍력 사업·기술 수행사례 및 주요 리스크 관리방안";
     const status = clean(meeting?.status || event?.meeting_status || "일정 협의 중");
+    const counterpart = clean(meeting?.contact || (event?.attendees || []).join(" / "));
     return [
       head,
       `○ 방문·일정: ${org} 방문 및 ${title}`,
+      counterpart ? `○ 현지 참석자: ${counterpart}` : "",
       `○ 주요 확인사항: ${agenda}`,
       `○ 추진상태: ${status}`,
       `○ 보고서 문안: ${org}를 방문하여 ${agenda}를 중심으로 현지 수행사례와 기술적 고려사항을 청취·논의하는 일정으로 구성하였다. 협의 내용은 국내 해상풍력 사업의 개발·설계·건설·운영 및 리스크 관리 검토에 활용할 예정이다.`,
-    ].join("\n");
+    ].filter(Boolean).join("\n");
   }
 
   if (isTransport(event)) {

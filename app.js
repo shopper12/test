@@ -359,7 +359,7 @@ function renderPlanDecision(){
     <div class="compare-grid">
       <article class="compare-card selected-card"><h3>직항 우선안 항공 3구간</h3><p><b>${esc(fareText(selected))}</b></p><p>대만→유럽은 TPE→AMS 직항으로 고정하고 나머지 업무·호텔·철도·귀국편은 권고안과 동일합니다.</p></article>
       <article class="compare-card selected-card"><h3>TPE→AMS 직항</h3><p><b>${esc(fareText(directMid))}</b></p><p>9/4 23:10 출발 → 9/5 07:40 도착. 중화항공 CI73 직항.</p></article>
-      <article class="compare-card selected-card"><h3>유럽 도시간 이동</h3><p><b>철도 중심</b></p><p>로테르담→함부르크, 함부르크→에스비에르, 에스비에르→코펜하겐을 철도로 연결합니다.</p></article>
+      <article class="compare-card selected-card"><h3>유럽 도시간 이동</h3><p><b>철도 중심</b></p><p>로테르담→함부르크, 함부르크→에스비에르, 에스비에르→Aarhus는 확정 미팅을 위해 전용차량으로 이동하고, Aarhus→코펜하겐은 철도로 연결합니다.</p></article>
       <article class="compare-card selected-card"><h3>귀국</h3><p><b>${esc(fareText(home))}</b></p><p>CPH→IST→ICN 한 번 환승으로 귀국합니다.</p></article>
     </div>
   </section>`;
@@ -405,12 +405,13 @@ async function drawMap(){
     .slice().sort((a,b)=>Number(a.day_id)-Number(b.day_id)||Number(a.sort_order)-Number(b.sort_order));
   if(!pts.length)return;
   if(state.map)state.map.remove();
-  state.map=L.map("map",{scrollWheelZoom:true});
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap"}).addTo(state.map);
+  state.map=L.map("map",{scrollWheelZoom:true,zoomControl:true});
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap",maxZoom:19}).addTo(state.map);
+  L.control.scale({metric:true,imperial:false}).addTo(state.map);
   const bounds=[];
   pts.forEach((p,i)=>{
     const ll=[Number(p.lat),Number(p.lng)];bounds.push(ll);
-    L.marker(ll).bindPopup(`<b>Day ${p.day_id} · ${esc(p.name)}</b><br>${esc(p.popup||"")}${p.url?`<br><a href="${esc(p.url)}" target="_blank">링크</a>`:""}`).addTo(state.map);
+    L.marker(ll).bindPopup(`<b>Day ${p.day_id} · ${esc(p.name)}</b><br>${esc(p.popup||"")}${p.url?`<br><a href="${esc(p.url)}" target="_blank">링크</a>`:""}`).bindTooltip(`${esc(p.name)} · ${esc(p.popup||"")}`,{sticky:true}).addTo(state.map);
     if(i && Number(pts[i-1].day_id)===Number(p.day_id)){const type=p.segment_type||"car";const style=type==="flight"?{color:"#008fc5",weight:2,dashArray:"7 7"}:type==="hsr"?{color:"#c73434",weight:4,dashArray:"13 5"}:type==="rail"?{color:"#a85c22",weight:4,dashArray:"8 5"}:type==="subway"?{color:"#7346b8",weight:3,dashArray:"2 5"}:{color:"#087a72",weight:3};L.polyline([[Number(pts[i-1].lat),Number(pts[i-1].lng)],ll],style).addTo(state.map);}
   });
   state.map.fitBounds(bounds,{padding:[28,28]});
@@ -429,7 +430,7 @@ async function drawMap(){
 const tableDefs={
   flights:{title:"항공",fields:["date","flight_no","origin","destination","depart_time","arrive_time","status","alternative","url","notes"],labels:{date:"날짜",flight_no:"편명",origin:"출발",destination:"도착",depart_time:"출발",arrive_time:"도착",status:"상태",alternative:"대안",url:"항공사",notes:"메모"}},
   hotels:{title:"숙박",fields:["name","city","check_in","check_out","nights","rooms","min_krw","max_krw","status","alternative","url","notes"],labels:{name:"호텔",city:"도시",check_in:"체크인",check_out:"체크아웃",nights:"박",rooms:"실",min_krw:"최소",max_krw:"최대",status:"상태",alternative:"대안",url:"링크",notes:"메모"}},
-  meetings:{title:"회의·방문기관",fields:["day_id","organization","agenda","recommended_duration","status","photo_allowed","ppe_required","interpreter_needed","url","notes"],labels:{day_id:"Day",organization:"기관",agenda:"의제",recommended_duration:"권장시간",status:"상태",photo_allowed:"사진",ppe_required:"PPE",interpreter_needed:"통역",url:"링크",notes:"메모"}},
+  meetings:{title:"회의·방문기관",fields:["day_id","organization","agenda","recommended_duration","contact","status","photo_allowed","ppe_required","interpreter_needed","url","notes"],labels:{day_id:"Day",organization:"기관",agenda:"의제",recommended_duration:"권장시간",contact:"현지 참석자",status:"상태",photo_allowed:"사진",ppe_required:"PPE",interpreter_needed:"통역",url:"링크",notes:"메모"}},
   transport_options:{title:"교통·렌터카",fields:["region","recommendation","reason","min_krw","max_krw","notes"],labels:{region:"지역",recommendation:"권고",reason:"사유",min_krw:"최소",max_krw:"최대",notes:"메모"}},
   restaurants:{title:"맛집",fields:["day_id","name","city","meal_type","price_per_person","url","notes"],labels:{day_id:"Day",name:"식당",city:"도시",meal_type:"구분",price_per_person:"1인 예산",url:"링크",notes:"메모"}},
   budget_items:{title:"예산 상세",fields:["category","label","min_krw","max_krw","notes"],labels:{category:"구분",label:"항목",min_krw:"최소(4인)",max_krw:"최대(4인)",notes:"메모"}},
