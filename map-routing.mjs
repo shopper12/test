@@ -58,9 +58,9 @@ const MAP_MANIFEST = Object.freeze({
   "d7-03": {kind:"place",query:"DNV, Brooktorkai 18, 20457 Hamburg"},
   "d7-04": {kind:"route",origin:"DNV, Brooktorkai 18, 20457 Hamburg",destination:"Skyborn Renewables, Ericusspitze 2-4, Hamburg",mode:"walking"},
   "d7-05": {kind:"place",query:"Skyborn Renewables, Ericusspitze 2-4, Hamburg"},
-  "d7-055": {kind:"route",origin:"Skyborn Renewables, Ericusspitze 2-4, Hamburg",destination:"OWC, Alter Wall 69, 20457 Hamburg",mode:"walking"},
-  "d7-06": {kind:"place",query:"OWC, Alter Wall 69, 20457 Hamburg"},
-  "d7-07": {kind:"route",origin:"OWC, Alter Wall 69, 20457 Hamburg",waypoints:"Elbphilharmonie Hamburg",destination:"Landungsbrücken Hamburg",mode:"transit"},
+  "d7-055": {kind:"place",query:"Hamburg 20457, Germany"},
+  "d7-06": {kind:"place",query:"Hamburg, Germany"},
+  "d7-07": {kind:"route",origin:"Hamburg, Germany",waypoints:"Elbphilharmonie Hamburg",destination:"Landungsbrücken Hamburg",mode:"transit"},
 
   "d8-01": {kind:"route",origin:"Motel One Hamburg-Fleetinsel",destination:"Hamburg Hbf",mode:"transit"},
   "d8-02": {kind:"route",origin:"Hamburg Hbf",waypoints:"Kolding Station",destination:"Esbjerg Station",mode:"transit"},

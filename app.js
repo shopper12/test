@@ -9,7 +9,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 let activeItinerary = ITINERARIES[DEFAULT_ITINERARY];
 let tripMeta = activeItinerary.meta;
 let officialSeed = activeItinerary.officialSeed;
-let MARKER = `__OFFSHORE_PLAN_${APP_VERSION}_${DEFAULT_ITINERARY}__`;
+let MARKER = `__OFFSHORE_PLAN_${APP_VERSION}_${DEFAULT_ITINERARY}_${tripMeta.lastVerified}__`;
 let LOCAL_ORDER_KEY = `offshore-trip-event-order-${APP_VERSION}-${DEFAULT_ITINERARY}`;
 
 const TABLES = ["days","events","flights","hotels","meetings","transport_options","restaurants","map_points","budget_items","team_notes"];
@@ -190,7 +190,7 @@ function setActiveDefinition(key){
   activeItinerary=next;
   tripMeta=next.meta;
   officialSeed=next.officialSeed;
-  MARKER=`__OFFSHORE_PLAN_${APP_VERSION}_${key}__`;
+  MARKER=`__OFFSHORE_PLAN_${APP_VERSION}_${key}_${tripMeta.lastVerified}__`;
   LOCAL_ORDER_KEY=`offshore-trip-event-order-${APP_VERSION}-${key}`;
   state.activeDay=officialSeed.days[0]?.id||1;
   return true;
