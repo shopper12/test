@@ -2035,7 +2035,7 @@ function buildMapPoints(mode) {
       lng: 10.0067,
       sort_order: 6,
       segment_type: "rail",
-      popup: "약 00:05 도착",
+      popup: "23:16 후보 도착",
       url: "",
     },
     {
@@ -2045,7 +2045,7 @@ function buildMapPoints(mode) {
       lat: 53.55293,
       lng: 10.01636,
       sort_order: 7,
-      segment_type: "subway",
+      segment_type: "walk",
       popup: "숙박",
       url: "https://www.booking.com/hotel/de/straphaelbestwesternhh.html",
     },
