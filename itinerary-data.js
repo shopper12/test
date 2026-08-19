@@ -255,7 +255,7 @@ function buildEvents(mode) {
           "교통",
           "CHECK Inn Taichung LaiLai → THSR Taichung → THSR Taoyuan → TPE",
           "택시+THSR+Airport MRT",
-          "2시간 20분",
+          "3시간 5분",
           {
             booking_url: "https://en.thsrc.com.tw/",
             min_cost_krw: 110_000,
@@ -1316,7 +1316,7 @@ const hotels = [
   {
     id: "h1",
     day_id: 1,
-    name: "CHECK Inn Taichung LaiLai · Sanmin Rd. 125",
+    name: "CHECK Inn Taichung LaiLai",
     city: "Taichung",
     check_in: "2026-09-02",
     check_out: "2026-09-04",
