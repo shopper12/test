@@ -1,0 +1,37 @@
+name: Fix Hamburg map arrival
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-hamburg-map-arrival.yml'
+      - 'scripts/fix_hamburg_map_arrival.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: python3 scripts/fix_hamburg_map_arrival.py
+      - name: Validate
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node --check /tmp/itinerary-data.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+          grep -q '23:16 후보 도착' itinerary-data.js
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add itinerary-data.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: align Hamburg map arrival with timetable'
+            git push
+          fi
