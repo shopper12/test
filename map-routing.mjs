@@ -51,7 +51,7 @@ const MAP_MANIFEST = Object.freeze({
   "d6-07": {kind:"place",query:"TNO Kesslerpark 1, Rijswijk"},
   "d6-08": {kind:"route",origin:"TNO Kesslerpark 1, Rijswijk",waypoints:"Holiday Inn Express Rotterdam - Central Station",destination:"Rotterdam Centraal",mode:"driving"},
   "d6-09": {kind:"route",origin:"Rotterdam Centraal",destination:"Hamburg Hbf",mode:"transit"},
-  "d6-10": {kind:"route",origin:"Hamburg Hbf",destination:"Motel One Hamburg-Fleetinsel",mode:"driving"},
+  "d6-10": {kind:"route",origin:"Hamburg Hbf",destination:"Best Western Plus Hotel St. Raphael, Adenauerallee 41, Hamburg",mode:"walking"},
 
   "d7-01": {kind:"place",query:"Best Western Plus Hotel St. Raphael, Adenauerallee 41, Hamburg"},
   "d7-02": {kind:"place",query:"Best Western Plus Hotel St. Raphael, Adenauerallee 41, Hamburg"},

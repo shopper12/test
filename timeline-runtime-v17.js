@@ -59,12 +59,19 @@ function fixed(e){const t=totalMinutes(e);if(!t)return null;if(e.id==="d3-03")re
 "d5-04":[[0,15,"RET 메트로 · Katendrecht 방면","move"],[15,-1,"Fenix Food Factory·항만 저녁","stay"]],
 "d6-04":[[0,35,"Wilhelminaplein 인근 점심","stay"],[35,55,"택시 · ROG 이동","move"]],
 "d6-08":[[0,40,"택시 · TNO → Rotterdam Centraal","move"],[40,70,"도보·짐 회수·승차 준비","wait"]],
-"d7-07":[[0,15,"도보 · OWC Alter Wall 69 → Elbphilharmonie","move"],[15,95,"Elbphilharmonie Plaza 체류","stay"],[95,110,"HVV U-Bahn · Landungsbrücken","move"],[110,180,"Landungsbrücken 산책·저녁","stay"]],
-"d8-01":[[0,50,"조식·체크아웃","stay"],[50,75,"U-Bahn 또는 택시 · Hamburg Hbf","move"],[75,105,"역 도보·승차 준비","wait"]],
+"d7-07":[[0,35,"Best Western St. Raphael → Elbphilharmonie · U-Bahn/도보","move"],[35,105,"Elbphilharmonie Plaza 체류","stay"],[105,125,"HVV · Landungsbrücken 이동","move"],[125,240,"Landungsbrücken 산책·저녁","stay"]],
+"d8-01":[[0,55,"조식·체크아웃·호텔에 수하물 임시보관","stay"]],
+"d8-011":[[0,15,"택시 · Best Western St. Raphael → DNV Brooktorkai 18","move"]],
+"d8-012":[[0,70,"DNV Hamburg 기술미팅 · Digital Twin·인증·기술검증","stay"]],
+"d8-013":[[0,15,"택시 · DNV → Best Western St. Raphael","move"],[15,25,"호텔 수하물 회수","wait"],[25,40,"호텔 → Hamburg Hbf","move"]],
 "d8-03":[[0,12,"도보 · Esbjerg St. → CABINN Plus","move"],[12,50,"호텔 체크인·정비","stay"]],
 "d8-04":[[0,25,"버스 · 도심 → Sædding Strand","move"],[25,180,"Men at Sea·박물관 외부 도보 체류","stay"]],
-"d9-04":[[0,20,"택시 · Blue Water Shipping → Centrum","move"],[20,60,"점심","stay"],[60,90,"도보 · 호텔 복귀","move"]],
-"d9-07":[[0,15,"기차 · København H → Ørestad","move"],[15,25,"도보 · Ørestad → CABINN Metro","move"],[25,55,"호텔 체크인","stay"]],
+"d9-04":[[0,120,"전용차량 · Blue Water Shipping Esbjerg → Kolding → Vejle → Horsens → OWC Aarhus","move"]],
+"d9-05":[[0,75,"Aarhus 도착·점심·15:00 OWC 미팅 준비","stay"]],
+"d9-055":[[0,90,"OWC Denmark 기술미팅 · René Aagaard / Rune Nørgaard","stay"]],
+"d9-06":[[0,10,"OWC 미팅 핵심내용 메모","stay"],[10,20,"도보 · Banegårdspladsen 4 → Aarhus H","move"],[20,35,"승차 준비","wait"]],
+"d9-07":[[0,196,"DSB InterCityLyn 후보 · Aarhus H → Skanderborg → Horsens → Vejle → Fredericia → Odense → Ringsted → København H","move"]],
+"d9-08":[[0,20,"København H → Ørestad 지역열차","move"],[20,30,"Ørestad → CABINN Metro 도보","move"],[30,84,"체크인·간단한 저녁","stay"]],
 "d10-01":[[0,20,"호텔 체크아웃","stay"],[20,35,"도보 · CABINN Metro → Ørestad Station","move"],[35,50,"기차 · Ørestad → CPH","move"],[50,75,"터미널 이동·수속 버퍼","wait"]]};return z[e.id]?.map(([a,b,l,k])=>leg(e,a,b===-1?t:b,l,k))||null;}
 function generic(e){const t=totalMinutes(e);if(!t)return[];const p=String(e.transport||"").split("+").map(x=>x.trim()).filter(Boolean);if(p.length>1){const activity=/관광|식사|업무|숙박|개인정비/.test(e.category||"")&&t>=60;if(activity){const m=Math.min(20,Math.max(8,Math.round(t*.12))),r=[];let a=0;for(const x of p){r.push(leg(e,a,Math.min(t,a+m),`${x} 이동`,`move`));a+=m;}if(a<t)r.push(leg(e,a,t,"목적지 체류","stay"));return r;}const n=Math.floor(t/p.length);return p.map((x,i)=>leg(e,i*n,i===p.length-1?t:(i+1)*n,`${x} 이동`,`move`));}const k=/교통|항공|출국·교통/.test(e.category||"")?"move":/환승/.test(e.category||"")?"wait":"stay";return[leg(e,0,t,k==="move"?"이동":k==="wait"?"대기·환승":"체류",k)];}
 function breakdown(e){const r=fixed(e)||generic(e);if(!r.length)return"";const sum=k=>r.filter(x=>x.kind===k).reduce((a,x)=>a+x.minutes,0),m=sum("move"),w=sum("wait"),st=sum("stay");return `<div class="event-time-breakdown"><div class="event-time-breakdown-head"><b>시간 구분</b><span>${m?`이동 ${m}분`:""}${w?` · 대기/환승 ${w}분`:""}${st?` · 체류 ${st}분`:""}</span></div><div class="event-leg-list">${r.map(x=>`<div class="event-leg ${x.kind}"><span class="event-leg-time">${esc(x.start)}–${esc(x.end)}</span><span class="event-leg-kind">${x.kind==="move"?"이동":x.kind==="wait"?"대기·환승":"체류"}</span><b>${esc(x.label)}</b></div>`).join("")}</div></div>`;}

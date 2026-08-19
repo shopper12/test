@@ -9,11 +9,11 @@ const MEETING_HINTS = Object.freeze({
   "d6-03": "Port of Rotterdam",
   "d6-05": "Rotterdam Offshore Group",
   "d6-07": "TNO",
-  "d7-03": "DNV",
+  "d7-03": "OWC",
   "d7-05": "Skyborn",
-  "d7-06": "OWC",
+  "d8-012": "DNV",
   "d9-03": "Blue Water",
-  "d9-05": "OWC",
+  "d9-055": "OWC",
 });
 
 function dateLabel(day) {
@@ -83,7 +83,7 @@ export function buildReportMemo(event, day = {}, meetings = []) {
   if (isBusiness(event)) {
     const org = clean(meeting?.organization || title);
     const agenda = agendaText(meeting, event) || "현지 해상풍력 사업·기술 수행사례 및 주요 리스크 관리방안";
-    const status = clean(meeting?.status || event?.meeting_status || "일정 협의 중");
+    const status = clean(event?.meeting_status || meeting?.status || "일정 협의 중");
     const counterpart = clean(meeting?.contact || (event?.attendees || []).join(" / "));
     return [
       head,
