@@ -1,0 +1,53 @@
+name: Apply OWC Aarhus detailed map update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-owc-aarhus-detail-map.yml'
+      - 'scripts/apply_owc_aarhus_detail_map.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply OWC Aarhus and detailed map update
+        run: python3 scripts/apply_owc_aarhus_detail_map.py
+      - name: Validate JavaScript and map coverage
+        run: |
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          cp stable-tools.js /tmp/stable-tools.mjs
+          cp report-memo.js /tmp/report-memo.mjs
+          cp app.js /tmp/app.mjs
+          node --check /tmp/itinerary-data.mjs
+          node --check /tmp/stable-tools.mjs
+          node --check /tmp/report-memo.mjs
+          node --check /tmp/app.mjs
+          node --check map-routing.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+      - name: Verify confirmed OWC Denmark and detailed route
+        run: |
+          grep -q '15:00 확정' itinerary-data.js
+          grep -q 'Banegårdspladsen 4' itinerary-data.js
+          grep -q 'René Aagaard' itinerary-data.js
+          grep -q 'Rune Nørgaard' itinerary-data.js
+          grep -q 'Christian Apeah' itinerary-data.js
+          grep -q 'Aarhus H → Skanderborg' itinerary-data.js
+          grep -q 'map-route-detail' stable-tools.js
+      - name: Commit update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add itinerary-data.js map-routing.mjs report-memo.js app.js stable-tools.js map-sidebar.css
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat: confirm OWC Aarhus visit and expand detailed maps'
+            git push
+          fi
