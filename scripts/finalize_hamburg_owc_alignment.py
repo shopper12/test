@@ -6,18 +6,15 @@ s=p.read_text(encoding='utf-8')
 s=s.replace('"d6-10": {kind:"route",origin:"Hamburg Hbf",destination:"Motel One Hamburg-Fleetinsel",mode:"driving"},','"d6-10": {kind:"route",origin:"Hamburg Hbf",destination:"Best Western Plus Hotel St. Raphael, Adenauerallee 41, Hamburg",mode:"walking"},')
 p.write_text(s,encoding='utf-8')
 
-# report memo meeting identities and local attendees
+# report memo: align event IDs with the new meeting placement.
 p=Path('report-memo.js')
 s=p.read_text(encoding='utf-8')
 old='''  "d7-03": "DNV",\n  "d7-05": "Skyborn",\n  "d7-06": "OWC",\n  "d9-03": "Blue Water",\n  "d9-05": "OWC",'''
 new='''  "d7-03": "OWC",\n  "d7-05": "Skyborn",\n  "d8-012": "DNV",\n  "d9-03": "Blue Water",\n  "d9-055": "OWC",'''
 if old not in s: raise SystemExit('missing meeting hints')
 s=s.replace(old,new,1)
-old='''    const status = clean(meeting?.status || event?.meeting_status || "일정 협의 중");\n    return [\n      head,\n      `○ 방문·일정: ${org} 방문 및 ${title}`,\n      `○ 주요 확인사항: ${agenda}`,\n      `○ 추진상태: ${status}`,'''
-new='''    const status = clean(event?.meeting_status || meeting?.status || "일정 협의 중");\n    const localAttendees = (event?.attendees || []).map(clean).filter(Boolean);\n    const contact = clean(meeting?.contact || "");\n    const attendeeText = localAttendees.length ? localAttendees.join(" / ") : contact;\n    return [\n      head,\n      `○ 방문·일정: ${org} 방문 및 ${title}`,\n      attendeeText ? `○ 현지 참석자: ${attendeeText}` : "",\n      `○ 주요 확인사항: ${agenda}`,\n      `○ 추진상태: ${status}`,'''
-if old not in s: raise SystemExit('missing report memo business block')
-s=s.replace(old,new,1)
-s=s.replace('''      `○ 보고서 문안: ${org}를 방문하여 ${agenda}를 중심으로 현지 수행사례와 기술적 고려사항을 청취·논의하는 일정으로 구성하였다. 협의 내용은 국내 해상풍력 사업의 개발·설계·건설·운영 및 리스크 관리 검토에 활용할 예정이다.`,\n    ].join("\\n");''','''      `○ 보고서 문안: ${org}를 방문하여 ${agenda}를 중심으로 현지 수행사례와 기술적 고려사항을 청취·논의하는 일정으로 구성하였다. 협의 내용은 국내 해상풍력 사업의 개발·설계·건설·운영 및 리스크 관리 검토에 활용할 예정이다.`,\n    ].filter(Boolean).join("\\n");''',1)
+# Event-level live status is more specific than the generic meeting-table status.
+s=s.replace('const status = clean(meeting?.status || event?.meeting_status || "일정 협의 중");','const status = clean(event?.meeting_status || meeting?.status || "일정 협의 중");',1)
 p.write_text(s,encoding='utf-8')
 
 # timeline detail segmentation: align with latest live itinerary
