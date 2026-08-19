@@ -58,7 +58,7 @@ function fixed(e){const t=totalMinutes(e);if(!t)return null;if(e.id==="d3-03")re
 "d5-03":[[0,15,"도보 · Erasmusbrug 선착장","move"],[15,65,"Waterbus/WaterShuttle · Rotterdam → Kinderdijk","move"],[65,-1,"Kinderdijk 풍차군 도보 체류","stay"]],
 "d5-04":[[0,15,"RET 메트로 · Katendrecht 방면","move"],[15,-1,"Fenix Food Factory·항만 저녁","stay"]],
 "d6-04":[[0,35,"Wilhelminaplein 인근 점심","stay"],[35,55,"택시 · ROG 이동","move"]],
-"d6-08":[[0,40,"택시 · TNO → Rotterdam Centraal","move"],[40,70,"도보·짐 회수·승차 준비","wait"]],
+"d6-08":[[0,25,"택시 · TNO → PREMIER SUITES Weena 710","move"],[25,30,"수하물 회수","wait"],[30,35,"도보 · PREMIER SUITES → Rotterdam Centraal","move"]],
 "d7-07":[[0,35,"Best Western St. Raphael → Elbphilharmonie · U-Bahn/도보","move"],[35,105,"Elbphilharmonie Plaza 체류","stay"],[105,125,"HVV · Landungsbrücken 이동","move"],[125,240,"Landungsbrücken 산책·저녁","stay"]],
 "d8-01":[[0,55,"조식·체크아웃·호텔에 수하물 임시보관","stay"]],
 "d8-011":[[0,15,"택시 · Best Western St. Raphael → DNV Brooktorkai 18","move"]],
