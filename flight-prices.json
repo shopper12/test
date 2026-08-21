@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-21T21:38:09Z",
-  "fresh_until": "2026-08-21T23:38:09Z",
+  "generated_at": "2026-08-21T22:41:21Z",
+  "fresh_until": "2026-08-22T00:41:21Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -151,38 +151,38 @@
         ]
       },
       "selected": {
-        "total_krw": 5987621,
-        "per_person_krw": 1496905,
+        "total_krw": 6793248,
+        "per_person_krw": 1698312,
         "airlines": [
-          "터키항공"
+          "에어프랑스"
         ],
-        "carrier_code": "TK",
+        "carrier_code": "AF",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
-            "destination": "IST",
+            "destination": "CDG",
             "departure_date": "2026-09-11",
-            "departure_time": "10:25",
+            "departure_time": "10:10",
             "arrival_date": "2026-09-11",
-            "arrival_time": "14:45",
-            "duration_minutes": 200,
-            "aircraft": "Airbus A321neo"
+            "arrival_time": "12:10",
+            "duration_minutes": 120,
+            "aircraft": "Airbus A220-300 Passenger"
           },
           {
-            "origin": "IST",
+            "origin": "CDG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "17:00",
+            "departure_time": "14:40",
             "arrival_date": "2026-09-12",
-            "arrival_time": "08:35",
-            "duration_minutes": 575,
-            "aircraft": "Boeing 777"
+            "arrival_time": "09:35",
+            "duration_minutes": 715,
+            "aircraft": "Airbus A350"
           }
         ]
       },
       "selected_reason": "9/11 귀국편 중 현재 4인 총액이 가장 낮은 1회 경유편",
-      "selected_fallback": true,
+      "selected_fallback": false,
       "status": "ok"
     },
     "compare_rmq_ams": {
