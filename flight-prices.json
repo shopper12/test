@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-22T11:34:50Z",
-  "fresh_until": "2026-08-22T13:34:50Z",
+  "generated_at": "2026-08-22T13:00:40Z",
+  "fresh_until": "2026-08-22T15:00:40Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -192,8 +192,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4682228,
-        "per_person_krw": 1170557,
+        "total_krw": 4682054,
+        "per_person_krw": 1170514,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -224,8 +224,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6170722,
-        "per_person_krw": 1542680,
+        "total_krw": 7006194,
+        "per_person_krw": 1751548,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
