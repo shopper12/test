@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-22T03:07:07Z",
-  "fresh_until": "2026-08-22T05:07:07Z",
+  "generated_at": "2026-08-22T03:56:14Z",
+  "fresh_until": "2026-08-22T05:56:14Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -120,33 +120,33 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5994533,
-        "per_person_krw": 1498633,
+        "total_krw": 6800221,
+        "per_person_krw": 1700055,
         "airlines": [
-          "터키항공"
+          "KLM"
         ],
-        "carrier_code": "TK",
+        "carrier_code": "KL",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
-            "destination": "IST",
+            "destination": "AMS",
             "departure_date": "2026-09-11",
-            "departure_time": "10:25",
+            "departure_time": "19:10",
             "arrival_date": "2026-09-11",
-            "arrival_time": "14:45",
-            "duration_minutes": 200,
+            "arrival_time": "20:35",
+            "duration_minutes": 85,
             "aircraft": "Airbus A321neo"
           },
           {
-            "origin": "IST",
+            "origin": "AMS",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "17:00",
+            "departure_time": "21:35",
             "arrival_date": "2026-09-12",
-            "arrival_time": "08:35",
-            "duration_minutes": 575,
-            "aircraft": "Boeing 777"
+            "arrival_time": "16:25",
+            "duration_minutes": 710,
+            "aircraft": "Boeing 787"
           }
         ]
       },
@@ -318,39 +318,39 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5994533,
-        "per_person_krw": 1498633,
+        "total_krw": 6800221,
+        "per_person_krw": 1700055,
         "airlines": [
-          "터키항공"
+          "KLM"
         ],
-        "carrier_code": "TK",
+        "carrier_code": "KL",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
-            "destination": "IST",
+            "destination": "AMS",
             "departure_date": "2026-09-11",
-            "departure_time": "10:25",
+            "departure_time": "19:10",
             "arrival_date": "2026-09-11",
-            "arrival_time": "14:45",
-            "duration_minutes": 200,
+            "arrival_time": "20:35",
+            "duration_minutes": 85,
             "aircraft": "Airbus A321neo"
           },
           {
-            "origin": "IST",
+            "origin": "AMS",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "17:00",
+            "departure_time": "21:35",
             "arrival_date": "2026-09-12",
-            "arrival_time": "08:35",
-            "duration_minutes": 575,
-            "aircraft": "Boeing 777"
+            "arrival_time": "16:25",
+            "duration_minutes": 710,
+            "aircraft": "Boeing 787"
           }
         ]
       },
       "selected": {
-        "total_krw": 5994533,
-        "per_person_krw": 1498633,
+        "total_krw": 7139322,
+        "per_person_krw": 1784830,
         "airlines": [
           "터키항공"
         ],
