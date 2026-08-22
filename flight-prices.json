@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-22T21:35:04Z",
-  "fresh_until": "2026-08-22T23:35:04Z",
+  "generated_at": "2026-08-22T22:37:46Z",
+  "fresh_until": "2026-08-23T00:37:46Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -183,7 +183,8 @@
       },
       "selected_reason": "9/11 귀국편 중 현재 4인 총액이 가장 낮은 1회 경유편",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 234 (char 233)"
     },
     "compare_rmq_ams": {
       "label": "비교 · 타이중 → 홍콩 → 암스테르담",
@@ -257,7 +258,8 @@
       },
       "selected_reason": "계획서의 홍콩 경유 선택지 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 236 (char 235)"
     },
     "compare_ams_ham": {
       "label": "비교 · 암스테르담 → 함부르크 직항",
@@ -309,8 +311,7 @@
       },
       "selected_reason": "계획서 항공과 로테르담발 국제열차 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     },
     "compare_cph_time": {
       "label": "시간 우선 · 코펜하겐 → 이스탄불 → 인천",
@@ -434,12 +435,11 @@
       },
       "selected_reason": "귀국 직항의 시간·가격 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     }
   },
   "errors": [
-    "compare_ams_ham: Extra data: line 1 column 236 (char 235)",
-    "compare_cph_direct: Extra data: line 1 column 236 (char 235)"
+    "compare_rmq_ams: Extra data: line 1 column 236 (char 235)",
+    "route_f3: Extra data: line 1 column 234 (char 233)"
   ]
 }
