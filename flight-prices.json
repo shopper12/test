@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-23T20:38:46Z",
-  "fresh_until": "2026-08-23T22:38:46Z",
+  "generated_at": "2026-08-23T21:35:17Z",
+  "fresh_until": "2026-08-23T23:35:17Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -120,8 +120,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5050570,
-        "per_person_krw": 1262642,
+        "total_krw": 5051756,
+        "per_person_krw": 1262939,
         "airlines": [
           "터키항공"
         ],
@@ -151,8 +151,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6791249,
-        "per_person_krw": 1697812,
+        "total_krw": 6792845,
+        "per_person_krw": 1698211,
         "airlines": [
           "에어프랑스"
         ],
@@ -309,7 +309,8 @@
       },
       "selected_reason": "계획서 항공과 로테르담발 국제열차 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "compare_cph_time": {
       "label": "시간 우선 · 코펜하겐 → 이스탄불 → 인천",
@@ -381,7 +382,8 @@
       },
       "selected_reason": "비용 최저안보다 약 1시간 빠른 인천 도착 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 234 (char 233)"
     },
     "compare_cph_direct": {
       "label": "비교 · 코펜하겐 → 인천 직항",
@@ -390,8 +392,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 17806894,
-        "per_person_krw": 4451724,
+        "total_krw": 17811078,
+        "per_person_krw": 4452770,
         "airlines": [
           "SAS항공"
         ],
@@ -411,8 +413,8 @@
         ]
       },
       "selected": {
-        "total_krw": 17806894,
-        "per_person_krw": 4451724,
+        "total_krw": 17811078,
+        "per_person_krw": 4452770,
         "airlines": [
           "SAS항공"
         ],
@@ -436,5 +438,8 @@
       "status": "ok"
     }
   },
-  "errors": []
+  "errors": [
+    "compare_cph_time: Extra data: line 1 column 234 (char 233)",
+    "compare_ams_ham: Extra data: line 1 column 235 (char 234)"
+  ]
 }
