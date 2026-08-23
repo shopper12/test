@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-23T04:03:37Z",
-  "fresh_until": "2026-08-23T06:03:37Z",
+  "generated_at": "2026-08-23T04:51:55Z",
+  "fresh_until": "2026-08-23T06:51:55Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -120,33 +120,33 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 6794228,
-        "per_person_krw": 1698557,
+        "total_krw": 5052785,
+        "per_person_krw": 1263196,
         "airlines": [
-          "에어프랑스"
+          "터키항공"
         ],
-        "carrier_code": "AF",
+        "carrier_code": "TK",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
-            "destination": "CDG",
+            "destination": "IST",
             "departure_date": "2026-09-11",
-            "departure_time": "10:10",
+            "departure_time": "06:30",
             "arrival_date": "2026-09-11",
-            "arrival_time": "12:10",
-            "duration_minutes": 120,
-            "aircraft": "Airbus A220-300 Passenger"
+            "arrival_time": "10:50",
+            "duration_minutes": 200,
+            "aircraft": "Boeing 737"
           },
           {
-            "origin": "CDG",
+            "origin": "IST",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "14:40",
+            "departure_time": "17:00",
             "arrival_date": "2026-09-12",
-            "arrival_time": "09:35",
-            "duration_minutes": 715,
-            "aircraft": "Airbus A350"
+            "arrival_time": "08:35",
+            "duration_minutes": 575,
+            "aircraft": "Boeing 777"
           }
         ]
       },
@@ -318,39 +318,39 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 6794228,
-        "per_person_krw": 1698557,
+        "total_krw": 5052785,
+        "per_person_krw": 1263196,
         "airlines": [
-          "에어프랑스"
+          "터키항공"
         ],
-        "carrier_code": "AF",
+        "carrier_code": "TK",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
-            "destination": "CDG",
+            "destination": "IST",
             "departure_date": "2026-09-11",
-            "departure_time": "10:10",
+            "departure_time": "06:30",
             "arrival_date": "2026-09-11",
-            "arrival_time": "12:10",
-            "duration_minutes": 120,
-            "aircraft": "Airbus A220-300 Passenger"
+            "arrival_time": "10:50",
+            "duration_minutes": 200,
+            "aircraft": "Boeing 737"
           },
           {
-            "origin": "CDG",
+            "origin": "IST",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "14:40",
+            "departure_time": "17:00",
             "arrival_date": "2026-09-12",
-            "arrival_time": "09:35",
-            "duration_minutes": 715,
-            "aircraft": "Airbus A350"
+            "arrival_time": "08:35",
+            "duration_minutes": 575,
+            "aircraft": "Boeing 777"
           }
         ]
       },
       "selected": {
-        "total_krw": 7132120,
-        "per_person_krw": 1783030,
+        "total_krw": 5988485,
+        "per_person_krw": 1497121,
         "airlines": [
           "터키항공"
         ],
