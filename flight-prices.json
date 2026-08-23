@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-23T04:51:55Z",
-  "fresh_until": "2026-08-23T06:51:55Z",
+  "generated_at": "2026-08-23T05:44:40Z",
+  "fresh_until": "2026-08-23T07:44:40Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
