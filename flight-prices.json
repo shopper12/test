@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-24T03:16:25Z",
-  "fresh_until": "2026-08-24T05:16:25Z",
+  "generated_at": "2026-08-24T04:09:12Z",
+  "fresh_until": "2026-08-24T06:09:12Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -120,8 +120,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5160157,
-        "per_person_krw": 1290039,
+        "total_krw": 5168129,
+        "per_person_krw": 1292032,
         "airlines": [
           "터키항공",
           "아시아나항공"
@@ -152,8 +152,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6756712,
-        "per_person_krw": 1689178,
+        "total_krw": 6767151,
+        "per_person_krw": 1691788,
         "airlines": [
           "에어프랑스"
         ],
