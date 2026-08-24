@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-24T14:02:24Z",
-  "fresh_until": "2026-08-24T16:02:24Z",
+  "generated_at": "2026-08-24T15:00:03Z",
+  "fresh_until": "2026-08-24T17:00:03Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -68,8 +68,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAGoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4826806,
-        "per_person_krw": 1206702,
+        "total_krw": 4827873,
+        "per_person_krw": 1206968,
         "airlines": [
           "KLM"
         ],
@@ -89,8 +89,8 @@
         ]
       },
       "selected": {
-        "total_krw": 4861379,
-        "per_person_krw": 1215345,
+        "total_krw": 4862454,
+        "per_person_krw": 1215614,
         "airlines": [
           "중화항공"
         ],
@@ -120,8 +120,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5171872,
-        "per_person_krw": 1292968,
+        "total_krw": 5172071,
+        "per_person_krw": 1293018,
         "airlines": [
           "터키항공",
           "아시아나항공"
@@ -152,8 +152,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6772052,
-        "per_person_krw": 1693013,
+        "total_krw": 6772313,
+        "per_person_krw": 1693078,
         "airlines": [
           "에어프랑스"
         ],
@@ -193,8 +193,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4672358,
-        "per_person_krw": 1168090,
+        "total_krw": 4673391,
+        "per_person_krw": 1168348,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -225,8 +225,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6991685,
-        "per_person_krw": 1747921,
+        "total_krw": 6993231,
+        "per_person_krw": 1748308,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -267,8 +267,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 2450231,
-        "per_person_krw": 612558,
+        "total_krw": 2450468,
+        "per_person_krw": 612617,
         "airlines": [
           "KLM"
         ],
@@ -288,8 +288,8 @@
         ]
       },
       "selected": {
-        "total_krw": 2450231,
-        "per_person_krw": 612558,
+        "total_krw": 2450468,
+        "per_person_krw": 612617,
         "airlines": [
           "KLM"
         ],
@@ -319,8 +319,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5171872,
-        "per_person_krw": 1292968,
+        "total_krw": 5172071,
+        "per_person_krw": 1293018,
         "airlines": [
           "터키항공",
           "아시아나항공"
@@ -351,39 +351,38 @@
         ]
       },
       "selected": {
-        "total_krw": 5171872,
-        "per_person_krw": 1292968,
+        "total_krw": 7109115,
+        "per_person_krw": 1777279,
         "airlines": [
-          "터키항공",
-          "아시아나항공"
+          "터키항공"
         ],
-        "carrier_code": "multi",
+        "carrier_code": "TK",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
             "destination": "IST",
             "departure_date": "2026-09-11",
-            "departure_time": "06:30",
+            "departure_time": "10:25",
             "arrival_date": "2026-09-11",
-            "arrival_time": "10:50",
+            "arrival_time": "14:45",
             "duration_minutes": 200,
-            "aircraft": "Boeing 737"
+            "aircraft": "Airbus A321neo"
           },
           {
             "origin": "IST",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "17:55",
+            "departure_time": "17:00",
             "arrival_date": "2026-09-12",
-            "arrival_time": "09:45",
-            "duration_minutes": 590,
+            "arrival_time": "08:35",
+            "duration_minutes": 575,
             "aircraft": "Boeing 777"
           }
         ]
       },
       "selected_reason": "비용 최저안보다 약 1시간 빠른 인천 도착 비교",
-      "selected_fallback": true,
+      "selected_fallback": false,
       "status": "ok"
     },
     "compare_cph_direct": {
@@ -393,8 +392,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 17756558,
-        "per_person_krw": 4439140,
+        "total_krw": 17757242,
+        "per_person_krw": 4439310,
         "airlines": [
           "SAS항공"
         ],
@@ -414,8 +413,8 @@
         ]
       },
       "selected": {
-        "total_krw": 17756558,
-        "per_person_krw": 4439140,
+        "total_krw": 17757242,
+        "per_person_krw": 4439310,
         "airlines": [
           "SAS항공"
         ],
