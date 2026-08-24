@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-23T23:35:04Z",
-  "fresh_until": "2026-08-24T01:35:04Z",
+  "generated_at": "2026-08-24T01:57:29Z",
+  "fresh_until": "2026-08-24T03:57:29Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -59,8 +59,7 @@
       },
       "selected_reason": "계획서 첫날 TIPC 회의에 맞춘 타이중 직항",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "status": "ok"
     },
     "route_f2_direct": {
       "label": "시간 우선 · 타이베이 → 암스테르담 직항",
@@ -69,8 +68,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAGoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4838369,
-        "per_person_krw": 1209592,
+        "total_krw": 4831996,
+        "per_person_krw": 1207999,
         "airlines": [
           "KLM"
         ],
@@ -90,8 +89,8 @@
         ]
       },
       "selected": {
-        "total_krw": 4873024,
-        "per_person_krw": 1218256,
+        "total_krw": 4866606,
+        "per_person_krw": 1216652,
         "airlines": [
           "중화항공"
         ],
@@ -112,8 +111,7 @@
       },
       "selected_reason": "대만에서 유럽으로 환승 없이 이동하는 중화항공 직항",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 233 (char 232)"
+      "status": "ok"
     },
     "route_f3": {
       "label": "비용 최적 · 코펜하겐 → 파리 → 인천",
@@ -122,8 +120,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5051756,
-        "per_person_krw": 1262939,
+        "total_krw": 5039363,
+        "per_person_krw": 1259841,
         "airlines": [
           "터키항공"
         ],
@@ -153,8 +151,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6792845,
-        "per_person_krw": 1698211,
+        "total_krw": 6776180,
+        "per_person_krw": 1694045,
         "airlines": [
           "에어프랑스"
         ],
@@ -185,8 +183,7 @@
       },
       "selected_reason": "9/11 귀국편 중 현재 4인 총액이 가장 낮은 1회 경유편",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     },
     "compare_rmq_ams": {
       "label": "비교 · 타이중 → 홍콩 → 암스테르담",
@@ -195,8 +192,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4683551,
-        "per_person_krw": 1170888,
+        "total_krw": 4677382,
+        "per_person_krw": 1169346,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -227,8 +224,8 @@
         ]
       },
       "selected": {
-        "total_krw": 7008434,
-        "per_person_krw": 1752108,
+        "total_krw": 6999203,
+        "per_person_krw": 1749801,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -260,8 +257,7 @@
       },
       "selected_reason": "계획서의 홍콩 경유 선택지 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     },
     "compare_ams_ham": {
       "label": "비교 · 암스테르담 → 함부르크 직항",
@@ -270,8 +266,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 2457265,
-        "per_person_krw": 614316,
+        "total_krw": 2451814,
+        "per_person_krw": 612954,
         "airlines": [
           "KLM"
         ],
@@ -291,8 +287,8 @@
         ]
       },
       "selected": {
-        "total_krw": 2457265,
-        "per_person_krw": 614316,
+        "total_krw": 2451814,
+        "per_person_krw": 612954,
         "airlines": [
           "KLM"
         ],
@@ -313,8 +309,7 @@
       },
       "selected_reason": "계획서 항공과 로테르담발 국제열차 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "status": "ok"
     },
     "compare_cph_time": {
       "label": "시간 우선 · 코펜하겐 → 이스탄불 → 인천",
@@ -323,8 +318,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5050570,
-        "per_person_krw": 1262642,
+        "total_krw": 5039363,
+        "per_person_krw": 1259841,
         "airlines": [
           "터키항공"
         ],
@@ -354,8 +349,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5985860,
-        "per_person_krw": 1496465,
+        "total_krw": 5972578,
+        "per_person_krw": 1493144,
         "airlines": [
           "터키항공"
         ],
@@ -386,8 +381,7 @@
       },
       "selected_reason": "비용 최저안보다 약 1시간 빠른 인천 도착 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 236 (char 235)"
+      "status": "ok"
     },
     "compare_cph_direct": {
       "label": "비교 · 코펜하겐 → 인천 직항",
@@ -396,8 +390,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 17811078,
-        "per_person_krw": 4452770,
+        "total_krw": 17767382,
+        "per_person_krw": 4441846,
         "airlines": [
           "SAS항공"
         ],
@@ -417,8 +411,8 @@
         ]
       },
       "selected": {
-        "total_krw": 17811078,
-        "per_person_krw": 4452770,
+        "total_krw": 17767382,
+        "per_person_krw": 4441846,
         "airlines": [
           "SAS항공"
         ],
@@ -439,17 +433,8 @@
       },
       "selected_reason": "귀국 직항의 시간·가격 비교",
       "selected_fallback": false,
-      "status": "stale",
-      "error": "Extra data: line 1 column 234 (char 233)"
+      "status": "ok"
     }
   },
-  "errors": [
-    "route_f3: Extra data: line 1 column 236 (char 235)",
-    "compare_rmq_ams: Extra data: line 1 column 236 (char 235)",
-    "route_f1: Extra data: line 1 column 234 (char 233)",
-    "route_f2_direct: Extra data: line 1 column 233 (char 232)",
-    "compare_ams_ham: Extra data: line 1 column 234 (char 233)",
-    "compare_cph_time: Extra data: line 1 column 236 (char 235)",
-    "compare_cph_direct: Extra data: line 1 column 234 (char 233)"
-  ]
+  "errors": []
 }
