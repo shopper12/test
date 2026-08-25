@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-24T23:34:50Z",
-  "fresh_until": "2026-08-25T01:34:50Z",
+  "generated_at": "2026-08-25T01:52:07Z",
+  "fresh_until": "2026-08-25T03:52:07Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -111,7 +111,8 @@
       },
       "selected_reason": "대만에서 유럽으로 환승 없이 이동하는 중화항공 직항",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "Extra data: line 1 column 235 (char 234)"
     },
     "route_f3": {
       "label": "비용 최적 · 코펜하겐 → 파리 → 인천",
@@ -120,8 +121,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5166752,
-        "per_person_krw": 1291688,
+        "total_krw": 5163779,
+        "per_person_krw": 1290945,
         "airlines": [
           "터키항공",
           "아시아나항공"
@@ -152,8 +153,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6765348,
-        "per_person_krw": 1691337,
+        "total_krw": 6761455,
+        "per_person_krw": 1690364,
         "airlines": [
           "에어프랑스"
         ],
@@ -193,8 +194,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4670193,
-        "per_person_krw": 1167548,
+        "total_krw": 4664082,
+        "per_person_krw": 1166020,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -225,8 +226,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6988445,
-        "per_person_krw": 1747111,
+        "total_krw": 6979300,
+        "per_person_krw": 1744825,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -267,8 +268,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 2447809,
-        "per_person_krw": 611952,
+        "total_krw": 2446434,
+        "per_person_krw": 611608,
         "airlines": [
           "KLM"
         ],
@@ -288,8 +289,8 @@
         ]
       },
       "selected": {
-        "total_krw": 2447809,
-        "per_person_krw": 611952,
+        "total_krw": 2446434,
+        "per_person_krw": 611608,
         "airlines": [
           "KLM"
         ],
@@ -319,8 +320,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 5166752,
-        "per_person_krw": 1291688,
+        "total_krw": 5163779,
+        "per_person_krw": 1290945,
         "airlines": [
           "터키항공",
           "아시아나항공"
@@ -351,8 +352,8 @@
         ]
       },
       "selected": {
-        "total_krw": 7101804,
-        "per_person_krw": 1775451,
+        "total_krw": 7097717,
+        "per_person_krw": 1774429,
         "airlines": [
           "터키항공"
         ],
@@ -392,8 +393,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 17738980,
-        "per_person_krw": 4434745,
+        "total_krw": 17728772,
+        "per_person_krw": 4432193,
         "airlines": [
           "SAS항공"
         ],
@@ -413,8 +414,8 @@
         ]
       },
       "selected": {
-        "total_krw": 17738980,
-        "per_person_krw": 4434745,
+        "total_krw": 17728772,
+        "per_person_krw": 4432193,
         "airlines": [
           "SAS항공"
         ],
@@ -438,5 +439,7 @@
       "status": "ok"
     }
   },
-  "errors": []
+  "errors": [
+    "route_f2_direct: Extra data: line 1 column 235 (char 234)"
+  ]
 }
