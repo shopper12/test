@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-25T09:00:05Z",
-  "fresh_until": "2026-08-25T11:00:05Z",
+  "generated_at": "2026-08-25T09:51:32Z",
+  "fresh_until": "2026-08-25T11:51:32Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -68,8 +68,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAGoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4832094,
-        "per_person_krw": 1208024,
+        "total_krw": 4830052,
+        "per_person_krw": 1207513,
         "airlines": [
           "KLM"
         ],
@@ -89,8 +89,8 @@
         ]
       },
       "selected": {
-        "total_krw": 5352123,
-        "per_person_krw": 1338031,
+        "total_krw": 5349861,
+        "per_person_krw": 1337465,
         "airlines": [
           "중화항공"
         ],
@@ -120,8 +120,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 6783361,
-        "per_person_krw": 1695840,
+        "total_krw": 6778288,
+        "per_person_krw": 1694572,
         "airlines": [
           "에어프랑스"
         ],
@@ -151,8 +151,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6783361,
-        "per_person_krw": 1695840,
+        "total_krw": 6778288,
+        "per_person_krw": 1694572,
         "airlines": [
           "에어프랑스"
         ],
@@ -192,8 +192,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4677477,
-        "per_person_krw": 1169369,
+        "total_krw": 4675500,
+        "per_person_krw": 1168875,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -224,8 +224,8 @@
         ]
       },
       "selected": {
-        "total_krw": 6999345,
-        "per_person_krw": 1749836,
+        "total_krw": 6996387,
+        "per_person_krw": 1749097,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -266,8 +266,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 2454416,
-        "per_person_krw": 613604,
+        "total_krw": 2452549,
+        "per_person_krw": 613137,
         "airlines": [
           "KLM"
         ],
@@ -287,8 +287,8 @@
         ]
       },
       "selected": {
-        "total_krw": 2454416,
-        "per_person_krw": 613604,
+        "total_krw": 2452549,
+        "per_person_krw": 613137,
         "airlines": [
           "KLM"
         ],
@@ -318,8 +318,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 6783361,
-        "per_person_krw": 1695840,
+        "total_krw": 6778288,
+        "per_person_krw": 1694572,
         "airlines": [
           "에어프랑스"
         ],
@@ -349,8 +349,8 @@
         ]
       },
       "selected": {
-        "total_krw": 7120713,
-        "per_person_krw": 1780178,
+        "total_krw": 7115388,
+        "per_person_krw": 1778847,
         "airlines": [
           "터키항공"
         ],
@@ -390,8 +390,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 17786212,
-        "per_person_krw": 4446553,
+        "total_krw": 17772910,
+        "per_person_krw": 4443228,
         "airlines": [
           "SAS항공"
         ],
@@ -411,8 +411,8 @@
         ]
       },
       "selected": {
-        "total_krw": 17786212,
-        "per_person_krw": 4446553,
+        "total_krw": 17772910,
+        "per_person_krw": 4443228,
         "airlines": [
           "SAS항공"
         ],
