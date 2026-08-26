@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-08-26T13:38:10.669342Z",
+  "generated_at": "2026-08-26T16:03:57.505448Z",
   "refresh_policy": "GitHub Actions hourly; official operator and official journey-planner sources",
   "providers": [
     {
@@ -13,7 +13,7 @@
       "official": true,
       "status": "normal",
       "summary": "THSR 공식 운행상태: on schedule",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -26,7 +26,7 @@
       "official": true,
       "status": "normal",
       "summary": "A18 Taoyuan HSR Station 공식 시간표 제공 중",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -39,7 +39,7 @@
       "official": true,
       "status": "live",
       "summary": "NS Journey Planner가 공사·지연·취소를 최신 반영",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -52,7 +52,7 @@
       "official": true,
       "status": "alert",
       "summary": "Status updates Quick navigate Status updates Status updates Diversions Home Mijn RET You are logged in as Travel history Payment cards Invoices My products Personal data Favorites and preferences Log off Login You are not currently logged in. Login Don't have an account yet? Start here Mijn RET You are logged in as Travel history Payment cards Invoices My products Personal data Favorites and preferences Log off Login",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -65,7 +65,7 @@
       "official": true,
       "status": "live",
       "summary": "Service notifications - Waterbus Skip navigation Plan your trip Travel information Timetable Line and stop information Service notifications Waterbus App Ferry Tales Magazine News Destinations All destinations All stops Tickets & prices One-way and return Day ticket Subscription Groups Tickets and fares OV-pay and check-in Contact Customer Service Lost and found Frequently Asked Questions Vacancies e-tickets this.pos",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -78,7 +78,7 @@
       "official": true,
       "status": "live",
       "summary": "Fahrpläne & aktuelle Meldungen Unsere Services informieren Sie aktuell über Pünktlichkeit, Verspätung und Änderungen an Ihrer Verbindung oder begleiten Sie mit individuellen Fahrplänen bei Ihrer Reise. Startseite Info & Services Fahrpläne & aktuelle Meldungen Fahrpläne & aktuelle",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -91,7 +91,7 @@
       "official": true,
       "status": "live",
       "summary": "All departures Jump to content To startpage Menu Open submenu Homepage Timetables Timetables Tickets Service About us meinhvv Contact All departures Timetable info Announcements All departures Line timetable Timetable at station / stop Plan of lifts Network and fare zone plans Your search term Search Open search de Tim",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -103,8 +103,8 @@
       "planner_url": "https://www.rejseplanen.dk/bin/query.exe/en",
       "official": true,
       "status": "alert",
-      "summary": "akutte ændringer. Akutte ændringer Akutte ændringer i trafikken i dag og de kommende dage Ingen akutte ændringer Planlagte ændringer Find planlagte ændringer i togtrafikken og kommende sporarbejde Se alle planlagte ændringer Større ændringer Læs mere om de største sporarbejder, der giver ændringer på flere strækninger i Danmark. Læs mere Ændringer, når du rejser med tog i Europa Sporarbejder giver ændringer som rejsende med EuroCity og Railjet til og fra Hamborg. Læs mere her Relevant Information Status på elevator",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "summary": "akutte ændringer. Akutte ændringer Akutte ændringer i trafikken i dag og de kommende dage Opdateret i dag kl. 17:53 Fredericia - Horsens - Aarhus H Togene holder i øjeblikket stille ved Horsens St Planlagte ændringer Find planlagte ændringer i togtrafikken og kommende sporarbejde Se alle planlagte ændringer Større ændringer Læs mere om de største sporarbejder, der giver ændringer på flere strækninger i Danmark. Læs mere Ændringer, når du rejser med tog i Europa Sporarbejder giver ændringer som rejsende med EuroCity",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     },
     {
@@ -116,8 +116,8 @@
       "planner_url": "https://www.rejseplanen.dk/bin/query.exe/en",
       "official": true,
       "status": "live",
-      "summary": "Timetable valid from 25.08.26 to 18.11.26. All information is issued without liability. Software/Data: 5.45.Rejseplanen.19.1.9 (customer/hcudk/release/2026.3.0.3) [2026-06-18].t0 -",
-      "fetched_at": "2026-08-26T13:38:10.669342Z",
+      "summary": "Timetable valid from 26.08.26 to 18.11.26. All information is issued without liability. Software/Data: 5.45.Rejseplanen.19.1.9 (customer/hcudk/release/2026.3.0.3) [2026-06-18].t0 -",
+      "fetched_at": "2026-08-26T16:03:57.505448Z",
       "fetch_ok": true
     }
   ]
