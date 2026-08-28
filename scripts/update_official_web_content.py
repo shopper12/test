@@ -6,7 +6,7 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,40 +55,42 @@ PHOTO_PAGES = {
 # says "official forecast not published" instead of fabricating a value.
 WEATHER = {
     "2026-09-02": [
-        dict(city="Taichung", aliases=["Taichung", "Wuqi", "Port of Taichung"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66", horizon=72),
+        dict(city="Taichung", aliases=["Taichung", "Wuqi", "Port of Taichung"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.1477, lon=120.6736),
     ],
     "2026-09-03": [
-        dict(city="Taichung / Lukang", aliases=["Taichung", "Lukang", "VESTAS"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=66", horizon=72),
+        dict(city="Taichung / Lukang", aliases=["Taichung", "Lukang", "VESTAS"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.0766, lon=120.3774),
     ],
     "2026-09-04": [
-        dict(city="Taichung / Taoyuan", aliases=["Taichung", "Taoyuan", "TPE"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/County/County.html?CID=68", horizon=72),
+        dict(city="Taichung", aliases=["Taichung"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.1477, lon=120.6736),
+        dict(city="Taoyuan / TPE", aliases=["Taoyuan", "TPE"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=25.0797, lon=121.2342),
     ],
     "2026-09-05": [
-        dict(city="Amsterdam / Rotterdam", aliases=["Amsterdam", "Schiphol", "Rotterdam"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/verwachtingen", horizon=48),
+        dict(city="Amsterdam / Rotterdam", aliases=["Amsterdam", "Schiphol", "Rotterdam"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=51.9244, lon=4.4777),
     ],
     "2026-09-06": [
-        dict(city="Rotterdam / Kinderdijk", aliases=["Rotterdam", "Kinderdijk"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/verwachtingen", horizon=48),
+        dict(city="Rotterdam / Kinderdijk", aliases=["Rotterdam", "Kinderdijk"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=51.9244, lon=4.4777),
     ],
     "2026-09-07": [
-        dict(city="Rotterdam / Rijswijk", aliases=["Rotterdam", "Rijswijk", "TNO"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/verwachtingen", horizon=48),
-        dict(city="Hamburg", aliases=["Hamburg"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=72),
+        dict(city="Rotterdam / Rijswijk", aliases=["Rotterdam", "Rijswijk", "TNO"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=51.9687, lon=4.3527),
+        dict(city="Hamburg", aliases=["Hamburg"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937),
     ],
     "2026-09-08": [
-        dict(city="Hamburg", aliases=["Hamburg", "HafenCity", "Skyborn"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=72),
+        dict(city="Hamburg", aliases=["Hamburg", "HafenCity", "Skyborn", "OWC", "DNV"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937),
     ],
     "2026-09-09": [
-        dict(city="Hamburg", aliases=["Hamburg"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=72),
-        dict(city="Esbjerg", aliases=["Esbjerg", "Men at Sea"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=48),
+        dict(city="Hamburg", aliases=["Hamburg"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937),
+        dict(city="Esbjerg", aliases=["Esbjerg", "Men at Sea"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=216, lat=55.4765, lon=8.4594),
     ],
     "2026-09-10": [
-        dict(city="Esbjerg", aliases=["Esbjerg", "Blue Water"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=48),
-        dict(city="Copenhagen", aliases=["Copenhagen", "København", "CABINN Metro"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/", horizon=48),
+        dict(city="Esbjerg", aliases=["Esbjerg", "Blue Water"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=216, lat=55.4765, lon=8.4594),
+        dict(city="Aarhus", aliases=["Aarhus", "OWC Denmark"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2624652/Aarhus", horizon=216, lat=56.1629, lon=10.2039),
+        dict(city="Copenhagen", aliases=["Copenhagen", "København", "CABINN Metro"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn", horizon=216, lat=55.6761, lon=12.5683),
     ],
     "2026-09-11": [
-        dict(city="Copenhagen", aliases=["Copenhagen", "CPH"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/", horizon=48),
+        dict(city="Copenhagen", aliases=["Copenhagen", "CPH"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn", horizon=216, lat=55.6761, lon=12.5683),
     ],
     "2026-09-12": [
-        dict(city="Incheon", aliases=["Incheon", "ICN"], country="South Korea", authority="Korea Meteorological Administration (KMA)", url="https://www.weather.go.kr/neng/forecast/short-term.do", horizon=120),
+        dict(city="Incheon", aliases=["Incheon", "ICN"], country="South Korea", authority="Korea Meteorological Administration (KMA)", url="https://www.weather.go.kr/neng/forecast/short-term.do", horizon=240, lat=37.4602, lon=126.4407),
     ],
 }
 
@@ -179,6 +181,57 @@ def extract_iso_hourly(text: str, target_date: str) -> list[dict]:
     return sorted(points, key=lambda row: row["time"])
 
 
+
+def open_meteo_daily(target_date: str, source: dict) -> dict | None:
+    """Keyless 16-day numerical guidance used only when official numeric values are not extractable.
+
+    National meteorological authorities remain the authoritative warning/source links.
+    """
+    if source.get("lat") is None or source.get("lon") is None:
+        return None
+    params = {
+        "latitude": source["lat"],
+        "longitude": source["lon"],
+        "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,wind_speed_10m_max,wind_gusts_10m_max",
+        "timezone": "auto",
+        "forecast_days": 16,
+    }
+    url = "https://api.open-meteo.com/v1/forecast?" + urlencode(params)
+    try:
+        req = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+        with urlopen(req, timeout=20) as response:
+            data = json.loads(response.read().decode("utf-8"))
+        daily = data.get("daily") or {}
+        times = daily.get("time") or []
+        if target_date not in times:
+            return None
+        i = times.index(target_date)
+        def val(key):
+            arr = daily.get(key) or []
+            return arr[i] if i < len(arr) else None
+        return {
+            "provider": "Open-Meteo",
+            "source_url": "https://open-meteo.com/en/docs",
+            "date": target_date,
+            "weather_code": val("weather_code"),
+            "temperature_max_c": val("temperature_2m_max"),
+            "temperature_min_c": val("temperature_2m_min"),
+            "precip_probability_max_pct": val("precipitation_probability_max"),
+            "precipitation_sum_mm": val("precipitation_sum"),
+            "wind_speed_max_kmh": val("wind_speed_10m_max"),
+            "wind_gusts_max_kmh": val("wind_gusts_10m_max"),
+        }
+    except Exception:
+        return None
+
+
+def confidence_label(hours_until: float) -> str:
+    if hours_until <= 168:
+        return "단기예보"
+    if hours_until <= 240:
+        return "중기전망"
+    return "장기전망"
+
 def weather_location(target_date: str, source: dict) -> dict:
     now = datetime.now(timezone.utc)
     target = datetime.fromisoformat(target_date + "T12:00:00+00:00")
@@ -192,30 +245,35 @@ def weather_location(target_date: str, source: dict) -> dict:
         "forecast_horizon_hours": source["horizon"],
         "checked_at": now.replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "hourly": [],
+        "forecast_confidence": confidence_label(hours_until),
     }
+    model = open_meteo_daily(target_date, source)
+    if model:
+        row["model_daily"] = model
     try:
         text = fetch_text(source["url"])
         row["source_reachable"] = True
         row["source_page_title"] = page_title(text)
     except Exception as exc:
         row["source_reachable"] = False
-        row["kind"] = "official_source_error"
-        row["reason"] = f"공식 기상기관 페이지 접근 실패: {str(exc)[:180]}"
+        row["kind"] = "official_source_error_model_support" if model else "official_source_error"
+        row["reason"] = f"공식 기상기관 페이지 접근 실패: {str(exc)[:180]}" + (" · 수치예보는 보조 모델값" if model else "")
         return row
 
-    if hours_until > source["horizon"]:
-        row["kind"] = "official_pending"
-        row["reason"] = f"{source['authority']}의 시간대별 예보 발표 범위({source['horizon']}시간) 밖입니다. 평년값·과거자료로 대체하지 않습니다."
-        return row
-
-    hourly = extract_iso_hourly(text, target_date)
+    hourly = extract_iso_hourly(text, target_date) if hours_until <= source["horizon"] else []
     if hourly:
         row["kind"] = "official_hourly"
         row["hourly"] = hourly
         row["reason"] = "공식 기상기관 페이지에 게시된 시간대별 예보를 추출했습니다."
+    elif model:
+        row["kind"] = "model_guidance"
+        if hours_until <= source["horizon"]:
+            row["reason"] = f"{source['authority']} 공식 원문을 함께 확인하십시오. 수치는 Open-Meteo 16일 수치예보 보조값이며 경보·특보보다 우선하지 않습니다."
+        else:
+            row["reason"] = f"{source['authority']}의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 {confidence_label(hours_until)} 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
     else:
-        row["kind"] = "official_unparsed"
-        row["reason"] = "공식 예보 범위에 들어왔지만 페이지 구조에서 시간대별 값을 안전하게 추출하지 못했습니다. 공식 원문 링크를 우선 확인하십시오."
+        row["kind"] = "official_pending"
+        row["reason"] = f"{source['authority']}의 상세 수치예보 발표 전입니다. 공식 원문을 계속 자동 확인합니다."
     return row
 
 

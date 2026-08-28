@@ -38,7 +38,7 @@ def main():
     payload["weather"] = weather
     payload.setdefault("sources", {})
     payload["sources"]["photos"] = "First-party venue/company/hotel/official-tourism website metadata only; no Wikimedia/stock fallback"
-    payload["sources"]["weather"] = "National meteorological authorities only (CWA, KNMI, DWD, DMI, KMA); no historical/climatology fallback"
+    payload["sources"]["weather"] = "National meteorological authorities (CWA, KNMI, DWD, DMI, KMA) for official warnings/source links; Open-Meteo 16-day numerical guidance is clearly labeled as model support when official numeric values are not yet extractable"
     base.SNAPSHOT.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     print(json.dumps({
         "schema_version":payload["schema_version"],
