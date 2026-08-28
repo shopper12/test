@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-27T22:32:41Z",
-  "fresh_until": "2026-08-28T00:32:41Z",
+  "generated_at": "2026-08-28T06:17:12Z",
+  "fresh_until": "2026-08-28T08:17:12Z",
   "weather": {
     "2026-09-02": {
       "date": "2026-09-02",
@@ -18,7 +18,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:38:06Z",
+          "checked_at": "2026-08-28T06:17:55Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -28,7 +28,7 @@
             "weather_code": 96,
             "temperature_max_c": 27.1,
             "temperature_min_c": 24.2,
-            "precip_probability_max_pct": 96,
+            "precip_probability_max_pct": 91,
             "precipitation_sum_mm": 33.3,
             "wind_speed_max_kmh": 8.3,
             "wind_gusts_max_kmh": 25.2
@@ -55,7 +55,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:38:06Z",
+          "checked_at": "2026-08-28T06:17:55Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -90,7 +90,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:38:06Z",
+          "checked_at": "2026-08-28T06:17:55Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -120,7 +120,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:38:06Z",
+          "checked_at": "2026-08-28T06:17:55Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -157,7 +157,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-28T00:38:06Z",
+          "checked_at": "2026-08-28T06:17:55Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -193,7 +193,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-28T00:38:07Z",
+          "checked_at": "2026-08-28T06:17:56Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -230,7 +230,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-28T00:38:07Z",
+          "checked_at": "2026-08-28T06:17:56Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -259,7 +259,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:38:07Z",
+          "checked_at": "2026-08-28T06:17:56Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -298,7 +298,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:38:07Z",
+          "checked_at": "2026-08-28T06:17:56Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -333,7 +333,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:38:07Z",
+          "checked_at": "2026-08-28T06:17:56Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -363,7 +363,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:38:07Z",
+          "checked_at": "2026-08-28T06:17:57Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -399,7 +399,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:38:07Z",
+          "checked_at": "2026-08-28T06:17:57Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -429,7 +429,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2624652/Aarhus",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:38:08Z",
+          "checked_at": "2026-08-28T06:17:57Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -460,7 +460,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:38:08Z",
+          "checked_at": "2026-08-28T06:17:57Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -496,7 +496,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:38:08Z",
+          "checked_at": "2026-08-28T06:17:57Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "source_reachable": true,
@@ -520,25 +520,24 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:38:08Z",
+          "checked_at": "2026-08-28T06:17:57Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-12",
-            "weather_code": 3,
-            "temperature_max_c": 23.2,
-            "temperature_min_c": 21.0,
-            "precip_probability_max_pct": 19,
-            "precipitation_sum_mm": 0.0,
-            "wind_speed_max_kmh": 18.6,
-            "wind_gusts_max_kmh": null
+            "weather_code": 51,
+            "temperature_max_c": 24.4,
+            "temperature_min_c": 22.0,
+            "precip_probability_max_pct": 20,
+            "precipitation_sum_mm": 1.0,
+            "wind_speed_max_kmh": 29.1,
+            "wind_gusts_max_kmh": 31.7
           },
-          "source_reachable": true,
-          "source_page_title": "Short-Range Forecasts - Korea Meteorological Administration",
-          "kind": "model_guidance",
-          "reason": "Korea Meteorological Administration (KMA)의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
+          "source_reachable": false,
+          "kind": "official_source_error_model_support",
+          "reason": "공식 기상기관 페이지 접근 실패: Remote end closed connection without response · 수치예보는 보조 모델값"
         }
       ]
     }
@@ -634,12 +633,15 @@
       "name": "Holiday Inn Express Rotterdam Central Station"
     },
     "Markthal Rotterdam": {
-      "url": "",
+      "url": "https://markthal.nl/_next/image/?url=https%3A%2F%2Fcms.markthal.nl%2Fwp-content%2Fuploads%2F2024%2F07%2Fcategory-asian.jpeg&w=828&q=75",
       "page_url": "https://markthal.nl/en/",
       "credit": "Markthal",
       "source": "official_website",
       "official": true,
-      "name": "Markthal Rotterdam"
+      "name": "Markthal Rotterdam",
+      "image_alt": "",
+      "content_image_score": 20,
+      "content_image_fallback": true
     },
     "Cube Houses": {
       "url": "https://giustoragev2.blob.core.windows.net/shoppinger/rp/ogimage.jpg",
@@ -666,23 +668,29 @@
       "name": "Restaurant Bazar"
     },
     "Kinderdijk": {
-      "url": "",
+      "url": "https://kinderdijk.nl/wp-content/uploads/2026/01/Kinderdijk_terras_cafe-e1769517056337-600x800.jpg",
       "page_url": "https://kinderdijk.com/",
       "credit": "Kinderdijk UNESCO World Heritage",
       "source": "official_website",
       "official": true,
-      "name": "Kinderdijk"
+      "name": "Kinderdijk",
+      "image_alt": "A family enjoys some treats together on the terrace of the Kinderdijk-cafe in Kinderdijk on a summer day, with the Kinderdijk windmills in the background.",
+      "content_image_score": 24,
+      "content_image_fallback": true
     },
     "Port of Rotterdam Authority": {
-      "url": "",
+      "url": "https://www.portofrotterdam.com/sites/default/files/styles/header_homepage_mobile/public/2021-06/container-schip-rotterdam-terminal.jpg?h=b9b2c2a7&itok=gBOKdMoq",
       "page_url": "https://www.portofrotterdam.com/en",
       "credit": "Port of Rotterdam | Rotterdam Port Authority",
       "source": "official_website",
       "official": true,
-      "name": "Port of Rotterdam Authority"
+      "name": "Port of Rotterdam Authority",
+      "image_alt": "Header image",
+      "content_image_score": 28,
+      "content_image_fallback": true
     },
     "Rotterdam Offshore Group": {
-      "url": "http://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
+      "url": "https://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
       "page_url": "https://www.rotterdamoffshore.com/",
       "credit": "ROG, your partner for dockside and on-site services",
       "source": "official_website",
@@ -706,12 +714,15 @@
       "name": "Motel One Hamburg-Fleetinsel"
     },
     "Speicherstadt": {
-      "url": "",
+      "url": "https://www.hamburg.com/resource/image/1172418/landscape_ratio16x9/610/343/c931b9b0e693eccb193ec9061c7e11a5/ADA853C54DB25A65D248414445DFDC61/landungsbruecken1-img.webp",
       "page_url": "https://www.hamburg.com/visitors/sights/maritime/",
       "credit": "Maritime Sights",
       "source": "official_website",
       "official": true,
-      "name": "Speicherstadt"
+      "name": "Speicherstadt",
+      "image_alt": "Total view of the Landungsbrücken piers and terminal building with River Elbe and harbour cranes at dusk",
+      "content_image_score": 12,
+      "content_image_fallback": true
     },
     "Skyborn Renewables": {
       "url": "https://cdn.sanity.io/images/hj3rn54t/production/791eabb3a728f9f219c28e2e427459667190ffc0-400x400.png?w=1500&fit=max&auto=format",
@@ -722,12 +733,15 @@
       "name": "Skyborn Renewables"
     },
     "Elbphilharmonie": {
-      "url": "",
+      "url": "https://d3c80vss50ue25.cloudfront.net/media/filer_public_thumbnails/filer_public/e2/dc/e2dcad18-3ad6-4abf-ac68-673b814511f9/20260820_ep_creators_26-27_pm_header_1920x1080_v2.jpg__1300x1080_q85_crop_subject_location-951%2C430_subsampling-2_upscale.jpg",
       "page_url": "https://www.elbphilharmonie.de/en/",
       "credit": "Elbphilharmonie Laeiszhalle Hamburg - Elbphilharmonie",
       "source": "official_website",
       "official": true,
-      "name": "Elbphilharmonie"
+      "name": "Elbphilharmonie",
+      "image_alt": "",
+      "content_image_score": 8,
+      "content_image_fallback": true
     },
     "Oberhafen-Kantine": {
       "url": "https://oberhafenkantine-hamburg.de/wp-content/uploads/2025/07/Haltung_Titelbild-242x300.jpg",
@@ -825,12 +839,13 @@
         "required_hours": 9.5,
         "price": 7091884
       }
-    ]
+    ],
+    "last_error": "Extra data: line 1 column 235 (char 234)"
   },
   "sources": {
     "weather": "National meteorological authorities (CWA, KNMI, DWD, DMI, KMA) for official warnings/source links; Open-Meteo 16-day numerical guidance is clearly labeled as model support when official numeric values are not yet extractable",
-    "photos": "First-party venue/company/hotel/official-tourism website metadata only; no Wikimedia/stock fallback",
+    "photos": "First-party official/business/tourism website representative metadata or page-content images only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-28T00:38:04Z"
+  "official_web_generated_at": "2026-08-28T06:17:53Z"
 }
