@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-28T05:24:13Z",
-  "fresh_until": "2026-08-28T07:24:13Z",
+  "generated_at": "2026-08-28T18:42:08Z",
+  "fresh_until": "2026-08-28T20:42:08Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -16,8 +16,8 @@
       "destination": "RMQ",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDIoAGoFEgNJQ05yBRIDUk1RQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 446000,
-        "per_person_krw": 111500,
+        "total_krw": 445600,
+        "per_person_krw": 111400,
         "airlines": [
           "진에어"
         ],
@@ -37,8 +37,8 @@
         ]
       },
       "selected": {
-        "total_krw": 446000,
-        "per_person_krw": 111500,
+        "total_krw": 445600,
+        "per_person_krw": 111400,
         "airlines": [
           "진에어"
         ],
@@ -68,8 +68,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAGoFEgNUUEVyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4838693,
-        "per_person_krw": 1209673,
+        "total_krw": 4839329,
+        "per_person_krw": 1209832,
         "airlines": [
           "중화항공"
         ],
@@ -89,8 +89,8 @@
         ]
       },
       "selected": {
-        "total_krw": 4838693,
-        "per_person_krw": 1209673,
+        "total_krw": 4839329,
+        "per_person_krw": 1209832,
         "airlines": [
           "중화항공"
         ],
@@ -120,40 +120,39 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 6725974,
-        "per_person_krw": 1681494,
+        "total_krw": 6717786,
+        "per_person_krw": 1679446,
         "airlines": [
-          "에어프랑스",
-          "대한항공"
+          "에어프랑스"
         ],
-        "carrier_code": "multi",
+        "carrier_code": "AF",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
             "destination": "CDG",
             "departure_date": "2026-09-11",
-            "departure_time": "12:20",
+            "departure_time": "10:10",
             "arrival_date": "2026-09-11",
-            "arrival_time": "14:20",
+            "arrival_time": "12:10",
             "duration_minutes": 120,
-            "aircraft": "Airbus A320"
+            "aircraft": "Airbus A220-300 Passenger"
           },
           {
             "origin": "CDG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "20:35",
+            "departure_time": "14:40",
             "arrival_date": "2026-09-12",
-            "arrival_time": "15:50",
-            "duration_minutes": 735,
-            "aircraft": "Boeing 777"
+            "arrival_time": "09:35",
+            "duration_minutes": 715,
+            "aircraft": "Airbus A350"
           }
         ]
       },
       "selected": {
-        "total_krw": 6727690,
-        "per_person_krw": 1681922,
+        "total_krw": 6717786,
+        "per_person_krw": 1679446,
         "airlines": [
           "에어프랑스"
         ],
@@ -193,8 +192,8 @@
       "destination": "AMS",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDQoAWoFEgNSTVFyBRIDQU1TQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 4682123,
-        "per_person_krw": 1170531,
+        "total_krw": 4682738,
+        "per_person_krw": 1170684,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -225,8 +224,8 @@
         ]
       },
       "selected": {
-        "total_krw": 7007161,
-        "per_person_krw": 1751790,
+        "total_krw": 7008082,
+        "per_person_krw": 1752020,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -267,8 +266,8 @@
       "destination": "HAM",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMDcoAGoFEgNBTVNyBRIDSEFNQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 2780206,
-        "per_person_krw": 695052,
+        "total_krw": 2774774,
+        "per_person_krw": 693694,
         "airlines": [
           "KLM"
         ],
@@ -288,8 +287,8 @@
         ]
       },
       "selected": {
-        "total_krw": 2780206,
-        "per_person_krw": 695052,
+        "total_krw": 2774774,
+        "per_person_krw": 693694,
         "airlines": [
           "KLM"
         ],
@@ -319,66 +318,64 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAWoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 6725974,
-        "per_person_krw": 1681494,
+        "total_krw": 6717786,
+        "per_person_krw": 1679446,
         "airlines": [
-          "에어프랑스",
-          "대한항공"
+          "에어프랑스"
         ],
-        "carrier_code": "multi",
+        "carrier_code": "AF",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
             "destination": "CDG",
             "departure_date": "2026-09-11",
-            "departure_time": "12:20",
+            "departure_time": "10:10",
             "arrival_date": "2026-09-11",
-            "arrival_time": "14:20",
+            "arrival_time": "12:10",
             "duration_minutes": 120,
-            "aircraft": "Airbus A320"
+            "aircraft": "Airbus A220-300 Passenger"
           },
           {
             "origin": "CDG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "20:35",
+            "departure_time": "14:40",
             "arrival_date": "2026-09-12",
-            "arrival_time": "15:50",
-            "duration_minutes": 735,
-            "aircraft": "Boeing 777"
+            "arrival_time": "09:35",
+            "duration_minutes": 715,
+            "aircraft": "Airbus A350"
           }
         ]
       },
       "selected": {
-        "total_krw": 6725974,
-        "per_person_krw": 1681494,
+        "total_krw": 6717786,
+        "per_person_krw": 1679446,
         "airlines": [
-          "에어프랑스",
-          "대한항공"
+          "에어프랑스"
         ],
-        "carrier_code": "multi",
+        "carrier_code": "AF",
         "stops": 1,
         "legs": [
           {
             "origin": "CPH",
             "destination": "CDG",
             "departure_date": "2026-09-11",
-            "departure_time": "12:20",
+            "departure_time": "10:10",
             "arrival_date": "2026-09-11",
-            "arrival_time": "14:20",
+            "arrival_time": "12:10",
             "duration_minutes": 120,
-            "aircraft": "Airbus A320"
+            "aircraft": "Airbus A220-300 Passenger"
           },
           {
             "origin": "CDG",
             "destination": "ICN",
             "departure_date": "2026-09-11",
-            "departure_time": "20:35",
+            "departure_time": "14:40",
             "arrival_date": "2026-09-12",
-            "arrival_time": "15:50",
-            "duration_minutes": 735,
-            "aircraft": "Boeing 777"
+            "arrival_time": "09:35",
+            "duration_minutes": 715,
+            "aircraft": "Airbus A350"
           }
         ]
       },
@@ -393,8 +390,8 @@
       "destination": "ICN",
       "query_url": "https://www.google.com/travel/flights/search?tfs=GhwSCjIwMjYtMDktMTEoAGoFEgNDUEhyBRIDSUNOQgQBAQEBSAGYAQI=&hl=ko&curr=KRW",
       "lowest": {
-        "total_krw": 17640240,
-        "per_person_krw": 4410060,
+        "total_krw": 17614270,
+        "per_person_krw": 4403568,
         "airlines": [
           "SAS항공"
         ],
@@ -414,8 +411,8 @@
         ]
       },
       "selected": {
-        "total_krw": 17640240,
-        "per_person_krw": 4410060,
+        "total_krw": 17614270,
+        "per_person_krw": 4403568,
         "airlines": [
           "SAS항공"
         ],
