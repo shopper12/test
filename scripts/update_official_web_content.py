@@ -209,7 +209,7 @@ def open_meteo_daily(target_date: str, source: dict) -> dict | None:
         def val(key):
             arr = daily.get(key) or []
             return arr[i] if i < len(arr) else None
-        return {
+        result = {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
             "date": target_date,
@@ -221,6 +221,8 @@ def open_meteo_daily(target_date: str, source: dict) -> dict | None:
             "wind_speed_max_kmh": val("wind_speed_10m_max"),
             "wind_gusts_max_kmh": val("wind_gusts_10m_max"),
         }
+        core = [result[k] for k in ("weather_code", "temperature_max_c", "temperature_min_c", "precip_probability_max_pct", "precipitation_sum_mm", "wind_speed_max_kmh", "wind_gusts_max_kmh")]
+        return result if any(v is not None for v in core) else None
     except Exception:
         return None
 

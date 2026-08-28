@@ -18,7 +18,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:35:07Z",
+          "checked_at": "2026-08-28T00:38:06Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -55,7 +55,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:35:07Z",
+          "checked_at": "2026-08-28T00:38:06Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -90,7 +90,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:35:07Z",
+          "checked_at": "2026-08-28T00:38:06Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -120,7 +120,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-28T00:35:07Z",
+          "checked_at": "2026-08-28T00:38:06Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -157,7 +157,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-28T00:35:08Z",
+          "checked_at": "2026-08-28T00:38:06Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -193,7 +193,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-28T00:35:08Z",
+          "checked_at": "2026-08-28T00:38:07Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -230,7 +230,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-28T00:35:08Z",
+          "checked_at": "2026-08-28T00:38:07Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -259,7 +259,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:35:08Z",
+          "checked_at": "2026-08-28T00:38:07Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -298,7 +298,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:35:09Z",
+          "checked_at": "2026-08-28T00:38:07Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -333,7 +333,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:35:09Z",
+          "checked_at": "2026-08-28T00:38:07Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -363,7 +363,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:35:09Z",
+          "checked_at": "2026-08-28T00:38:07Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -399,7 +399,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:35:09Z",
+          "checked_at": "2026-08-28T00:38:07Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -429,7 +429,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2624652/Aarhus",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:35:10Z",
+          "checked_at": "2026-08-28T00:38:08Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -460,7 +460,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:35:10Z",
+          "checked_at": "2026-08-28T00:38:08Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -496,25 +496,13 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-28T00:35:10Z",
+          "checked_at": "2026-08-28T00:38:08Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
-          "model_daily": {
-            "provider": "Open-Meteo",
-            "source_url": "https://open-meteo.com/en/docs",
-            "date": "2026-09-11",
-            "weather_code": null,
-            "temperature_max_c": null,
-            "temperature_min_c": null,
-            "precip_probability_max_pct": null,
-            "precipitation_sum_mm": null,
-            "wind_speed_max_kmh": null,
-            "wind_gusts_max_kmh": null
-          },
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
-          "kind": "model_guidance",
-          "reason": "Danish Meteorological Institute (DMI)의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
+          "kind": "official_pending",
+          "reason": "Danish Meteorological Institute (DMI)의 상세 수치예보 발표 전입니다. 공식 원문을 계속 자동 확인합니다."
         }
       ]
     },
@@ -532,7 +520,7 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-28T00:35:10Z",
+          "checked_at": "2026-08-28T00:38:08Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -844,5 +832,5 @@
     "photos": "First-party venue/company/hotel/official-tourism website metadata only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-28T00:35:05Z"
+  "official_web_generated_at": "2026-08-28T00:38:04Z"
 }
