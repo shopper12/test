@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-29T14:40:18Z",
-  "fresh_until": "2026-08-29T16:40:18Z",
+  "generated_at": "2026-08-29T18:48:59Z",
+  "fresh_until": "2026-08-29T20:48:59Z",
   "weather": {
     "2026-09-02": {
       "date": "2026-09-02",
@@ -18,7 +18,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -28,7 +28,7 @@
             "weather_code": 95,
             "temperature_max_c": 28.5,
             "temperature_min_c": 24.2,
-            "precip_probability_max_pct": 93,
+            "precip_probability_max_pct": 94,
             "precipitation_sum_mm": 24.0,
             "wind_speed_max_kmh": 8.5,
             "wind_gusts_max_kmh": 27.7
@@ -55,7 +55,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -65,7 +65,7 @@
             "weather_code": 96,
             "temperature_max_c": 27.9,
             "temperature_min_c": 26.1,
-            "precip_probability_max_pct": 82,
+            "precip_probability_max_pct": 89,
             "precipitation_sum_mm": 51.3,
             "wind_speed_max_kmh": 26.9,
             "wind_gusts_max_kmh": 49.0
@@ -90,7 +90,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -120,7 +120,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -157,7 +157,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -193,7 +193,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -230,7 +230,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -259,7 +259,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T14:40:49Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -298,7 +298,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T14:40:50Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -333,7 +333,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T14:40:50Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -363,7 +363,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T14:40:50Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -399,7 +399,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T14:40:50Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -429,7 +429,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2624652/Aarhus",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T14:40:50Z",
+          "checked_at": "2026-08-29T18:49:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -460,7 +460,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T14:40:51Z",
+          "checked_at": "2026-08-29T18:49:45Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -496,7 +496,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T14:40:51Z",
+          "checked_at": "2026-08-29T18:49:45Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -532,12 +532,24 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T14:40:51Z",
+          "checked_at": "2026-08-29T18:49:45Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
+          "model_daily": {
+            "provider": "Open-Meteo",
+            "source_url": "https://open-meteo.com/en/docs",
+            "date": "2026-09-12",
+            "weather_code": 1,
+            "temperature_max_c": 24.2,
+            "temperature_min_c": 19.5,
+            "precip_probability_max_pct": 8,
+            "precipitation_sum_mm": 0.0,
+            "wind_speed_max_kmh": 21.8,
+            "wind_gusts_max_kmh": 40.3
+          },
           "source_reachable": false,
-          "kind": "official_source_error",
-          "reason": "공식 기상기관 페이지 접근 실패: HTTP Error 502: Bad Gateway"
+          "kind": "official_source_error_model_support",
+          "reason": "공식 기상기관 페이지 접근 실패: Remote end closed connection without response · 수치예보는 보조 모델값"
         }
       ]
     }
@@ -852,5 +864,5 @@
     "photos": "First-party official/business/tourism website representative metadata or page-content images only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-29T14:40:47Z"
+  "official_web_generated_at": "2026-08-29T18:49:41Z"
 }
