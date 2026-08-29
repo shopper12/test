@@ -5,8 +5,8 @@
   "currency": "KRW",
   "passengers": 4,
   "cabin": "economy",
-  "generated_at": "2026-08-29T18:29:21Z",
-  "fresh_until": "2026-08-29T20:29:21Z",
+  "generated_at": "2026-08-29T21:43:54Z",
+  "fresh_until": "2026-08-29T23:43:54Z",
   "fare_scope": "Google Flights가 표시한 성인 4명 총액. 위탁수하물·좌석·결제수수료는 최종 예약화면에서 추가될 수 있음.",
   "fares": {
     "route_f1": {
@@ -224,8 +224,8 @@
         ]
       },
       "selected": {
-        "total_krw": 7002035,
-        "per_person_krw": 1750509,
+        "total_krw": 4676964,
+        "per_person_krw": 1169241,
         "airlines": [
           "홍콩 익스프레스항공",
           "캐세이패시픽항공"
@@ -237,18 +237,18 @@
             "origin": "RMQ",
             "destination": "HKG",
             "departure_date": "2026-09-04",
-            "departure_time": "13:35",
+            "departure_time": "20:40",
             "arrival_date": "2026-09-04",
-            "arrival_time": "15:20",
+            "arrival_time": "22:25",
             "duration_minutes": 105,
-            "aircraft": "Airbus A320"
+            "aircraft": "Airbus A321neo"
           },
           {
             "origin": "HKG",
             "destination": "AMS",
-            "departure_date": "2026-09-04",
+            "departure_date": "2026-09-05",
             "departure_time": "23:15",
-            "arrival_date": "2026-09-05",
+            "arrival_date": "2026-09-06",
             "arrival_time": "06:55",
             "duration_minutes": 820,
             "aircraft": "Airbus A350"
@@ -256,7 +256,7 @@
         ]
       },
       "selected_reason": "계획서의 홍콩 경유 선택지 비교",
-      "selected_fallback": false,
+      "selected_fallback": true,
       "status": "ok"
     },
     "compare_ams_ham": {
@@ -433,8 +433,11 @@
       },
       "selected_reason": "귀국 직항의 시간·가격 비교",
       "selected_fallback": false,
-      "status": "ok"
+      "status": "stale",
+      "error": "'NoneType' object is not subscriptable"
     }
   },
-  "errors": []
+  "errors": [
+    "compare_cph_direct: 'NoneType' object is not subscriptable"
+  ]
 }
