@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
-  "generated_at": "2026-08-29T09:20:52Z",
-  "fresh_until": "2026-08-29T11:20:52Z",
+  "generated_at": "2026-08-29T14:40:18Z",
+  "fresh_until": "2026-08-29T16:40:18Z",
   "weather": {
     "2026-09-02": {
       "date": "2026-09-02",
@@ -18,20 +18,20 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T09:21:34Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-02",
-            "weather_code": 96,
-            "temperature_max_c": 28.8,
-            "temperature_min_c": 23.8,
-            "precip_probability_max_pct": 97,
-            "precipitation_sum_mm": 32.0,
-            "wind_speed_max_kmh": 11.8,
-            "wind_gusts_max_kmh": 37.8
+            "weather_code": 95,
+            "temperature_max_c": 28.5,
+            "temperature_min_c": 24.2,
+            "precip_probability_max_pct": 93,
+            "precipitation_sum_mm": 24.0,
+            "wind_speed_max_kmh": 8.5,
+            "wind_gusts_max_kmh": 27.7
           },
           "source_reachable": true,
           "source_page_title": "7-day Forecasts | Central Weather Administration",
@@ -55,7 +55,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T09:21:34Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -63,12 +63,12 @@
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-03",
             "weather_code": 96,
-            "temperature_max_c": 29.9,
-            "temperature_min_c": 25.6,
-            "precip_probability_max_pct": 84,
-            "precipitation_sum_mm": 11.4,
-            "wind_speed_max_kmh": 14.2,
-            "wind_gusts_max_kmh": 36.0
+            "temperature_max_c": 27.9,
+            "temperature_min_c": 26.1,
+            "precip_probability_max_pct": 82,
+            "precipitation_sum_mm": 51.3,
+            "wind_speed_max_kmh": 26.9,
+            "wind_gusts_max_kmh": 49.0
           },
           "source_reachable": true,
           "source_page_title": "7-day Forecasts | Central Weather Administration",
@@ -90,20 +90,20 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T09:21:34Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-04",
-            "weather_code": 96,
-            "temperature_max_c": 27.7,
-            "temperature_min_c": 24.7,
-            "precip_probability_max_pct": 91,
-            "precipitation_sum_mm": 58.2,
-            "wind_speed_max_kmh": 10.9,
-            "wind_gusts_max_kmh": 29.2
+            "weather_code": 95,
+            "temperature_max_c": 30.6,
+            "temperature_min_c": 24.6,
+            "precip_probability_max_pct": 83,
+            "precipitation_sum_mm": 42.0,
+            "wind_speed_max_kmh": 14.8,
+            "wind_gusts_max_kmh": 44.6
           },
           "source_reachable": true,
           "source_page_title": "7-day Forecasts | Central Weather Administration",
@@ -120,20 +120,20 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-29T09:21:34Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-04",
-            "weather_code": 96,
-            "temperature_max_c": 28.9,
-            "temperature_min_c": 25.2,
-            "precip_probability_max_pct": 85,
-            "precipitation_sum_mm": 27.9,
+            "weather_code": 95,
+            "temperature_max_c": 28.8,
+            "temperature_min_c": 24.8,
+            "precip_probability_max_pct": 88,
+            "precipitation_sum_mm": 25.2,
             "wind_speed_max_kmh": 16.9,
-            "wind_gusts_max_kmh": 35.3
+            "wind_gusts_max_kmh": 36.0
           },
           "source_reachable": true,
           "source_page_title": "7-day Forecasts | Central Weather Administration",
@@ -157,9 +157,9 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-29T09:21:34Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
-          "forecast_confidence": "중기전망",
+          "forecast_confidence": "단기예보",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
@@ -167,7 +167,7 @@
             "weather_code": 51,
             "temperature_max_c": 22.3,
             "temperature_min_c": 16.6,
-            "precip_probability_max_pct": 28,
+            "precip_probability_max_pct": 29,
             "precipitation_sum_mm": 2.7,
             "wind_speed_max_kmh": 16.3,
             "wind_gusts_max_kmh": 47.9
@@ -193,7 +193,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-29T09:21:34Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -203,7 +203,7 @@
             "weather_code": 51,
             "temperature_max_c": 20.6,
             "temperature_min_c": 14.5,
-            "precip_probability_max_pct": 19,
+            "precip_probability_max_pct": 35,
             "precipitation_sum_mm": 1.2,
             "wind_speed_max_kmh": 10.0,
             "wind_gusts_max_kmh": 43.2
@@ -230,7 +230,7 @@
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-29T09:21:34Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -240,7 +240,7 @@
             "weather_code": 51,
             "temperature_max_c": 21.3,
             "temperature_min_c": 13.4,
-            "precip_probability_max_pct": 32,
+            "precip_probability_max_pct": 35,
             "precipitation_sum_mm": 1.2,
             "wind_speed_max_kmh": 26.6,
             "wind_gusts_max_kmh": 54.7
@@ -259,7 +259,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T09:21:35Z",
+          "checked_at": "2026-08-29T14:40:49Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -269,7 +269,7 @@
             "weather_code": 55,
             "temperature_max_c": 18.4,
             "temperature_min_c": 12.5,
-            "precip_probability_max_pct": 40,
+            "precip_probability_max_pct": 45,
             "precipitation_sum_mm": 6.3,
             "wind_speed_max_kmh": 13.6,
             "wind_gusts_max_kmh": 34.9
@@ -298,9 +298,9 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T09:21:35Z",
+          "checked_at": "2026-08-29T14:40:50Z",
           "hourly": [],
-          "forecast_confidence": "장기전망",
+          "forecast_confidence": "중기전망",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
@@ -308,7 +308,7 @@
             "weather_code": 55,
             "temperature_max_c": 19.7,
             "temperature_min_c": 14.7,
-            "precip_probability_max_pct": 37,
+            "precip_probability_max_pct": 32,
             "precipitation_sum_mm": 8.1,
             "wind_speed_max_kmh": 36.8,
             "wind_gusts_max_kmh": 89.6
@@ -316,7 +316,7 @@
           "source_reachable": true,
           "source_page_title": "Wetter und Klima - Deutscher Wetterdienst - Hamburg (Flugh.)",
           "kind": "model_guidance",
-          "reason": "Deutscher Wetterdienst (DWD)의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
+          "reason": "Deutscher Wetterdienst (DWD) 공식 원문을 함께 확인하십시오. 수치는 Open-Meteo 16일 수치예보 보조값이며 경보·특보보다 우선하지 않습니다."
         }
       ]
     },
@@ -333,7 +333,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T09:21:35Z",
+          "checked_at": "2026-08-29T14:40:50Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -343,7 +343,7 @@
             "weather_code": 3,
             "temperature_max_c": 16.3,
             "temperature_min_c": 12.6,
-            "precip_probability_max_pct": 53,
+            "precip_probability_max_pct": 33,
             "precipitation_sum_mm": 0.0,
             "wind_speed_max_kmh": 15.9,
             "wind_gusts_max_kmh": 65.9
@@ -363,7 +363,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T09:21:35Z",
+          "checked_at": "2026-08-29T14:40:50Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -373,7 +373,7 @@
             "weather_code": 3,
             "temperature_max_c": 15.4,
             "temperature_min_c": 12.7,
-            "precip_probability_max_pct": 61,
+            "precip_probability_max_pct": 51,
             "precipitation_sum_mm": 0.0,
             "wind_speed_max_kmh": 25.9,
             "wind_gusts_max_kmh": 74.2
@@ -399,7 +399,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T09:21:35Z",
+          "checked_at": "2026-08-29T14:40:50Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -409,7 +409,7 @@
             "weather_code": 55,
             "temperature_max_c": 19.0,
             "temperature_min_c": 12.2,
-            "precip_probability_max_pct": 41,
+            "precip_probability_max_pct": 46,
             "precipitation_sum_mm": 9.0,
             "wind_speed_max_kmh": 26.0,
             "wind_gusts_max_kmh": 48.2
@@ -429,7 +429,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2624652/Aarhus",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T09:21:35Z",
+          "checked_at": "2026-08-29T14:40:50Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -439,7 +439,7 @@
             "weather_code": 80,
             "temperature_max_c": 17.3,
             "temperature_min_c": 9.5,
-            "precip_probability_max_pct": 27,
+            "precip_probability_max_pct": 31,
             "precipitation_sum_mm": 8.1,
             "wind_speed_max_kmh": 27.9,
             "wind_gusts_max_kmh": 55.8
@@ -460,7 +460,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T09:21:36Z",
+          "checked_at": "2026-08-29T14:40:51Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -470,7 +470,7 @@
             "weather_code": 53,
             "temperature_max_c": 17.1,
             "temperature_min_c": 11.9,
-            "precip_probability_max_pct": 35,
+            "precip_probability_max_pct": 47,
             "precipitation_sum_mm": 3.6,
             "wind_speed_max_kmh": 29.5,
             "wind_gusts_max_kmh": 61.2
@@ -496,7 +496,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-29T09:21:36Z",
+          "checked_at": "2026-08-29T14:40:51Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -506,7 +506,7 @@
             "weather_code": 53,
             "temperature_max_c": 18.9,
             "temperature_min_c": 16.5,
-            "precip_probability_max_pct": 31,
+            "precip_probability_max_pct": 28,
             "precipitation_sum_mm": 3.6,
             "wind_speed_max_kmh": 28.3,
             "wind_gusts_max_kmh": 67.3
@@ -532,25 +532,12 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-29T09:21:36Z",
+          "checked_at": "2026-08-29T14:40:51Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
-          "model_daily": {
-            "provider": "Open-Meteo",
-            "source_url": "https://open-meteo.com/en/docs",
-            "date": "2026-09-12",
-            "weather_code": 3,
-            "temperature_max_c": 24.2,
-            "temperature_min_c": 19.5,
-            "precip_probability_max_pct": 20,
-            "precipitation_sum_mm": 0.0,
-            "wind_speed_max_kmh": 21.8,
-            "wind_gusts_max_kmh": 40.3
-          },
-          "source_reachable": true,
-          "source_page_title": "Short-Range Forecasts - Korea Meteorological Administration",
-          "kind": "model_guidance",
-          "reason": "Korea Meteorological Administration (KMA)의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
+          "source_reachable": false,
+          "kind": "official_source_error",
+          "reason": "공식 기상기관 페이지 접근 실패: HTTP Error 502: Bad Gateway"
         }
       ]
     }
@@ -865,5 +852,5 @@
     "photos": "First-party official/business/tourism website representative metadata or page-content images only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-29T09:21:31Z"
+  "official_web_generated_at": "2026-08-29T14:40:47Z"
 }
