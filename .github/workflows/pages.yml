@@ -27,7 +27,7 @@ jobs:
       - name: Refresh official transit snapshot for artifact
         run: python scripts/update_transit_live.py
 
-      - name: Validate v17 direct itinerary and verified internal maps
+      - name: Validate FINAL_0830 itinerary and verified internal maps
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
@@ -36,17 +36,21 @@ jobs:
           import json
           html=Path('index.html').read_text(encoding='utf-8')
           boot=Path('boot.js').read_text(encoding='utf-8')
+          itinerary=Path('itinerary-data.js').read_text(encoding='utf-8')
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
           timeline=Path('timeline-runtime-v17.js').read_text(encoding='utf-8')
-          assert 'LIVE_TRAVEL_V17' in html and 'LIVE_TRAVEL_V17' in boot
+          assert 'FINAL_0830_V1' in html and 'FINAL_0830_V1' in boot
+          assert 'FINAL_0830_V1' in itinerary and 'final_0830' in itinerary
+          assert '2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx' in itinerary
+          assert 'travelers:3' in itinerary
           assert 'timeline-runtime-v17.js' in boot
           assert 'map-sidebar-group' in stable and 'flightRoutePoints' in stable
           assert 'MAP_MANIFEST' in routing and 'manifestCoverage' in routing
           assert 'data-v16-map' in timeline and '__openDashboardMapEvent' in timeline
           f=json.load(open('flight-prices.json',encoding='utf-8'))
-          assert len(f.get('fares',{})) == 7
-          assert 'route_f2_direct' in f['fares']
+          assert f.get('passengers') == 3
+          assert f.get('fares') == {}
           t=json.load(open('transit-live.json',encoding='utf-8'))
           assert len(t.get('providers',[])) == 9
           PY
