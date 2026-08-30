@@ -54,44 +54,17 @@ PHOTO_PAGES = {
 # substitutions. Until the national authority publishes the target time, the dashboard
 # says "official forecast not published" instead of fabricating a value.
 WEATHER = {
-    "2026-09-02": [
-        dict(city="Taichung", aliases=["Taichung", "Wuqi", "Port of Taichung"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.1477, lon=120.6736),
-    ],
-    "2026-09-03": [
-        dict(city="Taichung / Lukang", aliases=["Taichung", "Lukang", "VESTAS"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.0766, lon=120.3774),
-    ],
-    "2026-09-04": [
-        dict(city="Taichung", aliases=["Taichung"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.1477, lon=120.6736),
-        dict(city="Taoyuan / TPE", aliases=["Taoyuan", "TPE"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=25.0797, lon=121.2342),
-    ],
-    "2026-09-05": [
-        dict(city="Amsterdam / Rotterdam", aliases=["Amsterdam", "Schiphol", "Rotterdam"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=51.9244, lon=4.4777),
-    ],
-    "2026-09-06": [
-        dict(city="Rotterdam / Kinderdijk", aliases=["Rotterdam", "Kinderdijk"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=51.9244, lon=4.4777),
-    ],
-    "2026-09-07": [
-        dict(city="Rotterdam / Rijswijk", aliases=["Rotterdam", "Rijswijk", "TNO"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=51.9687, lon=4.3527),
-        dict(city="Hamburg", aliases=["Hamburg"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937),
-    ],
-    "2026-09-08": [
-        dict(city="Hamburg", aliases=["Hamburg", "HafenCity", "Skyborn", "OWC", "DNV"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937),
-    ],
-    "2026-09-09": [
-        dict(city="Hamburg", aliases=["Hamburg"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937),
-        dict(city="Esbjerg", aliases=["Esbjerg", "Men at Sea"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=216, lat=55.4765, lon=8.4594),
-    ],
-    "2026-09-10": [
-        dict(city="Esbjerg", aliases=["Esbjerg", "Blue Water"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=216, lat=55.4765, lon=8.4594),
-        dict(city="Aarhus", aliases=["Aarhus", "OWC Denmark"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2624652/Aarhus", horizon=216, lat=56.1629, lon=10.2039),
-        dict(city="Copenhagen", aliases=["Copenhagen", "København", "CABINN Metro"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn", horizon=216, lat=55.6761, lon=12.5683),
-    ],
-    "2026-09-11": [
-        dict(city="Copenhagen", aliases=["Copenhagen", "CPH"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn", horizon=216, lat=55.6761, lon=12.5683),
-    ],
-    "2026-09-12": [
-        dict(city="Incheon", aliases=["Incheon", "ICN"], country="South Korea", authority="Korea Meteorological Administration (KMA)", url="https://www.weather.go.kr/neng/forecast/short-term.do", horizon=240, lat=37.4602, lon=126.4407),
-    ],
+    "2026-09-02": [dict(city="Taichung", aliases=["Taichung","Wuqi","Port of Taichung"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.1477, lon=120.6736)],
+    "2026-09-03": [dict(city="Taichung / Changhua", aliases=["Taichung","Changhua","OEG"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.0756, lon=120.5440)],
+    "2026-09-04": [dict(city="Taichung", aliases=["Taichung"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=24.1477, lon=120.6736),dict(city="Taoyuan / TPE", aliases=["Taoyuan","TPE"], country="Taiwan", authority="Central Weather Administration (CWA)", url="https://www.cwa.gov.tw/V8/E/W/week.html", horizon=168, lat=25.0797, lon=121.2342)],
+    "2026-09-05": [dict(city="Amsterdam", aliases=["Amsterdam","Schiphol","Sloterdijk","Urban Lodge"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=52.3676, lon=4.9041)],
+    "2026-09-06": [dict(city="Amsterdam", aliases=["Amsterdam","Urban Lodge"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=52.3676, lon=4.9041)],
+    "2026-09-07": [dict(city="Amsterdam / Den Helder", aliases=["Amsterdam","Den Helder","OEG Subsea","Schiphol"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=52.9563, lon=4.7608),dict(city="Hamburg", aliases=["Hamburg","HAM"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937)],
+    "2026-09-08": [dict(city="Hamburg", aliases=["Hamburg","OWC","DNV"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937)],
+    "2026-09-09": [dict(city="Hamburg", aliases=["Hamburg","Skyborn"], country="Germany", authority="Deutscher Wetterdienst (DWD)", url="https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html", horizon=240, lat=53.5511, lon=9.9937),dict(city="Esbjerg", aliases=["Esbjerg","Hotel Britannia"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=216, lat=55.4765, lon=8.4594)],
+    "2026-09-10": [dict(city="Esbjerg", aliases=["Esbjerg","Blue Water"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=216, lat=55.4765, lon=8.4594),dict(city="Aarhus", aliases=["Aarhus","OWC Denmark"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2624652/Aarhus", horizon=216, lat=56.1629, lon=10.2039)],
+    "2026-09-11": [dict(city="Esbjerg", aliases=["Esbjerg","EBJ"], country="Denmark", authority="Danish Meteorological Institute (DMI)", url="https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg", horizon=216, lat=55.4765, lon=8.4594),dict(city="Aberdeen", aliases=["Aberdeen","ABZ"], country="United Kingdom", authority="Met Office", url="https://www.metoffice.gov.uk/weather/forecast/gfnm4z8f4", horizon=168, lat=57.1497, lon=-2.0943),dict(city="Amsterdam", aliases=["Amsterdam","AMS","Schiphol"], country="Netherlands", authority="KNMI", url="https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse", horizon=336, lat=52.3676, lon=4.9041)],
+    "2026-09-12": [dict(city="Incheon", aliases=["Incheon","ICN"], country="South Korea", authority="Korea Meteorological Administration (KMA)", url="https://www.weather.go.kr/neng/forecast/short-term.do", horizon=240, lat=37.4602, lon=126.4407)],
 }
 
 META_PATTERNS = [

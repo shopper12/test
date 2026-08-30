@@ -3,17 +3,15 @@ const norm = (v) => clean(v).toLowerCase().normalize("NFKD").replace(/[\u0300-\u
 
 const WEEKDAY_KO = ["일", "월", "화", "수", "목", "금", "토"];
 const MEETING_HINTS = Object.freeze({
-  "d1-06": "TIPC",
-  "d2-02": "VESTAS",
-  "d2-03": "VESTAS",
-  "d6-03": "Port of Rotterdam",
-  "d6-05": "Rotterdam Offshore Group",
-  "d6-07": "TNO",
-  "d7-03": "OWC",
-  "d7-05": "Skyborn",
-  "d8-012": "DNV",
-  "d9-03": "Blue Water",
-  "d9-055": "OWC",
+  "f1-03": "TIPC",
+  "f2-02": "OEG Taichung",
+  "f2-04": "OEG Changhua",
+  "f6-02": "OEG Subsea",
+  "f7-01": "OWC Hamburg",
+  "f7-02": "DNV Hamburg",
+  "f8-01": "Skyborn",
+  "f9-01": "Blue Water",
+  "f9-03": "OWC Denmark",
 });
 
 function dateLabel(day) {

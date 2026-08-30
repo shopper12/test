@@ -18,7 +18,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-30T07:20:25Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -45,17 +45,17 @@
       "kind": "official_weather_bundle",
       "locations": [
         {
-          "city": "Taichung / Lukang",
+          "city": "Taichung / Changhua",
           "aliases": [
             "Taichung",
-            "Lukang",
-            "VESTAS"
+            "Changhua",
+            "OEG"
           ],
           "country": "Taiwan",
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-30T07:20:25Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -63,12 +63,12 @@
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-03",
             "weather_code": 96,
-            "temperature_max_c": 28.2,
-            "temperature_min_c": 25.5,
+            "temperature_max_c": 28.8,
+            "temperature_min_c": 25.2,
             "precip_probability_max_pct": 87,
-            "precipitation_sum_mm": 35.0,
-            "wind_speed_max_kmh": 14.6,
-            "wind_gusts_max_kmh": 33.5
+            "precipitation_sum_mm": 38.5,
+            "wind_speed_max_kmh": 4.4,
+            "wind_gusts_max_kmh": 28.8
           },
           "source_reachable": true,
           "source_page_title": "7-day Forecasts | Central Weather Administration",
@@ -90,7 +90,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-30T07:20:25Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -120,7 +120,7 @@
           "authority": "Central Weather Administration (CWA)",
           "source_url": "https://www.cwa.gov.tw/V8/E/W/week.html",
           "forecast_horizon_hours": 168,
-          "checked_at": "2026-08-30T07:20:26Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
@@ -147,30 +147,31 @@
       "kind": "official_weather_bundle",
       "locations": [
         {
-          "city": "Amsterdam / Rotterdam",
+          "city": "Amsterdam",
           "aliases": [
             "Amsterdam",
             "Schiphol",
-            "Rotterdam"
+            "Sloterdijk",
+            "Urban Lodge"
           ],
           "country": "Netherlands",
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-30T07:20:26Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "단기예보",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-05",
-            "weather_code": 53,
-            "temperature_max_c": 20.8,
-            "temperature_min_c": 17.1,
-            "precip_probability_max_pct": 32,
-            "precipitation_sum_mm": 2.4,
-            "wind_speed_max_kmh": 11.7,
-            "wind_gusts_max_kmh": 45.4
+            "weather_code": 3,
+            "temperature_max_c": 19.1,
+            "temperature_min_c": 16.1,
+            "precip_probability_max_pct": 34,
+            "precipitation_sum_mm": 0.0,
+            "wind_speed_max_kmh": 12.1,
+            "wind_gusts_max_kmh": 34.2
           },
           "source_reachable": true,
           "source_page_title": "KNMI - Guidance meerdaagse",
@@ -184,16 +185,16 @@
       "kind": "official_weather_bundle",
       "locations": [
         {
-          "city": "Rotterdam / Kinderdijk",
+          "city": "Amsterdam",
           "aliases": [
-            "Rotterdam",
-            "Kinderdijk"
+            "Amsterdam",
+            "Urban Lodge"
           ],
           "country": "Netherlands",
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-30T07:20:26Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -201,12 +202,12 @@
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-06",
             "weather_code": 3,
-            "temperature_max_c": 21.8,
-            "temperature_min_c": 16.3,
-            "precip_probability_max_pct": 22,
+            "temperature_max_c": 21.2,
+            "temperature_min_c": 14.9,
+            "precip_probability_max_pct": 21,
             "precipitation_sum_mm": 0.0,
-            "wind_speed_max_kmh": 13.0,
-            "wind_gusts_max_kmh": 31.3
+            "wind_speed_max_kmh": 12.1,
+            "wind_gusts_max_kmh": 28.1
           },
           "source_reachable": true,
           "source_page_title": "KNMI - Guidance meerdaagse",
@@ -220,17 +221,18 @@
       "kind": "official_weather_bundle",
       "locations": [
         {
-          "city": "Rotterdam / Rijswijk",
+          "city": "Amsterdam / Den Helder",
           "aliases": [
-            "Rotterdam",
-            "Rijswijk",
-            "TNO"
+            "Amsterdam",
+            "Den Helder",
+            "OEG Subsea",
+            "Schiphol"
           ],
           "country": "Netherlands",
           "authority": "KNMI",
           "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
           "forecast_horizon_hours": 336,
-          "checked_at": "2026-08-30T07:20:27Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -238,12 +240,12 @@
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-07",
             "weather_code": 53,
-            "temperature_max_c": 22.3,
-            "temperature_min_c": 17.8,
-            "precip_probability_max_pct": 29,
+            "temperature_max_c": 20.2,
+            "temperature_min_c": 17.5,
+            "precip_probability_max_pct": 25,
             "precipitation_sum_mm": 7.8,
-            "wind_speed_max_kmh": 23.1,
-            "wind_gusts_max_kmh": 54.7
+            "wind_speed_max_kmh": 34.2,
+            "wind_gusts_max_kmh": 68.8
           },
           "source_reachable": true,
           "source_page_title": "KNMI - Guidance meerdaagse",
@@ -253,13 +255,14 @@
         {
           "city": "Hamburg",
           "aliases": [
-            "Hamburg"
+            "Hamburg",
+            "HAM"
           ],
           "country": "Germany",
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-30T07:20:27Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -289,8 +292,6 @@
           "city": "Hamburg",
           "aliases": [
             "Hamburg",
-            "HafenCity",
-            "Skyborn",
             "OWC",
             "DNV"
           ],
@@ -298,7 +299,7 @@
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-30T07:20:27Z",
+          "checked_at": "2026-08-30T09:18:43Z",
           "hourly": [],
           "forecast_confidence": "중기전망",
           "model_daily": {
@@ -327,13 +328,14 @@
         {
           "city": "Hamburg",
           "aliases": [
-            "Hamburg"
+            "Hamburg",
+            "Skyborn"
           ],
           "country": "Germany",
           "authority": "Deutscher Wetterdienst (DWD)",
           "source_url": "https://www.dwd.de/DE/wetter/wetterundklima_vorort/schleswig-holstein_hamburg/hamburg/_node.html",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-30T07:20:27Z",
+          "checked_at": "2026-08-30T09:18:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -357,13 +359,13 @@
           "city": "Esbjerg",
           "aliases": [
             "Esbjerg",
-            "Men at Sea"
+            "Hotel Britannia"
           ],
           "country": "Denmark",
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-30T07:20:27Z",
+          "checked_at": "2026-08-30T09:18:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -399,7 +401,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-30T07:20:27Z",
+          "checked_at": "2026-08-30T09:18:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -429,7 +431,7 @@
           "authority": "Danish Meteorological Institute (DMI)",
           "source_url": "https://www.dmi.dk/lokation/show/DK/2624652/Aarhus",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-30T07:20:27Z",
+          "checked_at": "2026-08-30T09:18:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -448,37 +450,6 @@
           "source_page_title": "Lokation | DMI",
           "kind": "model_guidance",
           "reason": "Danish Meteorological Institute (DMI)의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
-        },
-        {
-          "city": "Copenhagen",
-          "aliases": [
-            "Copenhagen",
-            "København",
-            "CABINN Metro"
-          ],
-          "country": "Denmark",
-          "authority": "Danish Meteorological Institute (DMI)",
-          "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
-          "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-30T07:20:27Z",
-          "hourly": [],
-          "forecast_confidence": "장기전망",
-          "model_daily": {
-            "provider": "Open-Meteo",
-            "source_url": "https://open-meteo.com/en/docs",
-            "date": "2026-09-10",
-            "weather_code": 51,
-            "temperature_max_c": 17.1,
-            "temperature_min_c": 12.5,
-            "precip_probability_max_pct": 33,
-            "precipitation_sum_mm": 0.9,
-            "wind_speed_max_kmh": 17.8,
-            "wind_gusts_max_kmh": 43.2
-          },
-          "source_reachable": true,
-          "source_page_title": "Lokation | DMI",
-          "kind": "model_guidance",
-          "reason": "Danish Meteorological Institute (DMI)의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
         }
       ]
     },
@@ -487,34 +458,95 @@
       "kind": "official_weather_bundle",
       "locations": [
         {
-          "city": "Copenhagen",
+          "city": "Esbjerg",
           "aliases": [
-            "Copenhagen",
-            "CPH"
+            "Esbjerg",
+            "EBJ"
           ],
           "country": "Denmark",
           "authority": "Danish Meteorological Institute (DMI)",
-          "source_url": "https://www.dmi.dk/lokation/show/DK/2618425/K%C3%B8benhavn",
+          "source_url": "https://www.dmi.dk/lokation/show/DK/2622447/Esbjerg",
           "forecast_horizon_hours": 216,
-          "checked_at": "2026-08-30T07:20:28Z",
+          "checked_at": "2026-08-30T09:18:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
             "provider": "Open-Meteo",
             "source_url": "https://open-meteo.com/en/docs",
             "date": "2026-09-11",
-            "weather_code": 55,
-            "temperature_max_c": 17.0,
-            "temperature_min_c": 15.9,
-            "precip_probability_max_pct": 38,
-            "precipitation_sum_mm": 10.5,
-            "wind_speed_max_kmh": 20.9,
-            "wind_gusts_max_kmh": 46.4
+            "weather_code": 53,
+            "temperature_max_c": 18.0,
+            "temperature_min_c": 14.6,
+            "precip_probability_max_pct": 47,
+            "precipitation_sum_mm": 5.7,
+            "wind_speed_max_kmh": 24.9,
+            "wind_gusts_max_kmh": 54.7
           },
           "source_reachable": true,
           "source_page_title": "Lokation | DMI",
           "kind": "model_guidance",
           "reason": "Danish Meteorological Institute (DMI)의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
+        },
+        {
+          "city": "Aberdeen",
+          "aliases": [
+            "Aberdeen",
+            "ABZ"
+          ],
+          "country": "United Kingdom",
+          "authority": "Met Office",
+          "source_url": "https://www.metoffice.gov.uk/weather/forecast/gfnm4z8f4",
+          "forecast_horizon_hours": 168,
+          "checked_at": "2026-08-30T09:18:44Z",
+          "hourly": [],
+          "forecast_confidence": "장기전망",
+          "model_daily": {
+            "provider": "Open-Meteo",
+            "source_url": "https://open-meteo.com/en/docs",
+            "date": "2026-09-11",
+            "weather_code": 51,
+            "temperature_max_c": 14.9,
+            "temperature_min_c": 12.4,
+            "precip_probability_max_pct": 27,
+            "precipitation_sum_mm": 3.6,
+            "wind_speed_max_kmh": 19.1,
+            "wind_gusts_max_kmh": 42.5
+          },
+          "source_reachable": true,
+          "source_page_title": "Westhill (Aberdeenshire) weather - Met Office",
+          "kind": "model_guidance",
+          "reason": "Met Office의 상세 수치예보 전 구간입니다. 현재 수치는 Open-Meteo 16일 수치예보의 장기전망 보조값이며 날짜가 가까워질수록 자동 갱신됩니다."
+        },
+        {
+          "city": "Amsterdam",
+          "aliases": [
+            "Amsterdam",
+            "AMS",
+            "Schiphol"
+          ],
+          "country": "Netherlands",
+          "authority": "KNMI",
+          "source_url": "https://www.knmi.nl/nederland-nu/weer/waarschuwingen-en-verwachtingen/extra/guidance-meerdaagse",
+          "forecast_horizon_hours": 336,
+          "checked_at": "2026-08-30T09:18:44Z",
+          "hourly": [],
+          "forecast_confidence": "장기전망",
+          "model_daily": {
+            "provider": "Open-Meteo",
+            "source_url": "https://open-meteo.com/en/docs",
+            "date": "2026-09-11",
+            "weather_code": 51,
+            "temperature_max_c": 19.6,
+            "temperature_min_c": 14.8,
+            "precip_probability_max_pct": 38,
+            "precipitation_sum_mm": 3.3,
+            "wind_speed_max_kmh": 22.2,
+            "wind_gusts_max_kmh": 50.8
+          },
+          "source_reachable": true,
+          "source_page_title": "KNMI - Guidance meerdaagse",
+          "kind": "model_guidance",
+          "reason": "KNMI 공식 원문을 함께 확인하십시오. 수치는 Open-Meteo 16일 수치예보 보조값이며 경보·특보보다 우선하지 않습니다."
         }
       ]
     },
@@ -532,7 +564,7 @@
           "authority": "Korea Meteorological Administration (KMA)",
           "source_url": "https://www.weather.go.kr/neng/forecast/short-term.do",
           "forecast_horizon_hours": 240,
-          "checked_at": "2026-08-30T07:20:28Z",
+          "checked_at": "2026-08-30T09:18:44Z",
           "hourly": [],
           "forecast_confidence": "장기전망",
           "model_daily": {
@@ -549,7 +581,7 @@
           },
           "source_reachable": false,
           "kind": "official_source_error_model_support",
-          "reason": "공식 기상기관 페이지 접근 실패: HTTP Error 502: Bad Gateway · 수치예보는 보조 모델값"
+          "reason": "공식 기상기관 페이지 접근 실패: Remote end closed connection without response · 수치예보는 보조 모델값"
         }
       ]
     }
@@ -645,15 +677,12 @@
       "name": "Holiday Inn Express Rotterdam Central Station"
     },
     "Markthal Rotterdam": {
-      "url": "https://markthal.nl/_next/image/?url=https%3A%2F%2Fcms.markthal.nl%2Fwp-content%2Fuploads%2F2024%2F07%2Fcategory-asian.jpeg&w=828&q=75",
+      "url": "",
       "page_url": "https://markthal.nl/en/",
       "credit": "Markthal",
       "source": "official_website",
       "official": true,
-      "name": "Markthal Rotterdam",
-      "image_alt": "",
-      "content_image_score": 20,
-      "content_image_fallback": true
+      "name": "Markthal Rotterdam"
     },
     "Cube Houses": {
       "url": "https://giustoragev2.blob.core.windows.net/shoppinger/rp/ogimage.jpg",
@@ -682,23 +711,21 @@
     "Kinderdijk": {
       "url": "",
       "page_url": "https://kinderdijk.com/",
-      "credit": "official website",
+      "credit": "Kinderdijk UNESCO World Heritage",
       "source": "official_website",
       "official": true,
-      "name": "Kinderdijk",
-      "error": "<urlopen error timed out>"
+      "name": "Kinderdijk"
     },
     "Port of Rotterdam Authority": {
       "url": "",
       "page_url": "https://www.portofrotterdam.com/en",
-      "credit": "official website",
+      "credit": "Port of Rotterdam | Rotterdam Port Authority",
       "source": "official_website",
       "official": true,
-      "name": "Port of Rotterdam Authority",
-      "error": "HTTP Error 520: <none>"
+      "name": "Port of Rotterdam Authority"
     },
     "Rotterdam Offshore Group": {
-      "url": "https://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
+      "url": "http://www.rotterdamoffshore.com/files/rog-homeblok-ship-conversion.jpg",
       "page_url": "https://www.rotterdamoffshore.com/",
       "credit": "ROG, your partner for dockside and on-site services",
       "source": "official_website",
@@ -724,11 +751,10 @@
     "Speicherstadt": {
       "url": "",
       "page_url": "https://www.hamburg.com/visitors/sights/maritime/",
-      "credit": "official website",
+      "credit": "Maritime Sights",
       "source": "official_website",
       "official": true,
-      "name": "Speicherstadt",
-      "error": "<urlopen error timed out>"
+      "name": "Speicherstadt"
     },
     "Skyborn Renewables": {
       "url": "https://cdn.sanity.io/images/hj3rn54t/production/791eabb3a728f9f219c28e2e427459667190ffc0-400x400.png?w=1500&fit=max&auto=format",
@@ -739,15 +765,12 @@
       "name": "Skyborn Renewables"
     },
     "Elbphilharmonie": {
-      "url": "https://d3c80vss50ue25.cloudfront.net/media/filer_public_thumbnails/filer_public/e2/dc/e2dcad18-3ad6-4abf-ac68-673b814511f9/20260820_ep_creators_26-27_pm_header_1920x1080_v2.jpg__1300x1080_q85_crop_subject_location-951%2C430_subsampling-2_upscale.jpg",
+      "url": "",
       "page_url": "https://www.elbphilharmonie.de/en/",
       "credit": "Elbphilharmonie Laeiszhalle Hamburg - Elbphilharmonie",
       "source": "official_website",
       "official": true,
-      "name": "Elbphilharmonie",
-      "image_alt": "",
-      "content_image_score": 8,
-      "content_image_fallback": true
+      "name": "Elbphilharmonie"
     },
     "Oberhafen-Kantine": {
       "url": "https://oberhafenkantine-hamburg.de/wp-content/uploads/2025/07/Haltung_Titelbild-242x300.jpg",
@@ -764,7 +787,7 @@
       "source": "official_website",
       "official": true,
       "name": "CABINN Plus Esbjerg",
-      "error": "<urlopen error timed out>"
+      "error": "HTTP Error 404: Not Found"
     },
     "Men at Sea": {
       "url": "",
@@ -792,13 +815,12 @@
       "name": "Blue Water Shipping"
     },
     "CABINN Metro": {
-      "url": "",
+      "url": "https://en.cabinn.com/typo3temp/assets/images/csm_CabInn_Metro_067_-_bygningen_671ceff5f7_779bc2c21b492defb09a12c1a6c57240.jpg",
       "page_url": "https://en.cabinn.com/hotel/cabinn-metro",
-      "credit": "official website",
+      "credit": "CABINN Metro",
       "source": "official_website",
       "official": true,
-      "name": "CABINN Metro",
-      "error": "<urlopen error timed out>"
+      "name": "CABINN Metro"
     },
     "Field's Food Court": {
       "url": "https://img.uniform.global/p/hwzO26lASzePZ9R51iN_MQ/mwGloGWhSTWwYjKlQqPvLg-field-s-886.png",
@@ -862,8 +884,8 @@
   },
   "sources": {
     "weather": "National meteorological authorities (CWA, KNMI, DWD, DMI, KMA) for official warnings/source links; Open-Meteo 16-day numerical guidance is clearly labeled as model support when official numeric values are not yet extractable",
-    "photos": "First-party official/business/tourism website representative metadata or page-content images only; no Wikimedia/stock fallback",
+    "photos": "First-party venue/company/hotel/official-tourism website metadata only; no Wikimedia/stock fallback",
     "return_fares": "Google Flights via fast-flights"
   },
-  "official_web_generated_at": "2026-08-30T07:20:22Z"
+  "official_web_generated_at": "2026-08-30T09:18:40Z"
 }

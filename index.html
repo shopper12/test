@@ -56,9 +56,9 @@
     실시간 대중교통은 외부 운영사 페이지로 이동하지 않고 카드의 ‘대시보드에서 실시간 확인’을 눌러 현재 자동수집 스냅샷을 내부 창에서 확인합니다.<br>
     호텔·음식점뿐 아니라 세부일정의 식별 가능한 장소·주소·관광지 이름을 Google Hotels·공식 페이지·Google Maps 검색에 외부 링크로 매핑합니다.<br>
     전체 일정의 지도 버튼은 외부 Google Maps 링크가 아니라 ‘지도’ 메뉴로 전환한 뒤 동일 event id의 해당 일정과 경로를 바로 선택합니다.<br>
-    THSR·Taoyuan Airport MRT·NS·RET·Waterbus/WaterShuttle·DB·HVV·DSB·Rejseplanen의 공식 교통정보를 자동 수집해 transit-live.json에 반영합니다.<br>
+    THSR·NS·DB·HVV·DSB 중심의 공식 교통정보를 자동 수집해 transit-live.json에 반영합니다.<br>
     지도 일정은 날짜 경계를 포함해 모든 인접 일정의 출발·도착 연속성을 검사하며, 검사를 통과해야 Pages 배포가 진행됩니다.<br>
-    날씨는 공식 시간별 예보를 최우선으로 사용하고, 아직 발표 전이면 월간전망 또는 9월 평년값을 표시합니다.
+    날씨는 최종 일정의 실제 체류도시를 기준으로 공식 예보를 우선하며, 상세 수치 전에는 모델 보조값을 구분 표시합니다.
   </footer>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
