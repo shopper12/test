@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="./stable-tools.css?v=FINAL_0830_V1" />
   <link rel="stylesheet" href="./map-sidebar.css?v=FINAL_0830_V1" />
   <link rel="stylesheet" href="./live-transit-links.css?v=FINAL_0830_V1" />
+  <link rel="stylesheet" href="./travel-study.css?v=FINAL_0830_V2" />
 </head>
 <body>
   <header class="topbar">
@@ -50,10 +51,12 @@
   <main class="shell" id="main-content"></main>
 
   <footer class="footer shell">
-    GitHub Pages 일정 대시보드 · <b>최종 기준 FINAL_0830_V1</b><br>
+    GitHub Pages 일정 대시보드 · <b>최종 기준 FINAL_0830_V1 + 여행공부 V2</b><br>
     기준 문서: 2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx · 3명 · 2026.09.02~09.12<br>
     사이트 주소는 업데이트와 관계없이 shopper12.github.io/test/ 로 유지됩니다.<br>
-    ‘전체 일정’은 각 일정의 이동시간·대기/환승시간·체류시간을 분리해서 표시하며, 여러 교통수단이 이어지는 일정은 수단별 시각을 각각 표시합니다.<br>
+    ‘전체 일정’의 각 📍장소명 옆에는 2026-08-31 확인 예보와 추천 옷차림을 직접 표시하며, 예보 링크에서 출발 전 재확인할 수 있습니다.<br>
+    ‘🎬 여행공부’ 탭은 실제 출장동선과 겹치는 YouTube 시점·영화/드라마 로케이션·수사/스릴러/추리책을 장소별로 정리합니다.<br>
+    영상 타임스탬프는 확인된 챕터를 사용하고, 영화·드라마의 분 단위가 공개자료로 검증되지 않으면 임의 추정하지 않습니다.<br>
     최종 문서에 없는 과거 4인 예산·코펜하겐 귀국안·가오슝·노르웨이·일본 일정은 최종 기준안에서 사용하지 않습니다.<br>
     항공은 최종 일정표의 발권 완료편과 상태를 기준으로 하며, 문서에 없는 비교 운임은 표시하지 않습니다.<br>
     THSR·NS·DB·hvv·DSB 등 운행정보는 변동 가능하므로 전날과 당일 운영사 앱에서 재확인합니다.<br>
@@ -77,5 +80,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script type="module" src="./boot.js?v=FINAL_0830_V1"></script>
+  <script type="module" src="./travel-study-runtime.js?v=FINAL_0830_V2"></script>
 </body>
 </html>
