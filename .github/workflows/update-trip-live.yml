@@ -1,9 +1,8 @@
 name: Update live transit intelligence
 
-# FINAL_0830_V1/V2
-# The former V17 job regenerated an obsolete 4-person fare/stopover model and
-# asserted LIVE_TRAVEL_V17.  It must not overwrite the 0830 final itinerary,
-# 3-person ticket status, route weather/clothing, or travel-study material.
+# FINAL_0830_V1 + companion V3
+# Transit refresh is intentionally narrow: it must never regenerate the retired
+# 4-person fare/stopover model or overwrite weather, report, media-study, or local-guide data.
 on:
   schedule:
     - cron: "37 * * * *"
@@ -16,8 +15,9 @@ on:
       - "transit-live.json"
       - "itinerary-data.js"
       - "travel-study.js"
-      - "travel-study-runtime.js"
-      - "travel-study.css"
+      - "trip-companion-data.js"
+      - "trip-companion-runtime.js"
+      - "trip-companion.css"
       - "index.html"
       - "boot.js"
       - ".github/workflows/update-trip-live.yml"
@@ -48,7 +48,8 @@ jobs:
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node --check boot.js
           node --check travel-study.js
-          node --check travel-study-runtime.js
+          node --check trip-companion-data.js
+          node --check trip-companion-runtime.js
           node --check scripts/verify_map_mappings.mjs
           node --check scripts/audit_map_continuity.mjs
           node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
@@ -59,11 +60,16 @@ jobs:
           boot=Path('boot.js').read_text(encoding='utf-8')
           itinerary=Path('itinerary-data.js').read_text(encoding='utf-8')
           study=Path('travel-study.js').read_text(encoding='utf-8')
+          companion=Path('trip-companion-data.js').read_text(encoding='utf-8')
+          runtime=Path('trip-companion-runtime.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           assert 'FINAL_0830_V1' in boot
           assert 'final_0830' in itinerary and 'travelers:3' in itinerary
           assert 'WEATHER_BY_DAY' in study and 'STUDY_PLACES' in study
-          assert 'travel-study-runtime.js?v=FINAL_0830_V2' in html
+          assert 'PRACTICAL_DAYS' in companion and 'REPORT_MEMOS' in companion
+          assert 'TRANSPORT_GUIDE' in companion and 'RESTAURANTS' in companion and 'ATTRACTIONS' in companion
+          assert 'trip-companion-runtime.js?v=FINAL_0830_V3' in html
+          assert '🧭 현지가이드' in runtime and '📝 보고서 메모' in runtime and '🎬 여행공부' in runtime
           fare=json.load(open('flight-prices.json',encoding='utf-8'))
           assert fare.get('passengers') == 3 and fare.get('fares') == {}
           PY
