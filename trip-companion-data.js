@@ -33,11 +33,12 @@ export const PRACTICAL_DAYS = [
   {
     day:3, date:"9/4", city:"타이중 → 타오위안",
     plan:[
-      ["07:40~08:40","Taichung Second Market 아침","호텔과 같은 Sanmin Rd 축 · 전통식 아침"],
-      ["09:00~10:00","Miyahara","기념품·아이스크림 · 10:00 오픈이므로 외관/주변 먼저"],
-      ["10:20~11:00","호텔 복귀·체크아웃","11:00 이전"],
-      ["11:30~12:40","Chun Shui Tang Original Store","버블티 원조점 · 점심 겸 이용"],
-      ["13:00~15:30","호텔 짐 픽업·휴식·출장 메모 정리","출국 전 완충시간"],
+      ["07:30~08:30","Taichung Second Market 아침","호텔과 같은 Sanmin Rd 축 · 전통식 아침"],
+      ["08:40~09:20","Liuchuan·구도심 짧은 산책","비 오면 호텔 카페/짐정리로 대체"],
+      ["09:30~10:00","호텔 짐 정리·체크아웃","11:00 이전 체크아웃, 짐은 프런트 보관"],
+      ["10:20~11:00","Miyahara","10:00 오픈 이후 방문 · 기념품/아이스크림"],
+      ["11:20~12:40","Chun Shui Tang Original Store","버블티 원조점 · 점심 겸 이용"],
+      ["13:00~15:10","호텔 복귀·짐 픽업·출장 메모 정리","출국 전 완충시간"],
       ["15:30~17:45","호텔 → TPE","전용차/택시 권장 · 교통정체 완충 포함"],
       ["17:45~20:30","출국수속·저녁","CI0073 23:10 출발 대비"],
       ["23:10","CI0073 TPE → AMS","발권 완료"]
@@ -60,11 +61,11 @@ export const PRACTICAL_DAYS = [
     plan:[
       ["09:15~10:00","호텔 → Maritime Museum","NS/트램 또는 택시"],
       ["10:00~12:15","Het Scheepvaartmuseum","해양·항만 역사라 출장 테마와 가장 잘 맞는 관광"],
-      ["12:20~13:20","Kanteen25 점심","Marineterrein 인접"],
-      ["13:40~15:00","운하/동부항만 산책 또는 Centraal 복귀","우천 시 카페·Rijksmuseum 대안"],
-      ["15:30~17:00","호텔 복귀·OEG Subsea 자료 정리","다음날 조기출발 준비"],
-      ["17:00~18:00","NS 앱에서 Den Helder 편·플랫폼 재확인","좌석예약 불필요 · OVpay/NS e-ticket"],
-      ["18:00 이후","이른 저녁·휴식","다음날 06:30대 체크아웃 권장"]
+      ["12:20~13:10","박물관 카페/Marineterrein 인근 점심","일요일 영업 불확실 업장은 일정에서 제외"],
+      ["13:20~14:40","Oosterdok·Centraal 방향 산책","우천 시 박물관 체류 연장 또는 Rijksmuseum 대안"],
+      ["15:00~16:30","호텔 복귀·OEG Subsea 자료 정리","다음날 조기출발 준비"],
+      ["16:30~17:15","NS 앱에서 Den Helder 편·플랫폼 재확인","좌석예약 불필요 · OVpay/NS e-ticket"],
+      ["17:30 이후","이른 저녁·휴식","다음날 06:25 체크아웃 권장"]
     ]
   },
   {
@@ -154,24 +155,26 @@ export const TRANSPORT_GUIDE = [
 
 export const RESTAURANTS = [
   {day:"1",city:"타이중",name:"Yizhong Night Market",fit:"숙소 바로 인근, 첫날 체력 부담 적음",menu:"지파이·반월형 간식·루웨이·취두부·Fengren Ice",hours:"대체로 10:00~24:00, 점포별 상이",reserve:"예약 불필요",url:"https://travel.taichung.gov.tw/en/tourist/tour/1037",map:"https://www.google.com/maps/search/?api=1&query=Yizhong+Street+Taichung"},
-  {day:"3",city:"타이중",name:"Chun Shui Tang Original Store",fit:"버블티 원조점, 출국 전 짧게 들르기 좋음",menu:"Pearl Milk Tea + 대만식 면/딤섬류",hours:"08:30~22:00",reserve:"3명은 대기 가능성 감안",url:"https://www.chunshuitang.com.tw/en/location-detail/original_store/",map:"https://www.google.com/maps/search/?api=1&query=Chun+Shui+Tang+Original+Store+Taichung"},
+  {day:"3",city:"타이중",name:"Taichung Second Market",fit:"100년 전통시장, 아침 일정에 바로 맞음",menu:"루러우판·버섯/고기 수프·홍차·면류",hours:"통상 07:30~15:30, 점포별 상이",reserve:"예약 불필요",url:"https://travel.taichung.gov.tw/en/Attractions/Intro/1366",map:"https://www.google.com/maps/search/?api=1&query=Taichung+Second+Market"},
+  {day:"3",city:"타이중",name:"Chun Shui Tang Original Store",fit:"버블티 원조점, 출국 전 점심에 적합",menu:"Pearl Milk Tea + 대만식 면/딤섬류",hours:"08:30~22:00",reserve:"3명은 대기 가능성 감안",url:"https://www.chunshuitang.com.tw/en/location-detail/original_store/",map:"https://www.google.com/maps/search/?api=1&query=Chun+Shui+Tang+Original+Store+Taichung"},
   {day:"4",city:"암스테르담",name:"The Pantry",fit:"전통 네덜란드 요리를 한 번에 먹기 좋음",menu:"hutspot·kale/sauerkraut stamppot·smoked sausage·hachee·bitterballen",hours:"매일 10:30~22:30",reserve:"온라인 예약 권장",url:"https://www.thepantry.nl/en/booking/",map:"https://www.google.com/maps/search/?api=1&query=The+Pantry+Amsterdam"},
-  {day:"4",city:"암스테르담",name:"Moeders",fit:"저녁용 Dutch comfort food",menu:"전통 네덜란드 가정식",hours:"매일 17:00~23:30/24:00 · 주방 22:00 전",reserve:"온라인 예약 권장",url:"https://moeders.com/en/reservations",map:"https://www.google.com/maps/search/?api=1&query=Moeders+Amsterdam"},
-  {day:"5",city:"암스테르담",name:"Kanteen25",fit:"Maritime Museum/Marineterrein 동선에 붙음",menu:"유럽·퓨전·캐주얼 런치",hours:"일요일 영업 여부 당일 확인 필요",reserve:"선택",url:"https://www.google.com/maps/search/?api=1&query=Kanteen25+Amsterdam",map:"https://www.google.com/maps/search/?api=1&query=Kanteen25+Amsterdam"},
-  {day:"7",city:"함부르크",name:"Restaurant Parlament",fit:"OWC Alter Wall과 매우 가까운 Rathaus 지하 · 점심용",menu:"북독일식 육류·생선, Hamburg식 메뉴",hours:"화~토 12:00~16:00 · 주방 15:00 마감",reserve:"온라인/전화 예약 권장",url:"https://www.parlament-hamburg.de/contact/?lang=en",map:"https://www.google.com/maps/search/?api=1&query=Restaurant+Parlament+Hamburg"},
+  {day:"4",city:"암스테르담",name:"Moeders",fit:"저녁용 Dutch comfort food",menu:"전통 네덜란드 가정식",hours:"매일 17:00~23:30/24:00 · 주방 마감 전 확인",reserve:"온라인 예약 권장",url:"https://moeders.com/en/reservations",map:"https://www.google.com/maps/search/?api=1&query=Moeders+Amsterdam"},
+  {day:"7",city:"함부르크",name:"Restaurant Parlament",fit:"OWC Alter Wall과 매우 가까운 Rathaus 지하 · 점심용",menu:"북독일식 육류·생선, Hamburg식 메뉴",hours:"화~토 12:00~16:00 · 주방 마감시간 재확인",reserve:"온라인/전화 예약 권장",url:"https://www.parlament-hamburg.de/contact/?lang=en",map:"https://www.google.com/maps/search/?api=1&query=Restaurant+Parlament+Hamburg"},
   {day:"7",city:"함부르크",name:"Deichgraf",fit:"Speicherstadt/HafenCity 답사 후 저녁에 붙이기 좋음",menu:"지역 생선·육류·계절 북독일식",hours:"화~토 12:00~15:00, 17:30~21:00 주방",reserve:"전화/이메일 예약",url:"https://www.deichgraf-hamburg.de/",map:"https://www.google.com/maps/search/?api=1&query=Deichgraf+Hamburg"},
   {day:"8·9",city:"에스비에르",name:"Dronning Louise",fit:"Hotel Britannia에서 거의 바로 앞 Torvet",menu:"2026 늦여름 메뉴 · 펍/덴마크식 식사",hours:"주방 매일 10:00~21:00",reserve:"BOOK BORD 가능",url:"https://dr-louise.dk/menukort/menukort/",map:"https://www.google.com/maps/search/?api=1&query=Dronning+Louise+Esbjerg"},
   {day:"8",city:"에스비에르",name:"Restaurant Plates",fit:"17층 전망 + 비즈니스 저녁 후보",menu:"버터구이 haddock 295 DKK·beef burger 235·3코스 summer menu 395",hours:"월~토 점심 11:30~15:00 · 저녁 17:00~23:00",reserve:"온라인 예약 권장",url:"https://restaurantplates.dk/index.php/en/",map:"https://www.google.com/maps/search/?api=1&query=Restaurant+Plates+Esbjerg"},
+  {day:"8·9",city:"에스비에르",name:"Café Danmark",fit:"전통 덴마크식 스뫼레브뢰드·생선 메뉴 대안",menu:"smørrebrød·stjerneskud·plaice 등",hours:"공식 사이트 당일 재확인",reserve:"사전예약 권장",url:"https://cafedanmark.dk/",map:"https://www.google.com/maps/search/?api=1&query=Cafe+Danmark+Esbjerg"},
   {day:"9",city:"오르후스",name:"Raadhuus Kafeen",fit:"Aarhus H·OWC 사이 1시간 점심에 적합",menu:"smørrebrød·plaice with shrimp 162 DKK·3 open sandwiches 198 DKK",hours:"월~토 11:30~23:00",reserve:"13:15 3명 사전예약 권장",url:"https://raadhuus-kafeen.dk/bestil-bord/",map:"https://www.google.com/maps/search/?api=1&query=Raadhuus+Kafeen+Aarhus"}
 ];
 
 export const ATTRACTIONS = [
   {day:"1",city:"타이중",name:"Yizhong Shopping District",slot:"18:30~20:30",why:"호텔 도보권·첫날 저녁 최적",hours:"상점별 상이",ticket:"무료",url:"https://travel.taichung.gov.tw/en/attractions/intro/1551",map:"https://www.google.com/maps/search/?api=1&query=Yizhong+Shopping+District+Taichung"},
-  {day:"3",city:"타이중",name:"Taichung Second Market",slot:"07:40~08:40",why:"Sanmin Road 축·100년 시장·아침식사",hours:"통상 07:30~15:30",ticket:"무료",url:"https://travel.taichung.gov.tw/en/Attractions/Intro/1366",map:"https://www.google.com/maps/search/?api=1&query=Taichung+Second+Market"},
-  {day:"3",city:"타이중",name:"Miyahara",slot:"09:00~10:00",why:"구도심 건축·디저트·기념품",hours:"10:00~21:00",ticket:"무료",url:"https://travel.taichung.gov.tw/en/attractions/intro/1239",map:"https://www.google.com/maps/search/?api=1&query=Miyahara+Taichung"},
+  {day:"3",city:"타이중",name:"Taichung Second Market",slot:"07:30~08:30",why:"Sanmin Road 축·100년 시장·아침식사",hours:"통상 07:30~15:30",ticket:"무료",url:"https://travel.taichung.gov.tw/en/Attractions/Intro/1366",map:"https://www.google.com/maps/search/?api=1&query=Taichung+Second+Market"},
+  {day:"3",city:"타이중",name:"Liuchuan Riverside Walk",slot:"08:40~09:20",why:"출국일 아침에 짧게 가능한 구도심 산책",hours:"옥외",ticket:"무료",url:"https://travel.taichung.gov.tw/en/",map:"https://www.google.com/maps/search/?api=1&query=Liuchuan+Riverside+Walk+Taichung"},
+  {day:"3",city:"타이중",name:"Miyahara",slot:"10:20~11:00",why:"10:00 오픈 이후 구도심 건축·디저트·기념품",hours:"10:00~21:00",ticket:"무료",url:"https://travel.taichung.gov.tw/en/attractions/intro/1239",map:"https://www.google.com/maps/search/?api=1&query=Miyahara+Taichung"},
   {day:"4",city:"암스테르담",name:"Amsterdam Canal Cruise",slot:"16:00~17:15",why:"짧은 시간에 운하·도심 구조 파악",hours:"운영사별",ticket:"I amsterdam 온라인 구매",url:"https://www.iamsterdam.com/en/tickets/canal-cruise-ticket",map:"https://www.google.com/maps/search/?api=1&query=Amsterdam+Canal+Cruise+Centraal"},
   {day:"5",city:"암스테르담",name:"Het Scheepvaartmuseum",slot:"10:00~12:15",why:"해상풍력 출장과 가장 직접 연결되는 해양·항만 역사",hours:"10:00~17:00",ticket:"온라인 사전구매 권장",url:"https://www.hetscheepvaartmuseum.com/",map:"https://www.google.com/maps/search/?api=1&query=Het+Scheepvaartmuseum+Amsterdam"},
-  {day:"5",city:"암스테르담",name:"Rijksmuseum (대안)",slot:"우천/취향 대안 09:00~11:00",why:"시간예약 필수 · 1시간 압축관람도 가능",hours:"매일 09:00~17:00",ticket:"시작시간 예약 필수",url:"https://www.rijksmuseum.nl/en/visit/practical-info/opening-hours-and-prices",map:"https://www.google.com/maps/search/?api=1&query=Rijksmuseum+Amsterdam"},
+  {day:"5",city:"암스테르담",name:"Rijksmuseum (우천/취향 대안)",slot:"09:00~11:00 대안",why:"시간예약 필수 · 1시간 압축관람도 가능",hours:"매일 09:00~17:00",ticket:"시작시간 예약 필수",url:"https://www.rijksmuseum.nl/en/visit/practical-info/opening-hours-and-prices",map:"https://www.google.com/maps/search/?api=1&query=Rijksmuseum+Amsterdam"},
   {day:"7",city:"함부르크",name:"Speicherstadt",slot:"15:40~16:40",why:"DNV Brooktorkai와 바로 이어져 추가 이동 거의 없음",hours:"옥외 상시",ticket:"무료",url:"https://www.hamburg-travel.com/discover-hamburg/areas/speicherstadt-hafencity/",map:"https://www.google.com/maps/search/?api=1&query=Speicherstadt+Hamburg"},
   {day:"7",city:"함부르크",name:"Elbphilharmonie Plaza",slot:"16:50~17:40",why:"HafenCity·항만 조망",hours:"공식 사이트 시간 확인",ticket:"Plaza 티켓 사전확보 권장",url:"https://www.elbphilharmonie.de/en/plaza",map:"https://www.google.com/maps/search/?api=1&query=Elbphilharmonie+Hamburg"},
   {day:"8",city:"에스비에르",name:"Men at Sea",slot:"18:00~18:45 선택",why:"북해·항만도시 정체성을 짧게 체감",hours:"옥외 상시",ticket:"무료",url:"https://www.visitvesterhavet.com/northsea/north-sea-vacation/men-sea-gdk610805",map:"https://www.google.com/maps/search/?api=1&query=Men+at+Sea+Esbjerg"},
