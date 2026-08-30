@@ -1,80 +1,21 @@
-name: Update live flight prices
+name: Legacy flight price refresh (manual only)
 
-# V17: refresh direct-vs-one-stop return comparison from current main.
+# 2026-08-30 final itinerary note:
+# The previous hourly fare job was built for an obsolete 4-person / CPH-return plan.
+# The final source document has 3 travelers and six already-ticketed flight legs,
+# and does not provide a budget or fare-comparison requirement.
+# Keep this workflow manual-only until a new final-itinerary fare model is defined.
 on:
-  schedule:
-    - cron: "17 * * * *"
-  push:
-    branches: [main]
-    paths:
-      - "scripts/update_flight_prices.py"
-      - ".github/workflows/update-flight-prices.yml"
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: live-flight-prices
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  refresh:
+  notice:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Install pinned fare reader
-        run: python -m pip install "fast-flights==3.0.1" "typing-extensions>=4.12,<5"
-      - name: Query Google Flights
-        id: prices
-        continue-on-error: true
-        run: python scripts/update_flight_prices.py
-      - name: Validate snapshot
+      - name: Explain retired automation
         run: |
-          python -m json.tool flight-prices.json >/dev/null
-          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "7"
-          python -c 'import json; f=json.load(open("flight-prices.json"))["fares"]; assert "route_f2_direct" in f; assert "route_f3" in f; assert "compare_cph_time" in f; assert "compare_cph_direct" in f'
-      - name: Commit refreshed snapshot
-        run: |
-          if git diff --quiet -- flight-prices.json; then exit 0; fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add flight-prices.json
-          git commit -m "chore: refresh live flight prices"
-          git push
-
-  deploy:
-    needs: refresh
-    runs-on: ubuntu-latest
-    concurrency:
-      group: pages
-      cancel-in-progress: true
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout latest main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-      - name: Validate refreshed snapshot
-        run: |
-          python -m json.tool flight-prices.json >/dev/null
-          test "$(python -c 'import json; print(len(json.load(open("flight-prices.json"))["fares"]))')" = "7"
-      - name: Configure Pages
-        uses: actions/configure-pages@v6
-      - name: Upload refreshed dashboard
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: .
-      - name: Deploy refreshed dashboard
-        id: deployment
-        uses: actions/deploy-pages@v4
+          echo "Hourly fare refresh is retired for FINAL_0830_V1."
+          echo "Use itinerary-data.js as the source of truth for ticketed flights and statuses."
