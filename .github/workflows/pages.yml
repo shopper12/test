@@ -27,7 +27,7 @@ jobs:
       - name: Refresh official transit snapshot for artifact
         run: python scripts/update_transit_live.py
 
-      - name: Validate FINAL_0830 itinerary, companion guide and maps
+      - name: Validate FINAL_0830 itinerary, companion V4 and maps
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
@@ -38,6 +38,9 @@ jobs:
           boot=Path('boot.js').read_text(encoding='utf-8')
           itinerary=Path('itinerary-data.js').read_text(encoding='utf-8')
           study=Path('travel-study.js').read_text(encoding='utf-8')
+          korean=Path('korean-video-guide.js').read_text(encoding='utf-8')
+          report_context=Path('report-context.js').read_text(encoding='utf-8')
+          enhancement=Path('korean-study-report-runtime.js').read_text(encoding='utf-8')
           companion=Path('trip-companion-data.js').read_text(encoding='utf-8')
           companion_runtime=Path('trip-companion-runtime.js').read_text(encoding='utf-8')
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
@@ -48,9 +51,19 @@ jobs:
           assert '2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx' in itinerary
           assert 'travelers:3' in itinerary
           assert 'trip-companion-runtime.js?v=FINAL_0830_V3' in html
-          assert 'trip-companion.css?v=FINAL_0830_V3' in html
-          assert 'travel-study.css?v=FINAL_0830_V2' in html
+          assert 'korean-study-report-runtime.js?v=FINAL_0830_V4' in html
+          assert '한국방송·보고서배경 V4' in html
           assert 'WEATHER_BY_DAY' in study and 'STUDY_PLACES' in study
+          assert 'KOREAN_VIDEO_BY_PLACE' in korean
+          assert 'EBS 세계테마기행' in korean and 'KBS 걸어서 세계속으로' in korean
+          assert '5_iIhRsywhU' in korean and 'd9XuuBd9-yc' in korean
+          assert 'PLrYSKNtvf1YEXyVV1v05gs_RABEojZWo4' in korean
+          assert 'PLrYSKNtvf1YE5Xi7s0BNxbgov0tROKDvM' in korean
+          assert 'COUNTRY_REPORT_CONTEXT' in report_context and 'COMPANY_BACKGROUND' in report_context
+          assert 'TIPC / Port of Taichung' in report_context and 'OEG · Taiwan / Den Helder' in report_context
+          assert 'OWC · Hamburg / Denmark' in report_context and 'DNV Hamburg' in report_context
+          assert 'Skyborn Renewables' in report_context and 'Blue Water Shipping' in report_context and 'Port Esbjerg' in report_context
+          assert 'KOREAN_VIDEO_BY_PLACE' in enhancement and 'REPORT_CONTEXT_CHECKED_AT' in enhancement
           assert 'PRACTICAL_DAYS' in companion and 'TRANSPORT_GUIDE' in companion
           assert 'RESTAURANTS' in companion and 'ATTRACTIONS' in companion
           assert 'REPORT_MEMOS' in companion and 'REPORT_OUTLINE' in companion
@@ -76,6 +89,9 @@ jobs:
           node --check boot.js
           node --check app.js
           node --check travel-study.js
+          node --check korean-video-guide.js
+          node --check report-context.js
+          node --check korean-study-report-runtime.js
           node --check trip-companion-data.js
           node --check trip-companion-runtime.js
           node --check unified-experience.js
