@@ -27,7 +27,7 @@ jobs:
       - name: Refresh official transit snapshot for artifact
         run: python scripts/update_transit_live.py
 
-      - name: Validate FINAL_0830 itinerary, weather study and maps
+      - name: Validate FINAL_0830 itinerary, companion guide and maps
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
@@ -38,7 +38,8 @@ jobs:
           boot=Path('boot.js').read_text(encoding='utf-8')
           itinerary=Path('itinerary-data.js').read_text(encoding='utf-8')
           study=Path('travel-study.js').read_text(encoding='utf-8')
-          study_runtime=Path('travel-study-runtime.js').read_text(encoding='utf-8')
+          companion=Path('trip-companion-data.js').read_text(encoding='utf-8')
+          companion_runtime=Path('trip-companion-runtime.js').read_text(encoding='utf-8')
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
           timeline=Path('timeline-runtime-v17.js').read_text(encoding='utf-8')
@@ -46,10 +47,19 @@ jobs:
           assert 'FINAL_0830_V1' in itinerary and 'final_0830' in itinerary
           assert '2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx' in itinerary
           assert 'travelers:3' in itinerary
-          assert 'travel-study-runtime.js?v=FINAL_0830_V2' in html
+          assert 'trip-companion-runtime.js?v=FINAL_0830_V3' in html
+          assert 'trip-companion.css?v=FINAL_0830_V3' in html
           assert 'travel-study.css?v=FINAL_0830_V2' in html
           assert 'WEATHER_BY_DAY' in study and 'STUDY_PLACES' in study
-          assert 'weather-inline' in study_runtime and 'travel-study-tab' in study_runtime
+          assert 'PRACTICAL_DAYS' in companion and 'TRANSPORT_GUIDE' in companion
+          assert 'RESTAURANTS' in companion and 'ATTRACTIONS' in companion
+          assert 'REPORT_MEMOS' in companion and 'REPORT_OUTLINE' in companion
+          assert '🧭 현지가이드' in companion_runtime
+          assert '📝 보고서 메모' in companion_runtime
+          assert '🎬 여행공부' in companion_runtime
+          assert 'IC 2337' in companion and '11:03~13:08' in companion
+          assert 'IC 460' in companion and '17:50~19:54' in companion
+          assert 'EBJ → ABZ' in itinerary or 'EBJ' in itinerary
           assert 'timeline-runtime-v17.js' in boot
           assert 'map-sidebar-group' in stable and 'flightRoutePoints' in stable
           assert 'MAP_MANIFEST' in routing and 'manifestCoverage' in routing
@@ -66,7 +76,8 @@ jobs:
           node --check boot.js
           node --check app.js
           node --check travel-study.js
-          node --check travel-study-runtime.js
+          node --check trip-companion-data.js
+          node --check trip-companion-runtime.js
           node --check unified-experience.js
           node --check travel-live.js
           node --check google-maps-inline.js
