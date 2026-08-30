@@ -1,8 +1,8 @@
 name: Update live transit intelligence
 
-# FINAL_0830_V1 + companion V3
+# FINAL_0830_V1 + companion V4
 # Transit refresh is intentionally narrow: it must never regenerate the retired
-# 4-person fare/stopover model or overwrite weather, report, media-study, or local-guide data.
+# 4-person fare/stopover model or overwrite weather, report, media-study, Korean-video, or local-guide data.
 on:
   schedule:
     - cron: "37 * * * *"
@@ -15,6 +15,9 @@ on:
       - "transit-live.json"
       - "itinerary-data.js"
       - "travel-study.js"
+      - "korean-video-guide.js"
+      - "report-context.js"
+      - "korean-study-report-runtime.js"
       - "trip-companion-data.js"
       - "trip-companion-runtime.js"
       - "trip-companion.css"
@@ -48,6 +51,9 @@ jobs:
           cp itinerary-data.js /tmp/itinerary-data.mjs
           node --check boot.js
           node --check travel-study.js
+          node --check korean-video-guide.js
+          node --check report-context.js
+          node --check korean-study-report-runtime.js
           node --check trip-companion-data.js
           node --check trip-companion-runtime.js
           node --check scripts/verify_map_mappings.mjs
@@ -60,15 +66,22 @@ jobs:
           boot=Path('boot.js').read_text(encoding='utf-8')
           itinerary=Path('itinerary-data.js').read_text(encoding='utf-8')
           study=Path('travel-study.js').read_text(encoding='utf-8')
+          korean=Path('korean-video-guide.js').read_text(encoding='utf-8')
+          report_context=Path('report-context.js').read_text(encoding='utf-8')
+          enhancement=Path('korean-study-report-runtime.js').read_text(encoding='utf-8')
           companion=Path('trip-companion-data.js').read_text(encoding='utf-8')
           runtime=Path('trip-companion-runtime.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
           assert 'FINAL_0830_V1' in boot
           assert 'final_0830' in itinerary and 'travelers:3' in itinerary
           assert 'WEATHER_BY_DAY' in study and 'STUDY_PLACES' in study
+          assert 'KOREAN_VIDEO_BY_PLACE' in korean and 'EBS 세계테마기행' in korean and 'KBS 걸어서 세계속으로' in korean
+          assert 'COUNTRY_REPORT_CONTEXT' in report_context and 'COMPANY_BACKGROUND' in report_context
           assert 'PRACTICAL_DAYS' in companion and 'REPORT_MEMOS' in companion
           assert 'TRANSPORT_GUIDE' in companion and 'RESTAURANTS' in companion and 'ATTRACTIONS' in companion
           assert 'trip-companion-runtime.js?v=FINAL_0830_V3' in html
+          assert 'korean-study-report-runtime.js?v=FINAL_0830_V4' in html
+          assert 'KOREAN_VIDEO_BY_PLACE' in enhancement and 'COUNTRY_REPORT_CONTEXT' in enhancement
           assert '🧭 현지가이드' in runtime and '📝 보고서 메모' in runtime and '🎬 여행공부' in runtime
           fare=json.load(open('flight-prices.json',encoding='utf-8'))
           assert fare.get('passengers') == 3 and fare.get('fares') == {}
