@@ -1,0 +1,64 @@
+name: Apply final 0830 itinerary
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-final-0830-schedule.yml'
+      - 'scripts/apply_final_0830_schedule.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply final schedule
+        run: python scripts/apply_final_0830_schedule.py
+      - name: Refresh weather for final route
+        run: PYTHONPATH=scripts python scripts/update_official_web_content_fast.py
+      - name: Validate JavaScript and itinerary
+        run: |
+          node --check itinerary-data.js
+          node --check app.js
+          node --check stable-tools.js
+          node --check report-memo.js
+          node --check map-routing.mjs
+          python -m py_compile scripts/update_official_web_content.py scripts/update_official_web_content_fast.py
+          cp itinerary-data.js /tmp/itinerary-data.mjs
+          node scripts/verify_map_mappings.mjs /tmp/itinerary-data.mjs
+          node scripts/audit_map_continuity.mjs itinerary-data.js
+          python - <<'PY'
+          from pathlib import Path
+          import json,re
+          t=Path('itinerary-data.js').read_text(encoding='utf-8')
+          assert 'FINAL_0830_V1' in t
+          assert 'travelers:3' in t
+          assert 'Urban Lodge Hotel' in t and 'PREMIER SUITES' not in t
+          assert 'OEG Subsea BV' in t and 'Rotterdam Offshore Group' not in t
+          assert 'Hotel Britannia' in t and 'CABINN Metro' not in t
+          assert 'LM058' in t and 'KL0918' in t and 'KL0855' in t
+          assert 'Copenhagen Airport' not in t
+          p=json.load(open('trip-live.json',encoding='utf-8'))
+          assert len(p.get('weather',{}))==11
+          assert any(x.get('city')=='Aberdeen' for x in p['weather']['2026-09-11']['locations'])
+          assert any('Den Helder' in x.get('city','') for x in p['weather']['2026-09-07']['locations'])
+          PY
+      - name: Commit final schedule
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add itinerary-data.js map-routing.mjs report-memo.js app.js index.html scripts/update_official_web_content.py trip-live.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat: adopt 0830 final offshore wind itinerary'
+            git push
+          fi
