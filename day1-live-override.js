@@ -199,19 +199,23 @@ function decorateStandardUi(){
   const main=document.querySelector("#main-content");
   if(!main)return;
 
-  main.querySelectorAll(".actual-day-override-banner").forEach(el=>el.remove());
+  const banner=main.querySelector(".actual-day-override-banner");
   if(activeDay===DAY_ID && !main.querySelector(".companion-hero")){
-    const anchor=main.querySelector(".day-summary,.map-layout,.table-wrap");
-    if(anchor){
-      const banner=document.createElement("div");
-      banner.className="status-banner warning actual-day-override-banner";
-      banner.innerHTML="<b>9/2 실제 변경</b> · TIPC 등 오늘 기관 일정은 전부 취소되었습니다. 0830 원본보다 이 자유일정이 우선합니다. 미술관 요청을 반영해 국립대만미술관 → 심계신촌 → 타이중 국가가극원 → 펑지아 야시장 순으로 운영합니다.";
-      anchor.before(banner);
+    if(!banner){
+      const anchor=main.querySelector(".day-summary,.map-layout,.table-wrap");
+      if(anchor){
+        const next=document.createElement("div");
+        next.className="status-banner warning actual-day-override-banner";
+        next.innerHTML="<b>9/2 실제 변경</b> · TIPC 등 오늘 기관 일정은 전부 취소되었습니다. 0830 원본보다 이 자유일정이 우선합니다. 미술관 요청을 반영해 국립대만미술관 → 심계신촌 → 타이중 국가가극원 → 펑지아 야시장 순으로 운영합니다.";
+        anchor.before(next);
+      }
     }
+  }else if(banner){
+    banner.remove();
   }
 
   main.querySelectorAll('[data-event-id^="live-d1-"]').forEach(card=>{
-    card.setAttribute("draggable","false");
+    if(card.getAttribute("draggable")!=="false")card.setAttribute("draggable","false");
     card.querySelector(".event-actions")?.remove();
   });
 
@@ -229,17 +233,25 @@ function decoratePracticalGuide(){
 
   const selected=Number(main.querySelector("[data-guide-day].active")?.dataset?.guideDay||0);
   const shouldShow=selected===0 || selected===DAY_ID;
-  main.querySelector("#day1-actual-guide")?.remove();
+  const existing=main.querySelector("#day1-actual-guide");
 
   const day1=[...main.querySelectorAll(".guide-day")].find(section=>/^Day 1\b/.test(section.querySelector("h3")?.textContent||""));
   if(day1){
     const plan=day1.querySelector(".guide-plan");
-    if(plan)plan.innerHTML=planRowsHtml();
+    if(plan && plan.dataset.actualDay1Override!==VERSION){
+      plan.innerHTML=planRowsHtml();
+      plan.dataset.actualDay1Override=VERSION;
+    }
     const header=day1.querySelector("header");
     if(header && !header.querySelector(".actual-guide-note"))header.insertAdjacentHTML("beforeend",'<p class="actual-guide-note"><b>당일 변경:</b> TIPC 등 기관 일정 전부 취소 · 미술관 중심 자유일정으로 대체</p>');
   }
 
-  if(!shouldShow)return;
+  if(!shouldShow){
+    existing?.remove();
+    return;
+  }
+  if(existing)return;
+
   const section=document.createElement("section");
   section.id="day1-actual-guide";
   section.className="guide-day";
