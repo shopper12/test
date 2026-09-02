@@ -1,0 +1,49 @@
+name: Day1 Override CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "day1-live-override.js"
+      - "index.html"
+      - ".github/workflows/day1-override-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: JavaScript syntax
+        run: node --check day1-live-override.js
+
+      - name: Verify live Day 1 contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          js=Path('day1-live-override.js').read_text(encoding='utf-8')
+          html=Path('index.html').read_text(encoding='utf-8')
+          required=[
+              'TIPC 등 오늘 기관 일정은 전부 취소',
+              '국립대만미술관',
+              'National Taiwan Museum of Fine Arts',
+              '심계신촌',
+              '타이중 국가가극원',
+              '펑지아 야시장',
+              '春水堂 國美店',
+              'DAY1_MAP_POINTS',
+              'DAY1_RESTAURANTS',
+              'applyStateOverride',
+          ]
+          for token in required:
+              assert token in js, token
+          assert 'day1-live-override.js?v=DAY1_ACTUAL_20260902_V1' in html
+          assert html.index('day1-live-override.js?v=DAY1_ACTUAL_20260902_V1') < html.index('trip-companion-runtime.js')
+          PY
