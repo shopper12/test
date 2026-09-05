@@ -1,4 +1,4 @@
-import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=AMSTERDAM_LIVE_20260905_V1";
+import { DEFAULT_ITINERARY, ITINERARIES } from "./itinerary-data.js?v=AMSTERDAM_LIVE_20260905_V2";
 
 const LIVE_URL = "./trip-live.json";
 const FARES_URL = "./flight-prices.json";
