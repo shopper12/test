@@ -1,7 +1,7 @@
-// FINAL_0830 practical companion data. Public-safe: no personal contacts or confidential meeting details.
-// Web rechecked 2026-08-31 KST. Suggested times are planning defaults, not meeting confirmations.
+// Live practical companion data. Public-safe: no personal contacts or confidential meeting details.
+// Amsterdam Day 4 web rechecked 2026-09-05 local time. Suggested times are planning defaults, not reservations.
 
-export const GUIDE_CHECKED_AT = "2026-08-31";
+export const GUIDE_CHECKED_AT = "2026-09-05";
 
 export const PRACTICAL_DAYS = [
   {
@@ -47,13 +47,15 @@ export const PRACTICAL_DAYS = [
   {
     day:4, date:"9/5", city:"암스테르담",
     plan:[
-      ["07:40~09:10","AMS 입국·수하물","Schiphol"],
-      ["09:10~09:40","Schiphol → Sloterdijk → 호텔","NS 약 10~15분 + 도보"],
-      ["10:30~12:00","Centraal·Damrak·Dam Square 워킹","Sloterdijk→Centraal NS"],
-      ["12:15~13:30","The Pantry 점심","전통 네덜란드식 · 예약 권장"],
-      ["14:00~15:00","호텔 체크인·휴식","피로 누적 시 이후 일정 생략 가능"],
-      ["16:00~17:15","운하 크루즈","1시간 이상 · I amsterdam 티켓"],
-      ["18:00~20:00","Moeders 또는 도심 저녁","Dutch comfort food"]
+      ["07:40~09:40","AMS 입국·수하물 → Sloterdijk → 호텔 짐 보관","NS 약 10~15분 + 도보"],
+      ["10:00~10:25","호텔 → Amsterdam Centraal","짐만 맡기고 저녁에 체크인 · 역 왕복 제거"],
+      ["10:25~11:15","Zeedijk·Nieuwmarkt → Black Gold 커피","입국 지연 시 산책을 줄이고 커피부터"],
+      ["11:30~12:45","Museum Rembrandthuis","가장 가까운 시간대 예약 · 한국어 멀티미디어 가이드 포함"],
+      ["13:00~13:40","Café de Sluyswacht 가벼운 점심","미술관 맞은편 · 비터발렌/크로켓"],
+      ["13:45~15:40","렘브란트 시내 도보 코스","Zuiderkerk→Rembrandtplein→Begijnhof/Dam→Westerkerk/Jordaan"],
+      ["16:00~17:15","운하 크루즈","Jordaan/Anne Frank 인근 선착장 우선 · 예약편 출발지 확인"],
+      ["17:30~19:00","Proeflokaal A. van Wees 저녁","전통 네덜란드식 · 예약 권장"],
+      ["19:00 이후","Centraal → Sloterdijk → 호텔 체크인","피로 시 크루즈/저녁 생략하고 조기 복귀"]
     ]
   },
   {
@@ -157,7 +159,10 @@ export const RESTAURANTS = [
   {day:"1",city:"타이중",name:"Yizhong Night Market",fit:"숙소 바로 인근, 첫날 체력 부담 적음",menu:"지파이·반월형 간식·루웨이·취두부·Fengren Ice",hours:"대체로 10:00~24:00, 점포별 상이",reserve:"예약 불필요",url:"https://travel.taichung.gov.tw/en/tourist/tour/1037",map:"https://www.google.com/maps/search/?api=1&query=Yizhong+Street+Taichung"},
   {day:"3",city:"타이중",name:"Taichung Second Market",fit:"100년 전통시장, 아침 일정에 바로 맞음",menu:"루러우판·버섯/고기 수프·홍차·면류",hours:"통상 07:30~15:30, 점포별 상이",reserve:"예약 불필요",url:"https://travel.taichung.gov.tw/en/Attractions/Intro/1366",map:"https://www.google.com/maps/search/?api=1&query=Taichung+Second+Market"},
   {day:"3",city:"타이중",name:"Chun Shui Tang Original Store",fit:"버블티 원조점, 출국 전 점심에 적합",menu:"Pearl Milk Tea + 대만식 면/딤섬류",hours:"08:30~22:00",reserve:"3명은 대기 가능성 감안",url:"https://www.chunshuitang.com.tw/en/location-detail/original_store/",map:"https://www.google.com/maps/search/?api=1&query=Chun+Shui+Tang+Original+Store+Taichung"},
-  {day:"4",city:"암스테르담",name:"The Pantry",fit:"전통 네덜란드 요리를 한 번에 먹기 좋음",menu:"hutspot·kale/sauerkraut stamppot·smoked sausage·hachee·bitterballen",hours:"매일 10:30~22:30",reserve:"온라인 예약 권장",url:"https://www.thepantry.nl/en/booking/",map:"https://www.google.com/maps/search/?api=1&query=The+Pantry+Amsterdam"},
+  {day:"4",city:"암스테르담",name:"Black Gold",fit:"렘브란트 하우스 전 커피 · 도보 동선상 최적",menu:"스페셜티 espresso·filter coffee·cold brew",hours:"토·일 10:00~18:00",reserve:"예약 불필요",url:"https://europeancoffeetrip.com/cafe/Blackgoldamsterdam-amsterdam/",map:"https://www.google.com/maps/search/?api=1&query=Black+Gold+Amsterdam"},
+  {day:"4",city:"암스테르담",name:"Café de Sluyswacht",fit:"렘브란트 하우스 바로 맞은편의 1695년 수문지기 집 · 가벼운 점심",menu:"bitterballen·croquettes·fries·샌드위치",hours:"토요일 12:00~02:00",reserve:"현장 이용 · 붐빌 수 있음",url:"https://sluyswacht.nl/",map:"https://www.google.com/maps/search/?api=1&query=Cafe+de+Sluyswacht+Amsterdam"},
+  {day:"4",city:"암스테르담",name:"Proeflokaal A. van Wees",fit:"Jordaan/운하 크루즈 뒤 저녁에 자연스럽게 연결",menu:"Dutch bitterballen·Zeeland mussels·cheese fondue·Amsterdam jenever",hours:"토요일 11:00~01:00 · 당일 주방시간 재확인",reserve:"공식 사이트 예약 권장",url:"https://proeflokaalvanwees.nl/en/",map:"https://www.google.com/maps/search/?api=1&query=Proeflokaal+A+van+Wees+Amsterdam"},
+  {day:"4",city:"암스테르담",name:"The Pantry (대안)",fit:"Museumplein 쪽으로 바꿀 때 좋은 전통 네덜란드식",menu:"hutspot·kale/sauerkraut stamppot·smoked sausage·hachee·bitterballen",hours:"매일 10:30~22:30",reserve:"온라인 예약 권장",url:"https://www.thepantry.nl/en/booking/",map:"https://www.google.com/maps/search/?api=1&query=The+Pantry+Amsterdam"},
   {day:"4",city:"암스테르담",name:"Moeders",fit:"저녁용 Dutch comfort food",menu:"전통 네덜란드 가정식",hours:"매일 17:00~23:30/24:00 · 주방 마감 전 확인",reserve:"온라인 예약 권장",url:"https://moeders.com/en/reservations",map:"https://www.google.com/maps/search/?api=1&query=Moeders+Amsterdam"},
   {day:"7",city:"함부르크",name:"Restaurant Parlament",fit:"OWC Alter Wall과 매우 가까운 Rathaus 지하 · 점심용",menu:"북독일식 육류·생선, Hamburg식 메뉴",hours:"화~토 12:00~16:00 · 주방 마감시간 재확인",reserve:"온라인/전화 예약 권장",url:"https://www.parlament-hamburg.de/contact/?lang=en",map:"https://www.google.com/maps/search/?api=1&query=Restaurant+Parlament+Hamburg"},
   {day:"7",city:"함부르크",name:"Deichgraf",fit:"Speicherstadt/HafenCity 답사 후 저녁에 붙이기 좋음",menu:"지역 생선·육류·계절 북독일식",hours:"화~토 12:00~15:00, 17:30~21:00 주방",reserve:"전화/이메일 예약",url:"https://www.deichgraf-hamburg.de/",map:"https://www.google.com/maps/search/?api=1&query=Deichgraf+Hamburg"},
@@ -172,7 +177,9 @@ export const ATTRACTIONS = [
   {day:"3",city:"타이중",name:"Taichung Second Market",slot:"07:30~08:30",why:"Sanmin Road 축·100년 시장·아침식사",hours:"통상 07:30~15:30",ticket:"무료",url:"https://travel.taichung.gov.tw/en/Attractions/Intro/1366",map:"https://www.google.com/maps/search/?api=1&query=Taichung+Second+Market"},
   {day:"3",city:"타이중",name:"Liuchuan Riverside Walk",slot:"08:40~09:20",why:"출국일 아침에 짧게 가능한 구도심 산책",hours:"옥외",ticket:"무료",url:"https://travel.taichung.gov.tw/en/",map:"https://www.google.com/maps/search/?api=1&query=Liuchuan+Riverside+Walk+Taichung"},
   {day:"3",city:"타이중",name:"Miyahara",slot:"10:20~11:00",why:"10:00 오픈 이후 구도심 건축·디저트·기념품",hours:"10:00~21:00",ticket:"무료",url:"https://travel.taichung.gov.tw/en/attractions/intro/1239",map:"https://www.google.com/maps/search/?api=1&query=Miyahara+Taichung"},
-  {day:"4",city:"암스테르담",name:"Amsterdam Canal Cruise",slot:"16:00~17:15",why:"짧은 시간에 운하·도심 구조 파악",hours:"운영사별",ticket:"I amsterdam 온라인 구매",url:"https://www.iamsterdam.com/en/tickets/canal-cruise-ticket",map:"https://www.google.com/maps/search/?api=1&query=Amsterdam+Canal+Cruise+Centraal"},
+  {day:"4",city:"암스테르담",name:"Museum Rembrandthuis",slot:"11:30~12:45",why:"렘브란트가 살고 작업한 실제 집·공방 · 한국어 멀티미디어 가이드 포함",hours:"매일 10:00~18:00",ticket:"성인 €23.50 · 16:00~18:00 €19.50 · 시간대 예약 권장",url:"https://tickets.rembrandthuis.nl/en/tickets",map:"https://www.google.com/maps/search/?api=1&query=Museum+Rembrandthuis+Amsterdam"},
+  {day:"4",city:"암스테르담",name:"Rembrandt in Amsterdam Walk",slot:"13:45~15:40",why:"미술관에서 시작해 렘브란트가 알던 도시를 동→서로 걸으며 시내 핵심을 연결",hours:"옥외 상시",ticket:"무료 · 공식 도보 코스",url:"https://www.rembrandthuis.nl/en/whats-on/rembrandt-in-amsterdam/",map:"https://www.google.com/maps/dir/?api=1&origin=Museum+Rembrandthuis+Amsterdam&destination=Westerkerk+Amsterdam&waypoints=Zuiderkerk+Amsterdam%7CRembrandtplein+Amsterdam%7CBegijnhof+Amsterdam&travelmode=walking"},
+  {day:"4",city:"암스테르담",name:"Amsterdam Canal Cruise",slot:"16:00~17:15",why:"도보 관광 뒤 운하에서 도심 구조와 17세기 운하 벨트를 한 번에 파악",hours:"운영사별",ticket:"Jordaan/Anne Frank 인근 출발편 우선 · 출발지·시간 확인",url:"https://www.iamsterdam.com/en/tickets/canal-cruise-ticket",map:"https://www.google.com/maps/search/?api=1&query=Canal+Cruise+near+Anne+Frank+House+Amsterdam"},
   {day:"5",city:"암스테르담",name:"Het Scheepvaartmuseum",slot:"10:00~12:15",why:"해상풍력 출장과 가장 직접 연결되는 해양·항만 역사",hours:"10:00~17:00",ticket:"온라인 사전구매 권장",url:"https://www.hetscheepvaartmuseum.com/",map:"https://www.google.com/maps/search/?api=1&query=Het+Scheepvaartmuseum+Amsterdam"},
   {day:"5",city:"암스테르담",name:"Rijksmuseum (우천/취향 대안)",slot:"09:00~11:00 대안",why:"시간예약 필수 · 1시간 압축관람도 가능",hours:"매일 09:00~17:00",ticket:"시작시간 예약 필수",url:"https://www.rijksmuseum.nl/en/visit/practical-info/opening-hours-and-prices",map:"https://www.google.com/maps/search/?api=1&query=Rijksmuseum+Amsterdam"},
   {day:"7",city:"함부르크",name:"Speicherstadt",slot:"15:40~16:40",why:"DNV Brooktorkai와 바로 이어져 추가 이동 거의 없음",hours:"옥외 상시",ticket:"무료",url:"https://www.hamburg-travel.com/discover-hamburg/areas/speicherstadt-hafencity/",map:"https://www.google.com/maps/search/?api=1&query=Speicherstadt+Hamburg"},
