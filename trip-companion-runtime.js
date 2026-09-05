@@ -1,5 +1,5 @@
 import { WEATHER_CHECKED_AT, STUDY_PLACES, weatherForDay } from "./travel-study.js?v=FINAL_0830_V2";
-import { GUIDE_CHECKED_AT, PRACTICAL_DAYS, TRANSPORT_GUIDE, RESTAURANTS, ATTRACTIONS, REPORT_MEMOS, REPORT_OUTLINE } from "./trip-companion-data.js?v=FINAL_0830_V3";
+import { GUIDE_CHECKED_AT, PRACTICAL_DAYS, TRANSPORT_GUIDE, RESTAURANTS, ATTRACTIONS, REPORT_MEMOS, REPORT_OUTLINE } from "./trip-companion-data.js?v=AMSTERDAM_LIVE_20260905_V1";
 
 let companionMode=null;
 let practicalDay=0;
