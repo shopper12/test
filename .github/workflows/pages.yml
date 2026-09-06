@@ -27,7 +27,7 @@ jobs:
       - name: Refresh official transit snapshot for artifact
         run: python scripts/update_transit_live.py
 
-      - name: Validate FINAL_0830 itinerary, companion V4 and maps
+      - name: Validate current 0830 itinerary, local time, companion and maps
         shell: bash
         run: |
           cp itinerary-data.js /tmp/itinerary-data.mjs
@@ -43,14 +43,18 @@ jobs:
           enhancement=Path('korean-study-report-runtime.js').read_text(encoding='utf-8')
           companion=Path('trip-companion-data.js').read_text(encoding='utf-8')
           companion_runtime=Path('trip-companion-runtime.js').read_text(encoding='utf-8')
+          local_time=Path('local-time-runtime.js').read_text(encoding='utf-8')
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
           timeline=Path('timeline-runtime-v17.js').read_text(encoding='utf-8')
           assert 'FINAL_0830_V1' in html and 'FINAL_0830_V1' in boot
-          assert 'FINAL_0830_V1' in itinerary and 'final_0830' in itinerary
+          assert 'final_0830' in itinerary and '0830 최종 일정표' in itinerary
           assert '2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx' in itinerary
           assert 'travelers:3' in itinerary
-          assert 'trip-companion-runtime.js?v=FINAL_0830_V3' in html
+          assert 'trip-companion-runtime.js?v=AMSTERDAM_LIVE_20260905_V2' in html
+          assert 'local-time-runtime.js?v=LOCAL_TIME_20260906_V1' in html
+          assert 'DAY_TIMEZONES' in local_time and 'EVENT_TIMEZONES' in local_time and 'FLIGHT_TIMEZONES' in local_time
+          assert 'Asia/Taipei' in local_time and 'Europe/Amsterdam' in local_time and 'Europe/London' in local_time and 'Asia/Seoul' in local_time
           assert 'korean-study-report-runtime.js?v=FINAL_0830_V4' in html
           assert '한국방송·보고서배경 V4' in html
           assert 'WEATHER_BY_DAY' in study and 'STUDY_PLACES' in study
@@ -94,6 +98,7 @@ jobs:
           node --check korean-study-report-runtime.js
           node --check trip-companion-data.js
           node --check trip-companion-runtime.js
+          node --check local-time-runtime.js
           node --check unified-experience.js
           node --check travel-live.js
           node --check google-maps-inline.js
