@@ -1,4 +1,4 @@
-export const APP_VERSION = "AMSTERDAM_LIVE_20260905_V2";
+export const APP_VERSION = "TRANSPORT_PRICES_20260907_V1";
 export const DEFAULT_ITINERARY = "final_0830";
 
 const SOURCE_PLAN = "2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx";
@@ -15,7 +15,7 @@ const meta={
   dates:"2026.09.02–09.12",
   route:"인천 → 타이중·창화 → 타오위안 → 암스테르담·덴헬더 → 함부르크 → 에스비에르·오르후스 → 애버딘 → 암스테르담 → 인천",
   travelers:3,hotelNights:8,flightNights:2,noHotelStopovers:0,durationText:"11일",lodgingNote:"호텔 8박·기내 2박",
-  budgetNote:"최종 일정표에는 예산 미기재",lastVerified:"2026-08-30-final",sourcePlan:SOURCE_PLAN,includesAwtec:false,flightCount:6,
+  budgetNote:"교통요금은 2026-09-07 확인값·예상범위 반영",lastVerified:"2026-09-07-transport-prices",sourcePlan:SOURCE_PLAN,includesAwtec:false,flightCount:6,
   businessLocationRule:"0830 최종 일정표의 방문기관·장소를 기준으로 함",
   tabLabel:"최종본 · 0830 교통편 반영",tabNote:"대만 → 네덜란드 → 독일 → 덴마크 · 3명",
   subtitle:"2026. 9. 2.(수) ~ 9. 12.(토) · 0830 최종 일정표 기준 · 발권/숙소/기관방문 상태 반영",
@@ -97,6 +97,26 @@ e("f10-07",10,"21:35","9/12 16:25","Amsterdam → Incheon","항공","Amsterdam A
 e("f11-01",11,"16:25","","인천공항(ICN T2) 도착·귀국 완료","귀국","Incheon International Airport Terminal 2","도보","",{meeting_status:"발권 완료"}),
 ];
 
+const GROUND_TRANSPORT_PRICES={
+  "f1-02":{original_currency:"TWD",original_min:500,original_max:650,min_cost_krw:21000,max_cost_krw:28000,cost_basis:"택시 1대·3명 합승 예상"},
+  "f1-03":{original_currency:"TWD",original_min:0,original_max:1200,min_cost_krw:0,max_cost_krw:51000,cost_basis:"LX 차량 0원 / 미지원 시 택시 1대"},
+  "f3-02":{original_currency:"TWD",original_min:2000,original_max:4200,min_cost_krw:85000,max_cost_krw:179000,cost_basis:"3명 합계·THSR 대안~직행 택시"},
+  "f4-01":{original_currency:"EUR",original_min:4.6,original_max:4.6,min_cost_krw:7200,max_cost_krw:7200,cost_basis:"1인 편도·3명 €13.80"},
+  "f6-01":{original_currency:"EUR",original_min:72.6,original_max:79.6,min_cost_krw:114000,max_cost_krw:125000,cost_basis:"3명 합계·NS €54.60 + 택시 1대 €18~25"},
+  "f6-03":{original_currency:"EUR",original_min:86.4,original_max:93.4,min_cost_krw:135000,max_cost_krw:146000,cost_basis:"3명 합계·NS 2구간 + 택시 1대"},
+  "f6-05":{original_currency:"EUR",original_min:12.3,original_max:12.3,min_cost_krw:19300,max_cost_krw:19300,cost_basis:"3명 합계·1인 €4.10(앱 €3.81)"},
+  "f7-01":{original_currency:"EUR",original_min:16.4,original_max:25,min_cost_krw:25700,max_cost_krw:39200,cost_basis:"3명 그룹 종일권 / 택시 1대 예상"},
+  "f7-02":{original_currency:"EUR",original_min:0,original_max:25,min_cost_krw:0,max_cost_krw:39200,cost_basis:"도보 0원 / 택시 1대 예상"},
+  "f8-01":{original_currency:"EUR",original_min:15,original_max:25,min_cost_krw:23500,max_cost_krw:39200,cost_basis:"택시 1대 예상"},
+  "f8-02":{original_currency:"EUR",original_min:15,original_max:25,min_cost_krw:23500,max_cost_krw:39200,cost_basis:"택시 1대 예상"},
+  "f8-03":{original_currency:"EUR",original_min:87,original_max:198,min_cost_krw:136000,max_cost_krw:310000,cost_basis:"3명 변동운임 합계·좌석예약 별도"},
+  "f9-01":{original_currency:"DKK",original_min:0,original_max:130,min_cost_krw:0,max_cost_krw:27000,cost_basis:"BWS 차량 0원 / 택시 1대 예상"},
+  "f9-02":{original_currency:"DKK",original_min:189,original_max:1026,min_cost_krw:39000,max_cost_krw:214000,cost_basis:"3명 편도·Orange~정상운임"},
+  "f9-04":{original_currency:"DKK",original_min:189,original_max:1026,min_cost_krw:39000,max_cost_krw:214000,cost_basis:"3명 편도·Orange~정상운임"},
+  "f10-02":{original_currency:"DKK",original_min:0,original_max:230,min_cost_krw:0,max_cost_krw:48000,cost_basis:"BWS 지원 0원 / 택시 1대 예상"}
+};
+for(const item of events)Object.assign(item,GROUND_TRANSPORT_PRICES[item.id]||{});
+
 const flights=[
 {id:"air1",day_id:1,date:"2026-09-02",flight_no:"LJ0735",origin:"ICN",destination:"RMQ",depart_time:"07:55",arrive_time:"09:40",status:"발권 완료",alternative:"",url:"https://www.jinair.com/",notes:"0830 최종 일정표",sort_order:10},
 {id:"air2",day_id:3,date:"2026-09-04",flight_no:"CI0073",origin:"TPE",destination:"AMS",depart_time:"23:10",arrive_time:"07:40+1",status:"발권 완료",alternative:"",url:"https://www.china-airlines.com/",notes:"0830 최종 일정표",sort_order:20},
@@ -126,11 +146,11 @@ const meetings=[
 ];
 
 const transport_options=[
-{id:"t1",region:"대만",recommendation:"택시·Uber / LX·OEG 차량 · 타오위안 이동은 전용차 또는 THSR",reason:"항만·O&M 현장 중심이라 대중교통보다 차량이 효율적",min_krw:null,max_krw:null,notes:"Google Maps·Uber·THSR T Express. EasyCard는 선택.",sort_order:10},
-{id:"t2",region:"네덜란드",recommendation:"NS 철도 + 필요 시 택시",reason:"Sloterdijk↔Den Helder 직통열차 활용",min_krw:null,max_krw:null,notes:"NS 앱 / OVpay. 1인 1카드·동일 카드로 IN/OUT. OV-chipkaart 불필요.",sort_order:20},
-{id:"t3",region:"독일",recommendation:"S-Bahn·hvv + 택시 / 장거리 DB",reason:"공항→Hbf는 S1, 회사 미팅 이동은 택시 병행이 편리",min_krw:null,max_krw:null,notes:"hvv switch · DB Navigator",sort_order:30},
-{id:"t4",region:"덴마크",recommendation:"DSB 철도 + BWS 차량·택시",reason:"Hamburg→Esbjerg 철도, Esbjerg→Aarhus 철도 약 2시간 20분",min_krw:null,max_krw:null,notes:"DSB 앱 · Rejseplanen",sort_order:40},
-{id:"t5",region:"영국",recommendation:"Aberdeen Airport 공항 내 환승",reason:"발권된 연결편 기준",min_krw:null,max_krw:null,notes:"KLM / Loganair 앱·예약정보. ETA 필요 여부는 동국관광 확인 결과에 따라 처리.",sort_order:50},
+{id:"t1",region:"대만",recommendation:"택시·Uber / LX·OEG 차량 · 타오위안 이동은 전용차 또는 THSR",reason:"항만·O&M 현장 중심이라 대중교통보다 차량이 효율적",min_krw:21000,max_krw:179000,notes:"구간별 3명/차량 기준. RMQ→호텔 NT$500~650, 호텔→항만 NT$900~1,200, TPE 직행 NT$3,500~4,200.",sort_order:10},
+{id:"t2",region:"네덜란드",recommendation:"NS 철도 + 필요 시 택시",reason:"Sloterdijk↔Den Helder 직통열차 활용",min_krw:7200,max_krw:171000,notes:"Schiphol↔Sloterdijk 1인 €4.60. Sloterdijk↔Den Helder 1인 왕복 €36.40, 3명 €109.20. Den Helder 택시 별도.",sort_order:20},
+{id:"t3",region:"독일",recommendation:"S-Bahn·hvv + 택시 / 장거리 DB",reason:"공항→Hbf는 S1, 회사 미팅 이동은 택시 병행이 편리",min_krw:6000,max_krw:310000,notes:"S1 1인 €4.10(앱 €3.81), 3명 그룹 종일권 €16.40. Hamburg→Esbjerg 3명 약 €87~198+좌석예약.",sort_order:30},
+{id:"t4",region:"덴마크",recommendation:"DSB 철도 + BWS 차량·택시",reason:"Hamburg→Esbjerg 철도, Esbjerg→Aarhus 철도 약 2시간 20분",min_krw:13000,max_krw:429000,notes:"Esbjerg↔Aarhus 1인 편도 DKK63~342, 3명 왕복 DKK378~2,052. 공항택시 1대 DKK150~230.",sort_order:40},
+{id:"t5",region:"영국",recommendation:"Aberdeen Airport 공항 내 환승",reason:"발권된 연결편 기준",min_krw:0,max_krw:0,notes:"공항 밖 이동 없음·추가 교통비 0원. KLM / Loganair 연결편 기준.",sort_order:50},
 ];
 
 const restaurants=[];
