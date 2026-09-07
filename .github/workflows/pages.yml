@@ -71,7 +71,7 @@ jobs:
           assert 'PRACTICAL_DAYS' in companion and 'TRANSPORT_GUIDE' in companion
           assert 'TRANSPORT_PRICE_NOTE' in companion and 'price:' in companion
           assert 'GROUND_TRANSPORT_PRICES' in itinerary and 'transport_options' in itinerary
-          assert 'guide-price' in companion_runtime and 'item.price' in companion_runtime
+          assert 'guide-price' in companion_runtime and 'x.price' in companion_runtime
           assert 'RESTAURANTS' in companion and 'ATTRACTIONS' in companion
           assert 'REPORT_MEMOS' in companion and 'REPORT_OUTLINE' in companion
           assert '🧭 현지가이드' in companion_runtime
