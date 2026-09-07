@@ -1,4 +1,4 @@
-const BUILD = "GOOGLE_TIMELINE_LOCAL_20260908_V1";
+const BUILD = "GOOGLE_TIMELINE_LOCAL_20260908_V2";
 
 const state = {
   parsed: null,
