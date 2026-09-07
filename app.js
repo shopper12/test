@@ -1,7 +1,7 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 import {
   APP_VERSION, DEFAULT_ITINERARY, ITINERARIES,
-} from "./itinerary-data.js?v=LIVE_TRAVEL_V17";
+} from "./itinerary-data.js?v=TRANSPORT_PRICES_20260907_V1";
 
 const SUPABASE_URL = "https://wrozrvsplryfjgckmxvl.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_g1uvMhgnSTskTzGCKglOag_cIVpzZ2a";
@@ -49,6 +49,12 @@ const money = (min,max) => {
   if(min == null)return `₩${fmt(max)}`;
   if(max == null || Number(min)===Number(max))return `₩${fmt(min)}`;
   return `₩${fmt(min)}~${fmt(max)}`;
+};
+const localMoney = (currency,min,max) => {
+  if(min==null&&max==null)return "";
+  const f=n=>new Intl.NumberFormat("ko-KR",{maximumFractionDigits:2}).format(Number(n)||0);
+  if(max==null||Number(min)===Number(max))return `${currency} ${f(min)}`;
+  return `${currency} ${f(min)}~${f(max)}`;
 };
 const showLoader = (v) => $("#loader").classList.toggle("open", v);
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),3200); }
@@ -350,7 +356,7 @@ function renderEventCard(e){
     <div><div class="event-title">${e.category?`<span class="chip">${esc(e.category)}</span>`:""}<span>${esc(e.title)}</span></div>
       <div class="meta">${e.location?`<span>📍 ${esc(e.location)}</span>`:""}${e.transport?`<span>🚗 ${esc(e.transport)}</span>`:""}${e.duration?`<span>⏱ ${esc(e.duration)}</span>`:""}</div>
       ${eventFareInline(e)}
-      ${(e.original_min!=null||e.min_cost_krw!=null)?`<div class="cost">${e.original_currency?`${esc(e.original_currency)} ${fmt(e.original_min)}~${fmt(e.original_max)}`:""} ${e.min_cost_krw!=null?`<b>${money(e.min_cost_krw,e.max_cost_krw)}</b>`:""} ${e.cost_basis?`<span>(${esc(e.cost_basis)})</span>`:""}</div>`:""}
+      ${(e.original_min!=null||e.min_cost_krw!=null)?`<div class="cost">${e.original_currency?localMoney(esc(e.original_currency),e.original_min,e.original_max):""} ${e.min_cost_krw!=null?`<b>${money(e.min_cost_krw,e.max_cost_krw)}</b>`:""} ${e.cost_basis?`<span>(${esc(e.cost_basis)})</span>`:""}</div>`:""}
       ${e.notes?`<div class="notes">${esc(e.notes)}</div>`:""}
       ${links.length?`<div class="link-row">${links.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noreferrer">${l} ↗</a>`).join("")}</div>`:""}
     </div>
@@ -450,7 +456,7 @@ function eventFareInline(event){return "";}
 
 function renderAirHotel(){return `<div class="status-banner cloud price-banner"><b>최종 일정표 발권·숙소 기준</b> · 가격 비교안이 아니라 실제 발권/예약 상태를 표시합니다.</div>${renderDataSection("flights")}<div style="height:22px"></div>${renderDataSection("hotels")}`;}
 function renderMeetings(){return renderDataSection("meetings");}
-function renderTransport(){return `<div class="security-note" style="margin-bottom:12px">0830 최종 일정표의 국가별 교통 이용 가이드를 표시합니다. 철도 시간·플랫폼은 전날/당일 공식 앱에서 재확인하십시오.</div>${renderDataSection("transport_options")}`;}
+function renderTransport(){return `<div class="security-note" style="margin-bottom:12px">2026-09-07 확인 교통요금입니다. 표의 최소·최대 금액은 구간별 1인 또는 3명·차량 기준이므로 상세 메모를 함께 보십시오. 철도 변동운임·택시는 결제 직전 공식 앱에서 재확인하십시오.</div>${renderDataSection("transport_options")}`;}
 function renderRestaurants(){return renderDataSection("restaurants");}
 function renderDataSection(table){
   const def=tableDefs[table], rows=state.data[table]||[];
