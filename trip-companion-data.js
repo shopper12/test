@@ -1,7 +1,8 @@
 // Live practical companion data. Public-safe: no personal contacts or confidential meeting details.
 // Amsterdam Day 4 web rechecked 2026-09-05 local time. Suggested times are planning defaults, not reservations.
 
-export const GUIDE_CHECKED_AT = "2026-09-05";
+export const GUIDE_CHECKED_AT = "2026-09-07";
+export const TRANSPORT_PRICE_NOTE = "요금 확인 2026-09-07 · 환산 기준: €1≈₩1,567, NT$1≈₩42.7, DKK1≈₩209 · 카드 해외결제 수수료 제외";
 
 export const PRACTICAL_DAYS = [
   {
@@ -141,17 +142,19 @@ export const PRACTICAL_DAYS = [
 ];
 
 export const TRANSPORT_GUIDE = [
-  {day:"1",route:"RMQ → CHECK Inn LaiLai",mode:"택시",time:"30~40분",booking:"https://www.uber.com/global/en/r/cities/taichung-tw/",live:"https://www.google.com/maps/dir/?api=1&origin=Taichung+International+Airport&destination=CHECK+Inn+Taichung+LaiLai",note:"3명+수하물이므로 공항택시/대형 Uber 우선."},
-  {day:"1",route:"호텔 → Port of Taichung/TIPC",mode:"LX 차량/택시",time:"40~50분",booking:"https://www.google.com/maps/dir/?api=1&origin=CHECK+Inn+Taichung+LaiLai&destination=Port+of+Taichung",live:"https://www.google.com/maps/dir/?api=1&origin=CHECK+Inn+Taichung+LaiLai&destination=Taiwan+International+Ports+Corporation+Taichung",note:"미팅 시작 50분 전 출발."},
-  {day:"3",route:"Taichung → TPE",mode:"전용차/택시 우선 · THSR 대안",time:"차량 약 2시간+",booking:"https://en.thsrc.com.tw/",live:"https://www.tymetro.com.tw/tymetro-new/en/",note:"THSR 대안: 택시→THSR Taichung→Taoyuan(A18)→Airport MRT A13(T2). 수하물 3인이라 전용차가 단순."},
-  {day:"4·6",route:"Schiphol ↔ Sloterdijk",mode:"NS Sprinter",time:"약 10~15분",booking:"https://www.ns.nl/en/featured/purchase-a-train-ticket-online/mobile-tickets.html",live:"https://www.ns.nl/en/travel-information",note:"OVpay 컨택리스 카드/휴대폰으로 check-in/out 가능. NS e-ticket도 가능."},
-  {day:"6",route:"Sloterdijk → Den Helder",mode:"NS 직통열차",time:"약 1시간 10분",booking:"https://www.ns.nl/en/travel-information",live:"https://www.ns.nl/en/travel-information",note:"06:40~07:00대 출발편 선택. 네덜란드 국내 NS는 좌석예약 불필요."},
-  {day:"6",route:"HAM → Hamburg Hbf",mode:"hvv S1",time:"약 25분",booking:"https://www.hvv.de/en",live:"https://www.hvv.de/en",note:"공항역에서 S1. 늦은 도착이라 수하물 많으면 택시 대안."},
-  {day:"7",route:"Hotel St. Raphael ↔ Alter Wall/Brooktorkai",mode:"택시 또는 hvv",time:"10~20분",booking:"https://www.hvv.de/en",live:"https://www.hvv.de/en",note:"OWC→DNV는 도심/HafenCity라 도보+택시 혼합이 효율적."},
-  {day:"8",route:"Hamburg Hbf → Kolding → Esbjerg",mode:"DB/DSB 국제열차",time:"약 5시간",booking:"https://int.bahn.de/en",live:"https://int.bahn.de/en",note:"3명 좌석예약 권장. 9/9 당일 DB Navigator에서 공사·플랫폼 재확인."},
-  {day:"9",route:"Esbjerg → Aarhus H",mode:"DSB IC 2337",time:"11:03→13:08 (현재 시간표)",booking:"https://www.dsb.dk/en/tickets-and-services/dsb-app/",live:"https://www.rejseplanen.dk/webapp/?language=en_EN",note:"Fredericia에서 편명이 이어지지만 동일 연결. 좌석예약 권장."},
-  {day:"9",route:"Aarhus H → Esbjerg",mode:"DSB IC 460 → IC 2360",time:"17:50→19:54 (현재 시간표)",booking:"https://www.dsb.dk/en/tickets-and-services/Seat-Reservation/",live:"https://www.rejseplanen.dk/webapp/?language=en_EN",note:"OWC 16:30 종료 가안이면 충분한 버퍼."},
-  {day:"10",route:"Hotel Britannia → Esbjerg Airport",mode:"BWS 차량 / Esbjerg Taxa",time:"약 10~20분",booking:"https://esbjergairport.dk/en/the-airport/to-and-from/",live:"https://www.rejseplanen.dk/webapp/?language=en_EN",note:"공항 공식 안내상 택시·버스 이용 가능. BWS 지원 미확정 시 택시."}
+  {day:"1",route:"RMQ → CHECK Inn LaiLai",mode:"택시",time:"30~40분",price:"차량 1대 NT$500~650 (3명 합승 약 ₩21,000~28,000)",booking:"https://www.uber.com/global/en/r/cities/taichung-tw/",live:"https://www.google.com/maps/dir/?api=1&origin=Taichung+International+Airport&destination=CHECK+Inn+Taichung+LaiLai",note:"Uber 공개 평균 NT$526 기준. 교통정체·대형차 배차 시 증가할 수 있음."},
+  {day:"1",route:"호텔 → Port of Taichung/TIPC",mode:"LX 차량/택시",time:"40~50분",price:"LX 차량 지원 시 0원 / 택시 1대 NT$900~1,200 (약 ₩38,000~51,000)",booking:"https://www.google.com/maps/dir/?api=1&origin=CHECK+Inn+Taichung+LaiLai&destination=Port+of+Taichung",live:"https://www.google.com/maps/dir/?api=1&origin=CHECK+Inn+Taichung+LaiLai&destination=Taiwan+International+Ports+Corporation+Taichung",note:"미팅 시작 50분 전 출발. 택시는 미터·Uber 호출가 확인."},
+  {day:"3",route:"Taichung → TPE",mode:"전용차/택시 우선 · THSR 대안",time:"차량 약 2시간+",price:"직행 택시 1대 NT$3,500~4,200 (약 ₩149,000~179,000) / THSR 대안 3명 합계 약 NT$2,000~2,300 (₩85,000~98,000)",booking:"https://en.thsrc.com.tw/",live:"https://www.tymetro.com.tw/tymetro-new/en/",note:"THSR 대안은 호텔→고속철도역 택시 + Taichung→Taoyuan 성인 3명 + A18→A13 Airport MRT 합계 예상."},
+  {day:"4·6",route:"Schiphol ↔ Sloterdijk",mode:"NS Sprinter",time:"약 10~15분",price:"1인 편도 €4.60 (약 ₩7,200) / 3명 €13.80 (약 ₩21,600)",booking:"https://www.ns.nl/en/featured/purchase-a-train-ticket-online/mobile-tickets.html",live:"https://www.ns.nl/en/travel-information",note:"2026년 2등석 정상운임. OVpay 컨택리스 카드/휴대폰으로 check-in/out 가능."},
+  {day:"6",route:"Sloterdijk ↔ Den Helder",mode:"NS 직통열차",time:"편도 약 1시간 10분",price:"1인 편도 €18.20 / 왕복 €36.40 (약 ₩28,500 / ₩57,000) · 3명 왕복 €109.20 (약 ₩171,000)",booking:"https://www.ns.nl/en/travel-information",live:"https://www.ns.nl/en/travel-information",note:"2026년 2등석 정상운임. 좌석예약 불필요. OVpay는 반드시 같은 카드로 IN/OUT."},
+  {day:"6",route:"Den Helder Station ↔ OEG Subsea BV",mode:"택시",time:"편도 약 10분",price:"차량 1대 편도 약 €18~25 (₩28,000~39,000) / 왕복 약 €36~50",booking:"https://www.google.com/maps/dir/?api=1&origin=Den+Helder+Station&destination=OEG+Subsea+BV+Koperslagersweg+2",live:"https://www.google.com/maps/dir/?api=1&origin=Den+Helder+Station&destination=OEG+Subsea+BV+Koperslagersweg+2",note:"3명 합승 차량 기준 예상. 호출·대기시간에 따라 변동."},
+  {day:"6",route:"HAM → Hamburg Hbf",mode:"hvv S1",time:"약 25분",price:"1인 €4.10 / hvv 앱 €3.81 (약 ₩6,400 / ₩6,000) · 3명 창구가 €12.30",booking:"https://www.hvv.de/en",live:"https://www.hvv.de/en",note:"2026 Hamburg AB 단일권. 앱·온라인은 7% 할인. 별도 공항 추가요금 없음."},
+  {day:"7",route:"Hotel St. Raphael ↔ Alter Wall/Brooktorkai",mode:"hvv 또는 택시",time:"10~20분",price:"hvv 1인 1회 최대 €4.10 / 3명 종일 그룹권 €16.40 (약 ₩25,700) · 택시 1대 약 €15~25",booking:"https://www.hvv.de/en/tickets/single-day-tickets",live:"https://www.hvv.de/en",note:"세 번 이상 이동하면 3명은 Hamburg AB 그룹 종일권이 유리. 그룹권은 최대 5명."},
+  {day:"8",route:"호텔 → Skyborn → Hamburg Hbf",mode:"택시+도보",time:"구간별 10~20분",price:"택시 1대 구간당 약 €15~25 (₩24,000~39,000)",booking:"https://www.google.com/maps/dir/?api=1&origin=Best+Western+Plus+Hotel+St.+Raphael+Hamburg&destination=Skyborn+Renewables+Hamburg",live:"https://www.hvv.de/en",note:"회사 미팅 위치 확정 후 호출가 확인. 대중교통 이용 시 Hamburg AB 요금 적용."},
+  {day:"8",route:"Hamburg Hbf → Kolding → Esbjerg",mode:"DB/DSB 국제열차",time:"약 4~5시간",price:"1인 변동운임 약 €29~66 (₩45,000~103,000) / 3명 약 €87~198 (₩136,000~310,000) + 좌석예약",booking:"https://int.bahn.de/en",live:"https://int.bahn.de/en",note:"Super Sparpreis 잔여석에 따라 당일 가격 변동. 결제 전 DB Navigator의 3명 총액을 기준으로 함."},
+  {day:"9",route:"Esbjerg → Aarhus H",mode:"DSB IC 2337",time:"11:03→13:08 (현재 시간표)",price:"1인 편도 DKK 63~342 (Orange~정상운임, 약 ₩13,000~71,000) / 3명 DKK 189~1,026",booking:"https://www.dsb.dk/en/tickets-and-services/dsb-app/",live:"https://www.rejseplanen.dk/webapp/?language=en_EN",note:"Orange는 편·재고 고정이며 변경 제한. 정상운임은 당일 다른 열차 이용 가능. 좌석예약 별도."},
+  {day:"9",route:"Aarhus H → Esbjerg",mode:"DSB IC 460 → IC 2360",time:"17:50→19:54 (현재 시간표)",price:"1인 편도 DKK 63~342 (약 ₩13,000~71,000) / 3명 왕복 전체 DKK 378~2,052 (약 ₩79,000~429,000)",booking:"https://www.dsb.dk/en/tickets-and-services/Seat-Reservation/",live:"https://www.rejseplanen.dk/webapp/?language=en_EN",note:"OWC 종료 후 귀환편. 왕복 총액은 선택한 Orange/정상운임 조합에 따라 달라짐."},
+  {day:"10",route:"Hotel Britannia → Esbjerg Airport",mode:"BWS 차량 / Esbjerg Taxa",time:"약 10~20분",price:"BWS 지원 시 0원 / 택시 1대 약 DKK 150~230 (₩31,000~48,000)",booking:"https://esbjergairport.dk/en/the-airport/to-and-from/",live:"https://www.rejseplanen.dk/webapp/?language=en_EN",note:"약 9km 기준 예상. 주간·야간·대기시간에 따라 변동."}
 ];
 
 export const RESTAURANTS = [
