@@ -87,14 +87,15 @@ function timeLabel(value) {
 }
 
 function normalizeMode(value) {
-  const raw = String(value || "이동").replace(/^IN_/, "").replaceAll("_", " ").toLowerCase();
+  const key = String(value || "이동").replace(/^IN_/, "").toLowerCase();
+  const raw = key.replaceAll("_", " ");
   const labels = {
     walking: "도보", running: "달리기", cycling: "자전거", bicycle: "자전거",
     passenger_vehicle: "차량", driving: "차량", car: "차량", bus: "버스",
     train: "열차", subway: "지하철", tram: "트램", ferry: "페리",
     flying: "항공", airplane: "항공", motorcycle: "오토바이",
   };
-  return labels[raw] || raw || "이동";
+  return labels[key] || raw || "이동";
 }
 
 function pushPoint(points, candidate, time, source = "path") {
@@ -520,4 +521,3 @@ function downloadDraft() {
 
 window.addEventListener("trip-data-changed", (event) => ensureWidget(event.detail || {}));
 document.addEventListener("DOMContentLoaded", () => ensureWidget(), { once: true });
-
