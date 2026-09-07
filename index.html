@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./interactive.css?v=FINAL_0830_V1" />
   <link rel="stylesheet" href="./travel-live.css?v=FINAL_0830_V1" />
   <link rel="stylesheet" href="./google-maps-inline.css?v=FINAL_0830_V1" />
+  <link rel="stylesheet" href="./google-timeline-local.css?v=GOOGLE_TIMELINE_LOCAL_20260908_V1" />
   <link rel="stylesheet" href="./unified-experience.css?v=FINAL_0830_V1" />
   <link rel="stylesheet" href="./stable-tools.css?v=FINAL_0830_V1" />
   <link rel="stylesheet" href="./map-sidebar.css?v=FINAL_0830_V1" />
@@ -52,7 +53,7 @@
   <main class="shell" id="main-content"></main>
 
   <footer class="footer shell">
-    GitHub Pages 일정 대시보드 · <b>최종 기준 FINAL_0830_V1 + 교통가격 20260907 V1 + 한국방송·보고서배경 V4 + 현지시간 V1</b><br>
+    GitHub Pages 일정 대시보드 · <b>최종 기준 FINAL_0830_V1 + 교통가격 20260907 V1 + 한국방송·보고서배경 V4 + 현지시간 V1 + 타임라인 로컬연동 V1</b><br>
     기준 문서: 2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx · 3명 · 2026.09.02~09.12<br>
     일정표의 모든 시각은 각 지역 현지시간 기준이며, 국제선은 출발지·도착지 시간대를 각각 표기합니다.<br>
     사이트 주소는 업데이트와 관계없이 shopper12.github.io/test/ 로 유지됩니다.<br>
@@ -65,6 +66,7 @@
     미확정 기관 시간과 장거리 열차의 구체 편은 ‘가안’이며 기관 회신·DB/DSB/NS 운행변경이 있으면 해당 블록만 조정합니다.<br>
     최종 문서에 없는 과거 4인 예산·코펜하겐 귀국안·가오슝·노르웨이·일본 일정은 사용하지 않습니다.<br>
     공개 대시보드에는 담당자 개인 연락처·여권정보·비공개 계약자료를 저장하지 않습니다.
+    <br>Google 지도 타임라인 내보내기 파일과 원시 이동좌표는 브라우저 메모리에서만 분석하며 GitHub·Supabase로 전송하거나 저장하지 않습니다.
   </footer>
 
   <div class="modal" id="edit-modal" aria-hidden="true">
@@ -87,6 +89,7 @@
   <script type="module" src="./day1-live-override.js?v=DAY1_ACTUAL_20260902_V1"></script>
   <script type="module" src="./trip-companion-runtime.js?v=TRANSPORT_PRICES_20260907_V1"></script>
   <script type="module" src="./local-time-runtime.js?v=LOCAL_TIME_20260906_V1"></script>
+  <script type="module" src="./google-timeline-local.js?v=GOOGLE_TIMELINE_LOCAL_20260908_V1"></script>
   <script type="module" src="./korean-study-report-runtime.js?v=FINAL_0830_V4"></script>
 </body>
 </html>
