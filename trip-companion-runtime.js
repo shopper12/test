@@ -1,5 +1,5 @@
 import { WEATHER_CHECKED_AT, STUDY_PLACES, weatherForDay } from "./travel-study.js?v=FINAL_0830_V2";
-import { GUIDE_CHECKED_AT, PRACTICAL_DAYS, TRANSPORT_GUIDE, RESTAURANTS, ATTRACTIONS, REPORT_MEMOS, REPORT_OUTLINE } from "./trip-companion-data.js?v=AMSTERDAM_LIVE_20260905_V2";
+import { GUIDE_CHECKED_AT, TRANSPORT_PRICE_NOTE, PRACTICAL_DAYS, TRANSPORT_GUIDE, RESTAURANTS, ATTRACTIONS, REPORT_MEMOS, REPORT_OUTLINE } from "./trip-companion-data.js?v=TRANSPORT_PRICES_20260907_V1";
 
 let companionMode=null;
 let practicalDay=0;
@@ -71,7 +71,7 @@ function renderPractical(){
   const sights=ATTRACTIONS.filter(x=>matchDay(x.day,practicalDay));
   main.innerHTML=`<section class="companion-hero"><span class="companion-eyebrow">${esc(GUIDE_CHECKED_AT)} 재조사</span><h2>현지에서 그대로 쓰는 일정·교통·식당·관광</h2><p>0830 최종 출장동선을 기준으로 다시 조사했습니다. 발권편과 확정 미팅은 건드리지 않고, 비어 있거나 미정인 시간만 현실적인 가안으로 채웠습니다.</p><div class="companion-toolbar">${dayBtns}</div></section>
   ${days.map(d=>`<section class="guide-day"><header><h3>Day ${d.day} · ${esc(d.date)} · ${esc(d.city)}</h3></header>${planRows(d.plan)}</section>`).join("")}
-  <h2 class="practical-section-title">🚆 교통·예약</h2><div class="guide-grid">${trans.map(x=>`<article class="guide-card"><div class="kicker">Day ${esc(x.day)} · ${esc(x.mode)}</div><h4>${esc(x.route)}</h4><p><b>${esc(x.time)}</b></p><p>${esc(x.note)}</p>${linkRow(x)}</article>`).join("")}</div>
+  <h2 class="practical-section-title">🚆 교통·예약</h2><p class="source-note">${esc(TRANSPORT_PRICE_NOTE)}</p><div class="guide-grid">${trans.map(x=>`<article class="guide-card"><div class="kicker">Day ${esc(x.day)} · ${esc(x.mode)}</div><h4>${esc(x.route)}</h4><p><b>시간</b> ${esc(x.time)}</p><p class="guide-price"><b>요금</b> ${esc(x.price||"가격 확인 필요")}</p><p>${esc(x.note)}</p>${linkRow(x)}</article>`).join("")}</div>
   <h2 class="practical-section-title">🍽 식당·추천 메뉴</h2><div class="guide-grid">${food.map(x=>`<article class="guide-card"><div class="kicker">Day ${esc(x.day)} · ${esc(x.city)}</div><h4>${esc(x.name)}</h4><p>${esc(x.fit)}</p><p><b>먹을 것</b> ${esc(x.menu)}</p><p><b>영업</b> ${esc(x.hours)}</p><p><b>예약</b> ${esc(x.reserve)}</p>${linkRow(x)}</article>`).join("")}</div>
   <h2 class="practical-section-title">📍 관광·짧은 자유시간</h2><div class="guide-grid">${sights.map(x=>`<article class="guide-card"><div class="kicker">Day ${esc(x.day)} · ${esc(x.city)} · ${esc(x.slot)}</div><h4>${esc(x.name)}</h4><p>${esc(x.why)}</p><p><b>시간</b> ${esc(x.hours)}</p><p><b>입장</b> ${esc(x.ticket)}</p>${linkRow(x)}</article>`).join("")}</div>
   <p class="source-note">열차·항공·기관 일정은 출발 전날 각 운영사 앱에서 다시 확인하세요. 특히 국제열차와 북해권 날씨는 변동 가능성이 큽니다.</p>`;
