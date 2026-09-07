@@ -47,11 +47,11 @@ jobs:
           stable=Path('stable-tools.js').read_text(encoding='utf-8')
           routing=Path('map-routing.mjs').read_text(encoding='utf-8')
           timeline=Path('timeline-runtime-v17.js').read_text(encoding='utf-8')
-          assert 'FINAL_0830_V1' in html and 'FINAL_0830_V1' in boot
+          assert 'FINAL_0830_V1' in html and 'TRANSPORT_PRICES_20260907_V1' in html and 'TRANSPORT_PRICES_20260907_V1' in boot
           assert 'final_0830' in itinerary and '0830 최종 일정표' in itinerary
           assert '2026_해외_해상풍력_벤치마킹_통합일정표_0830_교통편반영.docx' in itinerary
           assert 'travelers:3' in itinerary
-          assert 'trip-companion-runtime.js?v=AMSTERDAM_LIVE_20260905_V2' in html
+          assert 'trip-companion-runtime.js?v=TRANSPORT_PRICES_20260907_V1' in html
           assert 'local-time-runtime.js?v=LOCAL_TIME_20260906_V1' in html
           assert 'DAY_TIMEZONES' in local_time and 'EVENT_TIMEZONES' in local_time and 'FLIGHT_TIMEZONES' in local_time
           assert 'Asia/Taipei' in local_time and 'Europe/Amsterdam' in local_time and 'Europe/London' in local_time and 'Asia/Seoul' in local_time
@@ -69,6 +69,9 @@ jobs:
           assert 'Skyborn Renewables' in report_context and 'Blue Water Shipping' in report_context and 'Port Esbjerg' in report_context
           assert 'KOREAN_VIDEO_BY_PLACE' in enhancement and 'REPORT_CONTEXT_CHECKED_AT' in enhancement
           assert 'PRACTICAL_DAYS' in companion and 'TRANSPORT_GUIDE' in companion
+          assert 'TRANSPORT_PRICE_NOTE' in companion and 'price:' in companion
+          assert 'GROUND_TRANSPORT_PRICES' in itinerary and 'transport_options' in itinerary
+          assert 'guide-price' in companion_runtime and 'item.price' in companion_runtime
           assert 'RESTAURANTS' in companion and 'ATTRACTIONS' in companion
           assert 'REPORT_MEMOS' in companion and 'REPORT_OUTLINE' in companion
           assert '🧭 현지가이드' in companion_runtime
