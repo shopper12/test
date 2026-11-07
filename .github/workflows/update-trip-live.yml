@@ -4,26 +4,7 @@ name: Update live transit intelligence
 # Transit refresh is intentionally narrow: it must never regenerate the retired
 # 4-person fare/stopover model or overwrite weather, report, media-study, Korean-video, or local-guide data.
 on:
-  # September 2026 trip completed; stop obsolete hourly transit refresh.
-  # Keep manual and relevant source-change triggers below.
-  push:
-    branches: [main]
-    paths:
-      - "scripts/update_transit_live.py"
-      - "scripts/verify_map_mappings.mjs"
-      - "scripts/audit_map_continuity.mjs"
-      - "transit-live.json"
-      - "itinerary-data.js"
-      - "travel-study.js"
-      - "korean-video-guide.js"
-      - "report-context.js"
-      - "korean-study-report-runtime.js"
-      - "trip-companion-data.js"
-      - "trip-companion-runtime.js"
-      - "trip-companion.css"
-      - "index.html"
-      - "boot.js"
-      - ".github/workflows/update-trip-live.yml"
+  # Completed trip: run manually only. No schedule, push or PR triggers.
   workflow_dispatch:
 
 permissions:
