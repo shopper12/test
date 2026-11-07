@@ -4,8 +4,8 @@ name: Update live transit intelligence
 # Transit refresh is intentionally narrow: it must never regenerate the retired
 # 4-person fare/stopover model or overwrite weather, report, media-study, Korean-video, or local-guide data.
 on:
-  schedule:
-    - cron: "37 * * * *"
+  # September 2026 trip completed; stop obsolete hourly transit refresh.
+  # Keep manual and relevant source-change triggers below.
   push:
     branches: [main]
     paths:
@@ -63,6 +63,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import json
+          import re
           boot=Path('boot.js').read_text(encoding='utf-8')
           itinerary=Path('itinerary-data.js').read_text(encoding='utf-8')
           study=Path('travel-study.js').read_text(encoding='utf-8')
@@ -72,14 +73,16 @@ jobs:
           companion=Path('trip-companion-data.js').read_text(encoding='utf-8')
           runtime=Path('trip-companion-runtime.js').read_text(encoding='utf-8')
           html=Path('index.html').read_text(encoding='utf-8')
-          assert 'FINAL_0830_V1' in boot
+          build_match = re.search(r'const BUILD\s*=\s*"([^"]+)"', boot)
+          assert build_match and 'dashboardBuild' in boot, 'boot.js build identifier missing'
+          build = build_match.group(1)
           assert 'final_0830' in itinerary and 'travelers:3' in itinerary
           assert 'WEATHER_BY_DAY' in study and 'STUDY_PLACES' in study
           assert 'KOREAN_VIDEO_BY_PLACE' in korean and 'EBS 세계테마기행' in korean and 'KBS 걸어서 세계속으로' in korean
           assert 'COUNTRY_REPORT_CONTEXT' in report_context and 'COMPANY_BACKGROUND' in report_context
           assert 'PRACTICAL_DAYS' in companion and 'REPORT_MEMOS' in companion
           assert 'TRANSPORT_GUIDE' in companion and 'RESTAURANTS' in companion and 'ATTRACTIONS' in companion
-          assert 'trip-companion-runtime.js?v=FINAL_0830_V3' in html
+          assert f'trip-companion-runtime.js?v={build}' in html, 'HTML/cache version does not match boot.js'
           assert 'korean-study-report-runtime.js?v=FINAL_0830_V4' in html
           assert 'KOREAN_VIDEO_BY_PLACE' in enhancement and 'COUNTRY_REPORT_CONTEXT' in enhancement
           assert '🧭 현지가이드' in runtime and '📝 보고서 메모' in runtime and '🎬 여행공부' in runtime
