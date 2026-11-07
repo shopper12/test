@@ -1,8 +1,7 @@
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches: [main]
+  # Completed trip: run manually only. No schedule, push or PR triggers.
   workflow_dispatch:
 
 permissions:
