@@ -1,12 +1,7 @@
 name: Day1 Override CI
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - "day1-live-override.js"
-      - "index.html"
-      - ".github/workflows/day1-override-ci.yml"
+  # Completed trip: run manually only. No schedule, push or PR triggers.
   workflow_dispatch:
 
 permissions:
