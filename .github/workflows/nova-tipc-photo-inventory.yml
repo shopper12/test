@@ -1,0 +1,31 @@
+name: NOVA pCloud TIPC photo inventory
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read public pCloud folder and index photo filenames
+        env:
+          PCLOUD_PUBLIC_CODE: kZsO277ZPgDpxvElLsYNj1GABB4yEf2C3IEV
+        run: python scripts/nova_pcloud_tipc_inventory.py --out photo-audit
+      - name: Attach results (do not commit photos or metadata to the public repository)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TIPC-photo-inventory
+          path: photo-audit/
+          if-no-files-found: warn
+          retention-days: 7
