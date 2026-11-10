@@ -1,0 +1,25 @@
+{
+  "title": "WP-NOVA actual-vs-plan audit",
+  "source_plan": "2026-08-30 itinerary in itinerary-data.js/README.md",
+  "source_actual": "2026-10-27 official trip-result report",
+  "visits": [
+    {
+      "date": "2026-09-03",
+      "location": "Port of Taichung",
+      "institution": "TIPC",
+      "status": "confirmed actual visit by report",
+      "plan_note": "current itinerary README and itinerary-data.js list TIPC under Sep 2",
+      "capture_time": "unknown"
+    },
+    {
+      "date": "2026-09-03",
+      "location": "Taichung",
+      "institution": "OEG Taiwan",
+      "status": "confirmed actual visit by report",
+      "capture_time": "unknown"
+    }
+  ],
+  "timeline_data": "not imported",
+  "photos": "pCloud metadata not yet inventoried",
+  "policy": "Do not silently overwrite pre-trip plan. Actual visit dates are authoritative for photo matching; photo identity remains unverified."
+}
