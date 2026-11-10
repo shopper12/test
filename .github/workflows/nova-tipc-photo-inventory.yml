@@ -2,6 +2,10 @@ name: NOVA pCloud TIPC photo inventory
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/nova-tipc-photo-inventory.yml'
+      - 'scripts/nova_pcloud_tipc_inventory.py'
 
 permissions:
   contents: read
