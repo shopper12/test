@@ -23,7 +23,7 @@ jobs:
           python-version: '3.12'
       - name: Read public pCloud folder and index photo filenames
         env:
-          PCLOUD_PUBLIC_CODE: kZsO277ZPgDpxvElLsYNj1GABB4yEf2C3IEV
+          PCLOUD_PUBLIC_CODE: ${{ secrets.PCLOUD_PUBLIC_CODE }}
         run: python scripts/nova_pcloud_tipc_inventory.py --out photo-audit
       - name: Attach results (do not commit photos or metadata to the public repository)
         if: always()
