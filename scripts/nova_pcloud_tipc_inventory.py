@@ -64,6 +64,46 @@ def score_candidate(row):
     if row["kind"] == "photo": score += 1
     return score, "; ".join(reasons)
 
+
+def make_contact_sheet(code, rows, out, limit=80):
+    """Download temporary pCloud public thumbnails, not originals.
+    Photo contents stay in short-lived Actions artifacts, never in git."""
+    try:
+        from PIL import Image, ImageDraw, ImageOps
+        import io
+    except ImportError:
+        print("Pillow unavailable; skipping contact sheet", file=sys.stderr)
+        return
+    cols, cell_w, img_h, label_h = 5, 240, 170, 48
+    chosen = [r for r in rows if r.get("fileid")][:limit]
+    if not chosen: return
+    sheet = Image.new("RGB", (cols * cell_w, ((len(chosen)+cols-1)//cols)*(img_h+label_h)), "white")
+    d = ImageDraw.Draw(sheet)
+    ok = 0
+    for i, r in enumerate(chosen):
+        x = (i % cols)*cell_w
+        y = (i // cols)*(img_h+label_h)
+        try:
+            link = call_api("getpubthumblink", {"code":code, "fileid":r["fileid"],"size":"400x300","crop":0},timeout=20)
+            hosts = link.get("hosts") or []
+            path = link.get("path")
+            if not hosts or not path: raise RuntimeError("missing thumbnail hosts or path")
+            thumburl = "https://" + hosts[0] + path
+            with urlopen(Request(thumburl,headers={"User-Agent":"WP-NOVA-photo-audit/1.0"}),timeout=20) as f:
+                raw = f.read(2_000_000)
+            im = Image.open(io.BytesIO(raw)).convert("RGB")
+            im.thumbnail((cell_w-10,img_h-10))
+            sheet.paste(im,(x+(cell_w-im.width)//2,y+(img_h-im.height)//2))
+            ok+=1
+        except Exception as err:
+            d.text((x+8,y+45),"thumbnail unavailable",fill="black")
+        filename = str(r["filename"])
+        d.text((x+6,y+img_h+3), f"{i+1}. {filename[:34]}", fill="black")
+        d.text((x+6,y+img_h+23), f"score {r['score']} | id {r['fileid']}",fill="black")
+    if ok:
+        sheet.save(out/"TIPC_contact_sheet.jpg",quality=85,optimize=True)
+    print(f"Contact sheet: {ok}/{len(chosen)} thumbnails loaded")
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--code", default=os.environ.get("PCLOUD_PUBLIC_CODE", ""), help="Public share code, not a password")
@@ -108,6 +148,7 @@ def main():
     for idx,r in enumerate(ranked[:60],1):
         report.append(f"| {idx} | {r['path'].replace('|','/')} | {r['score']} | {r['reason']} |")
     (out/"TIPC_report.md").write_text("\n".join(report)+"\n", encoding="utf-8")
+    make_contact_sheet(args.code, ranked, out)
     # JSON machine-readable inventory for downstream data verification.
     (out/"manifest.json").write_text(json.dumps({
         "source":"pCloud public share metadata", "source_visit_date":"2026-09-03",
